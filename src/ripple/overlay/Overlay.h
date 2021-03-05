@@ -43,18 +43,15 @@ namespace ripple {
 class Overlay : public P2POverlay<Peer>
 {
 protected:
-
     // VFALCO NOTE The requirement of this constructor is an
     //             unfortunate problem with the API for
     //             Stoppable and PropertyStream
     //
-    Overlay(Stoppable& parent)
-        : P2POverlay<Peer>(parent)
+    Overlay(Stoppable& parent) : P2POverlay<Peer>(parent)
     {
     }
 
 public:
-
     virtual ~Overlay() = default;
 
     /** Calls the checkTracking function on each peer

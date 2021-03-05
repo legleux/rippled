@@ -49,7 +49,7 @@ class context;
 namespace ripple {
 
 /** Manages the set of connected peers. */
-template<typename AppPeer>
+template <typename AppPeer>
 class P2POverlay : public Stoppable, public beast::PropertyStream::Source
 {
 protected:
@@ -66,7 +66,6 @@ protected:
     }
 
 public:
-
     struct Setup
     {
         explicit Setup() = default;
