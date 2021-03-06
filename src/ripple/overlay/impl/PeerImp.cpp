@@ -56,8 +56,6 @@ using namespace std::chrono_literals;
 namespace ripple {
 
 namespace {
-/** The threshold above which we treat a peer connection as high latency */
-std::chrono::milliseconds constexpr peerHighLatency{300};
 
 /** How often we PING the peer to check for latency and sendq probe */
 std::chrono::seconds constexpr peerTimerInterval{60};
@@ -73,41 +71,25 @@ PeerImp::PeerImp(
     Resource::Consumer consumer,
     std::unique_ptr<stream_type>&& stream_ptr,
     OverlayImpl& overlay)
-    : Child(overlay)
+    : P2PeerImp<PeerImp>(
+          app.config(),
+          app.logs(),
+          id,
+          slot,
+          std::move(request),
+          publicKey,
+          protocol,
+          consumer,
+          std::move(stream_ptr))
+    , Child(overlay)
     , app_(app)
-    , id_(id)
-    , sink_(app_.journal("Peer"), makePrefix(id))
-    , p_sink_(app_.journal("Protocol"), makePrefix(id))
-    , journal_(sink_)
-    , p_journal_(p_sink_)
-    , stream_ptr_(std::move(stream_ptr))
-    , socket_(stream_ptr_->next_layer().socket())
-    , stream_(*stream_ptr_)
-    , strand_(socket_.get_executor())
     , timer_(waitable_timer{socket_.get_executor()})
-    , remote_address_(slot->remote_endpoint())
     , overlay_(overlay)
-    , inbound_(true)
-    , protocol_(protocol)
     , tracking_(Tracking::unknown)
     , trackingTime_(clock_type::now())
-    , publicKey_(publicKey)
     , lastPingTime_(clock_type::now())
     , creationTime_(clock_type::now())
     , squelch_(app_.journal("Squelch"))
-    , usage_(consumer)
-    , fee_(Resource::feeLightPeer)
-    , slot_(slot)
-    , request_(std::move(request))
-    , headers_(request_)
-    , compressionEnabled_(
-          peerFeatureEnabled(
-              headers_,
-              FEATURE_COMPR,
-              "lz4",
-              app_.config().COMPRESSION)
-              ? Compressed::On
-              : Compressed::Off)
     , vpReduceRelayEnabled_(peerFeatureEnabled(
           headers_,
           FEATURE_VPRR,
@@ -148,69 +130,11 @@ stringIsUint256Sized(std::string const& pBuffStr)
 }
 
 void
-PeerImp::run()
-{
-    if (!strand_.running_in_this_thread())
-        return post(strand_, std::bind(&PeerImp::run, shared_from_this()));
-
-    auto parseLedgerHash =
-        [](std::string const& value) -> boost::optional<uint256> {
-        if (uint256 ret; ret.parseHex(value))
-            return ret;
-
-        if (auto const s = base64_decode(value); s.size() == uint256::size())
-            return uint256{s};
-
-        return boost::none;
-    };
-
-    boost::optional<uint256> closed;
-    boost::optional<uint256> previous;
-
-    if (auto const iter = headers_.find("Closed-Ledger");
-        iter != headers_.end())
-    {
-        closed = parseLedgerHash(iter->value().to_string());
-
-        if (!closed)
-            fail("Malformed handshake data (1)");
-    }
-
-    if (auto const iter = headers_.find("Previous-Ledger");
-        iter != headers_.end())
-    {
-        previous = parseLedgerHash(iter->value().to_string());
-
-        if (!previous)
-            fail("Malformed handshake data (2)");
-    }
-
-    if (previous && !closed)
-        fail("Malformed handshake data (3)");
-
-    {
-        std::lock_guard<std::mutex> sl(recentLock_);
-        if (closed)
-            closedLedgerHash_ = *closed;
-        if (previous)
-            previousLedgerHash_ = *previous;
-    }
-
-    if (inbound_)
-        doAccept();
-    else
-        doProtocolStart();
-
-    // Anything else that needs to be done with the connection should be
-    // done in doProtocolStart
-}
-
-void
 PeerImp::stop()
 {
     if (!strand_.running_in_this_thread())
         return post(strand_, std::bind(&PeerImp::stop, shared_from_this()));
-    if (socket_.is_open())
+    if (isSocketOpen())
     {
         // The rationale for using different severity levels is that
         // outbound connections are under our control and may be logged
@@ -231,74 +155,6 @@ PeerImp::stop()
 
 //------------------------------------------------------------------------------
 
-void
-PeerImp::send(std::shared_ptr<Message> const& m)
-{
-    if (!strand_.running_in_this_thread())
-        return post(strand_, std::bind(&PeerImp::send, shared_from_this(), m));
-    if (gracefulClose_)
-        return;
-    if (detaching_)
-        return;
-
-    auto validator = m->getValidatorKey();
-    if (validator && !squelch_.expireSquelch(*validator))
-        return;
-
-    overlay_.reportTraffic(
-        safe_cast<TrafficCount::category>(m->getCategory()),
-        false,
-        static_cast<int>(m->getBuffer(compressionEnabled_).size()));
-
-    auto sendq_size = send_queue_.size();
-
-    if (sendq_size < Tuning::targetSendQueue)
-    {
-        // To detect a peer that does not read from their
-        // side of the connection, we expect a peer to have
-        // a small senq periodically
-        large_sendq_ = 0;
-    }
-    else if (auto sink = journal_.debug();
-             sink && (sendq_size % Tuning::sendQueueLogFreq) == 0)
-    {
-        std::string const n = name();
-        sink << (n.empty() ? remote_address_.to_string() : n)
-             << " sendq: " << sendq_size;
-    }
-
-    send_queue_.push(m);
-
-    if (sendq_size != 0)
-        return;
-
-    boost::asio::async_write(
-        stream_,
-        boost::asio::buffer(
-            send_queue_.front()->getBuffer(compressionEnabled_)),
-        bind_executor(
-            strand_,
-            std::bind(
-                &PeerImp::onWriteMessage,
-                shared_from_this(),
-                std::placeholders::_1,
-                std::placeholders::_2)));
-}
-
-void
-PeerImp::charge(Resource::Charge const& fee)
-{
-    if ((usage_.charge(fee) == Resource::drop) && usage_.disconnect() &&
-        strand_.running_in_this_thread())
-    {
-        // Sever the connection
-        overlay_.incPeerDisconnectCharges();
-        fail("charge: Resources");
-    }
-}
-
-//------------------------------------------------------------------------------
-
 bool
 PeerImp::crawl() const
 {
@@ -314,24 +170,10 @@ PeerImp::cluster() const
     return static_cast<bool>(app_.cluster().member(publicKey_));
 }
 
-std::string
-PeerImp::getVersion() const
-{
-    if (inbound_)
-        return headers_["User-Agent"].to_string();
-    return headers_["Server"].to_string();
-}
-
 Json::Value
 PeerImp::json()
 {
-    Json::Value ret(Json::objectValue);
-
-    ret[jss::public_key] = toBase58(TokenType::NodePublic, publicKey_);
-    ret[jss::address] = remote_address_.to_string();
-
-    if (inbound_)
-        ret[jss::inbound] = true;
+    auto ret = P2PeerImp::json();
 
     if (cluster())
     {
@@ -340,25 +182,6 @@ PeerImp::json()
         if (auto const n = name(); !n.empty())
             // Could move here if Json::Value supported moving from a string
             ret[jss::name] = n;
-    }
-
-    if (auto const d = domain(); !d.empty())
-        ret[jss::server_domain] = domain();
-
-    if (auto const nid = headers_["Network-ID"].to_string(); !nid.empty())
-        ret[jss::network_id] = nid;
-
-    ret[jss::load] = usage_.balance();
-
-    if (auto const version = getVersion(); !version.empty())
-        ret[jss::version] = version;
-
-    ret[jss::protocol] = to_string(protocol_);
-
-    {
-        std::lock_guard sl(recentLock_);
-        if (latency_)
-            ret[jss::latency] = static_cast<Json::UInt>(latency_->count());
     }
 
     ret[jss::uptime] = static_cast<Json::UInt>(
@@ -426,16 +249,6 @@ PeerImp::json()
                     << "Unknown status: " << last_status.newstatus();
         }
     }
-
-    ret[jss::metrics] = Json::Value(Json::objectValue);
-    ret[jss::metrics][jss::total_bytes_recv] =
-        std::to_string(metrics_.recv.total_bytes());
-    ret[jss::metrics][jss::total_bytes_sent] =
-        std::to_string(metrics_.sent.total_bytes());
-    ret[jss::metrics][jss::avg_bps_recv] =
-        std::to_string(metrics_.recv.average_bytes());
-    ret[jss::metrics][jss::avg_bps_sent] =
-        std::to_string(metrics_.sent.average_bytes());
 
     return ret;
 }
@@ -522,57 +335,13 @@ PeerImp::hasRange(std::uint32_t uMin, std::uint32_t uMax)
 //------------------------------------------------------------------------------
 
 void
-PeerImp::close()
+PeerImp::onEvtClose()
 {
-    assert(strand_.running_in_this_thread());
-    if (socket_.is_open())
+    if (isSocketOpen())
     {
-        detaching_ = true;  // DEPRECATED
         error_code ec;
         timer_.cancel(ec);
-        socket_.close(ec);
-        overlay_.incPeerDisconnect();
-        if (inbound_)
-        {
-            JLOG(journal_.debug()) << "Closed";
-        }
-        else
-        {
-            JLOG(journal_.info()) << "Closed";
-        }
     }
-}
-
-void
-PeerImp::fail(std::string const& reason)
-{
-    if (!strand_.running_in_this_thread())
-        return post(
-            strand_,
-            std::bind(
-                (void (Peer::*)(std::string const&)) & PeerImp::fail,
-                shared_from_this(),
-                reason));
-    if (journal_.active(beast::severities::kWarning) && socket_.is_open())
-    {
-        std::string const n = name();
-        JLOG(journal_.warn()) << (n.empty() ? remote_address_.to_string() : n)
-                              << " failed: " << reason;
-    }
-    close();
-}
-
-void
-PeerImp::fail(std::string const& name, error_code ec)
-{
-    assert(strand_.running_in_this_thread());
-    if (socket_.is_open())
-    {
-        JLOG(journal_.warn())
-            << name << " from " << toBase58(TokenType::NodePublic, publicKey_)
-            << " at " << remote_address_.to_string() << ": " << ec.message();
-    }
-    close();
 }
 
 boost::optional<RangeSet<std::uint32_t>>
@@ -595,24 +364,9 @@ PeerImp::getPeerShardInfo() const
 }
 
 void
-PeerImp::gracefulClose()
+PeerImp::onEvtGracefulClose()
 {
-    assert(strand_.running_in_this_thread());
-    assert(socket_.is_open());
-    assert(!gracefulClose_);
-    gracefulClose_ = true;
-#if 0
-    // Flush messages
-    while(send_queue_.size() > 1)
-        send_queue_.pop_back();
-#endif
-    if (send_queue_.size() > 0)
-        return;
     setTimer();
-    stream_.async_shutdown(bind_executor(
-        strand_,
-        std::bind(
-            &PeerImp::onShutdown, shared_from_this(), std::placeholders::_1)));
 }
 
 void
@@ -641,14 +395,6 @@ PeerImp::cancelTimer()
 }
 
 //------------------------------------------------------------------------------
-
-std::string
-PeerImp::makePrefix(id_t id)
-{
-    std::stringstream ss;
-    ss << "[" << std::setfill('0') << std::setw(3) << id << "] ";
-    return ss.str();
-}
 
 void
 PeerImp::onTimer(error_code const& ec)
@@ -712,39 +458,15 @@ PeerImp::onTimer(error_code const& ec)
 }
 
 void
-PeerImp::onShutdown(error_code ec)
+PeerImp::onEvtShutdown()
 {
     cancelTimer();
-    // If we don't get eof then something went wrong
-    if (!ec)
-    {
-        JLOG(journal_.error()) << "onShutdown: expected error condition";
-        return close();
-    }
-    if (ec != boost::asio::error::eof)
-        return fail("onShutdown", ec);
-    close();
 }
 
 //------------------------------------------------------------------------------
 void
-PeerImp::doAccept()
+PeerImp::onEvtAccept()
 {
-    assert(read_buffer_.size() == 0);
-
-    JLOG(journal_.debug()) << "doAccept: " << remote_address_;
-
-    auto const sharedValue = makeSharedValue(*stream_ptr_, journal_);
-
-    // This shouldn't fail since we already computed
-    // the shared value successfully in OverlayImpl
-    if (!sharedValue)
-        return fail("makeSharedValue: Unexpected failure");
-
-    JLOG(journal_.info()) << "Protocol: " << to_string(protocol_);
-    JLOG(journal_.info()) << "Public Key: "
-                          << toBase58(TokenType::NodePublic, publicKey_);
-
     if (auto member = app_.cluster().member(publicKey_))
     {
         {
@@ -753,57 +475,6 @@ PeerImp::doAccept()
         }
         JLOG(journal_.info()) << "Cluster name: " << *member;
     }
-
-    overlay_.activate(shared_from_this());
-
-    // XXX Set timer: connection is in grace period to be useful.
-    // XXX Set timer: connection idle (idle may vary depending on connection
-    // type.)
-
-    auto write_buffer = std::make_shared<boost::beast::multi_buffer>();
-
-    boost::beast::ostream(*write_buffer) << makeResponse(
-        !overlay_.peerFinder().config().peerPrivate,
-        request_,
-        overlay_.setup().public_ip,
-        remote_address_.address(),
-        *sharedValue,
-        overlay_.setup().networkID,
-        protocol_,
-        app_);
-
-    // Write the whole buffer and only start protocol when that's done.
-    boost::asio::async_write(
-        stream_,
-        write_buffer->data(),
-        boost::asio::transfer_all(),
-        bind_executor(
-            strand_,
-            [this, write_buffer, self = shared_from_this()](
-                error_code ec, std::size_t bytes_transferred) {
-                if (!socket_.is_open())
-                    return;
-                if (ec == boost::asio::error::operation_aborted)
-                    return;
-                if (ec)
-                    return fail("onWriteResponse", ec);
-                if (write_buffer->size() == bytes_transferred)
-                    return doProtocolStart();
-                return fail("Failed to write header");
-            }));
-}
-
-std::string
-PeerImp::name() const
-{
-    std::shared_lock read_lock{nameMutex_};
-    return name_;
-}
-
-std::string
-PeerImp::domain() const
-{
-    return headers_["Server-Domain"].to_string();
 }
 
 //------------------------------------------------------------------------------
@@ -811,10 +482,8 @@ PeerImp::domain() const
 // Protocol logic
 
 void
-PeerImp::doProtocolStart()
+PeerImp::onEvtProtocolStart()
 {
-    onReadMessage(error_code(), 0);
-
     // Send all the validator lists that have been loaded
     if (inbound_ && supportsFeature(ProtocolFeature::ValidatorListPropagation))
     {
@@ -852,108 +521,50 @@ PeerImp::doProtocolStart()
     setTimer();
 }
 
-// Called repeatedly with protocol message data
 void
-PeerImp::onReadMessage(error_code ec, std::size_t bytes_transferred)
+PeerImp::onEvtRun()
 {
-    if (!socket_.is_open())
-        return;
-    if (ec == boost::asio::error::operation_aborted)
-        return;
-    if (ec == boost::asio::error::eof)
+    auto parseLedgerHash =
+        [](std::string const& value) -> boost::optional<uint256> {
+        if (uint256 ret; ret.parseHex(value))
+            return ret;
+
+        if (auto const s = base64_decode(value); s.size() == uint256::size())
+            return uint256{s};
+
+        return boost::none;
+    };
+
+    boost::optional<uint256> closed;
+    boost::optional<uint256> previous;
+
+    if (auto const iter = headers_.find("Closed-Ledger");
+        iter != headers_.end())
     {
-        JLOG(journal_.info()) << "EOF";
-        return gracefulClose();
-    }
-    if (ec)
-        return fail("onReadMessage", ec);
-    if (auto stream = journal_.trace())
-    {
-        if (bytes_transferred > 0)
-            stream << "onReadMessage: " << bytes_transferred << " bytes";
-        else
-            stream << "onReadMessage";
-    }
+        closed = parseLedgerHash(iter->value().to_string());
 
-    metrics_.recv.add_message(bytes_transferred);
-
-    read_buffer_.commit(bytes_transferred);
-
-    auto hint = Tuning::readBufferBytes;
-
-    while (read_buffer_.size() > 0)
-    {
-        std::size_t bytes_consumed;
-        std::tie(bytes_consumed, ec) =
-            invokeProtocolMessage(read_buffer_.data(), *this, hint);
-        if (ec)
-            return fail("onReadMessage", ec);
-        if (!socket_.is_open())
-            return;
-        if (gracefulClose_)
-            return;
-        if (bytes_consumed == 0)
-            break;
-        read_buffer_.consume(bytes_consumed);
+        if (!closed)
+            fail("Malformed handshake data (1)");
     }
 
-    // Timeout on writes only
-    stream_.async_read_some(
-        read_buffer_.prepare(std::max(Tuning::readBufferBytes, hint)),
-        bind_executor(
-            strand_,
-            std::bind(
-                &PeerImp::onReadMessage,
-                shared_from_this(),
-                std::placeholders::_1,
-                std::placeholders::_2)));
-}
-
-void
-PeerImp::onWriteMessage(error_code ec, std::size_t bytes_transferred)
-{
-    if (!socket_.is_open())
-        return;
-    if (ec == boost::asio::error::operation_aborted)
-        return;
-    if (ec)
-        return fail("onWriteMessage", ec);
-    if (auto stream = journal_.trace())
+    if (auto const iter = headers_.find("Previous-Ledger");
+        iter != headers_.end())
     {
-        if (bytes_transferred > 0)
-            stream << "onWriteMessage: " << bytes_transferred << " bytes";
-        else
-            stream << "onWriteMessage";
+        previous = parseLedgerHash(iter->value().to_string());
+
+        if (!previous)
+            fail("Malformed handshake data (2)");
     }
 
-    metrics_.sent.add_message(bytes_transferred);
+    if (previous && !closed)
+        fail("Malformed handshake data (3)");
 
-    assert(!send_queue_.empty());
-    send_queue_.pop();
-    if (!send_queue_.empty())
     {
-        // Timeout on writes only
-        return boost::asio::async_write(
-            stream_,
-            boost::asio::buffer(
-                send_queue_.front()->getBuffer(compressionEnabled_)),
-            bind_executor(
-                strand_,
-                std::bind(
-                    &PeerImp::onWriteMessage,
-                    shared_from_this(),
-                    std::placeholders::_1,
-                    std::placeholders::_2)));
-    }
-
-    if (gracefulClose_)
-    {
-        return stream_.async_shutdown(bind_executor(
-            strand_,
-            std::bind(
-                &PeerImp::onShutdown,
-                shared_from_this(),
-                std::placeholders::_1)));
+        std::lock_guard<std::mutex> sl(recentLock_);
+        if (closed)
+            closedLedgerHash_ = *closed;
+        if (previous)
+            previousLedgerHash_ = *previous;
     }
 }
 
@@ -3103,51 +2714,6 @@ PeerImp::getLedger(std::shared_ptr<protocol::TMGetLedger> const& m)
     send(oPacket);
 }
 
-int
-PeerImp::getScore(bool haveItem) const
-{
-    // Random component of score, used to break ties and avoid
-    // overloading the "best" peer
-    static const int spRandomMax = 9999;
-
-    // Score for being very likely to have the thing we are
-    // look for; should be roughly spRandomMax
-    static const int spHaveItem = 10000;
-
-    // Score reduction for each millisecond of latency; should
-    // be roughly spRandomMax divided by the maximum reasonable
-    // latency
-    static const int spLatency = 30;
-
-    // Penalty for unknown latency; should be roughly spRandomMax
-    static const int spNoLatency = 8000;
-
-    int score = rand_int(spRandomMax);
-
-    if (haveItem)
-        score += spHaveItem;
-
-    boost::optional<std::chrono::milliseconds> latency;
-    {
-        std::lock_guard sl(recentLock_);
-        latency = latency_;
-    }
-
-    if (latency)
-        score -= latency->count() * spLatency;
-    else
-        score -= spNoLatency;
-
-    return score;
-}
-
-bool
-PeerImp::isHighLatency() const
-{
-    std::lock_guard sl(recentLock_);
-    return latency_ >= peerHighLatency;
-}
-
 bool
 PeerImp::reduceRelayReady()
 {
@@ -3156,46 +2722,6 @@ PeerImp::reduceRelayReady()
             reduce_relay::epoch<std::chrono::minutes>(UptimeClock::now()) >
             reduce_relay::WAIT_ON_BOOTUP;
     return vpReduceRelayEnabled_ && reduceRelayReady_;
-}
-
-void
-PeerImp::Metrics::add_message(std::uint64_t bytes)
-{
-    using namespace std::chrono_literals;
-    std::unique_lock lock{mutex_};
-
-    totalBytes_ += bytes;
-    accumBytes_ += bytes;
-    auto const timeElapsed = clock_type::now() - intervalStart_;
-    auto const timeElapsedInSecs =
-        std::chrono::duration_cast<std::chrono::seconds>(timeElapsed);
-
-    if (timeElapsedInSecs >= 1s)
-    {
-        auto const avgBytes = accumBytes_ / timeElapsedInSecs.count();
-        rollingAvg_.push_back(avgBytes);
-
-        auto const totalBytes =
-            std::accumulate(rollingAvg_.begin(), rollingAvg_.end(), 0ull);
-        rollingAvgBytes_ = totalBytes / rollingAvg_.size();
-
-        intervalStart_ = clock_type::now();
-        accumBytes_ = 0;
-    }
-}
-
-std::uint64_t
-PeerImp::Metrics::average_bytes() const
-{
-    std::shared_lock lock{mutex_};
-    return rollingAvgBytes_;
-}
-
-std::uint64_t
-PeerImp::Metrics::total_bytes() const
-{
-    std::shared_lock lock{mutex_};
-    return totalBytes_;
 }
 
 }  // namespace ripple

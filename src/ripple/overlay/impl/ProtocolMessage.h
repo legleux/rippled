@@ -294,32 +294,6 @@ parseMessageContent(MessageHeader const& header, Buffers const& buffers)
     return m;
 }
 
-template <
-    class T,
-    class Buffers,
-    class Handler,
-    class = std::enable_if_t<
-        std::is_base_of<::google::protobuf::Message, T>::value>>
-bool
-invoke(MessageHeader const& header, Buffers const& buffers, Handler& handler)
-{
-    auto const m = parseMessageContent<T>(header, buffers);
-    if (!m)
-        return false;
-
-    using namespace ripple::compression;
-    handler.onMessageBegin(
-        header.message_type,
-        m,
-        header.payload_wire_size,
-        header.uncompressed_size,
-        header.algorithm != Algorithm::None);
-    handler.onMessage(m);
-    handler.onMessageEnd(header.message_type, m);
-
-    return true;
-}
-
 }  // namespace detail
 
 /** Calls the handler for up to one protocol message in the passed buffers.
@@ -385,114 +359,7 @@ invokeProtocolMessage(
         return result;
     }
 
-    bool success;
-
-    switch (header->message_type)
-    {
-        case protocol::mtMANIFESTS:
-            success = detail::invoke<protocol::TMManifests>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtPING:
-            success =
-                detail::invoke<protocol::TMPing>(*header, buffers, handler);
-            break;
-        case protocol::mtCLUSTER:
-            success =
-                detail::invoke<protocol::TMCluster>(*header, buffers, handler);
-            break;
-        case protocol::mtGET_SHARD_INFO:
-            success = detail::invoke<protocol::TMGetShardInfo>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtSHARD_INFO:
-            success = detail::invoke<protocol::TMShardInfo>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtGET_PEER_SHARD_INFO:
-            success = detail::invoke<protocol::TMGetPeerShardInfo>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtPEER_SHARD_INFO:
-            success = detail::invoke<protocol::TMPeerShardInfo>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtENDPOINTS:
-            success = detail::invoke<protocol::TMEndpoints>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtTRANSACTION:
-            success = detail::invoke<protocol::TMTransaction>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtGET_LEDGER:
-            success = detail::invoke<protocol::TMGetLedger>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtLEDGER_DATA:
-            success = detail::invoke<protocol::TMLedgerData>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtPROPOSE_LEDGER:
-            success = detail::invoke<protocol::TMProposeSet>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtSTATUS_CHANGE:
-            success = detail::invoke<protocol::TMStatusChange>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtHAVE_SET:
-            success = detail::invoke<protocol::TMHaveTransactionSet>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtVALIDATION:
-            success = detail::invoke<protocol::TMValidation>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtVALIDATORLIST:
-            success = detail::invoke<protocol::TMValidatorList>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtVALIDATORLISTCOLLECTION:
-            success = detail::invoke<protocol::TMValidatorListCollection>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtGET_OBJECTS:
-            success = detail::invoke<protocol::TMGetObjectByHash>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtSQUELCH:
-            success =
-                detail::invoke<protocol::TMSquelch>(*header, buffers, handler);
-            break;
-        case protocol::mtPROOF_PATH_REQ:
-            success = detail::invoke<protocol::TMProofPathRequest>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtPROOF_PATH_RESPONSE:
-            success = detail::invoke<protocol::TMProofPathResponse>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtREPLAY_DELTA_REQ:
-            success = detail::invoke<protocol::TMReplayDeltaRequest>(
-                *header, buffers, handler);
-            break;
-        case protocol::mtREPLAY_DELTA_RESPONSE:
-            success = detail::invoke<protocol::TMReplayDeltaResponse>(
-                *header, buffers, handler);
-            break;
-        default:
-            handler.onMessageUnknown(header->message_type);
-            success = true;
-            break;
-    }
-
-    result.first = header->total_wire_size;
-
-    if (!success)
-        result.second = make_error_code(boost::system::errc::bad_message);
-
-    return result;
+    return handler.invokeProtocolMessage(*header, buffers, hint);
 }
 
 }  // namespace ripple

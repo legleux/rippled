@@ -165,6 +165,40 @@ public:
     {
         return false;
     }
+    bool
+    isSocketOpen() const override
+    {
+        return true;
+    }
+    std::size_t
+    queueSize() const override
+    {
+        return 0;
+    }
+    void
+    onEvtAccept() override
+    {
+    }
+    void
+    onEvtProtocolStart() override
+    {
+    }
+    void
+    onEvtRun() override
+    {
+    }
+    void
+    onEvtClose() override
+    {
+    }
+    void
+    onEvtGracefulClose() override
+    {
+    }
+    void
+    onEvtShutdown() override
+    {
+    }
 };
 
 /** Manually advanced clock. */

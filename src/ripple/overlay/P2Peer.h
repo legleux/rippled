@@ -32,6 +32,26 @@ namespace Resource {
 class Charge;
 }
 
+class P2PeerEvents
+{
+public:
+    virtual ~P2PeerEvents() = default;
+
+protected:
+    virtual void
+    onEvtAccept() = 0;
+    virtual void
+    onEvtProtocolStart() = 0;
+    virtual void
+    onEvtRun() = 0;
+    virtual void
+    onEvtClose() = 0;
+    virtual void
+    onEvtGracefulClose() = 0;
+    virtual void
+    onEvtShutdown() = 0;
+};
+
 /** Represents a peer connection in the overlay. */
 class P2Peer
 {
@@ -80,6 +100,13 @@ public:
 
     virtual bool
     compressionEnabled() const = 0;
+
+protected:
+    virtual bool
+    isSocketOpen() const = 0;
+
+    virtual std::size_t
+    queueSize() const = 0;
 };
 
 }  // namespace ripple

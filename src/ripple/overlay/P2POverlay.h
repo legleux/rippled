@@ -49,7 +49,7 @@ class context;
 namespace ripple {
 
 /** Manages the set of connected peers. */
-template <typename AppPeer>
+template <typename BasePeer>
 class P2POverlay : public Stoppable, public beast::PropertyStream::Source
 {
 protected:
@@ -78,7 +78,7 @@ public:
         bool vlEnabled = true;
     };
 
-    using PeerSequence = std::vector<std::shared_ptr<AppPeer>>;
+    using PeerSequence = std::vector<std::shared_ptr<BasePeer>>;
 
     virtual ~P2POverlay() = default;
 
@@ -120,11 +120,11 @@ public:
     getActivePeers() const = 0;
 
     /** Returns the peer with the matching short id, or null. */
-    virtual std::shared_ptr<AppPeer>
+    virtual std::shared_ptr<BasePeer>
     findPeerByShortID(P2Peer::id_t const& id) const = 0;
 
     /** Returns the peer with the matching public key, or null. */
-    virtual std::shared_ptr<AppPeer>
+    virtual std::shared_ptr<BasePeer>
     findPeerByPublicKey(PublicKey const& pubKey) = 0;
 
     /** Visit every active peer.

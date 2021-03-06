@@ -37,7 +37,7 @@ enum class ProtocolFeature {
 };
 
 /** Represents a peer connection in the overlay. */
-class Peer : public P2Peer
+class Peer : public virtual P2Peer, public P2PeerEvents
 {
 public:
     using ptr = std::shared_ptr<Peer>;
