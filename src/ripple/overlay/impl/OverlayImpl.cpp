@@ -65,15 +65,15 @@ OverlayImpl::OverlayImpl(
     : P2POverlay<PeerImp::Peer_t>(parent)
     , Overlay(parent)
     , P2POverlayImpl<OverlayImpl, PeerImp>(
-            app,
-            setup,
-            parent,
-            serverHandler,
-            resourceManager,
-            resolver,
-            io_service,
-            config,
-            collector)
+          app,
+          setup,
+          parent,
+          serverHandler,
+          resourceManager,
+          resolver,
+          io_service,
+          config,
+          collector)
     , app_(app)
     , timer_count_(0)
     , slots_(app, *this)
@@ -91,6 +91,52 @@ OverlayImpl::~OverlayImpl()
     std::unique_lock<decltype(mutex_)> lock(mutex_);
     cond_.wait(lock, [this] { return list_.empty(); });
 }
+
+OverlayImpl::Timer::Timer(OverlayImpl& overlay)
+    : Child<OverlayImpl>(overlay), timer_(overlay_.io_service_)
+{
+}
+
+void
+OverlayImpl::Timer::stop()
+{
+    error_code ec;
+    timer_.cancel(ec);
+}
+
+void
+OverlayImpl::Timer::run()
+{
+    timer_.expires_from_now(std::chrono::seconds(1));
+    timer_.async_wait(overlay_.strand_.wrap(std::bind(
+        &Timer::on_timer, shared_from_this(), std::placeholders::_1)));
+}
+
+void
+OverlayImpl::Timer::on_timer(error_code ec)
+{
+    if (ec || overlay_.isStopping())
+    {
+        if (ec && ec != boost::asio::error::operation_aborted)
+        {
+            JLOG(overlay_.journal_.error()) << "on_timer: " << ec.message();
+        }
+        return;
+    }
+
+    overlay_.m_peerFinder->once_per_second();
+    overlay_.sendEndpoints();
+    overlay_.autoConnect();
+
+    if ((++overlay_.timer_count_ % Tuning::checkIdlePeers) == 0)
+        overlay_.deleteIdlePeers();
+
+    timer_.expires_from_now(std::chrono::seconds(1));
+    timer_.async_wait(overlay_.strand_.wrap(std::bind(
+        &Timer::on_timer, shared_from_this(), std::placeholders::_1)));
+}
+
+//------------------------------------------------------------------------------
 
 void
 OverlayImpl::onManifests(
@@ -773,7 +819,7 @@ OverlayImpl::deleteIdlePeers()
 void
 OverlayImpl::onEvtStart()
 {
-    auto const timer = std::make_shared<Timer<OverlayImpl>>(*this);
+    auto const timer = std::make_shared<Timer>(*this);
     std::lock_guard lock(mutex_);
     list_.emplace(timer.get(), timer);
     timer_ = timer;
@@ -812,7 +858,7 @@ setup_Overlay(BasicConfig const& config)
         if (values.size() > 1)
         {
             Throw<std::runtime_error>(
-                    "Configured [crawl] section is invalid, too many values");
+                "Configured [crawl] section is invalid, too many values");
         }
 
         bool crawlEnabled = true;
@@ -827,8 +873,8 @@ setup_Overlay(BasicConfig const& config)
             catch (boost::bad_lexical_cast const&)
             {
                 Throw<std::runtime_error>(
-                        "Configured [crawl] section has invalid value: " +
-                        values.front());
+                    "Configured [crawl] section has invalid value: " +
+                    values.front());
             }
         }
 
@@ -879,8 +925,8 @@ setup_Overlay(BasicConfig const& config)
     catch (...)
     {
         Throw<std::runtime_error>(
-                "Configured [network_id] section is invalid: must be a number "
-                "or one of the strings 'main', 'testnet' or 'devnet'.");
+            "Configured [network_id] section is invalid: must be a number "
+            "or one of the strings 'main', 'testnet' or 'devnet'.");
     }
 
     return setup;

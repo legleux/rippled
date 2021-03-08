@@ -24,11 +24,11 @@
 #include <ripple/beast/net/IPAddressConversion.h>
 #include <ripple/beast/utility/WrappedSink.h>
 #include <ripple/json/json_reader.h>
-#include <ripple/overlay/impl/ProtocolVersion.h>
-#include <ripple/overlay/impl/Handshake.h>
-#include <ripple/overlay/impl/Child.h>
-#include <ripple/overlay/impl/Tuning.h>
 #include <ripple/overlay/Cluster.h>
+#include <ripple/overlay/impl/Child.h>
+#include <ripple/overlay/impl/Handshake.h>
+#include <ripple/overlay/impl/ProtocolVersion.h>
+#include <ripple/overlay/impl/Tuning.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/resource/Consumer.h>
 
@@ -39,8 +39,9 @@ namespace ripple {
 
 /** Manages an outbound connection attempt. */
 template <typename OverlayImplmnt>
-class ConnectAttempt : public Child<OverlayImplmnt>,
-                       public std::enable_shared_from_this<ConnectAttempt<OverlayImplmnt>>
+class ConnectAttempt
+    : public Child<OverlayImplmnt>,
+      public std::enable_shared_from_this<ConnectAttempt<OverlayImplmnt>>
 {
 private:
     using error_code = boost::system::error_code;
@@ -140,30 +141,30 @@ private:
 
 template <typename OverlayImplmnt>
 ConnectAttempt<OverlayImplmnt>::ConnectAttempt(
-        Application& app,
-        boost::asio::io_service& io_service,
-        endpoint_type const& remote_endpoint,
-        Resource::Consumer usage,
-        shared_context const& context,
-        std::uint32_t id,
-        std::shared_ptr<PeerFinder::Slot> const& slot,
-        beast::Journal journal,
-        OverlayImplmnt& overlay)
-        : Child<OverlayImplmnt>(overlay)
-        , app_(app)
-        , id_(id)
-        , sink_(journal, OverlayImplmnt::makePrefix(id))
-        , journal_(sink_)
-        , remote_endpoint_(remote_endpoint)
-        , usage_(usage)
-        , strand_(io_service)
-        , timer_(io_service)
-        , stream_ptr_(std::make_unique<stream_type>(
-                socket_type(std::forward<boost::asio::io_service&>(io_service)),
-                *context))
-        , socket_(stream_ptr_->next_layer().socket())
-        , stream_(*stream_ptr_)
-        , slot_(slot)
+    Application& app,
+    boost::asio::io_service& io_service,
+    endpoint_type const& remote_endpoint,
+    Resource::Consumer usage,
+    shared_context const& context,
+    std::uint32_t id,
+    std::shared_ptr<PeerFinder::Slot> const& slot,
+    beast::Journal journal,
+    OverlayImplmnt& overlay)
+    : Child<OverlayImplmnt>(overlay)
+    , app_(app)
+    , id_(id)
+    , sink_(journal, OverlayImplmnt::makePrefix(id))
+    , journal_(sink_)
+    , remote_endpoint_(remote_endpoint)
+    , usage_(usage)
+    , strand_(io_service)
+    , timer_(io_service)
+    , stream_ptr_(std::make_unique<stream_type>(
+          socket_type(std::forward<boost::asio::io_service&>(io_service)),
+          *context))
+    , socket_(stream_ptr_->next_layer().socket())
+    , stream_(*stream_ptr_)
+    , slot_(slot)
 {
     JLOG(journal_.debug()) << "Connect " << remote_endpoint;
 }
@@ -182,7 +183,7 @@ ConnectAttempt<OverlayImplmnt>::stop()
 {
     if (!strand_.running_in_this_thread())
         return strand_.post(
-                std::bind(&ConnectAttempt::stop, this->shared_from_this()));
+            std::bind(&ConnectAttempt::stop, this->shared_from_this()));
     if (socket_.is_open())
     {
         JLOG(journal_.debug()) << "Stop";
@@ -195,11 +196,11 @@ void
 ConnectAttempt<OverlayImplmnt>::run()
 {
     stream_.next_layer().async_connect(
-            remote_endpoint_,
-            strand_.wrap(std::bind(
-                    &ConnectAttempt<OverlayImplmnt>::onConnect,
-                    this->shared_from_this(),
-                    std::placeholders::_1)));
+        remote_endpoint_,
+        strand_.wrap(std::bind(
+            &ConnectAttempt<OverlayImplmnt>::onConnect,
+            this->shared_from_this(),
+            std::placeholders::_1)));
 }
 
 //------------------------------------------------------------------------------
@@ -247,7 +248,9 @@ ConnectAttempt<OverlayImplmnt>::setTimer()
     }
 
     timer_.async_wait(strand_.wrap(std::bind(
-            &ConnectAttempt<OverlayImplmnt>::onTimer, this->shared_from_this(), std::placeholders::_1)));
+        &ConnectAttempt<OverlayImplmnt>::onTimer,
+        this->shared_from_this(),
+        std::placeholders::_1)));
 }
 
 template <typename OverlayImplmnt>
@@ -295,11 +298,11 @@ ConnectAttempt<OverlayImplmnt>::onConnect(error_code ec)
     setTimer();
     stream_.set_verify_mode(boost::asio::ssl::verify_none);
     stream_.async_handshake(
-            boost::asio::ssl::stream_base::client,
-            strand_.wrap(std::bind(
-                    &ConnectAttempt<OverlayImplmnt>::onHandshake,
-                    this->shared_from_this(),
-                    std::placeholders::_1)));
+        boost::asio::ssl::stream_base::client,
+        strand_.wrap(std::bind(
+            &ConnectAttempt<OverlayImplmnt>::onHandshake,
+            this->shared_from_this(),
+            std::placeholders::_1)));
 }
 
 template <typename OverlayImplmnt>
@@ -327,27 +330,27 @@ ConnectAttempt<OverlayImplmnt>::onHandshake(error_code ec)
         return close();  // makeSharedValue logs
 
     req_ = makeRequest(
-            !this->overlay_.peerFinder().config().peerPrivate,
-            app_.config().COMPRESSION,
-            app_.config().VP_REDUCE_RELAY_ENABLE,
-            app_.config().LEDGER_REPLAY);
+        !this->overlay_.peerFinder().config().peerPrivate,
+        app_.config().COMPRESSION,
+        app_.config().VP_REDUCE_RELAY_ENABLE,
+        app_.config().LEDGER_REPLAY);
 
     buildHandshake(
-            req_,
-            *sharedValue,
-            this->overlay_.setup().networkID,
-            this->overlay_.setup().public_ip,
-            remote_endpoint_.address(),
-            app_);
+        req_,
+        *sharedValue,
+        this->overlay_.setup().networkID,
+        this->overlay_.setup().public_ip,
+        remote_endpoint_.address(),
+        app_);
 
     setTimer();
     boost::beast::http::async_write(
-            stream_,
-            req_,
-            strand_.wrap(std::bind(
-                    &ConnectAttempt::onWrite,
-                    this->shared_from_this(),
-                    std::placeholders::_1)));
+        stream_,
+        req_,
+        strand_.wrap(std::bind(
+            &ConnectAttempt::onWrite,
+            this->shared_from_this(),
+            std::placeholders::_1)));
 }
 
 template <typename OverlayImplmnt>
@@ -362,13 +365,13 @@ ConnectAttempt<OverlayImplmnt>::onWrite(error_code ec)
     if (ec)
         return fail("onWrite", ec);
     boost::beast::http::async_read(
-            stream_,
-            read_buf_,
-            response_,
-            strand_.wrap(std::bind(
-                    &ConnectAttempt<OverlayImplmnt>::onRead,
-                    this->shared_from_this(),
-                    std::placeholders::_1)));
+        stream_,
+        read_buf_,
+        response_,
+        strand_.wrap(std::bind(
+            &ConnectAttempt<OverlayImplmnt>::onRead,
+            this->shared_from_this(),
+            std::placeholders::_1)));
 }
 
 template <typename OverlayImplmnt>
@@ -386,9 +389,9 @@ ConnectAttempt<OverlayImplmnt>::onRead(error_code ec)
         JLOG(journal_.info()) << "EOF";
         setTimer();
         return stream_.async_shutdown(strand_.wrap(std::bind(
-                &ConnectAttempt<OverlayImplmnt>::onShutdown,
-                this->shared_from_this(),
-                std::placeholders::_1)));
+            &ConnectAttempt<OverlayImplmnt>::onShutdown,
+            this->shared_from_this(),
+            std::placeholders::_1)));
     }
     if (ec)
         return fail("onRead", ec);
@@ -424,8 +427,8 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
         s.reserve(boost::asio::buffer_size(response_.body().data()));
         for (auto const& buffer : response_.body().data())
             s.append(
-                    boost::asio::buffer_cast<char const*>(buffer),
-                    boost::asio::buffer_size(buffer));
+                boost::asio::buffer_cast<char const*>(buffer),
+                boost::asio::buffer_size(buffer));
         auto const success = r.parse(s, json);
         if (success)
         {
@@ -446,7 +449,8 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
                                 eps.push_back(ep);
                         }
                     }
-                    this->overlay_.peerFinder().onRedirects(remote_endpoint_, eps);
+                    this->overlay_.peerFinder().onRedirects(
+                        remote_endpoint_, eps);
                 }
             }
         }
@@ -472,7 +476,7 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
 
         if (!negotiatedProtocol)
             return fail(
-                    "processResponse: Unable to negotiate protocol version");
+                "processResponse: Unable to negotiate protocol version");
     }
 
     auto const sharedValue = makeSharedValue(*stream_ptr_, journal_);
@@ -482,12 +486,12 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
     try
     {
         auto publicKey = verifyHandshake(
-                response_,
-                *sharedValue,
-                this->overlay_.setup().networkID,
-                this->overlay_.setup().public_ip,
-                remote_endpoint_.address(),
-                app_);
+            response_,
+            *sharedValue,
+            this->overlay_.setup().networkID,
+            this->overlay_.setup().public_ip,
+            remote_endpoint_.address(),
+            app_);
 
         JLOG(journal_.info())
             << "Public Key: " << toBase58(TokenType::NodePublic, publicKey);
@@ -502,11 +506,11 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
         }
 
         auto const result = this->overlay_.peerFinder().activate(
-                slot_, publicKey, static_cast<bool>(member));
+            slot_, publicKey, static_cast<bool>(member));
         if (result != PeerFinder::Result::success)
             return fail("Outbound slots full");
 
-#if 0 // TBD
+#if 0  // TBD
         auto const peer = std::make_shared<PeerImp>(
                 app_,
                 std::move(stream_ptr_),
@@ -520,7 +524,6 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
                 overlay_);
         this->overlay_.add_active(peer);
 #endif
-
     }
     catch (std::exception const& e)
     {

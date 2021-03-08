@@ -11,27 +11,30 @@
     WITH  REGARD  TO  THIS  SOFTWARE  INCLUDING  ALL  IMPLIED  WARRANTIES  OF
     MERCHANTABILITY  AND  FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
     ANY  SPECIAL ,  DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-    WHATSOEVER  RESULTING  FROM  LOSS  OF USE, DATA OR PROFITS, WHETHER IN<OverlayImpl_t> AN
-    ACTION  OF  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+    WHATSOEVER  RESULTING  FROM  LOSS  OF USE, DATA OR PROFITS, WHETHER
+   IN<OverlayImpl_t> AN ACTION  OF  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+   ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+   SOFTWARE.
 */
 //==============================================================================
 
 #ifndef RIPPLE_OVERLAY_CHILD_H_INCLUDED
 #define RIPPLE_OVERLAY_CHILD_H_INCLUDED
 
-namespace ripple
-{
+namespace ripple {
 
 template <typename OverlayImplmnt>
-class Child {
+class Child
+{
 protected:
-    OverlayImplmnt &overlay_;
+    OverlayImplmnt& overlay_;
 
-    explicit Child(OverlayImplmnt &overlay) : overlay_(overlay) {
+    explicit Child(OverlayImplmnt& overlay) : overlay_(overlay)
+    {
     }
 
-    virtual ~Child() {
+    virtual ~Child()
+    {
         overlay_.remove(*this);
     }
 
@@ -40,6 +43,6 @@ public:
     stop() = 0;
 };
 
-}
+}  // namespace ripple
 
-#endif //RIPPLE_OVERLAY_CHILD_H_INCLUDED
+#endif  // RIPPLE_OVERLAY_CHILD_H_INCLUDED

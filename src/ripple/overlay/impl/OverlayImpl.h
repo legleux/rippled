@@ -11,9 +11,10 @@
     WITH  REGARD  TO  THIS  SOFTWARE  INCLUDING  ALL  IMPLIED  WARRANTIES  OF
     MERCHANTABILITY  AND  FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
     ANY  SPECIAL ,  DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
-    WHATSOEVER  RESULTING  FROM  LOSS  OF USE, DATA OR PROFITS, WHETHER IN<OverlayImpl_t> AN
-    ACTION  OF  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
-    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+    WHATSOEVER  RESULTING  FROM  LOSS  OF USE, DATA OR PROFITS, WHETHER
+   IN<OverlayImpl_t> AN ACTION  OF  CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
+   ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+   SOFTWARE.
 */
 //==============================================================================
 
@@ -25,14 +26,13 @@
 #include <ripple/basics/UnorderedContainers.h>
 #include <ripple/basics/chrono.h>
 #include <ripple/core/Job.h>
-#include <ripple/overlay/impl/Child.h>
 #include <ripple/overlay/Message.h>
 #include <ripple/overlay/Overlay.h>
 #include <ripple/overlay/Slot.h>
+#include <ripple/overlay/impl/Child.h>
 #include <ripple/overlay/impl/Handshake.h>
 #include <ripple/overlay/impl/P2POverlayImpl.h>
 #include <ripple/overlay/impl/PeerImp.h>
-#include <ripple/overlay/impl/Timer.h>
 #include <ripple/overlay/impl/TrafficCount.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/resource/ResourceManager.h>
@@ -61,12 +61,28 @@ class OverlayImpl : public Overlay,
                     public P2POverlayImpl<OverlayImpl, PeerImp>,
                     public reduce_relay::SquelchHandler
 {
-    friend class Timer<OverlayImpl>;
 private:
     using clock_type = std::chrono::steady_clock;
 
+    struct Timer : ripple::Child<OverlayImpl>,
+                   std::enable_shared_from_this<Timer>
+    {
+        boost::asio::basic_waitable_timer<clock_type> timer_;
+
+        explicit Timer(OverlayImpl& overlay);
+
+        void
+        stop() override;
+
+        void
+        run();
+
+        void
+        on_timer(error_code ec);
+    };
+
     Application& app_;
-    std::weak_ptr<Timer<OverlayImpl>> timer_;
+    std::weak_ptr<Timer> timer_;
     int timer_count_;
     std::atomic<uint64_t> jqTransOverflow_{0};
 
@@ -116,19 +132,18 @@ public:
 
     std::set<Peer::id_t>
     relay(
-            protocol::TMProposeSet& m,
-            uint256 const& uid,
-            PublicKey const& validator) override;
+        protocol::TMProposeSet& m,
+        uint256 const& uid,
+        PublicKey const& validator) override;
 
     std::set<Peer::id_t>
     relay(
-            protocol::TMValidation& m,
-            uint256 const& uid,
-            PublicKey const& validator) override;
+        protocol::TMValidation& m,
+        uint256 const& uid,
+        PublicKey const& validator) override;
 
     std::shared_ptr<Message>
     getManifestsMessage();
-
 
     void
     onManifests(

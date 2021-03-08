@@ -30,14 +30,14 @@
 #include <ripple/overlay/P2POverlay.h>
 #include <ripple/overlay/Slot.h>
 #include <ripple/overlay/impl/Child.h>
+#include <ripple/overlay/impl/ConnectAttempt.h>
 #include <ripple/overlay/impl/Handshake.h>
 #include <ripple/overlay/impl/TrafficCount.h>
-#include <ripple/overlay/impl/ConnectAttempt.h>
-#include <ripple/peerfinder/make_Manager.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
+#include <ripple/peerfinder/make_Manager.h>
 #include <ripple/resource/ResourceManager.h>
-#include <ripple/rpc/json_body.h>
 #include <ripple/rpc/ServerHandler.h>
+#include <ripple/rpc/json_body.h>
 #include <ripple/server/Handoff.h>
 #include <ripple/server/SimpleWriter.h>
 #include <boost/asio/ip/tcp.hpp>
@@ -66,7 +66,8 @@ class P2POverlayImpl : virtual public P2POverlay<typename PeerImplmnt::Peer_t>,
 {
     friend OverlayImplmnt;
     using Setup_t = typename P2POverlay<typename PeerImplmnt::Peer_t>::Setup;
-    using PeerSequence_t = typename P2POverlay<typename PeerImplmnt::Peer_t>::PeerSequence;
+    using PeerSequence_t =
+        typename P2POverlay<typename PeerImplmnt::Peer_t>::PeerSequence;
 
 protected:
     using socket_type = boost::asio::ip::tcp::socket;
@@ -80,14 +81,17 @@ protected:
     boost::asio::io_service::strand strand_;
     mutable std::recursive_mutex mutex_;  // VFALCO use std::mutex
     std::condition_variable_any cond_;
-    boost::container::flat_map<Child<OverlayImplmnt>*, std::weak_ptr<Child<OverlayImplmnt>>> list_;
+    boost::container::
+        flat_map<Child<OverlayImplmnt>*, std::weak_ptr<Child<OverlayImplmnt>>>
+            list_;
     Setup_t setup_;
     beast::Journal const journal_;
     ServerHandler& serverHandler_;
     Resource::Manager& m_resourceManager;
     std::unique_ptr<PeerFinder::Manager> m_peerFinder;
     TrafficCount m_traffic;
-    hash_map<std::shared_ptr<PeerFinder::Slot>, std::weak_ptr<PeerImplmnt>> m_peers;
+    hash_map<std::shared_ptr<PeerFinder::Slot>, std::weak_ptr<PeerImplmnt>>
+        m_peers;
     hash_map<P2Peer::id_t, std::weak_ptr<PeerImplmnt>> ids_;
     Resolver& m_resolver;
     std::atomic<P2Peer::id_t> next_id_;
@@ -290,7 +294,6 @@ public:
     }
 
 protected:
-
     std::shared_ptr<Writer>
     makeRedirectResponse(
         std::shared_ptr<PeerFinder::Slot> const& slot,
@@ -304,8 +307,7 @@ protected:
         address_type remote_address,
         std::string msg);
 
-    virtual
-    bool
+    virtual bool
     processRequest(http_request_type const& req, Handoff& handoff) = 0;
 
     /** Returns information about the local server's UNL.
@@ -419,47 +421,49 @@ protected:
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::P2POverlayImpl(
-        Application& app,
-        Setup_t const& setup,
-        Stoppable& parent,
-        ServerHandler& serverHandler,
-        Resource::Manager& resourceManager,
-        Resolver& resolver,
-        boost::asio::io_service& io_service,
-        BasicConfig const& config,
-        beast::insight::Collector::ptr const& collector)
-        : P2POverlay<typename PeerImplmnt::Peer_t>(parent)
-        , app_(app)
-        , io_service_(io_service)
-        , work_(boost::in_place(std::ref(io_service_)))
-        , strand_(io_service_)
-        , setup_(setup)
-        , journal_(app_.journal("Overlay"))
-        , serverHandler_(serverHandler)
-        , m_resourceManager(resourceManager)
-        , m_peerFinder(PeerFinder::make_Manager(
-                *this,
-                io_service,
-                stopwatch(),
-                app_.journal("PeerFinder"),
-                config,
-                collector))
-        , m_resolver(resolver)
-        , next_id_(1)
-        , m_stats(
-                std::bind(&P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::collect_metrics, this),
-                collector,
-                [counts = m_traffic.getCounts(), collector]() {
-                    std::vector<TrafficGauges> ret;
-                    ret.reserve(counts.size());
+    Application& app,
+    Setup_t const& setup,
+    Stoppable& parent,
+    ServerHandler& serverHandler,
+    Resource::Manager& resourceManager,
+    Resolver& resolver,
+    boost::asio::io_service& io_service,
+    BasicConfig const& config,
+    beast::insight::Collector::ptr const& collector)
+    : P2POverlay<typename PeerImplmnt::Peer_t>(parent)
+    , app_(app)
+    , io_service_(io_service)
+    , work_(boost::in_place(std::ref(io_service_)))
+    , strand_(io_service_)
+    , setup_(setup)
+    , journal_(app_.journal("Overlay"))
+    , serverHandler_(serverHandler)
+    , m_resourceManager(resourceManager)
+    , m_peerFinder(PeerFinder::make_Manager(
+          *this,
+          io_service,
+          stopwatch(),
+          app_.journal("PeerFinder"),
+          config,
+          collector))
+    , m_resolver(resolver)
+    , next_id_(1)
+    , m_stats(
+          std::bind(
+              &P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::collect_metrics,
+              this),
+          collector,
+          [counts = m_traffic.getCounts(), collector]() {
+              std::vector<TrafficGauges> ret;
+              ret.reserve(counts.size());
 
-                    for (size_t i = 0; i < counts.size(); ++i)
-                    {
-                        ret.push_back(TrafficGauges(counts[i].name, collector));
-                    }
+              for (size_t i = 0; i < counts.size(); ++i)
+              {
+                  ret.push_back(TrafficGauges(counts[i].name, collector));
+              }
 
-                    return ret;
-                }())
+              return ret;
+          }())
 {
     beast::PropertyStream::Source::add(m_peerFinder.get());
 }
@@ -481,9 +485,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::~P2POverlayImpl()
 template <typename OverlayImplmnt, typename PeerImplmnt>
 Handoff
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
-        std::unique_ptr<stream_type>&& stream_ptr,
-        http_request_type&& request,
-        endpoint_type remote_endpoint)
+    std::unique_ptr<stream_type>&& stream_ptr,
+    http_request_type&& request,
+    endpoint_type remote_endpoint)
 {
     auto const id = next_id_++;
     beast::WrappedSink sink(app_.logs()["Peer"], makePrefix(id));
@@ -501,7 +505,7 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
 
     error_code ec;
     auto const local_endpoint(
-            stream_ptr->next_layer().socket().local_endpoint(ec));
+        stream_ptr->next_layer().socket().local_endpoint(ec));
     if (ec)
     {
         JLOG(journal.debug()) << remote_endpoint << " failed: " << ec.message();
@@ -509,13 +513,13 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
     }
 
     auto consumer = m_resourceManager.newInboundEndpoint(
-            beast::IPAddressConversion::from_asio(remote_endpoint));
+        beast::IPAddressConversion::from_asio(remote_endpoint));
     if (consumer.disconnect())
         return handoff;
 
     auto const slot = m_peerFinder->new_inbound_slot(
-            beast::IPAddressConversion::from_asio(local_endpoint),
-            beast::IPAddressConversion::from_asio(remote_endpoint));
+        beast::IPAddressConversion::from_asio(local_endpoint),
+        beast::IPAddressConversion::from_asio(remote_endpoint));
 
     if (slot == nullptr)
     {
@@ -529,12 +533,12 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
     {
         auto const types = beast::rfc2616::split_commas(request["Connect-As"]);
         if (std::find_if(types.begin(), types.end(), [](std::string const& s) {
-            return boost::iequals(s, "peer");
-        }) == types.end())
+                return boost::iequals(s, "peer");
+            }) == types.end())
         {
             handoff.moved = false;
             handoff.response =
-                    makeRedirectResponse(slot, request, remote_endpoint.address());
+                makeRedirectResponse(slot, request, remote_endpoint.address());
             handoff.keep_alive = beast::rfc2616::is_keep_alive(request);
             return handoff;
         }
@@ -546,10 +550,10 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
         m_peerFinder->on_closed(slot);
         handoff.moved = false;
         handoff.response = makeErrorResponse(
-                slot,
-                request,
-                remote_endpoint.address(),
-                "Unable to agree on a protocol version");
+            slot,
+            request,
+            remote_endpoint.address(),
+            "Unable to agree on a protocol version");
         handoff.keep_alive = false;
         return handoff;
     }
@@ -560,10 +564,10 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
         m_peerFinder->on_closed(slot);
         handoff.moved = false;
         handoff.response = makeErrorResponse(
-                slot,
-                request,
-                remote_endpoint.address(),
-                "Incorrect security cookie");
+            slot,
+            request,
+            remote_endpoint.address(),
+            "Incorrect security cookie");
         handoff.keep_alive = false;
         return handoff;
     }
@@ -571,21 +575,21 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
     try
     {
         auto publicKey = verifyHandshake(
-                request,
-                *sharedValue,
-                setup_.networkID,
-                setup_.public_ip,
-                remote_endpoint.address(),
-                app_);
+            request,
+            *sharedValue,
+            setup_.networkID,
+            setup_.public_ip,
+            remote_endpoint.address(),
+            app_);
 
         {
             // The node gets a reserved slot if it is in our cluster
             // or if it has a reservation.
             bool const reserved =
-                    static_cast<bool>(app_.cluster().member(publicKey)) ||
-                    app_.peerReservations().contains(publicKey);
+                static_cast<bool>(app_.cluster().member(publicKey)) ||
+                app_.peerReservations().contains(publicKey);
             auto const result =
-                    m_peerFinder->activate(slot, publicKey, reserved);
+                m_peerFinder->activate(slot, publicKey, reserved);
             if (result != PeerFinder::Result::success)
             {
                 m_peerFinder->on_closed(slot);
@@ -593,13 +597,13 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
                     << "Peer " << remote_endpoint << " redirected, slots full";
                 handoff.moved = false;
                 handoff.response = makeRedirectResponse(
-                        slot, request, remote_endpoint.address());
+                    slot, request, remote_endpoint.address());
                 handoff.keep_alive = false;
                 return handoff;
             }
         }
 
-#if 0 // TBD add mkInboundPeer()
+#if 0  // TBD add mkInboundPeer()
         auto const peer = std::make_shared<PeerImplmnt>(
                 app_,
                 id,
@@ -636,7 +640,7 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
         m_peerFinder->on_closed(slot);
         handoff.moved = false;
         handoff.response = makeErrorResponse(
-                slot, request, remote_endpoint.address(), e.what());
+            slot, request, remote_endpoint.address(), e.what());
         handoff.keep_alive = false;
         return handoff;
     }
@@ -646,7 +650,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 bool
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::isPeerUpgrade(http_request_type const& request)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::isPeerUpgrade(
+    http_request_type const& request)
 {
     if (!is_upgrade(request))
         return false;
@@ -666,9 +671,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makePrefix(std::uint32_t id)
 template <typename OverlayImplmnt, typename PeerImplmnt>
 std::shared_ptr<Writer>
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeRedirectResponse(
-        std::shared_ptr<PeerFinder::Slot> const& slot,
-        http_request_type const& request,
-        address_type remote_address)
+    std::shared_ptr<PeerFinder::Slot> const& slot,
+    http_request_type const& request,
+    address_type remote_address)
 {
     boost::beast::http::response<json_body> msg;
     msg.version(request.version());
@@ -694,10 +699,10 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeRedirectResponse(
 template <typename OverlayImplmnt, typename PeerImplmnt>
 std::shared_ptr<Writer>
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeErrorResponse(
-        std::shared_ptr<PeerFinder::Slot> const& slot,
-        http_request_type const& request,
-        address_type remote_address,
-        std::string text)
+    std::shared_ptr<PeerFinder::Slot> const& slot,
+    http_request_type const& request,
+    address_type remote_address,
+    std::string text)
 {
     boost::beast::http::response<boost::beast::http::empty_body> msg;
     msg.version(request.version());
@@ -714,7 +719,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeErrorResponse(
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::connect(beast::IP::Endpoint const& remote_endpoint)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::connect(
+    beast::IP::Endpoint const& remote_endpoint)
 {
     assert(work_);
 
@@ -733,15 +739,15 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::connect(beast::IP::Endpoint const& 
     }
 
     auto const p = std::make_shared<ConnectAttempt<OverlayImplmnt>>(
-            app_,
-            io_service_,
-            beast::IPAddressConversion::to_asio_endpoint(remote_endpoint),
-            usage,
-            setup_.context,
-            next_id_++,
-            slot,
-            app_.journal("Peer"),
-            static_cast<OverlayImplmnt&>(*this));
+        app_,
+        io_service_,
+        beast::IPAddressConversion::to_asio_endpoint(remote_endpoint),
+        usage,
+        setup_.context,
+        next_id_++,
+        slot,
+        app_.journal("Peer"),
+        static_cast<OverlayImplmnt&>(*this));
 
     std::lock_guard lock(mutex_);
     list_.emplace(p.get(), p);
@@ -753,7 +759,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::connect(beast::IP::Endpoint const& 
 // Adds a peer that is already handshaked and active
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(std::shared_ptr<PeerImplmnt> const& peer)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(
+    std::shared_ptr<PeerImplmnt> const& peer)
 {
     std::lock_guard lock(mutex_);
 
@@ -765,9 +772,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(std::shared_ptr<PeerImpl
 
     {
         auto const result = ids_.emplace(
-                std::piecewise_construct,
-                std::make_tuple(peer->id()),
-                std::make_tuple(peer));
+            std::piecewise_construct,
+            std::make_tuple(peer->id()),
+            std::make_tuple(peer));
         assert(result.second);
         (void)result.second;
     }
@@ -777,7 +784,7 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(std::shared_ptr<PeerImpl
     JLOG(journal_.debug()) << "activated " << peer->getRemoteAddress() << " ("
                            << peer->id() << ":"
                            << toBase58(
-                                   TokenType::NodePublic, peer->getNodePublic())
+                                  TokenType::NodePublic, peer->getNodePublic())
                            << ")";
 
     // As we are not on the strand, run() must be called
@@ -788,7 +795,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(std::shared_ptr<PeerImpl
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(std::shared_ptr<PeerFinder::Slot> const& slot)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(
+    std::shared_ptr<PeerFinder::Slot> const& slot)
 {
     std::lock_guard lock(mutex_);
     auto const iter = m_peers.find(slot);
@@ -816,17 +824,17 @@ void
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onPrepare()
 {
     PeerFinder::Config config = PeerFinder::Config::makeConfig(
-            app_.config(),
-            serverHandler_.setup().overlay.port,
-            !app_.getValidationPublicKey().empty(),
-            setup_.ipLimit);
+        app_.config(),
+        serverHandler_.setup().overlay.port,
+        !app_.getValidationPublicKey().empty(),
+        setup_.ipLimit);
 
     m_peerFinder->setConfig(config);
 
     // Populate our boot cache: if there are no entries in [ips] then we use
     // the entries in [ips_fixed].
     auto bootstrapIps =
-            app_.config().IPS.empty() ? app_.config().IPS_FIXED : app_.config().IPS;
+        app_.config().IPS.empty() ? app_.config().IPS_FIXED : app_.config().IPS;
 
     // If nothing is specified, default to several well-known high-capacity
     // servers to serve as bootstrap:
@@ -843,47 +851,47 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onPrepare()
     }
 
     m_resolver.resolve(
-            bootstrapIps,
-            [this](
-                    std::string const& name,
-                    std::vector<beast::IP::Endpoint> const& addresses) {
-                std::vector<std::string> ips;
-                ips.reserve(addresses.size());
-                for (auto const& addr : addresses)
-                {
-                    if (addr.port() == 0)
-                        ips.push_back(to_string(addr.at_port(DEFAULT_PEER_PORT)));
-                    else
-                        ips.push_back(to_string(addr));
-                }
+        bootstrapIps,
+        [this](
+            std::string const& name,
+            std::vector<beast::IP::Endpoint> const& addresses) {
+            std::vector<std::string> ips;
+            ips.reserve(addresses.size());
+            for (auto const& addr : addresses)
+            {
+                if (addr.port() == 0)
+                    ips.push_back(to_string(addr.at_port(DEFAULT_PEER_PORT)));
+                else
+                    ips.push_back(to_string(addr));
+            }
 
-                std::string const base("config: ");
-                if (!ips.empty())
-                    m_peerFinder->addFallbackStrings(base + name, ips);
-            });
+            std::string const base("config: ");
+            if (!ips.empty())
+                m_peerFinder->addFallbackStrings(base + name, ips);
+        });
 
     // Add the ips_fixed from the rippled.cfg file
     if (!app_.config().standalone() && !app_.config().IPS_FIXED.empty())
     {
         m_resolver.resolve(
-                app_.config().IPS_FIXED,
-                [this](
-                        std::string const& name,
-                        std::vector<beast::IP::Endpoint> const& addresses) {
-                    std::vector<beast::IP::Endpoint> ips;
-                    ips.reserve(addresses.size());
+            app_.config().IPS_FIXED,
+            [this](
+                std::string const& name,
+                std::vector<beast::IP::Endpoint> const& addresses) {
+                std::vector<beast::IP::Endpoint> ips;
+                ips.reserve(addresses.size());
 
-                    for (auto& addr : addresses)
-                    {
-                        if (addr.port() == 0)
-                            ips.emplace_back(addr.address(), DEFAULT_PEER_PORT);
-                        else
-                            ips.emplace_back(addr);
-                    }
+                for (auto& addr : addresses)
+                {
+                    if (addr.port() == 0)
+                        ips.emplace_back(addr.address(), DEFAULT_PEER_PORT);
+                    else
+                        ips.emplace_back(addr);
+                }
 
-                    if (!ips.empty())
-                        m_peerFinder->addFixedPeer(name, ips);
-                });
+                if (!ips.empty())
+                    m_peerFinder->addFixedPeer(name, ips);
+            });
     }
 }
 
@@ -898,7 +906,8 @@ template <typename OverlayImplmnt, typename PeerImplmnt>
 void
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onStop()
 {
-    strand_.dispatch(std::bind(&P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::stop, this));
+    strand_.dispatch(
+        std::bind(&P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::stop, this));
 }
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
@@ -917,7 +926,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onChildrenStopped()
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onWrite(beast::PropertyStream::Map& stream)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onWrite(
+    beast::PropertyStream::Map& stream)
 {
     beast::PropertyStream::Set set("traffic", stream);
     auto const stats = m_traffic.getCounts();
@@ -943,15 +953,16 @@ are known.
 */
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::activate(std::shared_ptr<PeerImplmnt> const& peer)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::activate(
+    std::shared_ptr<PeerImplmnt> const& peer)
 {
     // Now track this peer
     {
         std::lock_guard lock(mutex_);
         auto const result(ids_.emplace(
-                std::piecewise_construct,
-                std::make_tuple(peer->id()),
-                std::make_tuple(peer)));
+            std::piecewise_construct,
+            std::make_tuple(peer->id()),
+            std::make_tuple(peer)));
         assert(result.second);
         (void)result.second;
     }
@@ -959,7 +970,7 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::activate(std::shared_ptr<PeerImplmn
     JLOG(journal_.debug()) << "activated " << peer->getRemoteAddress() << " ("
                            << peer->id() << ":"
                            << toBase58(
-                                   TokenType::NodePublic, peer->getNodePublic())
+                                  TokenType::NodePublic, peer->getNodePublic())
                            << ")";
 
     // We just accepted this peer so we have non-zero active peers
@@ -977,9 +988,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onPeerDeactivate(P2Peer::id_t id)
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::reportTraffic(
-        TrafficCount::category cat,
-        bool isInbound,
-        int number)
+    TrafficCount::category cat,
+    bool isInbound,
+    int number)
 {
     m_traffic.addCount(cat, isInbound, number);
 }
@@ -1032,7 +1043,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::getActivePeers() const
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 std::shared_ptr<typename PeerImplmnt::Peer_t>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByShortID(P2Peer::id_t const& id) const
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByShortID(
+    P2Peer::id_t const& id) const
 {
     std::lock_guard lock(mutex_);
     auto const iter = ids_.find(id);
@@ -1045,7 +1057,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByShortID(P2Peer::id_t cons
 // update overhead outweighing the performance of a small set linear search.
 template <typename OverlayImplmnt, typename PeerImplmnt>
 std::shared_ptr<typename PeerImplmnt::Peer_t>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByPublicKey(PublicKey const& pubKey)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByPublicKey(
+    PublicKey const& pubKey)
 {
     std::lock_guard lock(mutex_);
     for (auto const& e : ids_)
@@ -1063,7 +1076,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByPublicKey(PublicKey const
 
 template <typename OverlayImplmnt, typename PeerImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(Child<OverlayImplmnt>& child)
+P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(
+    Child<OverlayImplmnt>& child)
 {
     std::lock_guard lock(mutex_);
     list_.erase(&child);
@@ -1076,13 +1090,14 @@ void
 P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::stop()
 {
     // Calling list_[].second->stop() may cause list_ to be modified
-    // (P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove() may be called on this same thread).  So
-    // iterating directly over list_ to call child->stop() could lead to
-    // undefined behavior.
+    // (P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove() may be called on
+    // this same thread).  So iterating directly over list_ to call
+    // child->stop() could lead to undefined behavior.
     //
     // Therefore we copy all of the weak/shared ptrs out of list_ before we
-    // start calling stop() on them.  That guarantees P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove()
-    // won't be called until vector<> children leaves scope.
+    // start calling stop() on them.  That guarantees
+    // P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove() won't be called
+    // until vector<> children leaves scope.
     std::vector<std::shared_ptr<Child<OverlayImplmnt>>> children;
     {
         std::lock_guard lock(mutex_);

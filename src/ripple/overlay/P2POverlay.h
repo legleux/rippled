@@ -48,9 +48,11 @@ class context;
 
 namespace ripple {
 
-class P2POverlayEvents {
+class P2POverlayEvents
+{
 public:
     virtual ~P2POverlayEvents() = default;
+
 protected:
     virtual void
     onEvtStart() = 0;
@@ -69,8 +71,7 @@ protected:
     //             Stoppable and PropertyStream
     //
     P2POverlay(Stoppable& parent)
-        : Stoppable("Overlay", parent)
-        , beast::PropertyStream::Source("peers")
+        : Stoppable("Overlay", parent), beast::PropertyStream::Source("peers")
     {
     }
 
