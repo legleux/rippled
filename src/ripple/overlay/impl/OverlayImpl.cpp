@@ -932,6 +932,52 @@ setup_Overlay(BasicConfig const& config)
     return setup;
 }
 
+std::shared_ptr<PeerImp>
+OverlayImpl::mkOutboundPeer(
+    std::unique_ptr<stream_type>&& stream_ptr,
+    boost::beast::multi_buffer const& buffers,
+    std::shared_ptr<PeerFinder::Slot>&& slot,
+    http_response_type&& response,
+    Resource::Consumer usage,
+    PublicKey const& publicKey,
+    ProtocolVersion protocol,
+    id_t id)
+{
+    return std::make_shared<PeerImp>(
+        app_,
+        std::move(stream_ptr),
+        buffers.data(),
+        std::move(slot),
+        std::move(response),
+        usage,
+        publicKey,
+        protocol,
+        id,
+        *this);
+}
+
+std::shared_ptr<PeerImp>
+OverlayImpl::mkInboundPeer(
+    id_t id,
+    std::shared_ptr<PeerFinder::Slot> const& slot,
+    http_request_type&& request,
+    PublicKey const& publicKey,
+    ProtocolVersion protocol,
+    Resource::Consumer consumer,
+    std::unique_ptr<stream_type>&& stream_ptr)
+{
+    return std::make_shared<PeerImp>(
+        app_,
+        id,
+        slot,
+        std::move(request),
+        publicKey,
+        protocol,
+        consumer,
+        std::move(stream_ptr),
+        *this);
+}
+
 std::unique_ptr<Overlay>
 make_Overlay(
     Application& app,

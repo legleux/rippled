@@ -293,6 +293,27 @@ public:
         return networkID_;
     }
 
+    virtual std::shared_ptr<PeerImplmnt>
+    mkOutboundPeer(
+        std::unique_ptr<stream_type>&& stream_ptr,
+        boost::beast::multi_buffer const& buffers,
+        std::shared_ptr<PeerFinder::Slot>&& slot,
+        http_response_type&& response,
+        Resource::Consumer usage,
+        PublicKey const& publicKey,
+        ProtocolVersion protocol,
+        id_t id) = 0;
+
+    virtual std::shared_ptr<PeerImplmnt>
+    mkInboundPeer(
+        id_t id,
+        std::shared_ptr<PeerFinder::Slot> const& slot,
+        http_request_type&& request,
+        PublicKey const& publicKey,
+        ProtocolVersion protocol,
+        Resource::Consumer consumer,
+        std::unique_ptr<stream_type>&& stream_ptr) = 0;
+
 protected:
     std::shared_ptr<Writer>
     makeRedirectResponse(
@@ -603,17 +624,14 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
             }
         }
 
-#if 0  // TBD add mkInboundPeer()
-        auto const peer = std::make_shared<PeerImplmnt>(
-                app_,
-                id,
-                slot,
-                std::move(request),
-                publicKey,
-                *negotiatedVersion,
-                consumer,
-                std::move(stream_ptr),
-                *this);
+        auto const peer = mkInboundPeer(
+            id,
+            slot,
+            std::move(request),
+            publicKey,
+            *negotiatedVersion,
+            consumer,
+            std::move(stream_ptr));
         {
             // As we are not on the strand, run() must be called
             // while holding the lock, otherwise new I/O can be
@@ -628,7 +646,6 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
 
             peer->run();
         }
-#endif
         handoff.moved = true;
         return handoff;
     }

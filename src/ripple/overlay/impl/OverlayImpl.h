@@ -205,6 +205,27 @@ public:
     void
     deletePeer(Peer::id_t id);
 
+    std::shared_ptr<PeerImp>
+    mkOutboundPeer(
+        std::unique_ptr<stream_type>&& stream_ptr,
+        boost::beast::multi_buffer const& buffers,
+        std::shared_ptr<PeerFinder::Slot>&& slot,
+        http_response_type&& response,
+        Resource::Consumer usage,
+        PublicKey const& publicKey,
+        ProtocolVersion protocol,
+        id_t id) override;
+
+    std::shared_ptr<PeerImp>
+    mkInboundPeer(
+        id_t id,
+        std::shared_ptr<PeerFinder::Slot> const& slot,
+        http_request_type&& request,
+        PublicKey const& publicKey,
+        ProtocolVersion protocol,
+        Resource::Consumer consumer,
+        std::unique_ptr<stream_type>&& stream_ptr) override;
+
 private:
     void
     squelch(

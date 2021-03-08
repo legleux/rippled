@@ -510,20 +510,16 @@ ConnectAttempt<OverlayImplmnt>::processResponse()
         if (result != PeerFinder::Result::success)
             return fail("Outbound slots full");
 
-#if 0  // TBD
-        auto const peer = std::make_shared<PeerImp>(
-                app_,
-                std::move(stream_ptr_),
-                read_buf_.data(),
-                std::move(slot_),
-                std::move(response_),
-                usage_,
-                publicKey,
-                *negotiatedProtocol,
-                id_,
-                overlay_);
+        auto peer = this->overlay_.mkOutboundPeer(
+            std::move(stream_ptr_),
+            read_buf_,
+            std::move(slot_),
+            std::move(response_),
+            usage_,
+            publicKey,
+            *negotiatedProtocol,
+            id_);
         this->overlay_.add_active(peer);
-#endif
     }
     catch (std::exception const& e)
     {
