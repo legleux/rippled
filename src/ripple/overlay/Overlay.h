@@ -40,7 +40,7 @@ class context;
 namespace ripple {
 
 /** Manages the set of connected peers. */
-class Overlay : public P2POverlay<Peer>
+class Overlay : virtual public P2POverlay<Peer>
 {
 protected:
     // VFALCO NOTE The requirement of this constructor is an

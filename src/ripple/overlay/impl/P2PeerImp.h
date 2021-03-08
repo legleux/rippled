@@ -24,13 +24,18 @@
 #include <ripple/basics/RangeSet.h>
 #include <ripple/beast/utility/WrappedSink.h>
 #include <ripple/overlay/P2Peer.h>
+#include <ripple/overlay/impl/Handshake.h>
 #include <ripple/overlay/impl/ProtocolMessage.h>
 #include <ripple/overlay/impl/ProtocolVersion.h>
 #include <ripple/overlay/impl/Tuning.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/protocol/Protocol.h>
 #include <ripple/resource/Fees.h>
+#include <ripple/resource/Consumer.h>
 
+#include <boost/beast/core/tcp_stream.hpp>
+#include <boost/beast/ssl/ssl_stream.hpp>
+#include <boost/beast/core/multi_buffer.hpp>
 #include <boost/circular_buffer.hpp>
 #include <boost/endian/conversion.hpp>
 #include <boost/optional.hpp>
@@ -48,7 +53,8 @@ std::chrono::milliseconds constexpr peerHighLatency{300};
 }  // namespace
 
 template <typename PeerImplmnt>
-class P2PeerImp : public virtual P2Peer, public P2PeerEvents
+class P2PeerImp : public virtual P2Peer,
+                  public P2PeerEvents
 {
 protected:
     using clock_type = std::chrono::steady_clock;
@@ -103,8 +109,6 @@ protected:
     int large_sendq_ = 0;
 
     Compressed compressionEnabled_ = Compressed::Off;
-
-    friend class P2POverlayImpl;
 
     class Metrics
     {

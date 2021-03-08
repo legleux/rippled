@@ -25,7 +25,7 @@
 #include <ripple/basics/Log.h>
 #include <ripple/basics/RangeSet.h>
 #include <ripple/overlay/Squelch.h>
-#include <ripple/overlay/impl/OverlayImpl.h>
+#include <ripple/overlay/impl/Child.h>
 #include <ripple/overlay/impl/P2PeerImp.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/protocol/Protocol.h>
@@ -42,13 +42,15 @@
 namespace ripple {
 
 struct ValidatorBlobInfo;
+class OverlayImpl;
 
 class PeerImp : public Peer,
                 public P2PeerImp<PeerImp>,
                 public std::enable_shared_from_this<PeerImp>,
-                public OverlayImpl::Child
+                public Child<OverlayImpl>
 {
 public:
+    using Peer_t = Peer;
     /** Whether the peer's view of the ledger converges or diverges from ours */
     enum class Tracking { diverged, unknown, converged };
 
