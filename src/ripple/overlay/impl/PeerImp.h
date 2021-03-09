@@ -285,7 +285,6 @@ private:
     bool
     reduceRelayReady();
 
-public:
     template <
         class T,
         class Buffers,
@@ -311,6 +310,7 @@ public:
         return true;
     }
 
+public:
     /** Calls the handler for up to one protocol message in the passed buffers.
 
     If there is insufficient data to produce a complete protocol
@@ -329,6 +329,9 @@ public:
         detail::MessageHeader const& header,
         Buffers const& buffers,
         std::size_t& hint);
+
+    bool
+    squelched(std::shared_ptr<Message> const& m);
 
 private:
     //--------------------------------------------------------------------------

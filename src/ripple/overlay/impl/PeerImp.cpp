@@ -2725,4 +2725,13 @@ PeerImp::reduceRelayReady()
     return vpReduceRelayEnabled_ && reduceRelayReady_;
 }
 
+bool
+PeerImp::squelched(std::shared_ptr<Message> const& m)
+{
+    if (auto validator = m->getValidatorKey();
+        validator && !squelch_.expireSquelch(*validator))
+        return true;
+    return false;
+}
+
 }  // namespace ripple

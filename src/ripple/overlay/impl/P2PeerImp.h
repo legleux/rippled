@@ -27,6 +27,7 @@
 #include <ripple/overlay/impl/Handshake.h>
 #include <ripple/overlay/impl/ProtocolMessage.h>
 #include <ripple/overlay/impl/ProtocolVersion.h>
+#include <ripple/overlay/impl/TrafficCount.h>
 #include <ripple/overlay/impl/Tuning.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/protocol/Protocol.h>
@@ -436,13 +437,11 @@ P2PeerImp<PeerImplmnt>::send(std::shared_ptr<Message> const& m)
     if (detaching_)
         return;
 
-#if 0  // TBD, need to add squelched(shared_ptr<Message> const&) to PeerImp
     if (static_cast<PeerImplmnt*>(this)->squelched(m))
         return;
-#endif
 
-#if 0  // TBD once P2POverlayImpl is implemented
-    overlay_.reportTraffic(
+#if 0  // TBD add overlay
+    this->overlay_.reportTraffic(
             safe_cast<TrafficCount::category>(m->getCategory()),
             false,
             static_cast<int>(m->getBuffer(compressionEnabled_).size()));
