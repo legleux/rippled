@@ -60,7 +60,7 @@ class BasicConfig;
 
 class OverlayImpl;
 
-template<>
+template <>
 struct OverlayImplTraits<OverlayImpl>
 {
     using OverlayImpl_t = OverlayImpl;

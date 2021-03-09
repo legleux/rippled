@@ -62,13 +62,15 @@ namespace ripple {
 class BasicConfig;
 
 template <typename OverlayImplmnt>
-class P2POverlayImpl : virtual public P2POverlay<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>,
+class P2POverlayImpl : virtual public P2POverlay<
+                           typename OverlayImplTraits<OverlayImplmnt>::Peer_t>,
                        public P2POverlayEvents
 {
     friend OverlayImplmnt;
-    using Setup_t = typename P2POverlay<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>::Setup;
-    using PeerSequence_t =
-        typename P2POverlay<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>::PeerSequence;
+    using Setup_t = typename P2POverlay<
+        typename OverlayImplTraits<OverlayImplmnt>::Peer_t>::Setup;
+    using PeerSequence_t = typename P2POverlay<
+        typename OverlayImplTraits<OverlayImplmnt>::Peer_t>::PeerSequence;
     using PeerImp_t = typename OverlayImplTraits<OverlayImplmnt>::PeerImp_t;
     using Peer_t = typename OverlayImplTraits<OverlayImplmnt>::Peer_t;
 
@@ -473,9 +475,7 @@ P2POverlayImpl<OverlayImplmnt>::P2POverlayImpl(
     , m_resolver(resolver)
     , next_id_(1)
     , m_stats(
-          std::bind(
-              &P2POverlayImpl<OverlayImplmnt>::collect_metrics,
-              this),
+          std::bind(&P2POverlayImpl<OverlayImplmnt>::collect_metrics, this),
           collector,
           [counts = m_traffic.getCounts(), collector]() {
               std::vector<TrafficGauges> ret;
@@ -670,8 +670,7 @@ P2POverlayImpl<OverlayImplmnt>::onHandoff(
 
 template <typename OverlayImplmnt>
 bool
-P2POverlayImpl<OverlayImplmnt>::isPeerUpgrade(
-    http_request_type const& request)
+P2POverlayImpl<OverlayImplmnt>::isPeerUpgrade(http_request_type const& request)
 {
     if (!is_upgrade(request))
         return false;
@@ -926,8 +925,7 @@ template <typename OverlayImplmnt>
 void
 P2POverlayImpl<OverlayImplmnt>::onStop()
 {
-    strand_.dispatch(
-        std::bind(&P2POverlayImpl<OverlayImplmnt>::stop, this));
+    strand_.dispatch(std::bind(&P2POverlayImpl<OverlayImplmnt>::stop, this));
 }
 
 template <typename OverlayImplmnt>
@@ -946,8 +944,7 @@ P2POverlayImpl<OverlayImplmnt>::onChildrenStopped()
 
 template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt>::onWrite(
-    beast::PropertyStream::Map& stream)
+P2POverlayImpl<OverlayImplmnt>::onWrite(beast::PropertyStream::Map& stream)
 {
     beast::PropertyStream::Set set("traffic", stream);
     auto const stats = m_traffic.getCounts();
@@ -973,8 +970,7 @@ are known.
 */
 template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt>::activate(
-    std::shared_ptr<PeerImp_t> const& peer)
+P2POverlayImpl<OverlayImplmnt>::activate(std::shared_ptr<PeerImp_t> const& peer)
 {
     // Now track this peer
     {
@@ -1063,8 +1059,7 @@ P2POverlayImpl<OverlayImplmnt>::getActivePeers() const
 
 template <typename OverlayImplmnt>
 std::shared_ptr<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>
-P2POverlayImpl<OverlayImplmnt>::findPeerByShortID(
-    P2Peer::id_t const& id) const
+P2POverlayImpl<OverlayImplmnt>::findPeerByShortID(P2Peer::id_t const& id) const
 {
     std::lock_guard lock(mutex_);
     auto const iter = ids_.find(id);
@@ -1077,8 +1072,7 @@ P2POverlayImpl<OverlayImplmnt>::findPeerByShortID(
 // update overhead outweighing the performance of a small set linear search.
 template <typename OverlayImplmnt>
 std::shared_ptr<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>
-P2POverlayImpl<OverlayImplmnt>::findPeerByPublicKey(
-    PublicKey const& pubKey)
+P2POverlayImpl<OverlayImplmnt>::findPeerByPublicKey(PublicKey const& pubKey)
 {
     std::lock_guard lock(mutex_);
     for (auto const& e : ids_)
@@ -1096,8 +1090,7 @@ P2POverlayImpl<OverlayImplmnt>::findPeerByPublicKey(
 
 template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt>::remove(
-    Child<OverlayImplmnt>& child)
+P2POverlayImpl<OverlayImplmnt>::remove(Child<OverlayImplmnt>& child)
 {
     std::lock_guard lock(mutex_);
     list_.erase(&child);

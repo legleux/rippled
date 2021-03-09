@@ -20,10 +20,9 @@
 #ifndef RIPPLE_OVERLAYIMPLTRAITS_H_INCLUDED
 #define RIPPLE_OVERLAYIMPLTRAITS_H_INCLUDED
 
-namespace ripple
-{
+namespace ripple {
 
-template<typename>
+template <typename>
 struct OverlayImplTraits;
 
 }
