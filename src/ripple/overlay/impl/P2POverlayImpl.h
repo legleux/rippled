@@ -32,6 +32,7 @@
 #include <ripple/overlay/impl/Child.h>
 #include <ripple/overlay/impl/ConnectAttempt.h>
 #include <ripple/overlay/impl/Handshake.h>
+#include <ripple/overlay/impl/OverlayImplTraits.h>
 #include <ripple/overlay/impl/TrafficCount.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/peerfinder/make_Manager.h>
@@ -60,14 +61,16 @@ namespace ripple {
 
 class BasicConfig;
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
-class P2POverlayImpl : virtual public P2POverlay<typename PeerImplmnt::Peer_t>,
+template <typename OverlayImplmnt>
+class P2POverlayImpl : virtual public P2POverlay<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>,
                        public P2POverlayEvents
 {
     friend OverlayImplmnt;
-    using Setup_t = typename P2POverlay<typename PeerImplmnt::Peer_t>::Setup;
+    using Setup_t = typename P2POverlay<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>::Setup;
     using PeerSequence_t =
-        typename P2POverlay<typename PeerImplmnt::Peer_t>::PeerSequence;
+        typename P2POverlay<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>::PeerSequence;
+    using PeerImp_t = typename OverlayImplTraits<OverlayImplmnt>::PeerImp_t;
+    using Peer_t = typename OverlayImplTraits<OverlayImplmnt>::Peer_t;
 
 protected:
     using socket_type = boost::asio::ip::tcp::socket;
@@ -90,9 +93,9 @@ protected:
     Resource::Manager& m_resourceManager;
     std::unique_ptr<PeerFinder::Manager> m_peerFinder;
     TrafficCount m_traffic;
-    hash_map<std::shared_ptr<PeerFinder::Slot>, std::weak_ptr<PeerImplmnt>>
+    hash_map<std::shared_ptr<PeerFinder::Slot>, std::weak_ptr<PeerImp_t>>
         m_peers;
-    hash_map<P2Peer::id_t, std::weak_ptr<PeerImplmnt>> ids_;
+    hash_map<P2Peer::id_t, std::weak_ptr<PeerImp_t>> ids_;
     Resolver& m_resolver;
     std::atomic<P2Peer::id_t> next_id_;
     std::atomic<uint64_t> peerDisconnects_{0};
@@ -114,9 +117,9 @@ public:
 
     ~P2POverlayImpl();
 
-    P2POverlayImpl(P2POverlayImpl<OverlayImplmnt, PeerImplmnt> const&) = delete;
+    P2POverlayImpl(P2POverlayImpl<OverlayImplmnt> const&) = delete;
     P2POverlayImpl&
-    operator=(P2POverlayImpl<OverlayImplmnt, PeerImplmnt> const&) = delete;
+    operator=(P2POverlayImpl<OverlayImplmnt> const&) = delete;
 
     PeerFinder::Manager&
     peerFinder()
@@ -163,10 +166,10 @@ public:
     PeerSequence_t
     getActivePeers() const override;
 
-    std::shared_ptr<typename PeerImplmnt::Peer_t>
+    std::shared_ptr<Peer_t>
     findPeerByShortID(P2Peer::id_t const& id) const override;
 
-    std::shared_ptr<typename PeerImplmnt::Peer_t>
+    std::shared_ptr<Peer_t>
     findPeerByPublicKey(PublicKey const& pubKey) override;
 
     //--------------------------------------------------------------------------
@@ -175,7 +178,7 @@ public:
     //
 
     void
-    add_active(std::shared_ptr<PeerImplmnt> const& peer);
+    add_active(std::shared_ptr<PeerImp_t> const& peer);
 
     void
     remove(std::shared_ptr<PeerFinder::Slot> const& slot);
@@ -186,7 +189,7 @@ public:
         are known.
     */
     void
-    activate(std::shared_ptr<PeerImplmnt> const& peer);
+    activate(std::shared_ptr<PeerImp_t> const& peer);
 
     // Called when an active peer is destroyed.
     void
@@ -199,7 +202,7 @@ public:
     void
     for_each(UnaryFunc&& f) const
     {
-        std::vector<std::weak_ptr<PeerImplmnt>> wp;
+        std::vector<std::weak_ptr<PeerImp_t>> wp;
         {
             std::lock_guard lock(mutex_);
 
@@ -293,7 +296,7 @@ public:
         return networkID_;
     }
 
-    virtual std::shared_ptr<PeerImplmnt>
+    virtual std::shared_ptr<PeerImp_t>
     mkOutboundPeer(
         std::unique_ptr<stream_type>&& stream_ptr,
         boost::beast::multi_buffer const& buffers,
@@ -304,7 +307,7 @@ public:
         ProtocolVersion protocol,
         id_t id) = 0;
 
-    virtual std::shared_ptr<PeerImplmnt>
+    virtual std::shared_ptr<PeerImp_t>
     mkInboundPeer(
         id_t id,
         std::shared_ptr<PeerFinder::Slot> const& slot,
@@ -440,8 +443,8 @@ protected:
 
 //------------------------------------------------------------------------------
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::P2POverlayImpl(
+template <typename OverlayImplmnt>
+P2POverlayImpl<OverlayImplmnt>::P2POverlayImpl(
     Application& app,
     Setup_t const& setup,
     Stoppable& parent,
@@ -451,7 +454,7 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::P2POverlayImpl(
     boost::asio::io_service& io_service,
     BasicConfig const& config,
     beast::insight::Collector::ptr const& collector)
-    : P2POverlay<typename PeerImplmnt::Peer_t>(parent)
+    : P2POverlay<Peer_t>(parent)
     , app_(app)
     , io_service_(io_service)
     , work_(boost::in_place(std::ref(io_service_)))
@@ -471,7 +474,7 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::P2POverlayImpl(
     , next_id_(1)
     , m_stats(
           std::bind(
-              &P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::collect_metrics,
+              &P2POverlayImpl<OverlayImplmnt>::collect_metrics,
               this),
           collector,
           [counts = m_traffic.getCounts(), collector]() {
@@ -489,8 +492,8 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::P2POverlayImpl(
     beast::PropertyStream::Source::add(m_peerFinder.get());
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::~P2POverlayImpl()
+template <typename OverlayImplmnt>
+P2POverlayImpl<OverlayImplmnt>::~P2POverlayImpl()
 {
     stop();
 
@@ -503,9 +506,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::~P2POverlayImpl()
 
 //------------------------------------------------------------------------------
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 Handoff
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
+P2POverlayImpl<OverlayImplmnt>::onHandoff(
     std::unique_ptr<stream_type>&& stream_ptr,
     http_request_type&& request,
     endpoint_type remote_endpoint)
@@ -665,9 +668,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onHandoff(
 
 //------------------------------------------------------------------------------
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 bool
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::isPeerUpgrade(
+P2POverlayImpl<OverlayImplmnt>::isPeerUpgrade(
     http_request_type const& request)
 {
     if (!is_upgrade(request))
@@ -676,18 +679,18 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::isPeerUpgrade(
     return !versions.empty();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::string
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makePrefix(std::uint32_t id)
+P2POverlayImpl<OverlayImplmnt>::makePrefix(std::uint32_t id)
 {
     std::stringstream ss;
     ss << "[" << std::setfill('0') << std::setw(3) << id << "] ";
     return ss.str();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::shared_ptr<Writer>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeRedirectResponse(
+P2POverlayImpl<OverlayImplmnt>::makeRedirectResponse(
     std::shared_ptr<PeerFinder::Slot> const& slot,
     http_request_type const& request,
     address_type remote_address)
@@ -713,9 +716,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeRedirectResponse(
     return std::make_shared<SimpleWriter>(msg);
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::shared_ptr<Writer>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeErrorResponse(
+P2POverlayImpl<OverlayImplmnt>::makeErrorResponse(
     std::shared_ptr<PeerFinder::Slot> const& slot,
     http_request_type const& request,
     address_type remote_address,
@@ -734,9 +737,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::makeErrorResponse(
 
 //------------------------------------------------------------------------------
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::connect(
+P2POverlayImpl<OverlayImplmnt>::connect(
     beast::IP::Endpoint const& remote_endpoint)
 {
     assert(work_);
@@ -774,10 +777,10 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::connect(
 //------------------------------------------------------------------------------
 
 // Adds a peer that is already handshaked and active
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(
-    std::shared_ptr<PeerImplmnt> const& peer)
+P2POverlayImpl<OverlayImplmnt>::add_active(
+    std::shared_ptr<PeerImp_t> const& peer)
 {
     std::lock_guard lock(mutex_);
 
@@ -810,9 +813,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::add_active(
     peer->run();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(
+P2POverlayImpl<OverlayImplmnt>::remove(
     std::shared_ptr<PeerFinder::Slot> const& slot)
 {
     std::lock_guard lock(mutex_);
@@ -828,17 +831,17 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(
 //------------------------------------------------------------------------------
 
 // Caller must hold the mutex
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::checkStopped()
+P2POverlayImpl<OverlayImplmnt>::checkStopped()
 {
     if (this->isStopping() && this->areChildrenStopped() && list_.empty())
         this->stopped();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onPrepare()
+P2POverlayImpl<OverlayImplmnt>::onPrepare()
 {
     PeerFinder::Config config = PeerFinder::Config::makeConfig(
         app_.config(),
@@ -912,24 +915,24 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onPrepare()
     }
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onStart()
+P2POverlayImpl<OverlayImplmnt>::onStart()
 {
     onEvtStart();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onStop()
+P2POverlayImpl<OverlayImplmnt>::onStop()
 {
     strand_.dispatch(
-        std::bind(&P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::stop, this));
+        std::bind(&P2POverlayImpl<OverlayImplmnt>::stop, this));
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onChildrenStopped()
+P2POverlayImpl<OverlayImplmnt>::onChildrenStopped()
 {
     std::lock_guard lock(mutex_);
     checkStopped();
@@ -941,9 +944,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onChildrenStopped()
 //
 //------------------------------------------------------------------------------
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onWrite(
+P2POverlayImpl<OverlayImplmnt>::onWrite(
     beast::PropertyStream::Map& stream)
 {
     beast::PropertyStream::Set set("traffic", stream);
@@ -968,10 +971,10 @@ This is called after the peer handshake has been completed and during
 peer activation. At this point, the peer address and the public key
 are known.
 */
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::activate(
-    std::shared_ptr<PeerImplmnt> const& peer)
+P2POverlayImpl<OverlayImplmnt>::activate(
+    std::shared_ptr<PeerImp_t> const& peer)
 {
     // Now track this peer
     {
@@ -994,17 +997,17 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::activate(
     assert(size() != 0);
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::onPeerDeactivate(P2Peer::id_t id)
+P2POverlayImpl<OverlayImplmnt>::onPeerDeactivate(P2Peer::id_t id)
 {
     std::lock_guard lock(mutex_);
     ids_.erase(id);
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::reportTraffic(
+P2POverlayImpl<OverlayImplmnt>::reportTraffic(
     TrafficCount::category cat,
     bool isInbound,
     int number)
@@ -1016,25 +1019,25 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::reportTraffic(
 Active peers are only those peers that have completed the handshake
 and are running the Ripple protocol.
 */
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::size_t
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::size() const
+P2POverlayImpl<OverlayImplmnt>::size() const
 {
     std::lock_guard lock(mutex_);
     return ids_.size();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 int
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::limit()
+P2POverlayImpl<OverlayImplmnt>::limit()
 {
     return m_peerFinder->config().maxPeers;
 }
 
 // Returns information on verified peers.
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 Json::Value
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::json()
+P2POverlayImpl<OverlayImplmnt>::json()
 {
     Json::Value json;
     for (auto const& peer : getActivePeers())
@@ -1044,23 +1047,23 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::json()
     return json;
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
-typename P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::PeerSequence_t
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::getActivePeers() const
+template <typename OverlayImplmnt>
+typename P2POverlayImpl<OverlayImplmnt>::PeerSequence_t
+P2POverlayImpl<OverlayImplmnt>::getActivePeers() const
 {
     PeerSequence_t ret;
     ret.reserve(size());
 
-    for_each([&ret](std::shared_ptr<PeerImplmnt>&& sp) {
+    for_each([&ret](std::shared_ptr<PeerImp_t>&& sp) {
         ret.emplace_back(std::move(sp));
     });
 
     return ret;
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
-std::shared_ptr<typename PeerImplmnt::Peer_t>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByShortID(
+template <typename OverlayImplmnt>
+std::shared_ptr<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>
+P2POverlayImpl<OverlayImplmnt>::findPeerByShortID(
     P2Peer::id_t const& id) const
 {
     std::lock_guard lock(mutex_);
@@ -1072,9 +1075,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByShortID(
 
 // A public key hash map was not used due to the peer connect/disconnect
 // update overhead outweighing the performance of a small set linear search.
-template <typename OverlayImplmnt, typename PeerImplmnt>
-std::shared_ptr<typename PeerImplmnt::Peer_t>
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByPublicKey(
+template <typename OverlayImplmnt>
+std::shared_ptr<typename OverlayImplTraits<OverlayImplmnt>::Peer_t>
+P2POverlayImpl<OverlayImplmnt>::findPeerByPublicKey(
     PublicKey const& pubKey)
 {
     std::lock_guard lock(mutex_);
@@ -1091,9 +1094,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::findPeerByPublicKey(
 
 //------------------------------------------------------------------------------
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(
+P2POverlayImpl<OverlayImplmnt>::remove(
     Child<OverlayImplmnt>& child)
 {
     std::lock_guard lock(mutex_);
@@ -1102,9 +1105,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove(
         checkStopped();
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::stop()
+P2POverlayImpl<OverlayImplmnt>::stop()
 {
     // Calling list_[].second->stop() may cause list_ to be modified
     // (P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::remove() may be called on
@@ -1136,9 +1139,9 @@ P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::stop()
     }
 }
 
-template <typename OverlayImplmnt, typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2POverlayImpl<OverlayImplmnt, PeerImplmnt>::autoConnect()
+P2POverlayImpl<OverlayImplmnt>::autoConnect()
 {
     auto const result = m_peerFinder->autoconnect();
     for (auto addr : result)

@@ -31,6 +31,7 @@
 #include <ripple/overlay/Slot.h>
 #include <ripple/overlay/impl/Child.h>
 #include <ripple/overlay/impl/Handshake.h>
+#include <ripple/overlay/impl/OverlayImplTraits.h>
 #include <ripple/overlay/impl/P2POverlayImpl.h>
 #include <ripple/overlay/impl/PeerImp.h>
 #include <ripple/overlay/impl/TrafficCount.h>
@@ -57,8 +58,18 @@ namespace ripple {
 
 class BasicConfig;
 
+class OverlayImpl;
+
+template<>
+struct OverlayImplTraits<OverlayImpl>
+{
+    using OverlayImpl_t = OverlayImpl;
+    using PeerImp_t = PeerImp;
+    using Peer_t = Peer;
+};
+
 class OverlayImpl : public Overlay,
-                    public P2POverlayImpl<OverlayImpl, PeerImp>,
+                    public P2POverlayImpl<OverlayImpl>,
                     public reduce_relay::SquelchHandler
 {
 private:

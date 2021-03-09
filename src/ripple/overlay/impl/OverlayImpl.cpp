@@ -64,7 +64,7 @@ OverlayImpl::OverlayImpl(
     beast::insight::Collector::ptr const& collector)
     : P2POverlay<PeerImp::Peer_t>(parent)
     , Overlay(parent)
-    , P2POverlayImpl<OverlayImpl, PeerImp>(
+    , P2POverlayImpl<OverlayImpl>(
           app,
           setup,
           parent,
