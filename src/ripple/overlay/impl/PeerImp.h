@@ -75,10 +75,6 @@ private:
     Application& app_;
     waitable_timer timer_;
 
-    // These are up here to prevent warnings about order of initializations
-    //
-    OverlayImpl& overlay_;
-
     std::atomic<Tracking> tracking_;
     clock_type::time_point trackingTime_;
     bool detaching_ = false;
@@ -505,7 +501,6 @@ PeerImp::PeerImp(
           overlay)
     , app_(app)
     , timer_(waitable_timer{socket_.get_executor()})
-    , overlay_(overlay)
     , tracking_(Tracking::unknown)
     , trackingTime_(clock_type::now())
     , lastPingTime_(clock_type::now())

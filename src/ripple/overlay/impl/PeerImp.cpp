@@ -85,7 +85,6 @@ PeerImp::PeerImp(
           overlay)
     , app_(app)
     , timer_(waitable_timer{socket_.get_executor()})
-    , overlay_(overlay)
     , tracking_(Tracking::unknown)
     , trackingTime_(clock_type::now())
     , lastPingTime_(clock_type::now())
