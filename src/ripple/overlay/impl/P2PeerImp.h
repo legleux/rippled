@@ -710,14 +710,14 @@ P2PeerImp<PeerImplmnt>::doAccept()
     auto write_buffer = std::make_shared<boost::beast::multi_buffer>();
 
     boost::beast::ostream(*write_buffer) << makeResponse(
-            !this->overlay_.peerFinder().config().peerPrivate,
-            request_,
-            this->overlay_.setup().public_ip,
-            remote_address_.address(),
-            *sharedValue,
-            this->overlay_.setup().networkID,
-            protocol_,
-            p2pApp_);
+        !this->overlay_.peerFinder().config().peerPrivate,
+        request_,
+        this->overlay_.setup().public_ip,
+        remote_address_.address(),
+        *sharedValue,
+        this->overlay_.setup().networkID,
+        protocol_,
+        p2pApp_);
 
     // Write the whole buffer and only start protocol when that's done.
     boost::asio::async_write(
