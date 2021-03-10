@@ -465,12 +465,6 @@ protected:
 
     void
     onEvtShutdown() override;
-
-    std::shared_ptr<PeerImp>
-    shared() override
-    {
-        return shared_from_this();
-    }
 };
 
 //------------------------------------------------------------------------------

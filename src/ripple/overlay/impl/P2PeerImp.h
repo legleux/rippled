@@ -317,7 +317,10 @@ protected:
     }
 
     virtual std::shared_ptr<PeerImplmnt>
-    shared() = 0;
+    shared()
+    {
+        return static_cast<PeerImplmnt*>(this)->shared_from_this();
+    }
 };
 
 //------------------------------------------------------------------------------
