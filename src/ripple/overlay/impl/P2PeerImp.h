@@ -56,11 +56,14 @@ std::chrono::milliseconds constexpr peerHighLatency{300};
 }  // namespace
 
 template <typename PeerImplmnt>
-class P2PeerImp : public virtual P2Peer,
-                  public P2PeerEvents,
-                  public Child<typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t>
+class P2PeerImp
+    : public virtual P2Peer,
+      public P2PeerEvents,
+      public Child<typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t>
 {
-    using OverlayImpl_t = typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t;
+    using OverlayImpl_t =
+        typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t;
+
 protected:
     using clock_type = std::chrono::steady_clock;
     using error_code = boost::system::error_code;
@@ -446,9 +449,9 @@ P2PeerImp<PeerImplmnt>::send(std::shared_ptr<Message> const& m)
         return;
 
     this->overlay_.reportTraffic(
-            safe_cast<TrafficCount::category>(m->getCategory()),
-            false,
-            static_cast<int>(m->getBuffer(compressionEnabled_).size()));
+        safe_cast<TrafficCount::category>(m->getCategory()),
+        false,
+        static_cast<int>(m->getBuffer(compressionEnabled_).size()));
 
     auto sendq_size = send_queue_.size();
 
@@ -694,7 +697,7 @@ P2PeerImp<PeerImplmnt>::doAccept()
 
     auto write_buffer = std::make_shared<boost::beast::multi_buffer>();
 
-#if 0 // TBD have to resolve Application dependency issue
+#if 0  // TBD have to resolve Application dependency issue
     boost::beast::ostream(*write_buffer) << makeResponse(
             !this->overlay_.peerFinder().config().peerPrivate,
             request_,
