@@ -81,8 +81,8 @@ PeerImp::PeerImp(
           publicKey,
           protocol,
           consumer,
-          std::move(stream_ptr))
-    , Child(overlay)
+          std::move(stream_ptr),
+          overlay)
     , app_(app)
     , timer_(waitable_timer{socket_.get_executor()})
     , overlay_(overlay)
@@ -2106,6 +2106,14 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMSquelch> const& m)
     {
         JLOG(p_journal_.debug())
             << "onMessage: TMSquelch discarding validator's squelch " << slice;
+        return;
+    }
+
+    auto const valkey = app_.validators().getListedKey(key);
+    if (!valkey)
+    {
+        JLOG(p_journal_.debug())
+            << "onMessage: TMSquelch invalid validator's key " << slice;
         return;
     }
 

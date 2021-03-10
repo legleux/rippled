@@ -26,6 +26,7 @@
 #include <ripple/basics/RangeSet.h>
 #include <ripple/overlay/Squelch.h>
 #include <ripple/overlay/impl/Child.h>
+#include <ripple/overlay/impl/OverlayImplTraits.h>
 #include <ripple/overlay/impl/P2PeerImp.h>
 #include <ripple/peerfinder/PeerfinderManager.h>
 #include <ripple/protocol/Protocol.h>
@@ -43,11 +44,18 @@ namespace ripple {
 
 struct ValidatorBlobInfo;
 class OverlayImpl;
+class PeerImp;
+
+template <>
+struct OverlayImplTraits<PeerImp>
+{
+    using OverlayImpl_t = OverlayImpl;
+    using Peer_t = Peer;
+};
 
 class PeerImp : public Peer,
                 public P2PeerImp<PeerImp>,
-                public std::enable_shared_from_this<PeerImp>,
-                public Child<OverlayImpl>
+                public std::enable_shared_from_this<PeerImp>
 {
 public:
     using Peer_t = Peer;
@@ -493,8 +501,8 @@ PeerImp::PeerImp(
           usage,
           publicKey,
           protocol,
-          id)
-    , Child(overlay)
+          id,
+          overlay)
     , app_(app)
     , timer_(waitable_timer{socket_.get_executor()})
     , overlay_(overlay)

@@ -24,7 +24,9 @@
 #include <ripple/basics/RangeSet.h>
 #include <ripple/beast/utility/WrappedSink.h>
 #include <ripple/overlay/P2Peer.h>
+#include <ripple/overlay/impl/Child.h>
 #include <ripple/overlay/impl/Handshake.h>
+#include <ripple/overlay/impl/OverlayImplTraits.h>
 #include <ripple/overlay/impl/ProtocolMessage.h>
 #include <ripple/overlay/impl/ProtocolVersion.h>
 #include <ripple/overlay/impl/TrafficCount.h>
@@ -54,8 +56,11 @@ std::chrono::milliseconds constexpr peerHighLatency{300};
 }  // namespace
 
 template <typename PeerImplmnt>
-class P2PeerImp : public virtual P2Peer, public P2PeerEvents
+class P2PeerImp : public virtual P2Peer,
+                  public P2PeerEvents,
+                  public Child<typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t>
 {
+    using OverlayImpl_t = typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t;
 protected:
     using clock_type = std::chrono::steady_clock;
     using error_code = boost::system::error_code;
@@ -158,8 +163,8 @@ public:
         PublicKey const& publicKey,
         ProtocolVersion protocol,
         Resource::Consumer consumer,
-        std::unique_ptr<stream_type>&& stream_ptr);
-    // OverlayImpl& overlay);
+        std::unique_ptr<stream_type>&& stream_ptr,
+        OverlayImpl_t& overlay);
 
     /** Create outgoing, handshaked peer. */
     // VFALCO legacyPublicKey should be implied by the Slot
@@ -174,8 +179,8 @@ public:
         Resource::Consumer usage,
         PublicKey const& publicKey,
         ProtocolVersion protocol,
-        id_t id);
-    // OverlayImpl& overlay);
+        id_t id,
+        OverlayImpl_t& overlay);
 
     virtual ~P2PeerImp();
 
@@ -326,9 +331,10 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
     Resource::Consumer usage,
     PublicKey const& publicKey,
     ProtocolVersion protocol,
-    id_t id)
-    // OverlayImpl& overlay)
-    : id_(id)
+    id_t id,
+    OverlayImpl_t& overlay)
+    : Child<OverlayImpl_t>(overlay)
+    , id_(id)
     , sink_(logs.journal("Peer"), makePrefix(id))
     , p_sink_(logs.journal("Protocol"), makePrefix(id))
     , journal_(sink_)
@@ -338,7 +344,6 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
     , stream_(*stream_ptr_)
     , strand_(socket_.get_executor())
     , remote_address_(slot->remote_endpoint())
-    //, overlay_(overlay)
     , inbound_(false)
     , protocol_(protocol)
     , publicKey_(publicKey)
@@ -369,9 +374,10 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
     PublicKey const& publicKey,
     ProtocolVersion protocol,
     Resource::Consumer consumer,
-    std::unique_ptr<stream_type>&& stream_ptr)
-    // OverlayImpl& overlay)
-    : id_(id)
+    std::unique_ptr<stream_type>&& stream_ptr,
+    OverlayImpl_t& overlay)
+    : Child<OverlayImpl_t>(overlay)
+    , id_(id)
     , sink_(logs.journal("Peer"), makePrefix(id))
     , p_sink_(logs.journal("Protocol"), makePrefix(id))
     , journal_(sink_)
@@ -381,7 +387,6 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
     , stream_(*stream_ptr_)
     , strand_(socket_.get_executor())
     , remote_address_(slot->remote_endpoint())
-    //, overlay_(overlay)
     , inbound_(true)
     , protocol_(protocol)
     , publicKey_(publicKey)
@@ -440,12 +445,10 @@ P2PeerImp<PeerImplmnt>::send(std::shared_ptr<Message> const& m)
     if (static_cast<PeerImplmnt*>(this)->squelched(m))
         return;
 
-#if 0  // TBD add overlay
     this->overlay_.reportTraffic(
             safe_cast<TrafficCount::category>(m->getCategory()),
             false,
             static_cast<int>(m->getBuffer(compressionEnabled_).size()));
-#endif
 
     auto sendq_size = send_queue_.size();
 
@@ -490,9 +493,7 @@ P2PeerImp<PeerImplmnt>::charge(Resource::Charge const& fee)
         strand_.running_in_this_thread())
     {
         // Sever the connection
-#if 0  // TBD once P2POverlayImpl is implemented
-        overlay_.incPeerDisconnectCharges();
-#endif
+        this->overlay_.incPeerDisconnectCharges();
         fail("charge: Resources");
     }
 }
@@ -565,9 +566,7 @@ P2PeerImp<PeerImplmnt>::close()
         detaching_ = true;  // DEPRECATED
         error_code ec;
         socket_.close(ec);
-#if 0  // TBD once P2POverlayImpl is implemented
-        overlay_.incPeerDisconnect();
-#endif
+        this->overlay_.incPeerDisconnect();
         if (inbound_)
         {
             JLOG(journal_.debug()) << "Closed";
@@ -687,9 +686,7 @@ P2PeerImp<PeerImplmnt>::doAccept()
 
     onEvtAccept();
 
-#if 0  // TBD once P2POverlayImpl is implemented
-    overlay_.activate(shared_from_this());
-#endif
+    this->overlay_.activate(std::static_pointer_cast<PeerImplmnt>(shared()));
 
     // XXX Set timer: connection is in grace period to be useful.
     // XXX Set timer: connection idle (idle may vary depending on connection
@@ -697,14 +694,14 @@ P2PeerImp<PeerImplmnt>::doAccept()
 
     auto write_buffer = std::make_shared<boost::beast::multi_buffer>();
 
-#if 0  // TBD once P2POverlayImpl is implemented and make response is updated
+#if 0 // TBD have to resolve Application dependency issue
     boost::beast::ostream(*write_buffer) << makeResponse(
-            !overlay_.peerFinder().config().peerPrivate,
+            !this->overlay_.peerFinder().config().peerPrivate,
             request_,
-            overlay_.setup().public_ip,
+            this->overlay_.setup().public_ip,
             remote_address_.address(),
             *sharedValue,
-            overlay_.setup().networkID,
+            this->overlay_.setup().networkID,
             protocol_,
             app_);
 #endif

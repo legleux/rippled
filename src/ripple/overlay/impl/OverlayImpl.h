@@ -63,7 +63,6 @@ class OverlayImpl;
 template <>
 struct OverlayImplTraits<OverlayImpl>
 {
-    using OverlayImpl_t = OverlayImpl;
     using PeerImp_t = PeerImp;
     using Peer_t = Peer;
 };
