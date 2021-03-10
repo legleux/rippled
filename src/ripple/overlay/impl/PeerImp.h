@@ -482,6 +482,7 @@ PeerImp::PeerImp(
     id_t id,
     OverlayImpl& overlay)
     : P2PeerImp<PeerImp>(
+          app,
           app.config(),
           app.logs(),
           std::move(stream_ptr),

@@ -73,6 +73,7 @@ PeerImp::PeerImp(
     std::unique_ptr<stream_type>&& stream_ptr,
     OverlayImpl& overlay)
     : P2PeerImp<PeerImp>(
+          app,
           app.config(),
           app.logs(),
           id,

@@ -50,6 +50,8 @@
 
 namespace ripple {
 
+class Application;
+
 namespace {
 /** The threshold above which we treat a peer connection as high latency */
 std::chrono::milliseconds constexpr peerHighLatency{300};
@@ -74,6 +76,7 @@ protected:
     using endpoint_type = boost::asio::ip::tcp::endpoint;
     using Compressed = compression::Compressed;
 
+    Application& p2pApp_;
     id_t const id_;
     beast::WrappedSink sink_;
     beast::WrappedSink p_sink_;
@@ -158,6 +161,7 @@ public:
 
     /** Create an active incoming peer from an established ssl connection. */
     P2PeerImp(
+        Application& app,
         Config const& config,
         Logs& logs,
         id_t id,
@@ -173,6 +177,7 @@ public:
     // VFALCO legacyPublicKey should be implied by the Slot
     template <class Buffers>
     P2PeerImp(
+        Application& app,
         Config const& config,
         Logs& logs,
         std::unique_ptr<stream_type>&& stream_ptr,
@@ -328,6 +333,7 @@ protected:
 template <typename PeerImplmnt>
 template <class Buffers>
 P2PeerImp<PeerImplmnt>::P2PeerImp(
+    Application& app,
     Config const& config,
     Logs& logs,
     std::unique_ptr<stream_type>&& stream_ptr,
@@ -340,6 +346,7 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
     id_t id,
     OverlayImpl_t& overlay)
     : Child<OverlayImpl_t>(overlay)
+    , p2pApp_(app)
     , id_(id)
     , sink_(logs.journal("Peer"), makePrefix(id))
     , p_sink_(logs.journal("Protocol"), makePrefix(id))
@@ -372,6 +379,7 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
 
 template <typename PeerImplmnt>
 P2PeerImp<PeerImplmnt>::P2PeerImp(
+    Application& app,
     Config const& config,
     Logs& logs,
     id_t id,
@@ -383,6 +391,7 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
     std::unique_ptr<stream_type>&& stream_ptr,
     OverlayImpl_t& overlay)
     : Child<OverlayImpl_t>(overlay)
+    , p2pApp_(app)
     , id_(id)
     , sink_(logs.journal("Peer"), makePrefix(id))
     , p_sink_(logs.journal("Protocol"), makePrefix(id))
@@ -700,7 +709,6 @@ P2PeerImp<PeerImplmnt>::doAccept()
 
     auto write_buffer = std::make_shared<boost::beast::multi_buffer>();
 
-#if 0  // TBD have to resolve Application dependency issue
     boost::beast::ostream(*write_buffer) << makeResponse(
             !this->overlay_.peerFinder().config().peerPrivate,
             request_,
@@ -709,8 +717,7 @@ P2PeerImp<PeerImplmnt>::doAccept()
             *sharedValue,
             this->overlay_.setup().networkID,
             protocol_,
-            app_);
-#endif
+            p2pApp_);
 
     // Write the whole buffer and only start protocol when that's done.
     boost::asio::async_write(
