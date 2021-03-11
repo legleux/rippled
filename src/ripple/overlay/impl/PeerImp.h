@@ -304,9 +304,9 @@ public:
     */
     std::pair<std::size_t, boost::system::error_code>
     invokeProtocolMessage(
-            detail::MessageHeader const& header,
-            boost::beast::multi_buffer const&,
-            std::size_t&) override;
+        detail::MessageHeader const& header,
+        boost::beast::multi_buffer const&,
+        std::size_t&) override;
 
 protected:
     bool
@@ -319,11 +319,13 @@ private:
     //
     //--------------------------------------------------------------------------
     template <
-            class T,
-            class = std::enable_if_t<
-                    std::is_base_of<::google::protobuf::Message, T>::value>>
+        class T,
+        class = std::enable_if_t<
+            std::is_base_of<::google::protobuf::Message, T>::value>>
     bool
-    invoke(detail::MessageHeader const& header, boost::beast::multi_buffer const& buffers)
+    invoke(
+        detail::MessageHeader const& header,
+        boost::beast::multi_buffer const& buffers)
     {
         auto const m = detail::parseMessageContent<T>(header, buffers.data());
         if (!m)
@@ -331,11 +333,11 @@ private:
 
         using namespace ripple::compression;
         onMessageBegin(
-                header.message_type,
-                m,
-                header.payload_wire_size,
-                header.uncompressed_size,
-                header.algorithm != Algorithm::None);
+            header.message_type,
+            m,
+            header.payload_wire_size,
+            header.uncompressed_size,
+            header.algorithm != Algorithm::None);
         onMessage(m);
         onMessageEnd(header.message_type, m);
 
@@ -541,7 +543,6 @@ PeerImp::sendEndpoints(FwdIt first, FwdIt last)
 
     send(std::make_shared<Message>(tm, protocol::mtENDPOINTS));
 }
-
 
 }  // namespace ripple
 

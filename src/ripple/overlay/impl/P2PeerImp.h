@@ -58,10 +58,9 @@ std::chrono::milliseconds constexpr peerHighLatency{300};
 }  // namespace
 
 template <typename OverlayImplmnt>
-class P2PeerImp
-    : public virtual P2Peer,
-      public P2PeerEvents,
-      public Child<OverlayImplmnt>
+class P2PeerImp : public virtual P2Peer,
+                  public P2PeerEvents,
+                  public Child<OverlayImplmnt>
 {
     using OverlayImpl_t = OverlayImplmnt;
 
@@ -426,7 +425,8 @@ void
 P2PeerImp<OverlayImplmnt>::run()
 {
     if (!strand_.running_in_this_thread())
-        return post(strand_, std::bind(&P2PeerImp<OverlayImplmnt>::run, shared()));
+        return post(
+            strand_, std::bind(&P2PeerImp<OverlayImplmnt>::run, shared()));
 
     onEvtRun();
 
@@ -697,7 +697,9 @@ P2PeerImp<OverlayImplmnt>::doAccept()
 
     onEvtAccept();
 
-    this->overlay_.activate(std::static_pointer_cast<typename OverlayImplTraits<OverlayImplmnt>::PeerImp_t>(shared()));
+    this->overlay_.activate(
+        std::static_pointer_cast<
+            typename OverlayImplTraits<OverlayImplmnt>::PeerImp_t>(shared()));
 
     // XXX Set timer: connection is in grace period to be useful.
     // XXX Set timer: connection idle (idle may vary depending on connection
@@ -799,7 +801,8 @@ P2PeerImp<OverlayImplmnt>::onReadMessage(
     while (read_buffer_.size() > 0)
     {
         std::size_t bytes_consumed;
-        std::tie(bytes_consumed, ec) = doInvokeProtocolMessage(read_buffer_, *this, hint);
+        std::tie(bytes_consumed, ec) =
+            doInvokeProtocolMessage(read_buffer_, *this, hint);
         if (ec)
             return fail("onReadMessage", ec);
         if (!socket_.is_open())

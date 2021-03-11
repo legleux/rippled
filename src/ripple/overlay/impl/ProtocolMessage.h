@@ -27,8 +27,8 @@
 #include <ripple/protocol/messages.h>
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/buffers_iterator.hpp>
-#include <boost/system/error_code.hpp>
 #include <boost/beast/core/multi_buffer.hpp>
+#include <boost/system/error_code.hpp>
 #include <cassert>
 #include <cstdint>
 #include <memory>

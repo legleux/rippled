@@ -210,9 +210,9 @@ public:
     }
     std::pair<std::size_t, boost::system::error_code>
     invokeProtocolMessage(
-            ripple::detail::MessageHeader const& header,
-            boost::beast::multi_buffer const&,
-            std::size_t&) override
+        ripple::detail::MessageHeader const& header,
+        boost::beast::multi_buffer const&,
+        std::size_t&) override
     {
         return {};
     }

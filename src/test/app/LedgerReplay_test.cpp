@@ -351,9 +351,9 @@ public:
 
     std::pair<std::size_t, boost::system::error_code>
     invokeProtocolMessage(
-            detail::MessageHeader const& header,
-            boost::beast::multi_buffer const&,
-            std::size_t&) override
+        detail::MessageHeader const& header,
+        boost::beast::multi_buffer const&,
+        std::size_t&) override
     {
         return {};
     }

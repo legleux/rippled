@@ -2744,9 +2744,9 @@ PeerImp::squelched(std::shared_ptr<Message> const& m)
 
 std::pair<std::size_t, boost::system::error_code>
 PeerImp::invokeProtocolMessage(
-        detail::MessageHeader const& header,
-        boost::beast::multi_buffer const& buffers,
-        std::size_t& hint)
+    detail::MessageHeader const& header,
+    boost::beast::multi_buffer const& buffers,
+    std::size_t& hint)
 {
     std::pair<std::size_t, boost::system::error_code> result = {0, {}};
     bool success;
@@ -2803,7 +2803,7 @@ PeerImp::invokeProtocolMessage(
             break;
         case protocol::mtVALIDATORLISTCOLLECTION:
             success =
-                    invoke<protocol::TMValidatorListCollection>(header, buffers);
+                invoke<protocol::TMValidatorListCollection>(header, buffers);
             break;
         case protocol::mtGET_OBJECTS:
             success = invoke<protocol::TMGetObjectByHash>(header, buffers);
