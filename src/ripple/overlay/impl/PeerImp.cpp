@@ -72,7 +72,7 @@ PeerImp::PeerImp(
     Resource::Consumer consumer,
     std::unique_ptr<stream_type>&& stream_ptr,
     OverlayImpl& overlay)
-    : P2PeerImp<PeerImp>(
+    : P2PeerImp<OverlayImpl>(
           app,
           app.config(),
           app.logs(),
@@ -2740,6 +2740,101 @@ PeerImp::squelched(std::shared_ptr<Message> const& m)
         validator && !squelch_.expireSquelch(*validator))
         return true;
     return false;
+}
+
+std::pair<std::size_t, boost::system::error_code>
+PeerImp::invokeProtocolMessage(
+        detail::MessageHeader const& header,
+        boost::beast::multi_buffer const& buffers,
+        std::size_t& hint)
+{
+    std::pair<std::size_t, boost::system::error_code> result = {0, {}};
+    bool success;
+
+    switch (header.message_type)
+    {
+        case protocol::mtMANIFESTS:
+            success = invoke<protocol::TMManifests>(header, buffers);
+            break;
+        case protocol::mtPING:
+            success = invoke<protocol::TMPing>(header, buffers);
+            break;
+        case protocol::mtCLUSTER:
+            success = invoke<protocol::TMCluster>(header, buffers);
+            break;
+        case protocol::mtGET_SHARD_INFO:
+            success = invoke<protocol::TMGetShardInfo>(header, buffers);
+            break;
+        case protocol::mtSHARD_INFO:
+            success = invoke<protocol::TMShardInfo>(header, buffers);
+            break;
+        case protocol::mtGET_PEER_SHARD_INFO:
+            success = invoke<protocol::TMGetPeerShardInfo>(header, buffers);
+            break;
+        case protocol::mtPEER_SHARD_INFO:
+            success = invoke<protocol::TMPeerShardInfo>(header, buffers);
+            break;
+        case protocol::mtENDPOINTS:
+            success = invoke<protocol::TMEndpoints>(header, buffers);
+            break;
+        case protocol::mtTRANSACTION:
+            success = invoke<protocol::TMTransaction>(header, buffers);
+            break;
+        case protocol::mtGET_LEDGER:
+            success = invoke<protocol::TMGetLedger>(header, buffers);
+            break;
+        case protocol::mtLEDGER_DATA:
+            success = invoke<protocol::TMLedgerData>(header, buffers);
+            break;
+        case protocol::mtPROPOSE_LEDGER:
+            success = invoke<protocol::TMProposeSet>(header, buffers);
+            break;
+        case protocol::mtSTATUS_CHANGE:
+            success = invoke<protocol::TMStatusChange>(header, buffers);
+            break;
+        case protocol::mtHAVE_SET:
+            success = invoke<protocol::TMHaveTransactionSet>(header, buffers);
+            break;
+        case protocol::mtVALIDATION:
+            success = invoke<protocol::TMValidation>(header, buffers);
+            break;
+        case protocol::mtVALIDATORLIST:
+            success = invoke<protocol::TMValidatorList>(header, buffers);
+            break;
+        case protocol::mtVALIDATORLISTCOLLECTION:
+            success =
+                    invoke<protocol::TMValidatorListCollection>(header, buffers);
+            break;
+        case protocol::mtGET_OBJECTS:
+            success = invoke<protocol::TMGetObjectByHash>(header, buffers);
+            break;
+        case protocol::mtSQUELCH:
+            success = invoke<protocol::TMSquelch>(header, buffers);
+            break;
+        case protocol::mtPROOF_PATH_REQ:
+            success = invoke<protocol::TMProofPathRequest>(header, buffers);
+            break;
+        case protocol::mtPROOF_PATH_RESPONSE:
+            success = invoke<protocol::TMProofPathResponse>(header, buffers);
+            break;
+        case protocol::mtREPLAY_DELTA_REQ:
+            success = invoke<protocol::TMReplayDeltaRequest>(header, buffers);
+            break;
+        case protocol::mtREPLAY_DELTA_RESPONSE:
+            success = invoke<protocol::TMReplayDeltaResponse>(header, buffers);
+            break;
+        default:
+            onMessageUnknown(header.message_type);
+            success = true;
+            break;
+    }
+
+    result.first = header.total_wire_size;
+
+    if (!success)
+        result.second = make_error_code(boost::system::errc::bad_message);
+
+    return result;
 }
 
 }  // namespace ripple

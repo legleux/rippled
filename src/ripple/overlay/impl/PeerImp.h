@@ -54,7 +54,7 @@ struct OverlayImplTraits<PeerImp>
 };
 
 class PeerImp : public Peer,
-                public P2PeerImp<PeerImp>,
+                public P2PeerImp<OverlayImpl>,
                 public std::enable_shared_from_this<PeerImp>
 {
 public:
@@ -289,31 +289,6 @@ private:
     bool
     reduceRelayReady();
 
-    template <
-        class T,
-        class Buffers,
-        class = std::enable_if_t<
-            std::is_base_of<::google::protobuf::Message, T>::value>>
-    bool
-    invoke(detail::MessageHeader const& header, Buffers const& buffers)
-    {
-        auto const m = detail::parseMessageContent<T>(header, buffers);
-        if (!m)
-            return false;
-
-        using namespace ripple::compression;
-        onMessageBegin(
-            header.message_type,
-            m,
-            header.payload_wire_size,
-            header.uncompressed_size,
-            header.algorithm != Algorithm::None);
-        onMessage(m);
-        onMessageEnd(header.message_type, m);
-
-        return true;
-    }
-
 public:
     /** Calls the handler for up to one protocol message in the passed buffers.
 
@@ -327,15 +302,15 @@ public:
 
     @return The number of bytes consumed, or the error code if any.
     */
-    template <typename Buffers>
     std::pair<std::size_t, boost::system::error_code>
     invokeProtocolMessage(
-        detail::MessageHeader const& header,
-        Buffers const& buffers,
-        std::size_t& hint);
+            detail::MessageHeader const& header,
+            boost::beast::multi_buffer const&,
+            std::size_t&) override;
 
+protected:
     bool
-    squelched(std::shared_ptr<Message> const& m);
+    squelched(std::shared_ptr<Message> const& m) override;
 
 private:
     //--------------------------------------------------------------------------
@@ -343,6 +318,29 @@ private:
     // ProtocolStream
     //
     //--------------------------------------------------------------------------
+    template <
+            class T,
+            class = std::enable_if_t<
+                    std::is_base_of<::google::protobuf::Message, T>::value>>
+    bool
+    invoke(detail::MessageHeader const& header, boost::beast::multi_buffer const& buffers)
+    {
+        auto const m = detail::parseMessageContent<T>(header, buffers.data());
+        if (!m)
+            return false;
+
+        using namespace ripple::compression;
+        onMessageBegin(
+                header.message_type,
+                m,
+                header.payload_wire_size,
+                header.uncompressed_size,
+                header.algorithm != Algorithm::None);
+        onMessage(m);
+        onMessageEnd(header.message_type, m);
+
+        return true;
+    }
 
     void
     onMessageUnknown(std::uint16_t type);
@@ -465,6 +463,12 @@ protected:
 
     void
     onEvtShutdown() override;
+
+    std::shared_ptr<P2PeerImp<OverlayImpl>>
+    shared() override
+    {
+        return shared_from_this();
+    }
 };
 
 //------------------------------------------------------------------------------
@@ -481,7 +485,7 @@ PeerImp::PeerImp(
     ProtocolVersion protocol,
     id_t id,
     OverlayImpl& overlay)
-    : P2PeerImp<PeerImp>(
+    : P2PeerImp<OverlayImpl>(
           app,
           app.config(),
           app.logs(),
@@ -538,101 +542,6 @@ PeerImp::sendEndpoints(FwdIt first, FwdIt last)
     send(std::make_shared<Message>(tm, protocol::mtENDPOINTS));
 }
 
-template <typename Buffers>
-std::pair<std::size_t, boost::system::error_code>
-PeerImp::invokeProtocolMessage(
-    detail::MessageHeader const& header,
-    Buffers const& buffers,
-    std::size_t& hint)
-{
-    std::pair<std::size_t, boost::system::error_code> result = {0, {}};
-    bool success;
-
-    switch (header.message_type)
-    {
-        case protocol::mtMANIFESTS:
-            success = invoke<protocol::TMManifests>(header, buffers);
-            break;
-        case protocol::mtPING:
-            success = invoke<protocol::TMPing>(header, buffers);
-            break;
-        case protocol::mtCLUSTER:
-            success = invoke<protocol::TMCluster>(header, buffers);
-            break;
-        case protocol::mtGET_SHARD_INFO:
-            success = invoke<protocol::TMGetShardInfo>(header, buffers);
-            break;
-        case protocol::mtSHARD_INFO:
-            success = invoke<protocol::TMShardInfo>(header, buffers);
-            break;
-        case protocol::mtGET_PEER_SHARD_INFO:
-            success = invoke<protocol::TMGetPeerShardInfo>(header, buffers);
-            break;
-        case protocol::mtPEER_SHARD_INFO:
-            success = invoke<protocol::TMPeerShardInfo>(header, buffers);
-            break;
-        case protocol::mtENDPOINTS:
-            success = invoke<protocol::TMEndpoints>(header, buffers);
-            break;
-        case protocol::mtTRANSACTION:
-            success = invoke<protocol::TMTransaction>(header, buffers);
-            break;
-        case protocol::mtGET_LEDGER:
-            success = invoke<protocol::TMGetLedger>(header, buffers);
-            break;
-        case protocol::mtLEDGER_DATA:
-            success = invoke<protocol::TMLedgerData>(header, buffers);
-            break;
-        case protocol::mtPROPOSE_LEDGER:
-            success = invoke<protocol::TMProposeSet>(header, buffers);
-            break;
-        case protocol::mtSTATUS_CHANGE:
-            success = invoke<protocol::TMStatusChange>(header, buffers);
-            break;
-        case protocol::mtHAVE_SET:
-            success = invoke<protocol::TMHaveTransactionSet>(header, buffers);
-            break;
-        case protocol::mtVALIDATION:
-            success = invoke<protocol::TMValidation>(header, buffers);
-            break;
-        case protocol::mtVALIDATORLIST:
-            success = invoke<protocol::TMValidatorList>(header, buffers);
-            break;
-        case protocol::mtVALIDATORLISTCOLLECTION:
-            success =
-                invoke<protocol::TMValidatorListCollection>(header, buffers);
-            break;
-        case protocol::mtGET_OBJECTS:
-            success = invoke<protocol::TMGetObjectByHash>(header, buffers);
-            break;
-        case protocol::mtSQUELCH:
-            success = invoke<protocol::TMSquelch>(header, buffers);
-            break;
-        case protocol::mtPROOF_PATH_REQ:
-            success = invoke<protocol::TMProofPathRequest>(header, buffers);
-            break;
-        case protocol::mtPROOF_PATH_RESPONSE:
-            success = invoke<protocol::TMProofPathResponse>(header, buffers);
-            break;
-        case protocol::mtREPLAY_DELTA_REQ:
-            success = invoke<protocol::TMReplayDeltaRequest>(header, buffers);
-            break;
-        case protocol::mtREPLAY_DELTA_RESPONSE:
-            success = invoke<protocol::TMReplayDeltaResponse>(header, buffers);
-            break;
-        default:
-            onMessageUnknown(header.message_type);
-            success = true;
-            break;
-    }
-
-    result.first = header.total_wire_size;
-
-    if (!success)
-        result.second = make_error_code(boost::system::errc::bad_message);
-
-    return result;
-}
 
 }  // namespace ripple
 

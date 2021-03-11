@@ -34,6 +34,11 @@
 #include <thread>
 
 namespace ripple {
+
+namespace detail {
+struct MessageHeader;
+}
+
 namespace test {
 
 struct LedgerReplay_test : public beast::unit_test::suite
@@ -336,6 +341,21 @@ public:
     void
     onEvtShutdown() override
     {
+    }
+
+    bool
+    squelched(std::shared_ptr<Message> const&) override
+    {
+        return false;
+    }
+
+    std::pair<std::size_t, boost::system::error_code>
+    invokeProtocolMessage(
+            detail::MessageHeader const& header,
+            boost::beast::multi_buffer const&,
+            std::size_t&) override
+    {
+        return {};
     }
 };
 

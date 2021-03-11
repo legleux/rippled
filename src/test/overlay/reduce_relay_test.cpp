@@ -34,6 +34,10 @@
 
 namespace ripple {
 
+namespace detail {
+struct MessageHeader;
+}
+
 namespace test {
 
 using namespace std::chrono;
@@ -198,6 +202,19 @@ public:
     void
     onEvtShutdown() override
     {
+    }
+    bool
+    squelched(std::shared_ptr<Message> const&) override
+    {
+        return false;
+    }
+    std::pair<std::size_t, boost::system::error_code>
+    invokeProtocolMessage(
+            ripple::detail::MessageHeader const& header,
+            boost::beast::multi_buffer const&,
+            std::size_t&) override
+    {
+        return {};
     }
 };
 

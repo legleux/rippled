@@ -28,6 +28,7 @@
 #include <boost/asio/buffer.hpp>
 #include <boost/asio/buffers_iterator.hpp>
 #include <boost/system/error_code.hpp>
+#include <boost/beast/core/multi_buffer.hpp>
 #include <cassert>
 #include <cstdint>
 #include <memory>
@@ -308,21 +309,23 @@ parseMessageContent(MessageHeader const& header, Buffers const& buffers)
 
     @return The number of bytes consumed, or the error code if any.
 */
-template <class Buffers, class Handler>
+template <class Handler>
 std::pair<std::size_t, boost::system::error_code>
-invokeProtocolMessage(
-    Buffers const& buffers,
+doInvokeProtocolMessage(
+    boost::beast::multi_buffer const& buffers,
     Handler& handler,
     std::size_t& hint)
 {
     std::pair<std::size_t, boost::system::error_code> result = {0, {}};
 
-    auto const size = boost::asio::buffer_size(buffers);
+    auto const data = buffers.data();
+
+    auto const size = boost::asio::buffer_size(data);
 
     if (size == 0)
         return result;
 
-    auto header = detail::parseMessageHeader(result.second, buffers, size);
+    auto header = detail::parseMessageHeader(result.second, data, size);
 
     // If we can't parse the header then it may be that we don't have enough
     // bytes yet, or because the message was cut off (if error_code is success).

@@ -26,10 +26,16 @@
 #include <ripple/overlay/Message.h>
 #include <ripple/protocol/PublicKey.h>
 
+#include <boost/beast/core/multi_buffer.hpp>
+
 namespace ripple {
 
 namespace Resource {
 class Charge;
+}
+
+namespace detail {
+struct MessageHeader;
 }
 
 class P2PeerEvents
@@ -107,6 +113,16 @@ protected:
 
     virtual std::size_t
     queueSize() const = 0;
+
+    virtual bool
+    squelched(std::shared_ptr<Message> const&) = 0;
+
+public:
+    virtual std::pair<std::size_t, boost::system::error_code>
+    invokeProtocolMessage(
+        detail::MessageHeader const& header,
+        boost::beast::multi_buffer const&,
+        std::size_t&) = 0;
 };
 
 }  // namespace ripple

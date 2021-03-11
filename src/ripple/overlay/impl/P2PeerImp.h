@@ -57,14 +57,13 @@ namespace {
 std::chrono::milliseconds constexpr peerHighLatency{300};
 }  // namespace
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 class P2PeerImp
     : public virtual P2Peer,
       public P2PeerEvents,
-      public Child<typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t>
+      public Child<OverlayImplmnt>
 {
-    using OverlayImpl_t =
-        typename OverlayImplTraits<PeerImplmnt>::OverlayImpl_t;
+    using OverlayImpl_t = OverlayImplmnt;
 
 protected:
     using clock_type = std::chrono::steady_clock;
@@ -321,18 +320,15 @@ protected:
         return send_queue_.size();
     }
 
-    virtual std::shared_ptr<PeerImplmnt>
-    shared()
-    {
-        return static_cast<PeerImplmnt*>(this)->shared_from_this();
-    }
+    virtual std::shared_ptr<P2PeerImp<OverlayImplmnt>>
+    shared() = 0;
 };
 
 //------------------------------------------------------------------------------
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 template <class Buffers>
-P2PeerImp<PeerImplmnt>::P2PeerImp(
+P2PeerImp<OverlayImplmnt>::P2PeerImp(
     Application& app,
     Config const& config,
     Logs& logs,
@@ -377,8 +373,8 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
                            << id_;
 }
 
-template <typename PeerImplmnt>
-P2PeerImp<PeerImplmnt>::P2PeerImp(
+template <typename OverlayImplmnt>
+P2PeerImp<OverlayImplmnt>::P2PeerImp(
     Application& app,
     Config const& config,
     Logs& logs,
@@ -420,17 +416,17 @@ P2PeerImp<PeerImplmnt>::P2PeerImp(
                            << id_;
 }
 
-template <typename PeerImplmnt>
-P2PeerImp<PeerImplmnt>::~P2PeerImp()
+template <typename OverlayImplmnt>
+P2PeerImp<OverlayImplmnt>::~P2PeerImp()
 {
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::run()
+P2PeerImp<OverlayImplmnt>::run()
 {
     if (!strand_.running_in_this_thread())
-        return post(strand_, std::bind(&P2PeerImp<PeerImplmnt>::run, shared()));
+        return post(strand_, std::bind(&P2PeerImp<OverlayImplmnt>::run, shared()));
 
     onEvtRun();
 
@@ -445,19 +441,19 @@ P2PeerImp<PeerImplmnt>::run()
 
 //------------------------------------------------------------------------------
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::send(std::shared_ptr<Message> const& m)
+P2PeerImp<OverlayImplmnt>::send(std::shared_ptr<Message> const& m)
 {
     if (!strand_.running_in_this_thread())
         return post(
-            strand_, std::bind(&P2PeerImp<PeerImplmnt>::send, shared(), m));
+            strand_, std::bind(&P2PeerImp<OverlayImplmnt>::send, shared(), m));
     if (gracefulClose_)
         return;
     if (detaching_)
         return;
 
-    if (static_cast<PeerImplmnt*>(this)->squelched(m))
+    if (squelched(m))
         return;
 
     this->overlay_.reportTraffic(
@@ -494,15 +490,15 @@ P2PeerImp<PeerImplmnt>::send(std::shared_ptr<Message> const& m)
         bind_executor(
             strand_,
             std::bind(
-                &P2PeerImp<PeerImplmnt>::onWriteMessage,
+                &P2PeerImp<OverlayImplmnt>::onWriteMessage,
                 shared(),
                 std::placeholders::_1,
                 std::placeholders::_2)));
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::charge(Resource::Charge const& fee)
+P2PeerImp<OverlayImplmnt>::charge(Resource::Charge const& fee)
 {
     if ((usage_.charge(fee) == Resource::drop) && usage_.disconnect() &&
         strand_.running_in_this_thread())
@@ -515,18 +511,18 @@ P2PeerImp<PeerImplmnt>::charge(Resource::Charge const& fee)
 
 //------------------------------------------------------------------------------
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::string
-P2PeerImp<PeerImplmnt>::getVersion() const
+P2PeerImp<OverlayImplmnt>::getVersion() const
 {
     if (inbound_)
         return headers_["User-Agent"].to_string();
     return headers_["Server"].to_string();
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 Json::Value
-P2PeerImp<PeerImplmnt>::json()
+P2PeerImp<OverlayImplmnt>::json()
 {
     Json::Value ret(Json::objectValue);
 
@@ -570,9 +566,9 @@ P2PeerImp<PeerImplmnt>::json()
 
 //------------------------------------------------------------------------------
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::close()
+P2PeerImp<OverlayImplmnt>::close()
 {
     assert(strand_.running_in_this_thread());
     if (socket_.is_open())
@@ -593,16 +589,16 @@ P2PeerImp<PeerImplmnt>::close()
     }
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::fail(std::string const& reason)
+P2PeerImp<OverlayImplmnt>::fail(std::string const& reason)
 {
     if (!strand_.running_in_this_thread())
         return post(
             strand_,
             std::bind(
-                (void (P2PeerImp<PeerImplmnt>::*)(std::string const&)) &
-                    P2PeerImp<PeerImplmnt>::fail,
+                (void (P2PeerImp<OverlayImplmnt>::*)(std::string const&)) &
+                    P2PeerImp<OverlayImplmnt>::fail,
                 shared(),
                 reason));
     if (journal_.active(beast::severities::kWarning) && socket_.is_open())
@@ -614,9 +610,9 @@ P2PeerImp<PeerImplmnt>::fail(std::string const& reason)
     close();
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::fail(std::string const& name, error_code ec)
+P2PeerImp<OverlayImplmnt>::fail(std::string const& name, error_code ec)
 {
     assert(strand_.running_in_this_thread());
     if (socket_.is_open())
@@ -628,9 +624,9 @@ P2PeerImp<PeerImplmnt>::fail(std::string const& name, error_code ec)
     close();
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::gracefulClose()
+P2PeerImp<OverlayImplmnt>::gracefulClose()
 {
     assert(strand_.running_in_this_thread());
     assert(socket_.is_open());
@@ -647,25 +643,25 @@ while(send_queue_.size() > 1)
     stream_.async_shutdown(bind_executor(
         strand_,
         std::bind(
-            &P2PeerImp<PeerImplmnt>::onShutdown,
+            &P2PeerImp<OverlayImplmnt>::onShutdown,
             shared(),
             std::placeholders::_1)));
 }
 
 //------------------------------------------------------------------------------
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::string
-P2PeerImp<PeerImplmnt>::makePrefix(id_t id)
+P2PeerImp<OverlayImplmnt>::makePrefix(id_t id)
 {
     std::stringstream ss;
     ss << "[" << std::setfill('0') << std::setw(3) << id << "] ";
     return ss.str();
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::onShutdown(error_code ec)
+P2PeerImp<OverlayImplmnt>::onShutdown(error_code ec)
 {
     onEvtShutdown();
     // If we don't get eof then something went wrong
@@ -680,9 +676,9 @@ P2PeerImp<PeerImplmnt>::onShutdown(error_code ec)
 }
 
 //------------------------------------------------------------------------------
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::doAccept()
+P2PeerImp<OverlayImplmnt>::doAccept()
 {
     assert(read_buffer_.size() == 0);
 
@@ -701,7 +697,7 @@ P2PeerImp<PeerImplmnt>::doAccept()
 
     onEvtAccept();
 
-    this->overlay_.activate(std::static_pointer_cast<PeerImplmnt>(shared()));
+    this->overlay_.activate(std::static_pointer_cast<typename OverlayImplTraits<OverlayImplmnt>::PeerImp_t>(shared()));
 
     // XXX Set timer: connection is in grace period to be useful.
     // XXX Set timer: connection idle (idle may vary depending on connection
@@ -740,17 +736,17 @@ P2PeerImp<PeerImplmnt>::doAccept()
             }));
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::string
-P2PeerImp<PeerImplmnt>::name() const
+P2PeerImp<OverlayImplmnt>::name() const
 {
     std::shared_lock read_lock{nameMutex_};
     return name_;
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::string
-P2PeerImp<PeerImplmnt>::domain() const
+P2PeerImp<OverlayImplmnt>::domain() const
 {
     return headers_["Server-Domain"].to_string();
 }
@@ -759,9 +755,9 @@ P2PeerImp<PeerImplmnt>::domain() const
 
 // Protocol logic
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::doProtocolStart()
+P2PeerImp<OverlayImplmnt>::doProtocolStart()
 {
     onReadMessage(error_code(), 0);
 
@@ -769,9 +765,9 @@ P2PeerImp<PeerImplmnt>::doProtocolStart()
 }
 
 // Called repeatedly with protocol message data
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::onReadMessage(
+P2PeerImp<OverlayImplmnt>::onReadMessage(
     error_code ec,
     std::size_t bytes_transferred)
 {
@@ -803,8 +799,7 @@ P2PeerImp<PeerImplmnt>::onReadMessage(
     while (read_buffer_.size() > 0)
     {
         std::size_t bytes_consumed;
-        std::tie(bytes_consumed, ec) = invokeProtocolMessage(
-            read_buffer_.data(), static_cast<PeerImplmnt&>(*this), hint);
+        std::tie(bytes_consumed, ec) = doInvokeProtocolMessage(read_buffer_, *this, hint);
         if (ec)
             return fail("onReadMessage", ec);
         if (!socket_.is_open())
@@ -822,15 +817,15 @@ P2PeerImp<PeerImplmnt>::onReadMessage(
         bind_executor(
             strand_,
             std::bind(
-                &P2PeerImp<PeerImplmnt>::onReadMessage,
+                &P2PeerImp<OverlayImplmnt>::onReadMessage,
                 shared(),
                 std::placeholders::_1,
                 std::placeholders::_2)));
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::onWriteMessage(
+P2PeerImp<OverlayImplmnt>::onWriteMessage(
     error_code ec,
     std::size_t bytes_transferred)
 {
@@ -862,7 +857,7 @@ P2PeerImp<PeerImplmnt>::onWriteMessage(
             bind_executor(
                 strand_,
                 std::bind(
-                    &P2PeerImp<PeerImplmnt>::onWriteMessage,
+                    &P2PeerImp<OverlayImplmnt>::onWriteMessage,
                     shared(),
                     std::placeholders::_1,
                     std::placeholders::_2)));
@@ -873,15 +868,15 @@ P2PeerImp<PeerImplmnt>::onWriteMessage(
         return stream_.async_shutdown(bind_executor(
             strand_,
             std::bind(
-                &P2PeerImp<PeerImplmnt>::onShutdown,
+                &P2PeerImp<OverlayImplmnt>::onShutdown,
                 shared(),
                 std::placeholders::_1)));
     }
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 int
-P2PeerImp<PeerImplmnt>::getScore(bool haveItem) const
+P2PeerImp<OverlayImplmnt>::getScore(bool haveItem) const
 {
     // Random component of score, used to break ties and avoid
     // overloading the "best" peer
@@ -918,17 +913,17 @@ P2PeerImp<PeerImplmnt>::getScore(bool haveItem) const
     return score;
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 bool
-P2PeerImp<PeerImplmnt>::isHighLatency() const
+P2PeerImp<OverlayImplmnt>::isHighLatency() const
 {
     std::lock_guard sl(recentLock_);
     return latency_ >= peerHighLatency;
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 void
-P2PeerImp<PeerImplmnt>::Metrics::add_message(std::uint64_t bytes)
+P2PeerImp<OverlayImplmnt>::Metrics::add_message(std::uint64_t bytes)
 {
     using namespace std::chrono_literals;
     std::unique_lock lock{mutex_};
@@ -953,17 +948,17 @@ P2PeerImp<PeerImplmnt>::Metrics::add_message(std::uint64_t bytes)
     }
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::uint64_t
-P2PeerImp<PeerImplmnt>::Metrics::average_bytes() const
+P2PeerImp<OverlayImplmnt>::Metrics::average_bytes() const
 {
     std::shared_lock lock{mutex_};
     return rollingAvgBytes_;
 }
 
-template <typename PeerImplmnt>
+template <typename OverlayImplmnt>
 std::uint64_t
-P2PeerImp<PeerImplmnt>::Metrics::total_bytes() const
+P2PeerImp<OverlayImplmnt>::Metrics::total_bytes() const
 {
     std::shared_lock lock{mutex_};
     return totalBytes_;
