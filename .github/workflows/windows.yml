@@ -68,7 +68,7 @@ jobs:
           ls
           cmake `
             -G "${{ matrix.generator }}" `
-            "-DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake" `
+            "-DCMAKE_TOOLCHAIN_FILE=generators\conan_toolchain.cmake" `
             -Dassert=ON `
             -Dcoverage=OFF `
             -Dreporting=OFF `
