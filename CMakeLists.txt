@@ -73,7 +73,7 @@ find_package(RocksDB REQUIRED)
 set_target_properties(RocksDB::rocksdb PROPERTIES
   INTERFACE_COMPILE_DEFINITIONS RIPPLE_ROCKSDB_AVAILABLE=1
 )
-find_package(NuDB REQUIRED)
+find_package(nudb REQUIRED)
 find_package(date REQUIRED)
 include(deps/Protobuf)
 include(deps/gRPC)
@@ -82,14 +82,14 @@ target_link_libraries(ripple_libs INTERFACE
   ed25519::ed25519
   LibArchive::LibArchive
   lz4::lz4
-  NuDB::NuDB
+  nudb::core
   OpenSSL::Crypto
   OpenSSL::SSL
   Ripple::grpc_pbufs
   Ripple::pbufs
   RocksDB::rocksdb
   secp256k1::secp256k1
-  SOCI::SOCI
+  soci::soci
   SQLite::SQLite3
 )
 

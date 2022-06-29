@@ -1,28 +1,30 @@
-from conans import ConanFile, tools
-from conan.tools.cmake import CMake
-from conan.tools.cmake import CMakeToolchain
+from conans import ConanFile
+from conan.tools.cmake import CMake, CMakeToolchain, cmake_layout
 import re
 
 class Xrpl(ConanFile):
     name = 'xrpl'
-    generators = 'CMakeToolchain', 'cmake_find_package'
 
     license = 'ISC'
     author = 'John Freeman <jfreeman@ripple.com>'
     url = 'https://github.com/ripple/rippled'
-    description = "XRP Ledger"
+    description = 'XRP Ledger'
     settings = 'os', 'compiler', 'build_type', 'arch'
     options = {
-        'shared': [True, False],
+        'assertions': [True, False],
+        'coverage': [True, False],
         'fPIC': [True, False],
-        'with_jemalloc': [True, False],
         'reporting': [True, False],
+        'shared': [True, False],
         'static': [True, False],
         'tests': [True, False],
         'unity': [True, False],
+        'with_jemalloc': [True, False],
     }
 
     default_options = {
+        'assertions': False,
+        'coverage': False,
         'fPIC': True,
         'reporting': False,
         'shared': False,
@@ -69,7 +71,6 @@ class Xrpl(ConanFile):
     }
 
     requires = [
-        'doctest/2.4.6',
         'boost/1.77.0',
         'date/3.0.1',
         'libarchive/3.6.0',
@@ -86,12 +87,11 @@ class Xrpl(ConanFile):
     ]
 
     def set_version(self):
-        BUILDINFO = f"src/ripple/protocol/impl/BuildInfo.cpp"
-        regex = r"versionString\s?=\s?\"(.*)\""
-        with open(BUILDINFO, 'r') as file:
-            while True:
-                if match := re.search(regex, file.readline()): break
-            self.version =  match.group(1)
+        path = f'{self.recipe_folder}/src/ripple/protocol/impl/BuildInfo.cpp'
+        regex = r'versionString\s?=\s?\"(.*)\"'
+        with open(path, 'r') as file:
+            next(match for line in file if (match := re.search(regex, line)))
+            self.version = match.group(1)
 
     def requirements(self):
         if self.options.with_jemalloc:
@@ -100,18 +100,25 @@ class Xrpl(ConanFile):
             self.requires('cassandra-cpp-driver/2.15.3')
             self.requires('libpq/13.6')
 
-    def export_sources(self):
-        self.copy("*", excludes=["build", ".github"])
+    exports_sources = 'CMakeLists.txt', 'Builds/CMake/*', 'src/*', 'cfg/*'
 
+    def layout(self):
+        cmake_layout(self)
+
+    generators = 'CMakeDeps'
     def generate(self):
         tc = CMakeToolchain(self)
-        if not self.options.tests:
-            tc.variables["tests"] = False
-        tc.variables["reporting"] = self.options.reporting
-        tc.variables["unity"] = self.options.unity
+        print('howdy')
+        tc.variables['tests'] = self.options.tests
+        tc.variables['assert'] = self.options.assertions
+        tc.variables['coverage'] = self.options.coverage
+        tc.variables['reporting'] = self.options.reporting
+        tc.variables['BUILD_SHARED_LIBS'] = self.options.shared
+        tc.variables['static'] = self.options.static
+        tc.variables['unity'] = self.options.unity
         tc.generate()
 
-    def build(self, cli_args="--parallel $(nproc)"):
+    def build(self, cli_args='--parallel $(nproc)'):
         cmake = CMake(self)
         cmake.verbose = True
         cmake.configure()
@@ -124,7 +131,7 @@ class Xrpl(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = [
-            "libxrpl_core.a",
-            "libed25519-donna.a",
-            "libsecp256k1.a",
-            ]
+            'libxrpl_core.a',
+            'libed25519-donna.a',
+            'libsecp256k1.a',
+        ]
