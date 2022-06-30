@@ -29,12 +29,11 @@ conan profile update settings.compiler.libcxx=libstdc++11 default
 
 Windows developers will commonly have a default Conan profile that is missing
 a selection for the [runtime library][2].
-We recommend that you make that selection in your Conan profile to ensure
-a consistent choice among all packages.
-
-```
-conan profile update settings.compiler.runtime=MT default
-```
+You must set the Conan setting `compiler.runtime`,
+either in your Conan profile or on the command line,
+to ensure a consistent choice among all binaries in the dependency graph.
+Which value you must use depends on which configuration you are trying to
+build: `MT` for release and `MTd` for debug.
 
 We find it necessary to use the x64 native build tools on Windows.
 An easy way to do that is to run the shortcut "x64 Native Tools Command
@@ -84,7 +83,7 @@ conan export external/rocksdb
 # The build directory must be named "build".
 mkdir build
 cd build
-conan install .. --build missing --settings build_type=Release
+conan install .. --build missing --settings build_type=Release --settings compiler.runtime=MT
 cmake --toolchain=generators/conan_toolchain.cmake ..
 cmake --build . --config Release
 ./rippled --unittest
