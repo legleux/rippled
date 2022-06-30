@@ -84,7 +84,7 @@ conan export external/rocksdb
 mkdir build
 cd build
 conan install .. --build missing --settings build_type=Release --settings compiler.runtime=MT
-cmake --toolchain=generators/conan_toolchain.cmake ..
+cmake -DCMAKE_TOOLCHAIN_FILE:FILEPATH=generators/conan_toolchain.cmake ..
 cmake --build . --config Release
 ./rippled --unittest
 ```

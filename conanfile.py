@@ -7,8 +7,8 @@ class Xrpl(ConanFile):
 
     license = 'ISC'
     author = 'John Freeman <jfreeman@ripple.com>'
-    url = 'https://github.com/ripple/rippled'
-    description = 'XRP Ledger'
+    url = 'https://github.com/xrplf/rippled'
+    description = 'The XRP Ledger'
     settings = 'os', 'compiler', 'build_type', 'arch'
     options = {
         'assertions': [True, False],
@@ -71,7 +71,7 @@ class Xrpl(ConanFile):
     }
 
     requires = [
-        'boost/1.77.0',
+        'boost/1.78.0',
         'date/3.0.1',
         'libarchive/3.6.0',
         'lz4/1.9.3',
