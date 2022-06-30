@@ -36,6 +36,18 @@ a consistent choice among all packages.
 conan profile update settings.compiler.runtime=MT default
 ```
 
+We find it necessary to use the x64 native build tools on Windows.
+An easy way to do that is to run the shortcut "x64 Native Tools Command
+Prompt" for the version of Visual Studio that you have installed.
+
+Windows developers must build rippled and thus its dependencies for the x64
+architecture.
+That can be guaranteed with a Conan profile setting:
+
+```
+conan profile update settings.compiler.arch=x86_64 default
+```
+
 
 ## Branches
 
@@ -63,17 +75,19 @@ git checkout develop
 ## How to build
 
 Here is an example building the package in a release configuration.
-These commands should work from just about any shell,
-including Bash and PowerShell.
+These commands should work in both Bash and PowerShell.
+(Replace "Release" with "Debug" if you want to build that configuration
+instead.)
 
 ```
 conan export external/rocksdb
-mkdir .build
-cd .build
-conan install .. --build missing -s build_type=Release
-cmake -DCMAKE_TOOLCHAIN_FILE=conan_toolchain.cmake -DCMAKE_BUILD_TYPE=Release ..
+# The build directory must be named "build".
+mkdir build
+cd build
+conan install .. --build missing --settings build_type=Release
+cmake --toolchain=generators/conan_toolchain.cmake ..
 cmake --build . --config Release
-./rippled --help
+./rippled --unittest
 ```
 
 In addition to choosing a different configuration, there are a few options you
