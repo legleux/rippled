@@ -15,7 +15,7 @@ jobs:
           - Release
     runs-on: ${{ matrix.platform }}-latest
     env:
-      build_dir: .build
+      build_dir: build
     steps:
       - name: checkout
         uses: actions/checkout@v3
