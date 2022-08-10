@@ -30,7 +30,4 @@ service XRPLedgerAPIService {
   // ledgers. Note, this method has no JSON equivalent.
   rpc GetLedgerDiff(GetLedgerDiffRequest) returns (GetLedgerDiffResponse);
 
-  // Get account info for an account on the XRP Ledger.
-  rpc GetAmmInfo (GetAmmInfoRequest) returns (GetAmmInfoResponse);
-
 }

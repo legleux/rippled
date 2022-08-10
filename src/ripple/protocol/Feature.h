@@ -341,6 +341,7 @@ extern uint256 const fixTrustLinesToSelf;
 extern uint256 const fixRemoveNFTokenAutoTrustLine;
 extern uint256 const featureImmediateOfferKilled;
 extern uint256 const featureAMM;
+extern uint256 const fixUniversalNumber;
 
 }  // namespace ripple
 
