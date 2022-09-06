@@ -535,6 +535,7 @@ public:
    @param limitQuality If present, the minimum quality for any strand taken
    @param sendMaxST If present, the maximum STAmount to send
    @param j Journal to write journal messages to
+   @param ammOfferCounter counts iterations with AMM offers
    @param flowDebugInfo If pointer is non-null, write flow debug info here
    @return Actual amount in and out from the strands, errors, and payment
    sandbox
