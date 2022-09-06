@@ -68,12 +68,13 @@ calcLPTokensOut(
     STAmount const& lpTokensBalance,
     std::uint16_t tfee)
 {
-    return toSTAmount(
-        lpTokensBalance.issue(),
-        lpTokensBalance *
-            (1 -
-             root(
-                 1 - asset1Withdraw / (asset1Balance * feeMultHalf(tfee)), 2)));
+    if (auto const a =
+            Number(1) - asset1Withdraw / (asset1Balance * feeMultHalf(tfee));
+        a <= 0 || a >= 1)
+        return STAmount{};
+    else
+        return toSTAmount(
+            lpTokensBalance.issue(), lpTokensBalance * (1 - root(a, 2)));
 }
 
 STAmount

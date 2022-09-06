@@ -130,7 +130,8 @@ calcAssetIn(
     STAmount const& ammTokensBalance,
     std::uint16_t tfee);
 
-/** Calculate LP Tokens given asset's withdraw amount.
+/** Calculate LP Tokens given asset's withdraw amount. Return 0
+ * if can't calculate.
  * @param asset1Balance current AMM asset1 balance
  * @param asset1Withdraw requested asset1 withdraw amount
  * @param lpTokensBalance LP Tokens balance

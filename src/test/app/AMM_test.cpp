@@ -30,6 +30,7 @@
 namespace ripple {
 namespace test {
 
+#if 0
 static Json::Value
 readOffers(jtx::Env& env, AccountID const& acct)
 {
@@ -53,6 +54,7 @@ accountInfo(jtx::Env& env, AccountID const& acctId)
     jv[jss::account] = to_string(acctId);
     return env.rpc("json", "account_info", to_string(jv));
 }
+#endif
 
 static XRPAmount
 txfee(jtx::Env const& env, std::uint16_t n)
@@ -872,6 +874,40 @@ private:
             ammAlice.withdraw(
                 alice, USD(0), std::nullopt, std::nullopt, ter(temBAD_AMOUNT));
         });
+
+        // Invalid amount/token value, withdraw all tokens from one side
+        // of the pool.
+        {
+            testAMM([&](AMM& ammAlice, Env& env) {
+                ammAlice.withdraw(
+                    alice,
+                    USD(10000),
+                    std::nullopt,
+                    std::nullopt,
+                    ter(tecAMM_FAILED_WITHDRAW));
+            });
+
+            testAMM([&](AMM& ammAlice, Env& env) {
+                ammAlice.withdraw(
+                    alice,
+                    XRP(10000),
+                    std::nullopt,
+                    std::nullopt,
+                    ter(tecAMM_FAILED_WITHDRAW));
+            });
+
+            testAMM([&](AMM& ammAlice, Env& env) {
+                ammAlice.withdraw(
+                    alice,
+                    std::nullopt,
+                    USD(0),
+                    std::nullopt,
+                    std::nullopt,
+                    tfAMMWithdrawAll,
+                    std::nullopt,
+                    ter(tecAMM_BALANCE));
+            });
+        }
 
         // Bad currency
         testAMM([&](AMM& ammAlice, Env& env) {

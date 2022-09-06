@@ -74,23 +74,27 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
                                "withdraw fields.";
         return temBAD_AMM_OPTIONS;
     }
+
     if (lpTokens && *lpTokens == beast::zero)
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid tokens.";
         return temBAD_AMM_TOKENS;
     }
+
     if (auto const res =
             invalidAmount(asset1Out, withdrawAll || lpTokens || ePrice))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid Asset1Out";
         return *res;
     }
-    else if (auto const res = invalidAmount(asset2Out))
+
+    if (auto const res = invalidAmount(asset2Out))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid Asset2OutAmount";
         return *res;
     }
-    else if (auto const res = invalidAmount(ePrice))
+
+    if (auto const res = invalidAmount(ePrice))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid EPrice";
         return *res;
@@ -102,7 +106,8 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
 TER
 AMMWithdraw::preclaim(PreclaimContext const& ctx)
 {
-    if (!ctx.view.read(keylet::account(ctx.tx[sfAccount])))
+    auto const accountID = ctx.tx[sfAccount];
+    if (!ctx.view.read(keylet::account(accountID)))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid account.";
         return terNO_ACCOUNT;
@@ -118,6 +123,13 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
     auto const asset1Out = ctx.tx[~sfAsset1Out];
     auto const asset2Out = ctx.tx[~sfAsset2Out];
     auto const ammAccountID = ammSle->getAccountID(sfAMMAccount);
+
+    if ((asset1Out && requireAuth(ctx.view, asset1Out->issue(), accountID)) ||
+        (asset2Out && requireAuth(ctx.view, asset2Out->issue(), accountID)))
+    {
+        JLOG(ctx.j.debug()) << "AMM Instance: account is not authorized";
+        return tecNO_PERMISSION;
+    }
 
     if (isFrozen(ctx.view, asset1Out) || isFrozen(ctx.view, sfAsset2Out))
     {
@@ -139,6 +151,12 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid tokens.";
         return tecAMM_INVALID_TOKENS;
+    }
+
+    if (lpTokens && lpTokens->issue() != lptBalance.issue())
+    {
+        JLOG(ctx.j.debug()) << "AMM Withdraw: invalid LPTokens.";
+        return temBAD_AMM_TOKENS;
     }
 
     return tesSUCCESS;
@@ -289,9 +307,6 @@ AMMWithdraw::withdraw(
     auto const [issue1, issue2] = getTokensIssue(*ammSle);
     auto const [asset1, asset2] =
         ammPoolHolds(view, ammAccount, issue1, issue2, j_);
-
-    // TODO there should be constraints on what can be withdrawn.
-    // For instance, all tokens can't be withdrawn from one pool.
 
     // Invalid tokens or withdrawing more than own.
     if (lpTokensWithdraw == beast::zero || lpTokensWithdraw > lpTokens)
@@ -448,13 +463,15 @@ AMMWithdraw::singleWithdrawal(
 {
     auto const tokens =
         calcLPTokensOut(asset1Balance, asset1Out, lptAMMBalance, tfee);
+    if (tokens == beast::zero)
+        return {tecAMM_FAILED_WITHDRAW, STAmount{}};
     return withdraw(
         view, ammAccount, asset1Out, std::nullopt, lptAMMBalance, tokens);
 }
 
 /** withdrawal of single asset specified in Asset1Out proportional
  * to the share represented by the amount of LPTokens.
- *       b = B * (1 - (1 - t/T)**2) * (1 - 0.5 * tfee) (8)
+ *       Y = B * (1 - (1 - t/T)**2) * (1 - 0.5 * tfee) (8)
  * Use equation 8 to compute the amount of asset1, given the redeemed t
  *   represented by LPTokens. Let this be Y.
  * If (amount exists for Asset1Out & Y >= amount in Asset1Out) ||

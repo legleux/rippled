@@ -40,51 +40,40 @@ AMMCreate::preflight(PreflightContext const& ctx)
     if (!ammRequiredAmendments(ctx.rules))
         return temDISABLED;
 
-    auto const ret = preflight1(ctx);
-    if (!isTesSuccess(ret))
+    if (auto const ret = preflight1(ctx); !isTesSuccess(ret))
         return ret;
 
-    auto& tx = ctx.tx;
-    auto& j = ctx.j;
-
-    if (tx.getFlags() & tfUniversalMask)
+    if (ctx.tx.getFlags() & tfUniversalMask)
     {
-        JLOG(j.debug()) << "AMM Instance: invalid flags.";
+        JLOG(ctx.j.debug()) << "AMM Instance: invalid flags.";
         return temINVALID_FLAG;
     }
 
-    auto const saAsset1 = tx[sfAsset1];
-    auto const saAsset2 = tx[sfAsset2];
+    auto const saAsset1 = ctx.tx[sfAsset1];
+    auto const saAsset2 = ctx.tx[sfAsset2];
+
     if (saAsset1.issue() == saAsset2.issue())
     {
-        JLOG(j.debug())
+        JLOG(ctx.j.debug())
             << "AMM Instance: tokens can not have the same currency/issuer.";
         return temBAD_AMM_TOKENS;
     }
-    if (saAsset1 <= beast::zero || saAsset2 <= beast::zero)
+
+    if (auto const err = invalidAmount(saAsset1))
     {
-        JLOG(j.debug()) << "AMM Instance: bad amount.";
-        return temBAD_AMOUNT;
+        JLOG(ctx.j.debug()) << "AMM Instance: invalid asset1 amount.";
+        return *err;
     }
 
-    // We don't allow a non-native currency to use the currency code XRP.
-    if (badCurrency() == saAsset1.getCurrency() ||
-        badCurrency() == saAsset2.getCurrency())
+    if (auto const err = invalidAmount(saAsset2))
     {
-        JLOG(j.debug()) << "AMM Instance: bad currency.";
-        return temBAD_CURRENCY;
+        JLOG(ctx.j.debug()) << "AMM Instance: invalid asset2 amount.";
+        return *err;
     }
 
-    if ((saAsset1.native() && saAsset1.native() != !saAsset1.getIssuer()) ||
-        (saAsset2.native() && saAsset2.native() != !saAsset2.getIssuer()))
+    if (ctx.tx[sfTradingFee] > 65000)
     {
-        JLOG(j.debug()) << "AMM Instance: bad issuer.";
-        return temBAD_ISSUER;
-    }
-
-    if (tx[sfTradingFee] > 65000)
-    {
-        JLOG(j.debug()) << "AMM Instance: invalid trading fee.";
+        JLOG(ctx.j.debug()) << "AMM Instance: invalid trading fee.";
         return temBAD_FEE;
     }
 
@@ -94,11 +83,9 @@ AMMCreate::preflight(PreflightContext const& ctx)
 TER
 AMMCreate::preclaim(PreclaimContext const& ctx)
 {
-    auto& tx = ctx.tx;
-    auto& j = ctx.j;
-    auto const accountID = tx[sfAccount];
-    auto const saAsset1 = tx[sfAsset1];
-    auto const saAsset2 = tx[sfAsset2];
+    auto const accountID = ctx.tx[sfAccount];
+    auto const saAsset1 = ctx.tx[sfAsset1];
+    auto const saAsset2 = ctx.tx[sfAsset2];
 
     if (!ctx.view.read(keylet::account(accountID)))
     {
@@ -109,15 +96,13 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
     if (requireAuth(ctx.view, saAsset1.issue(), accountID) ||
         requireAuth(ctx.view, saAsset2.issue(), accountID))
     {
-        JLOG(j.debug()) << "AMM Instance: account is not authorized";
+        JLOG(ctx.j.debug()) << "AMM Instance: account is not authorized";
         return tecNO_PERMISSION;
     }
 
-    if ((!saAsset1.native() &&
-         isGlobalFrozen(ctx.view, saAsset1.getIssuer())) ||
-        (!saAsset2.native() && isGlobalFrozen(ctx.view, saAsset2.getIssuer())))
+    if (isFrozen(ctx.view, saAsset1) || isFrozen(ctx.view, saAsset2))
     {
-        JLOG(j.debug()) << "AMM Instance: involves frozen asset";
+        JLOG(ctx.j.debug()) << "AMM Instance: involves frozen asset.";
         return tecFROZEN;
     }
 
@@ -134,7 +119,7 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
 
     if (insufficientBalance(saAsset1) || insufficientBalance(saAsset2))
     {
-        JLOG(j.debug()) << "AMM Instance: has insufficient funds";
+        JLOG(ctx.j.debug()) << "AMM Instance: has insufficient funds";
         return tecUNFUNDED_PAYMENT;
     }
 
@@ -187,7 +172,7 @@ AMMCreate::applyGuts(Sandbox& sb)
         view().rules().enabled(featureDeletableAccounts) ? view().seq() : 1};
     sleAMMRoot->setFieldU32(sfSequence, seqno);
     // Ignore reserves requirement, disable the master key, and allow default
-    // rippling (AMM LPToken can be used a token in another AMM, which must
+    // rippling (AMM LPToken can be used as a token in another AMM, which must
     // support payments and offer crossing).
     sleAMMRoot->setFieldU32(
         sfFlags, lsfAMM | lsfDisableMaster | lsfDefaultRipple);

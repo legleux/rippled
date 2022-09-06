@@ -105,17 +105,33 @@ AMMBid::preclaim(PreclaimContext const& ctx)
 
     auto const lpTokens = lpHolds(
         ctx.view, ammSle->getAccountID(sfAMMAccount), ctx.tx[sfAccount], ctx.j);
-    if (auto const minSlotPrice = ctx.tx[~sfMinSlotPrice];
-        minSlotPrice && *minSlotPrice > lpTokens)
+
+    if (auto const minSlotPrice = ctx.tx[~sfMinSlotPrice])
     {
-        JLOG(ctx.j.debug()) << "AMM Bid: Invalid Tokens.";
-        return tecAMM_INVALID_TOKENS;
+        if (*minSlotPrice > lpTokens)
+        {
+            JLOG(ctx.j.debug()) << "AMM Bid: Invalid Tokens.";
+            return tecAMM_INVALID_TOKENS;
+        }
+        if (minSlotPrice->issue() != lpTokens.issue())
+        {
+            JLOG(ctx.j.debug()) << "AMM Bid: Invalid LPToken.";
+            return temBAD_AMM_TOKENS;
+        }
     }
-    else if (auto const maxSlotPrice = ctx.tx[~sfMaxSlotPrice];
-             maxSlotPrice && *maxSlotPrice > lpTokens)
+
+    if (auto const maxSlotPrice = ctx.tx[~sfMaxSlotPrice])
     {
-        JLOG(ctx.j.debug()) << "AMM Bid: Invalid Tokens.";
-        return tecAMM_INVALID_TOKENS;
+        if (*maxSlotPrice > lpTokens)
+        {
+            JLOG(ctx.j.debug()) << "AMM Bid: Invalid Tokens.";
+            return tecAMM_INVALID_TOKENS;
+        }
+        if (maxSlotPrice->issue() != lpTokens.issue())
+        {
+            JLOG(ctx.j.debug()) << "AMM Bid: Invalid LPToken.";
+            return temBAD_AMM_TOKENS;
+        }
     }
 
     return tesSUCCESS;

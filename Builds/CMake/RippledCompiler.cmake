@@ -108,7 +108,7 @@ else ()
       -Wno-char-subscripts
       -Wno-format
       -Wno-unused-local-typedefs
-      $<$<OR:$<BOOL:${is_gcc}>,$<BOOL:${is_clang}>>:
+      $<$<BOOL:${is_gcc}>:
         -Wno-unused-but-set-variable
         -Wno-deprecated
       >

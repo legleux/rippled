@@ -69,22 +69,26 @@ AMMDeposit::preflight(PreflightContext const& ctx)
                                "deposit fields.";
         return temBAD_AMM_OPTIONS;
     }
-    if (lpTokens && *lpTokens == beast::zero)
+
+    if (lpTokens && *lpTokens <= beast::zero)
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid LPTokens";
         return temBAD_AMM_TOKENS;
     }
-    else if (auto const res = invalidAmount(asset1In, (lpTokens || ePrice)))
+
+    if (auto const res = invalidAmount(asset1In, (lpTokens || ePrice)))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid Asset1In";
         return *res;
     }
-    else if (auto const res = invalidAmount(asset2In))
+
+    if (auto const res = invalidAmount(asset2In))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid Asset2InAmount";
         return *res;
     }
-    else if (auto const res = invalidAmount(ePrice))
+
+    if (auto const res = invalidAmount(ePrice))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid EPrice";
         return *res;
@@ -96,7 +100,9 @@ AMMDeposit::preflight(PreflightContext const& ctx)
 TER
 AMMDeposit::preclaim(PreclaimContext const& ctx)
 {
-    if (!ctx.view.read(keylet::account(ctx.tx[sfAccount])))
+    auto const accountID = ctx.tx[sfAccount];
+
+    if (!ctx.view.read(keylet::account(accountID)))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: Invalid account.";
         return terNO_ACCOUNT;
@@ -105,14 +111,23 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
     auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAMMID]);
     if (!ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Deposit: Invalid AMM account.";
+        JLOG(ctx.j.debug()) << "AMM Deposit: Invalid AMMID.";
         return terNO_ACCOUNT;
     }
 
-    if (isFrozen(ctx.view, ctx.tx[~sfAsset1In]) ||
-        isFrozen(ctx.view, ctx.tx[~sfAsset2Out]))
+    auto const asset1In = ctx.tx[~sfAsset1In];
+    auto const asset2Out = ctx.tx[~sfAsset2Out];
+
+    if ((asset1In && requireAuth(ctx.view, asset1In->issue(), accountID)) ||
+        (asset2Out && requireAuth(ctx.view, asset2Out->issue(), accountID)))
     {
-        JLOG(ctx.j.debug()) << "AMM Deposit involves frozen asset";
+        JLOG(ctx.j.debug()) << "AMM Instance: account is not authorized";
+        return tecNO_PERMISSION;
+    }
+
+    if (isFrozen(ctx.view, asset1In) || isFrozen(ctx.view, asset2Out))
+    {
+        JLOG(ctx.j.debug()) << "AMM Deposit involves frozen asset.";
         return tecFROZEN;
     }
 
@@ -122,8 +137,15 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
         lptAMMBalance <= beast::zero)
     {
         JLOG(ctx.j.debug())
-            << "AMM Deposit: reserves or tokens balance is zero";
+            << "AMM Deposit: reserves or tokens balance is zero.";
         return tecAMM_BALANCE;
+    }
+
+    if (auto const lpTokens = ctx.tx[~sfLPToken];
+        lpTokens && lpTokens->issue() != lptAMMBalance.issue())
+    {
+        JLOG(ctx.j.debug()) << "AMM Deposit: invalid LPTokens.";
+        return temBAD_AMM_TOKENS;
     }
 
     return tesSUCCESS;

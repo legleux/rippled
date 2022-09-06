@@ -191,7 +191,7 @@ public:
     qualityUpperBound(ReadView const& v, DebtDirection prevStepDir) const = 0;
 
     /** Get QualityFunction. Used in one path optimization where
-     * the quality function is non-constant (has AMM) and there
+     * the quality function is non-constant (has AMM) and there is
      * limitQuality. QualityFunction allows calculation of
      * required path output given requested limitQuality.
      * All steps, except for BookStep have the default
@@ -379,6 +379,7 @@ normalizePath(
    @param ownerPaysTransferFee false -> charge sender; true -> charge offer
    owner
    @param offerCrossing false -> payment; true -> offer crossing
+   @param ammOfferCounter counts iterations with AMM offers
    @param j Journal for logging messages
    @return Error code and constructed Strand
 */
@@ -417,6 +418,7 @@ toStrand(
    @param ownerPaysTransferFee false -> charge sender; true -> charge offer
    owner
    @param offerCrossing false -> payment; true -> offer crossing
+   @param ammOfferCounter counts iterations with AMM offers
    @param j Journal for logging messages
    @return error code and collection of strands
 */

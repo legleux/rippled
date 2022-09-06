@@ -26,18 +26,10 @@ namespace ripple {
 
 class Quality;
 
-/** Average Quality as function of out: q(out) = m * out + b,
+/** Average Quality as a function of out: q(out) = m * out + b,
  * where m = -1 / poolGets, b = poolPays / poolGets. Used
  * to find required output amount when quality limit is
- * provided for one path optimization. This implementation
- * may possibly lead to using this approach for multiple paths.
- * Current issue with is AMM and CLOB offer dependency between
- * the paths. AMM is more complicated of two. But CLOB offer
- * dependency also requires some tweaking. If a CLOB offer
- * is used in calculating quality function in one path, then
- * it can't be used in calculating quality function in another
- * path. Moreover, we need to find a path, which would have
- * the best quality with this CLOB offer.
+ * provided for one path optimization.
  */
 class QualityFunction
 {
@@ -49,7 +41,7 @@ public:
     QualityFunction(Quality const& quality);
     QualityFunction(Amounts const& amounts);
     QualityFunction();
-    ~QualityFunction() = default;
+    //~QualityFunction() = default;
 
     /** Combines QF with the next step QF
      */

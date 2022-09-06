@@ -226,10 +226,9 @@ AMMLiquidity::getOffer(
                      << " " << balances_.out << " new balances " << balances.in
                      << " " << balances.out;
 
-    // Spot Price quality
-    auto const spQuality = Quality{balances};
-    // Can't generate AMM offer with a better quality than CLOB's offer quality.
-    if (clobQuality && spQuality < *clobQuality)
+    // Can't generate AMM offer with a better quality than CLOB's offer quality
+    // if AMM's Spot Price quality is less than CLOB offer quality.
+    if (clobQuality && Quality{balances} < *clobQuality)
     {
         JLOG(j_.debug()) << "AMMLiquidity::getOffer, higher clob quality";
         return std::nullopt;
