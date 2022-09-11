@@ -50,10 +50,17 @@ public:
 
     /** Find output to produce the requested
      * instant quality (Spot Price Quality).
-     * @param quality requested instant quality (quality limit)
+     * @param quality requested instant quality.
      */
     std::optional<Number>
     outFromInstQ(Quality const& quality);
+
+    /** Find output to produce the requested
+     * average quality.
+     * @param quality requested average quality (quality limit)
+     */
+    std::optional<Number>
+    outFromAvgQ(Quality const& quality);
 
     /** Return true if the quality function is constant
      */

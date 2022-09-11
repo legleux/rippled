@@ -17,6 +17,7 @@
 */
 //==============================================================================
 
+#include <ripple/app/ledger/OrderBookDB.h>
 #include <ripple/app/misc/AMM.h>
 #include <ripple/app/misc/AMM_formulae.h>
 #include <ripple/app/tx/impl/AMMCreate.h>
@@ -223,9 +224,24 @@ AMMCreate::applyGuts(Sandbox& sb)
     if (res != tesSUCCESS)
         JLOG(j_.debug()) << "AMM Instance: failed to send " << saAsset2;
     else
+    {
         JLOG(j_.debug()) << "AMM Instance: success " << ammAccountID << " "
                          << ammID << " " << lptIssue << " " << saAsset1 << " "
                          << saAsset2;
+        auto addOrderBook = [&](Issue const& issueIn,
+                                Issue const& issueOut,
+                                std::uint64_t uRate) {
+            Book const book{issueIn, issueOut};
+            auto dir = keylet::quality(keylet::book(book), uRate);
+            if (auto const bookExisted = static_cast<bool>(sb.peek(dir));
+                !bookExisted)
+                ctx_.app.getOrderBookDB().addOrderBook(book);
+        };
+        addOrderBook(
+            saAsset1.issue(), saAsset2.issue(), getRate(saAsset2, saAsset1));
+        addOrderBook(
+            saAsset2.issue(), saAsset1.issue(), getRate(saAsset1, saAsset2));
+    }
 
     return {res, res == tesSUCCESS};
 }

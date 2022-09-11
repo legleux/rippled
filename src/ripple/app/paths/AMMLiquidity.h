@@ -128,7 +128,7 @@ private:
     AMMOfferCounter const& offerCounter_;
     AccountID ammAccountID_;
     std::uint32_t tradingFee_;
-    // Cached AMM pool balances as of last getOffers()
+    // Cached AMM pool balances as of last getOffer()
     mutable Amounts balances_;
     // Is seated in case of multi-path. Generates Fibonacci
     // sequence offer.
@@ -191,7 +191,8 @@ private:
     Amounts
     fetchBalances(ReadView const& view) const;
 
-    /** Returns total amount held by AMM for the given token.
+    /** Returns seated total amount held by AMM for the given token.
+     * Returns nullopt if AMM doesn't exist.
      */
     STAmount
     ammAccountHolds(

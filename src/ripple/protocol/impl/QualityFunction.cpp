@@ -70,4 +70,17 @@ QualityFunction::outFromInstQ(Quality const& quality)
     return std::nullopt;
 }
 
+std::optional<Number>
+QualityFunction::outFromAvgQ(Quality const& quality)
+{
+    if (m_ != 0 && quality.rate() != beast::zero)
+    {
+        auto const out = (b_ - 1 / quality.rate()) / m_;
+        if (out <= 0)
+            return std::nullopt;
+        return out;
+    }
+    return std::nullopt;
+}
+
 }  // namespace ripple
