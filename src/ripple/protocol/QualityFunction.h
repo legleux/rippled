@@ -49,13 +49,6 @@ public:
     combineWithNext(QualityFunction const& qf);
 
     /** Find output to produce the requested
-     * instant quality (Spot Price Quality).
-     * @param quality requested instant quality.
-     */
-    std::optional<Number>
-    outFromInstQ(Quality const& quality);
-
-    /** Find output to produce the requested
      * average quality.
      * @param quality requested average quality (quality limit)
      */

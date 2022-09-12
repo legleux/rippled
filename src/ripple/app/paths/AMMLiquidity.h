@@ -191,8 +191,7 @@ private:
     Amounts
     fetchBalances(ReadView const& view) const;
 
-    /** Returns seated total amount held by AMM for the given token.
-     * Returns nullopt if AMM doesn't exist.
+    /** Returns total amount held by AMM for the given token.
      */
     STAmount
     ammAccountHolds(
