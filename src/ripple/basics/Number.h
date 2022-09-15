@@ -22,6 +22,7 @@
 
 #include <ripple/basics/XRPAmount.h>
 #include <cstdint>
+#include <limits>
 #include <ostream>
 #include <string>
 
@@ -335,6 +336,24 @@ squelch(Number const& x, Number const& limit) noexcept
         return Number{};
     return x;
 }
+
+class saveNumberRoundMode
+{
+    Number::rounding_mode mode_;
+
+public:
+    ~saveNumberRoundMode()
+    {
+        Number::setround(mode_);
+    }
+    explicit saveNumberRoundMode(Number::rounding_mode mode) noexcept
+        : mode_{mode}
+    {
+    }
+    saveNumberRoundMode(saveNumberRoundMode const&) = delete;
+    saveNumberRoundMode&
+    operator=(saveNumberRoundMode const&) = delete;
+};
 
 }  // namespace ripple
 

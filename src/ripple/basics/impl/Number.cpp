@@ -25,7 +25,7 @@
 #include <type_traits>
 #include <utility>
 
-#ifdef _MSVC_LANG
+#ifdef BOOST_COMP_MSVC
 #include <boost/multiprecision/cpp_int.hpp>
 using uint128_t = boost::multiprecision::uint128_t;
 #else   // !defined(_MSVC_LANG)
@@ -130,32 +130,37 @@ int
 Number::Guard::round() noexcept
 {
     auto mode = Number::getround();
-    switch (mode)
+
+    if (mode == towards_zero)
+        return -1;
+
+    if (mode == downward)
     {
-        case to_nearest:
-            if (digits_ > 0x5000'0000'0000'0000)
-                return 1;
-            if (digits_ < 0x5000'0000'0000'0000)
-                return -1;
-            if (xbit_)
-                return 1;
-            return 0;
-        case towards_zero:
-            return -1;
-        case downward:
-            if (sbit_)
-            {
-                if (digits_ > 0 || xbit_)
-                    return 1;
-            }
-            return -1;
-        case upward:
-            if (sbit_)
-                return -1;
+        if (sbit_)
+        {
             if (digits_ > 0 || xbit_)
                 return 1;
-            return -1;
+        }
+        return -1;
     }
+
+    if (mode == upward)
+    {
+        if (sbit_)
+            return -1;
+        if (digits_ > 0 || xbit_)
+            return 1;
+        return -1;
+    }
+
+    // assume round to nearest if mode is not one of the predefined values
+    if (digits_ > 0x5000'0000'0000'0000)
+        return 1;
+    if (digits_ < 0x5000'0000'0000'0000)
+        return -1;
+    if (xbit_)
+        return 1;
+    return 0;
 }
 
 // Number
@@ -171,9 +176,9 @@ Number::normalize()
         return;
     }
     bool const negative = (mantissa_ < 0);
-    if (negative)
-        mantissa_ = -mantissa_;
     auto m = static_cast<std::make_unsigned_t<rep>>(mantissa_);
+    if (negative)
+        m = -m;
     while ((m < minMantissa) && (exponent_ > minExponent))
     {
         m *= 10;
@@ -506,8 +511,8 @@ to_string(Number const& amount)
 
     assert(exponent + 43 > 0);
 
-    size_t const pad_prefix = 27;
-    size_t const pad_suffix = 23;
+    ptrdiff_t const pad_prefix = 27;
+    ptrdiff_t const pad_suffix = 23;
 
     std::string const raw_value(std::to_string(mantissa));
     std::string val;
@@ -517,7 +522,7 @@ to_string(Number const& amount)
     val.append(raw_value);
     val.append(pad_suffix, '0');
 
-    size_t const offset(exponent + 43);
+    ptrdiff_t const offset(exponent + 43);
 
     auto pre_from(val.begin());
     auto const pre_to(val.begin() + offset);
