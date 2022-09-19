@@ -2857,7 +2857,8 @@ private:
             // Carol pays 25% transfer fee.
             BEAST_EXPECT(expectLine(env, carol, EUR(14937.5)));
             BEAST_EXPECT(expectOffers(env, carol, 0));
-            BEAST_EXPECT(expectOffers(env, bob, 1, {{Amounts{EUR(50), XRP(50)}}}));
+            BEAST_EXPECT(
+                expectOffers(env, bob, 1, {{Amounts{EUR(50), XRP(50)}}}));
         }
 
         {
