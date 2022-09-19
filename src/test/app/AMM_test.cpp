@@ -31,7 +31,6 @@
 namespace ripple {
 namespace test {
 
-#if 0
 static Json::Value
 readOffers(jtx::Env& env, AccountID const& acct)
 {
@@ -47,7 +46,6 @@ readLines(jtx::Env& env, AccountID const& acctId)
     jv[jss::account] = to_string(acctId);
     return env.rpc("json", "account_lines", to_string(jv));
 }
-#endif
 
 static XRPAmount
 txfee(jtx::Env const& env, std::uint16_t n)
@@ -1394,7 +1392,7 @@ private:
                 vote(i, 10000);
             BEAST_EXPECT(ammAlice.expectTradingFee(2750));
             vote(0, 20000);
-            BEAST_EXPECT(ammAlice.expectTradingFee(2056));
+            BEAST_EXPECT(ammAlice.expectTradingFee(2445));
         });
     }
 
@@ -2011,6 +2009,9 @@ private:
             BEAST_EXPECT(expectLine(env, carol, STAmount{token1, 999901}));
             // Carol initial token2 1,000,000 + 100(offer)
             BEAST_EXPECT(expectLine(env, carol, STAmount{token2, 1000100}));
+            ammAMMTokens.withdrawAll(alice);
+            ammAlice1.withdrawAll(alice);
+            ammAlice.withdrawAll(alice);
         });
 
         // LPs pay LPTokens directly. Must trust set .
@@ -2564,36 +2565,106 @@ private:
 
         using namespace jtx;
 
-        Env env{*this, features};
+        {
+            Env env{*this, features};
 
-        fund(env, gw, {alice, bob, carol}, {USD(15000), EUR(15000)}, Fund::All);
+            fund(
+                env,
+                gw,
+                {alice, bob, carol},
+                {USD(15000), EUR(15000)},
+                Fund::All);
 
-        // The scenario:
-        //   o USD/XPR AMM is created.
-        //   o EUR/XRP AMM is created.
-        //   o carol has EUR but wants USD.
-        // Note that carol's offer must come last.  If carol's offer is placed
-        // before AMM is created, then autobridging will not occur.
-        AMM ammAlice(env, alice, XRP(10000), USD(11000));
-        AMM ammBob(env, bob, EUR(10000), XRP(11000));
+            // The scenario:
+            //   o USD/XPR AMM is created.
+            //   o EUR/XRP AMM is created.
+            //   o carol has EUR but wants USD.
+            // Note that carol's offer must come last.  If carol's offer is
+            // placed before AMM is created, then autobridging will not occur.
+            AMM ammAlice(env, alice, XRP(10000), USD(10100));
+            AMM ammBob(env, bob, EUR(10000), XRP(10100));
 
-        // Carol makes an offer that consumes AMM liquidity and
-        // fully consumes Carol's offer.
-        env(offer(carol, USD(400), EUR(400)));
-        env.close();
+            // Carol makes an offer that consumes AMM liquidity and
+            // fully consumes Carol's offer.
+            env(offer(carol, USD(100), EUR(100)));
+            env.close();
 
-        BEAST_EXPECT(ammAlice.expectBalances(
-            XRPAmount{10377358491},
-            STAmount{USD, 10600},
-            IOUAmount{1048808848170152, -8}));
-        BEAST_EXPECT(ammBob.expectBalances(
-            XRPAmount{10622641509},
-            STAmount{EUR, UINT64_C(1035523978727917), -11},
-            IOUAmount{1048808848170152, -8}));
-        BEAST_EXPECT(expectLine(env, carol, STAmount{USD, 15400}));
-        BEAST_EXPECT(expectLine(
-            env, carol, STAmount{EUR, UINT64_C(1464476021272083), -11}));
-        BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(10100), USD(10000), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(ammBob.expectBalances(
+                XRP(10000), EUR(10100), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(15100)));
+            BEAST_EXPECT(expectLine(env, carol, EUR(14900)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+        }
+
+        {
+            Env env{*this, features};
+
+            fund(
+                env,
+                gw,
+                {alice, bob, carol},
+                {USD(15000), EUR(15000)},
+                Fund::All);
+
+            // The scenario:
+            //   o USD/XPR AMM is created.
+            //   o EUR/XRP offer is created.
+            //   o carol has EUR but wants USD.
+            // Note that carol's offer must come last.  If carol's offer is
+            // placed before AMM and bob's offer are created, then autobridging
+            // will not occur.
+            AMM ammAlice(env, alice, XRP(10000), USD(10100));
+            env(offer(bob, EUR(100), XRP(100)));
+            env.close();
+
+            // Carol makes an offer that consumes AMM liquidity and
+            // fully consumes Carol's offer.
+            env(offer(carol, USD(100), EUR(100)));
+            env.close();
+
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(10100), USD(10000), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(15100)));
+            BEAST_EXPECT(expectLine(env, carol, EUR(14900)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(expectOffers(env, bob, 0));
+        }
+
+        {
+            Env env{*this, features};
+
+            fund(
+                env,
+                gw,
+                {alice, bob, carol},
+                {USD(15000), EUR(15000)},
+                Fund::All);
+
+            // The scenario:
+            //   o USD/XPR offer is created.
+            //   o EUR/XRP AMM is created.
+            //   o carol has EUR but wants USD.
+            // Note that carol's offer must come last.  If carol's offer is
+            // placed before AMM and alice's offer are created, then
+            // autobridging will not occur.
+            env(offer(alice, XRP(100), USD(100)));
+            env.close();
+            AMM ammBob(env, bob, EUR(10000), XRP(10100));
+
+            // Carol makes an offer that consumes AMM liquidity and
+            // fully consumes Carol's offer.
+            env(offer(carol, USD(100), EUR(100)));
+            env.close();
+
+            BEAST_EXPECT(ammBob.expectBalances(
+                XRP(10000), EUR(10100), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(15100)));
+            BEAST_EXPECT(expectLine(env, carol, EUR(14900)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(expectOffers(env, alice, 0));
+        }
     }
 
     void
@@ -2671,6 +2742,211 @@ private:
     }
 
     void
+    testTransferRateOffer(FeatureBitset features)
+    {
+        testcase("Transfer Rate Offer");
+
+        using namespace jtx;
+
+        // Transfer fee is not charged if AMM is src/dst.
+        {
+            Env env{*this, features};
+            fund(env, gw, {alice, bob}, {USD(15000)}, Fund::All);
+            env(rate(gw, 1.25));
+
+            // AMM XRP/USD. Alice places USD/XRP offer. The transfer fee is not
+            // charged.
+            AMM ammBob(env, bob, XRP(10000), USD(10100));
+
+            env(offer(alice, USD(100), XRP(100)));
+            env.close();
+
+            BEAST_EXPECT(ammBob.expectBalances(
+                XRP(10100), USD(10000), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, alice, USD(15100)));
+            BEAST_EXPECT(expectOffers(env, alice, 0));
+        }
+
+        {
+            // Reverse the order, so the offer in the books is to sell XRP
+            // in return for USD. The transfer fee is not charged.
+            Env env{*this, features};
+            fund(env, gw, {alice, bob}, {USD(15000)}, Fund::All);
+            env(rate(gw, 1.25));
+
+            AMM ammBob(env, bob, XRP(10100), USD(10000));
+
+            env(offer(alice, XRP(100), USD(100)));
+            env.close();
+
+            BEAST_EXPECT(ammBob.expectBalances(
+                XRP(10000), USD(10100), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, alice, USD(14900)));
+            BEAST_EXPECT(expectOffers(env, alice, 0));
+        }
+
+        {
+            // Bridged crossing. The transfer fee is paid on the step not
+            // involving AMM as src/dst.
+            Env env{*this, features};
+            fund(
+                env,
+                gw,
+                {alice, bob, carol},
+                {USD(15000), EUR(15000)},
+                Fund::All);
+            env(rate(gw, 1.25));
+
+            // The scenario:
+            //   o USD/XPR AMM is created.
+            //   o EUR/XRP Offer is created.
+            //   o carol has EUR but wants USD.
+            // Note that Carol's offer must come last.  If Carol's offer is
+            // placed before AMM is created, then autobridging will not occur.
+            AMM ammAlice(env, alice, XRP(10000), USD(10100));
+            env(offer(bob, EUR(100), XRP(100)));
+            env.close();
+
+            // Carol makes an offer that consumes AMM liquidity and
+            // fully consumes Bob's offer.
+            env(offer(carol, USD(100), EUR(100)));
+            env.close();
+
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(10100), USD(10000), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(15100)));
+            // Carol pays 25% transfer fee.
+            BEAST_EXPECT(expectLine(env, carol, EUR(14875)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(expectOffers(env, bob, 0));
+        }
+
+        {
+            // Bridged crossing. The transfer fee is paid on the step not
+            // involving AMM as src/dst.
+            Env env{*this, features};
+            fund(
+                env,
+                gw,
+                {alice, bob, carol},
+                {USD(15000), EUR(15000)},
+                Fund::All);
+            env(rate(gw, 1.25));
+
+            // The scenario:
+            //   o USD/XPR AMM is created.
+            //   o EUR/XRP Offer is created.
+            //   o carol has EUR but wants USD.
+            // Note that Carol's offer must come last.  If Carol's offer is
+            // placed before AMM is created, then autobridging will not occur.
+            AMM ammAlice(env, alice, XRP(10000), USD(10050));
+            env(offer(bob, EUR(100), XRP(100)));
+            env.close();
+
+            // Carol makes an offer that consumes AMM liquidity and
+            // partially consumes Bob's offer.
+            env(offer(carol, USD(50), EUR(50)));
+            env.close();
+            // This test verifies that the amount removed from an offer
+            // accounts for the transfer fee that is removed from the
+            // account but not from the remaining offer.
+
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(10050), USD(10000), IOUAmount{1002496882788171, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(15050)));
+            // Carol pays 25% transfer fee.
+            BEAST_EXPECT(expectLine(env, carol, EUR(14937.5)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(expectOffers(env, bob, 1, {{Amounts{EUR(50), XRP(50)}}}));
+        }
+
+        {
+            // A trust line's QualityIn should not affect offer crossing.
+            // Bridged crossing. The transfer fee is paid on the step not
+            // involving AMM as src/dst.
+            Env env{*this, features};
+            fund(env, gw, {alice, carol, bob}, XRP(30000));
+            env(rate(gw, 1.25));
+            env(trust(alice, USD(15000)));
+            env(trust(bob, EUR(15000)));
+            env(trust(carol, EUR(15000)), qualityInPercent(80));
+            env(trust(bob, USD(15000)));
+            env(trust(carol, USD(15000)));
+            env.close();
+
+            env(pay(gw, alice, USD(11000)));
+            env(pay(gw, carol, EUR(1000)), sendmax(EUR(10000)));
+            env.close();
+            // 1000 / 0.8
+            BEAST_EXPECT(expectLine(env, carol, EUR(1250)));
+            // The scenario:
+            //   o USD/XPR AMM is created.
+            //   o EUR/XRP Offer is created.
+            //   o carol has EUR but wants USD.
+            // Note that Carol's offer must come last.  If Carol's offer is
+            // placed before AMM is created, then autobridging will not occur.
+            AMM ammAlice(env, alice, XRP(10000), USD(10100));
+            env(offer(bob, EUR(100), XRP(100)));
+            env.close();
+
+            // Carol makes an offer that consumes AMM liquidity and
+            // fully consumes Bob's offer.
+            env(offer(carol, USD(100), EUR(100)));
+            env.close();
+
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(10100), USD(10000), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(100)));
+            // Carol pays 25% transfer fee: 1250 - 100(offer) - 25(transfer fee)
+            BEAST_EXPECT(expectLine(env, carol, EUR(1125)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(expectOffers(env, bob, 0));
+        }
+
+        {
+            // A trust line's QualityOut should not affect offer crossing.
+            // Bridged crossing. The transfer fee is paid on the step not
+            // involving AMM as src/dst.
+            Env env{*this, features};
+            fund(env, gw, {alice, carol, bob}, XRP(30000));
+            env(rate(gw, 1.25));
+            env(trust(alice, USD(15000)));
+            env(trust(bob, EUR(15000)));
+            env(trust(carol, EUR(15000)), qualityOutPercent(120));
+            env(trust(bob, USD(15000)));
+            env(trust(carol, USD(15000)));
+            env.close();
+
+            env(pay(gw, alice, USD(11000)));
+            env(pay(gw, carol, EUR(1000)), sendmax(EUR(10000)));
+            env.close();
+            BEAST_EXPECT(expectLine(env, carol, EUR(1000)));
+            // The scenario:
+            //   o USD/XPR AMM is created.
+            //   o EUR/XRP Offer is created.
+            //   o carol has EUR but wants USD.
+            // Note that Carol's offer must come last.  If Carol's offer is
+            // placed before AMM is created, then autobridging will not occur.
+            AMM ammAlice(env, alice, XRP(10000), USD(10100));
+            env(offer(bob, EUR(100), XRP(100)));
+            env.close();
+
+            // Carol makes an offer that consumes AMM liquidity and
+            // fully consumes Bob's offer.
+            env(offer(carol, USD(100), EUR(100)));
+            env.close();
+
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(10100), USD(10000), IOUAmount{1004987562112089, -8}));
+            BEAST_EXPECT(expectLine(env, carol, USD(100)));
+            // Carol pays 25% transfer fee: 1000 - 100(offer) - 25(transfer fee)
+            BEAST_EXPECT(expectLine(env, carol, EUR(875)));
+            BEAST_EXPECT(expectOffers(env, carol, 0));
+            BEAST_EXPECT(expectOffers(env, bob, 0));
+        }
+    }
+
+    void
     testAmendment()
     {
         testcase("Amendment");
@@ -2704,6 +2980,7 @@ private:
         testGatewayCrossCurrency(all);
         testBridgedCross(all);
         testSellWithFillOrKill(all);
+        testTransferRateOffer(all);
     }
 
     void
