@@ -177,6 +177,7 @@ requireAuth(ReadView const& view, Issue const& issue, AccountID const& account)
             return !(
                 (*trustLine)[sfFlags] &
                 ((account > issue.account) ? lsfLowAuth : lsfHighAuth));
+        return true;
     }
 
     return false;

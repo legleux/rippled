@@ -88,6 +88,12 @@ expectLine(
 }
 
 static bool
+expectLine(jtx::Env& env, AccountID const& account, jtx::None const& value)
+{
+    return !env.le(keylet::line(account, value.issue));
+}
+
+static bool
 expectOffers(
     jtx::Env& env,
     AccountID const& account,
@@ -399,7 +405,7 @@ private:
             Env env{*this};
             fund(env, gw, {alice}, {USD(30000)}, Fund::All);
             AMM ammAlice(
-                env, alice, XRP(10000), USD(40000), ter(tecUNFUNDED_PAYMENT));
+                env, alice, XRP(10000), USD(40000), ter(tecUNFUNDED_AMM));
             BEAST_EXPECT(!ammAlice.ammExists());
         }
 
@@ -408,7 +414,7 @@ private:
             Env env{*this};
             fund(env, gw, {alice}, {USD(30000)}, Fund::All);
             AMM ammAlice(
-                env, alice, XRP(40000), USD(10000), ter(tecUNFUNDED_PAYMENT));
+                env, alice, XRP(40000), USD(10000), ter(tecUNFUNDED_AMM));
             BEAST_EXPECT(!ammAlice.ammExists());
         }
 
@@ -2948,9 +2954,228 @@ private:
     }
 
     void
+    testSelfIssueOffer(FeatureBitset features)
+    {
+        // This test is not the same as corresponding testSelfIssueOffer()
+        // in the Offer_test. It simply tests AMM with self issue and
+        // offer crossing.
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        auto const USD_bob = bob["USD"];
+        auto const f = env.current()->fees().base;
+
+        env.fund(XRP(30000) + f, alice, bob);
+        env.close();
+        AMM ammBob(env, bob, XRP(10000), USD_bob(10100));
+
+        env(offer(alice, USD_bob(100), XRP(100)));
+        env.close();
+
+        BEAST_EXPECT(ammBob.expectBalances(
+            XRP(10100), USD_bob(10000), IOUAmount{1004987562112089, -8}));
+        BEAST_EXPECT(expectOffers(env, alice, 0));
+        BEAST_EXPECT(expectLine(env, alice, USD_bob(100)));
+    }
+
+    void
+    testBadPathAssert(FeatureBitset features)
+    {
+        // At one point in the past this invalid path caused an assert.  It
+        // should not be possible for user-supplied data to cause an assert.
+        // Make sure the assert is gone.
+        testcase("Bad path assert");
+
+        using namespace jtx;
+
+        // The problem was identified when featureOwnerPaysFee was enabled,
+        // so make sure that gets included.
+        Env env{*this, features | featureOwnerPaysFee};
+
+        // The fee that's charged for transactions.
+        auto const fee = env.current()->fees().base;
+        {
+            // A trust line's QualityOut should not affect offer crossing.
+            auto const ann = Account("ann");
+            auto const A_BUX = ann["BUX"];
+            auto const bob = Account("bob");
+            auto const cam = Account("cam");
+            auto const dan = Account("dan");
+            auto const D_BUX = dan["BUX"];
+
+            // Verify trust line QualityOut affects payments.
+            env.fund(reserve(env, 4) + (fee * 4), ann, bob, cam, dan);
+            env.close();
+
+            env(trust(bob, A_BUX(400)));
+            env(trust(bob, D_BUX(200)), qualityOutPercent(120));
+            env(trust(cam, D_BUX(100)));
+            env.close();
+            env(pay(dan, bob, D_BUX(100)));
+            env.close();
+            BEAST_EXPECT(expectLine(env, bob, D_BUX(100)));
+
+            env(pay(ann, cam, D_BUX(60)), path(bob, dan), sendmax(A_BUX(200)));
+            env.close();
+
+            BEAST_EXPECT(expectLine(env, ann, A_BUX(none)));
+            BEAST_EXPECT(expectLine(env, ann, D_BUX(none)));
+            BEAST_EXPECT(expectLine(env, bob, A_BUX(72)));
+            BEAST_EXPECT(expectLine(env, bob, D_BUX(40)));
+            BEAST_EXPECT(expectLine(env, cam, A_BUX(none)));
+            BEAST_EXPECT(expectLine(env, cam, D_BUX(60)));
+            BEAST_EXPECT(expectLine(env, dan, A_BUX(none)));
+            BEAST_EXPECT(expectLine(env, dan, D_BUX(none)));
+
+            AMM ammBob(env, bob, A_BUX(30), D_BUX(30));
+
+            env(trust(ann, D_BUX(100)));
+            env.close();
+
+            // This payment caused the assert.
+            env(pay(ann, ann, D_BUX(30)),
+                path(A_BUX, D_BUX),
+                sendmax(A_BUX(30)),
+                ter(temBAD_PATH));
+            env.close();
+
+            BEAST_EXPECT(
+                ammBob.expectBalances(A_BUX(30), D_BUX(30), IOUAmount{30}));
+            BEAST_EXPECT(expectLine(env, ann, A_BUX(none)));
+            BEAST_EXPECT(expectLine(env, ann, D_BUX(0)));
+            BEAST_EXPECT(expectLine(env, cam, A_BUX(none)));
+            BEAST_EXPECT(expectLine(env, cam, D_BUX(60)));
+            BEAST_EXPECT(expectLine(env, dan, A_BUX(0)));
+            BEAST_EXPECT(expectLine(env, dan, D_BUX(none)));
+        }
+    }
+
+    void
+    testRequireAuth(FeatureBitset features)
+    {
+        testcase("lsfRequireAuth");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        auto const aliceUSD = alice["USD"];
+        auto const bobUSD = bob["USD"];
+
+        env.fund(XRP(400000), gw, alice, bob);
+        env.close();
+
+        // GW requires authorization for holders of its IOUs
+        env(fset(gw, asfRequireAuth));
+        env.close();
+
+        // Properly set trust and have gw authorize bob and alice
+        env(trust(gw, bobUSD(100)), txflags(tfSetfAuth));
+        env(trust(bob, USD(100)));
+        env(trust(gw, aliceUSD(100)), txflags(tfSetfAuth));
+        env(trust(alice, USD(2000)));
+        env(pay(gw, alice, USD(1000)));
+        env.close();
+        // Alice is able to create AMM since the GW has authorized her
+        AMM ammAlice(env, alice, USD(1000), XRP(1050));
+
+        env(pay(gw, bob, USD(50)));
+        env.close();
+
+        BEAST_EXPECT(expectLine(env, bob, USD(50)));
+
+        // Bob's offer should cross Alice's AMM
+        env(offer(bob, XRP(50), USD(50)));
+        env.close();
+
+        BEAST_EXPECT(ammAlice.expectBalances(
+            USD(1050), XRP(1000), IOUAmount{102469507659596, -8}));
+        BEAST_EXPECT(expectOffers(env, bob, 0));
+        BEAST_EXPECT(expectLine(env, bob, USD(0)));
+    }
+
+    void
+    testMissingAuth(FeatureBitset features)
+    {
+        testcase("Missing Auth");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        env.fund(XRP(400000), gw, alice, bob);
+        env.close();
+
+        // Alice doesn't have the funds
+        {
+            AMM ammAlice(
+                env, alice, USD(1000), XRP(1000), ter(tecUNFUNDED_AMM));
+        }
+
+        env(fset(gw, asfRequireAuth));
+        env.close();
+
+        env(trust(gw, bob["USD"](50)), txflags(tfSetfAuth));
+        env.close();
+        env(trust(bob, USD(50)));
+        env.close();
+
+        env(pay(gw, bob, USD(50)));
+        env.close();
+        BEAST_EXPECT(expectLine(env, bob, USD(50)));
+
+        // Alice should not be able to create AMM without authorization.
+        {
+            AMM ammAlice(
+                env, alice, USD(1000), XRP(1000), ter(tecNO_PERMISSION));
+        }
+
+        // Set up a trust line for Alice, but don't authorize it. Alice
+        // should still not be able to create AMM for USD/gw.
+        env(trust(gw, alice["USD"](2000)));
+        env.close();
+
+        {
+            AMM ammAlice(
+                env, alice, USD(1000), XRP(1000), ter(tecNO_PERMISSION));
+        }
+
+        // Finally, set up an authorized trust line for Alice. Now Alice's
+        // AMM create should succeed.
+        env(trust(gw, alice["USD"](100)), txflags(tfSetfAuth));
+        env(trust(alice, USD(2000)));
+        env(pay(gw, alice, USD(1000)));
+        env.close();
+
+        AMM ammAlice(env, alice, USD(1000), XRP(1050));
+
+        // Now bob creates his offer again, which crosses with  alice's AMM.
+        env(offer(bob, XRP(50), USD(50)));
+        env.close();
+
+        BEAST_EXPECT(ammAlice.expectBalances(
+            USD(1050), XRP(1000), IOUAmount{102469507659596, -8}));
+        BEAST_EXPECT(expectOffers(env, bob, 0));
+        BEAST_EXPECT(expectLine(env, bob, USD(0)));
+    }
+
+    void
     testAmendment()
     {
         testcase("Amendment");
+        using namespace jtx;
+        FeatureBitset const all{supported_amendments()};
+        FeatureBitset const noAMM{all - featureAMM};
+        FeatureBitset const noNumber{all - fixUniversalNumber};
+        FeatureBitset const noFlowCross{all - featureFlowCross};
+
+        for (auto const& feature : {noAMM, noNumber, noFlowCross})
+        {
+            Env env{*this, feature};
+            fund(env, gw, {alice}, {USD(1000)}, Fund::All);
+            AMM amm(env, alice, XRP(1000), USD(1000), ter(temDISABLED));
+        }
     }
 
     void
@@ -2982,10 +3207,16 @@ private:
         testBridgedCross(all);
         testSellWithFillOrKill(all);
         testTransferRateOffer(all);
+        testSelfIssueOffer(all);
+        testBadPathAssert(all);
+        testRequireAuth(all);
+        testMissingAuth(all);
+        // testRCSmoketest
+        // testDeletedOfferIssuer
     }
 
     void
-    testAll()
+    testCore()
     {
         testInvalidInstance();
         testInstanceCreate();
@@ -3000,12 +3231,13 @@ private:
         testInvalidAMMPayment();
         testBasicPaymentEngine();
         testAMMTokens();
+        testAmendment();
     }
 
     void
     run() override
     {
-        testAll();
+        testCore();
         testOffers();
     }
 };
