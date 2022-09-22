@@ -94,11 +94,20 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
         return terNO_ACCOUNT;
     }
 
-    if (requireAuth(ctx.view, saAsset1.issue(), accountID) ||
-        requireAuth(ctx.view, saAsset2.issue(), accountID))
+    if (auto const ter = requireAuth(ctx.view, saAsset1.issue(), accountID);
+        ter != tesSUCCESS)
     {
-        JLOG(ctx.j.debug()) << "AMM Instance: account is not authorized";
-        return tecNO_PERMISSION;
+        JLOG(ctx.j.debug())
+            << "AMM Instance: account is not authorized, " << saAsset1.issue();
+        return ter;
+    }
+
+    if (auto const ter = requireAuth(ctx.view, saAsset2.issue(), accountID);
+        ter != tesSUCCESS)
+    {
+        JLOG(ctx.j.debug())
+            << "AMM Instance: account is not authorized, " << saAsset2.issue();
+        return ter;
     }
 
     if (isFrozen(ctx.view, saAsset1) || isFrozen(ctx.view, saAsset2))
