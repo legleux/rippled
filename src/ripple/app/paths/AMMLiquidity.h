@@ -155,7 +155,7 @@ public:
     /** Generate AMM offer. Returns nullopt if clobQuality is provided
      * and it is better than AMM offer quality. Otherwise returns AMM offer.
      * If clobQuality is provided then AMM offer size is set based on the
-     * quality. If either remainingIn/remainingOut/cache is provided
+     * quality. If either limitIn/limitOut/cache is provided
      * then the offer size is adjusted based on those amounts.
      */
     template <typename TIn, typename TOut>
@@ -163,8 +163,10 @@ public:
     getOffer(
         ReadView const& view,
         std::optional<Quality> const& clobQuality = std::nullopt,
-        std::optional<TIn> const& remainingIn = std::nullopt,
-        std::optional<TOut> const& remainingOut = std::nullopt,
+        std::uint32_t trIn = QUALITY_ONE,
+        std::uint32_t trOut = QUALITY_ONE,
+        std::optional<TIn> const& limitIn = std::nullopt,
+        std::optional<TOut> const& limitOut = std::nullopt,
         std::optional<TAmounts<TIn, TOut>> const& cache = std::nullopt) const;
 
     /** Called when AMM offer is consumed. Sets dirty flag
@@ -211,8 +213,10 @@ std::optional<Amounts>
 AMMLiquidity::getOffer(
     ReadView const& view,
     std::optional<Quality> const& clobQuality,
-    std::optional<TIn> const& remainingIn,
-    std::optional<TOut> const& remainingOut,
+    std::uint32_t trIn,
+    std::uint32_t trOut,
+    std::optional<TIn> const& limitIn,
+    std::optional<TOut> const& limitOut,
     std::optional<TAmounts<TIn, TOut>> const& cache) const
 {
     // Can't generate more offers. Only applies if generating
@@ -234,18 +238,20 @@ AMMLiquidity::getOffer(
         return std::nullopt;
     }
 
-    std::optional<STAmount> const saRemIn = remainingIn
-        ? std::optional<STAmount>(toSTAmount(*remainingIn, balances.in.issue()))
+    auto const& issueIn = balances.in.issue();
+    auto const& issueOut = balances.out.issue();
+
+    std::optional<STAmount> const saLimIn = limitIn
+        ? std::optional<STAmount>(toSTAmount(*limitIn, issueIn))
         : std::nullopt;
-    std::optional<STAmount> const saRemOut = remainingOut
-        ? std::optional<STAmount>(
-              toSTAmount(*remainingOut, balances.out.issue()))
+    std::optional<STAmount> const saLimOut = limitOut
+        ? std::optional<STAmount>(toSTAmount(*limitOut, issueOut))
         : std::nullopt;
     std::optional<STAmount> const saCacheIn = cache
-        ? std::optional<STAmount>(toSTAmount(cache->in, balances.in.issue()))
+        ? std::optional<STAmount>(toSTAmount(cache->in, issueIn))
         : std::nullopt;
     std::optional<STAmount> const saCacheOut = cache
-        ? std::optional<STAmount>(toSTAmount(cache->out, balances.out.issue()))
+        ? std::optional<STAmount>(toSTAmount(cache->out, issueOut))
         : std::nullopt;
 
     auto const offer = [&]() -> std::optional<Amounts> {
@@ -257,21 +263,38 @@ AMMLiquidity::getOffer(
                 return std::nullopt;
             // Change offer size proportionally to the quality
             // to retain the strands order by quality.
-            if (saRemOut && offer.out > *saRemOut)
-                return quality.ceil_out(offer, *saRemOut);
-            if (saRemIn && offer.in > *saRemIn)
+            if (saLimOut && offer.out > *saLimOut)
             {
-                auto amounts = quality.ceil_in(offer, *saRemIn);
+                return quality.ceil_out(offer, *saLimOut);
+            }
+            if (limitIn)
+            {
+                auto adjOffer = offer;
+                auto stpIn =
+                    mulRatio(get<TIn>(offer.in), trIn, QUALITY_ONE, true);
+                if (stpIn > *limitIn)
+                {
+                    auto const in = toSTAmount(
+                        issueIn,
+                        mulRatio(
+                            *limitIn, QUALITY_ONE, trIn, /*roundUp*/ false));
+                    adjOffer = quality.ceil_in(offer, in);
+                    stpIn = *limitIn;
+                }
                 // The step produced more output in the forward pass than the
                 // reverse pass while consuming the same input (or less).
-                if (saCacheOut && amounts.out > *saCacheOut &&
-                    amounts.in <= saCacheIn)
+                if (cache && adjOffer.out > *saCacheOut && stpIn <= cache->in)
                 {
-                    amounts = quality.ceil_out(offer, *saCacheOut);
-                    if (amounts.in != *saCacheIn)
+                    adjOffer = quality.ceil_out(offer, *saCacheOut);
+                    stpIn = mulRatio(
+                        get<TIn>(adjOffer.in),
+                        trIn,
+                        QUALITY_ONE,
+                        /*roundUp*/ true);
+                    if (stpIn != *limitIn)
                         return std::nullopt;
                 }
-                return amounts;
+                return adjOffer;
             }
             return offer;
         }
@@ -283,29 +306,44 @@ AMMLiquidity::getOffer(
             // Change offer size based on swap in/out formulas. The stand's
             // quality changes in this case for the better but since
             // there is only one strand it doesn't impact the strands order.
-            if (saRemOut && offer->out > *saRemOut)
+            if (saLimOut && offer->out > *saLimOut)
                 return Amounts{
-                    swapAssetOut(balances, *remainingOut, tradingFee_),
-                    *saRemOut};
-            if (saRemIn && offer->in > *saRemIn)
+                    swapAssetOut(balances, *limitOut, tradingFee_), *saLimOut};
+            auto adjOffer = *offer;
+            if (limitIn)
             {
-                auto in = *saRemIn;
-                auto out = swapAssetIn(balances, *remainingIn, tradingFee_);
-                // The step produced more output in the forward pass than the
-                // reverse pass while consuming the same input (or less).
-                if (saCacheOut && out > *saCacheOut && in <= *saCacheIn)
+                auto stpIn =
+                    mulRatio(get<TIn>(offer->in), trIn, QUALITY_ONE, true);
+                if (stpIn > *limitIn)
                 {
-                    out = *saCacheOut;
-                    in = swapAssetOut(balances, out, tradingFee_);
-                    if (in != *saCacheIn)
+                    auto in = toSTAmount(
+                        issueIn,
+                        mulRatio(
+                            *limitIn, QUALITY_ONE, trIn, /*roundUp*/ false));
+                    auto out = swapAssetIn(balances, in, tradingFee_);
+                    adjOffer = {in, out};
+                    stpIn = *limitIn;
+                }
+                // The step produced more output in the forward pass than
+                // the reverse pass while consuming the same input (or
+                // less).
+                if (cache && adjOffer.out > *saCacheOut && stpIn <= cache->in)
+                {
+                    auto const out = *saCacheOut;
+                    auto const in = swapAssetOut(balances, out, tradingFee_);
+                    adjOffer = {in, out};
+                    stpIn = mulRatio(
+                        get<TIn>(adjOffer.in),
+                        trIn,
+                        QUALITY_ONE,
+                        /*roundUp*/ true);
+                    if (stpIn != *limitIn)
                         return std::nullopt;
                 }
-                return Amounts{in, out};
             }
-            return offer;
+            return adjOffer;
         }
-        else
-            return std::nullopt;
+        return std::nullopt;
     }();
 
     balances_ = balances;

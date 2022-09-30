@@ -34,7 +34,7 @@
 namespace ripple {
 namespace test {
 
-#if 0
+//#if 0
 static Json::Value
 readOffers(jtx::Env& env, AccountID const& acct)
 {
@@ -50,7 +50,7 @@ readLines(jtx::Env& env, AccountID const& acctId)
     jv[jss::account] = to_string(acctId);
     return env.rpc("json", "account_lines", to_string(jv));
 }
-#endif
+//#endif
 
 static XRPAmount
 txfee(jtx::Env const& env, std::uint16_t n)
@@ -156,7 +156,7 @@ equal(STAmount const& sa1, STAmount const& sa2)
 class Test : public beast::unit_test::suite
 {
 protected:
-    enum class Fund { All, Acct, None };
+    enum class Fund { All, Acct, Gw, None };
     jtx::Account const gw;
     jtx::Account const carol;
     jtx::Account const alice;
@@ -201,7 +201,7 @@ protected:
         std::vector<STAmount> const& amts = {},
         Fund how = Fund::All)
     {
-        if (how == Fund::All)
+        if (how == Fund::All || how == Fund::Gw)
             env.fund(xrp, gw);
         env.close();
         for (auto const& account : accounts)
@@ -470,6 +470,7 @@ private:
             Env env{*this};
             fund(env, gw, {alice}, {USD(25000), BTC(0.625)}, Fund::All);
             env(rate(gw, 1.25));
+            env.close();
             AMM ammAlice(env, alice, USD(20000), BTC(0.5));
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
@@ -934,6 +935,7 @@ private:
             Env env{*this};
             fund(env, gw, {alice}, {USD(25000), BTC(0.625)}, Fund::All);
             env(rate(gw, 1.25));
+            env.close();
             AMM ammAlice(env, alice, USD(20000), BTC(0.5));
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
@@ -1385,6 +1387,7 @@ private:
             Env env{*this};
             fund(env, gw, {alice}, {USD(25000), BTC(0.625)}, Fund::All);
             env(rate(gw, 1.25));
+            env.close();
             AMM ammAlice(env, alice, USD(20000), BTC(0.5));
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
@@ -2043,6 +2046,458 @@ private:
                 BEAST_EXPECT(expectOffers(env, bob, 0));
             },
             {{EUR(10000), USD(10100)}});
+    }
+
+    void
+    testTransferFee()
+    {
+        using namespace jtx;
+        std::cout << "@gw @" << gw.human() << "$" << std::endl;
+        std::cout << "@alice @" << alice.human() << "$" << std::endl;
+        std::cout << "@carol @" << carol.human() << "$" << std::endl;
+        std::cout << "@bob @" << bob.human() << "$" << std::endl;
+        std::cout << "testclob1 offer 100eur/100usd pay 100usd for "
+                     "100eur-------------------\n";
+        {
+            Env env(*this);
+            fund(env, gw, {alice, carol, bob}, {EUR(400), USD(400)}, Fund::All);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(100), USD(100)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~USD),
+                sendmax(EUR(100)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob2 offer 200eur/200usd pay 100usd for "
+                     "100eur-------------------\n";
+        {
+            Env env(*this);
+            fund(env, gw, {alice, carol, bob}, {EUR(400), USD(400)}, Fund::All);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~USD),
+                sendmax(EUR(100)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob3 offer 200eur/200usd pay 100usd for "
+                     "150eur-------------------\n";
+        {
+            Env env(*this);
+            fund(env, gw, {alice, carol, bob}, {EUR(400), USD(400)}, Fund::All);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~USD),
+                sendmax(EUR(150)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob4 offer 200eur/200usd pay 100usd for "
+                     "200eur-------------------\n";
+        {
+            Env env(*this);
+            fund(env, gw, {alice, carol, bob}, {EUR(400), USD(400)}, Fund::All);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob5 offers 200eur/200gbp pay 100usd for "
+                     "200eur-------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            auto const CAN = gw["CAN"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, dan, ed},
+                {EUR(400), USD(400), GBP(400), CAN(400)},
+                Fund::All);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), GBP(200)));
+            env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob6 offers 200eur/200gbp pay 100usd for "
+                     "200eur-------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            Account const gw1("gw1");
+            auto const CAN = gw1["CAN"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            std::cout << "@gw1 @" << gw1.human() << "$" << std::endl;
+            fund(env, gw1, {dan}, {CAN(400)}, Fund::All);
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, ed},
+                {EUR(400), USD(400), GBP(400)},
+                Fund::All);
+            env(trust(dan, GBP(400)));
+            env(trust(ed, CAN(400)));
+            env(rate(gw, 1.25));
+            env(rate(gw1, 1.1));
+            env.close();
+            env(offer(alice, EUR(200), GBP(200)));
+            env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob7 offers simulate AMM 200eur/200gbp pay 100usd "
+                     "for 200eur gw 1.25 gw1 1-------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            Account const gw1("gw1");
+            auto const CAN = gw1["CAN"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            std::cout << "@gw1 @" << gw1.human() << "$" << std::endl;
+            fund(env, gw1, {dan}, {CAN(400)}, Fund::All);
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, ed},
+                {EUR(400), USD(400), GBP(400)},
+                Fund::All);
+            fund(env, gw, {dan}, {GBP(400)}, Fund::None);
+            fund(env, gw1, {ed}, {CAN(400)}, Fund::None);
+            env(rate(gw, 1.25));
+            // env(rate(gw1, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), GBP(200)));
+            env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            std::cout << readLines(env, gw1).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob8 offers 200eur/200gbp pay 100usd for 200eur gw "
+                     "1 gw 1.25 -------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            Account const gw1("gw1");
+            auto const CAN = gw1["CAN"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            std::cout << "@gw1 @" << gw1.human() << "$" << std::endl;
+            fund(env, gw1, {dan}, {CAN(400)}, Fund::All);
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, ed},
+                {EUR(400), USD(400), GBP(400)},
+                Fund::All);
+            env(trust(dan, GBP(400)));
+            env(trust(ed, CAN(400)));
+            // env(rate(gw, 1.25));
+            env(rate(gw1, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), GBP(200)));
+            env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            std::cout << readLines(env, gw1).toStyledString();
+            env.close();
+        }
+        std::cout << "\n\ntestclob9 offer/offer gw 100eur/100usd "
+                     "1.25-------------------\n";
+        {
+            Env env(*this);
+            fund(env, gw, {alice, carol}, {EUR(400), USD(400)}, Fund::All);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(100), USD(100)));
+            env.close();
+            env(offer(carol, USD(100), EUR(100)));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "\n\ntestclob10 simulate AMM offer/offer gw 100eur/100usd "
+                     "1.25-------------------\n";
+        {
+            Env env(*this);
+            auto const gw1 = Account("gw1");
+            auto const USD = gw1["USD"];
+            fund(env, gw, {alice, carol}, {EUR(400)}, Fund::All);
+            fund(env, gw1, {alice, carol}, {USD(400)}, Fund::Gw);
+            env(rate(gw, 1.25));
+            env.close();
+            env(offer(alice, EUR(100), USD(100)));
+            env.close();
+            env(offer(carol, USD(100), EUR(100)));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            std::cout << readLines(env, gw1).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob11 offers simulate AMM 200eur/200gbp pay 100usd "
+                     "for 200eur gw 1.25 gw1 1-------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            Account const gw1("gw1");
+            auto const CAN = gw1["CAN"];
+            auto const GBP = gw1["GBP"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            std::cout << "@gw1 @" << gw1.human() << "$" << std::endl;
+            fund(env, gw1, {dan}, {CAN(400)}, Fund::All);
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, ed},
+                {EUR(400), USD(400)},
+                Fund::All);
+            fund(env, gw1, {dan, alice}, {GBP(400)}, Fund::None);
+            fund(env, gw1, {ed}, {CAN(400)}, Fund::None);
+            env(rate(gw, 1.25));
+            // env(rate(gw1, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), GBP(200)));
+            env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            std::cout << readLines(env, gw1).toStyledString();
+            env.close();
+        }
+        std::cout << "testclob12 offers no transfer AMM 200eur/200gbp pay "
+                     "100usd for 200eur-------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            auto const CAN = gw["CAN"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, dan, ed},
+                {EUR(400), GBP(400), CAN(400), USD(400)},
+                Fund::All);
+            // env(rate(gw, 1.25));
+            // env(rate(gw1, 1.25));
+            env.close();
+            env(offer(alice, EUR(200), GBP(200)));
+            env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
+        std::cout << "\n\nAMM\n";
+        std::cout << "\n\ntestamm1 amm 10000eur/10100usd pay 100usd for 100eur "
+                     "gw 1.25-------------------\n";
+        // Payment and transfer rate
+        testAMM(
+            [&](AMM& ammAlice, Env& env) {
+                fund(env, gw, {bob}, {USD(400), EUR(400)}, Fund::Acct);
+                env(rate(gw, 1.25));
+                env.close();
+                env(pay(bob, carol, USD(100)),
+                    path(~USD),
+                    sendmax(EUR(200)),
+                    txflags(tfPartialPayment));
+                std::cout << "pay -------------------\n";
+                env.close();
+                std::cout << ammAlice.ammRpcInfo()->toStyledString();
+                std::cout << readLines(env, alice).toStyledString();
+                std::cout << readLines(env, carol).toStyledString();
+                std::cout << readLines(env, bob).toStyledString();
+                std::cout
+                    << readLines(env, ammAlice.ammAccount()).toStyledString();
+                std::cout << readLines(env, gw).toStyledString();
+            },
+            {{EUR(10000), USD(10100)}});
+
+        std::cout << "\n\ntestamm2 AMM/offer 10000eur/10100usd "
+                     "100usd/100eur-------------------\n";
+        {
+            Env env(*this);
+            fund(env, gw, {alice}, {USD(11000), EUR(11000)}, Fund::All);
+            fund(env, gw, {carol}, {USD(400), EUR(400)}, Fund::Acct);
+            env(rate(gw, 1.25));
+            env.close();
+            AMM ammAlice(env, alice, EUR(10000), USD(10100));
+            env(offer(carol, USD(100), EUR(100)));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << ammAlice.ammRpcInfo()->toStyledString();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, ammAlice.ammAccount()).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+        }
+        std::cout << "testamm3 offers 200eur/200gbp/AMM 200eur/200gbp pay "
+                     "100usd for 200eur-------------------\n";
+        {
+            Env env(*this);
+            Account const dan("dan");
+            Account const ed("ed");
+            auto const CAN = gw["CAN"];
+            std::cout << "@dan @" << dan.human() << "$" << std::endl;
+            std::cout << "@ed @" << ed.human() << "$" << std::endl;
+            fund(
+                env,
+                gw,
+                {alice, carol, bob, ed},
+                {EUR(400), USD(400), GBP(400), CAN(400)},
+                Fund::All);
+            fund(env, gw, {dan}, {GBP(11000), CAN(11000)}, Fund::Acct);
+            env(rate(gw, 1.25));
+            env.close();
+            AMM ammDan(env, dan, GBP(10000), CAN(10128));
+            env(offer(alice, EUR(200), GBP(200)));
+            // env(offer(dan, GBP(200), CAN(200)));
+            env(offer(ed, CAN(200), USD(200)));
+            env.close();
+            env(pay(bob, carol, USD(100)),
+                path(~GBP, ~CAN, ~USD),
+                sendmax(EUR(200)),
+                txflags(tfPartialPayment));
+            std::cout << "pay -------------------\n";
+            env.close();
+            std::cout << ammDan.ammRpcInfo()->toStyledString();
+            std::cout << readLines(env, alice).toStyledString();
+            std::cout << readLines(env, carol).toStyledString();
+            std::cout << readLines(env, bob).toStyledString();
+            std::cout << readLines(env, dan).toStyledString();
+            std::cout << readLines(env, ed).toStyledString();
+            std::cout << readLines(env, gw).toStyledString();
+            env.close();
+        }
     }
 
     void
@@ -3384,6 +3839,7 @@ private:
     void
     testCore()
     {
+#if 0
         testInvalidInstance();
         testInstanceCreate();
         testInvalidDeposit();
@@ -3398,6 +3854,8 @@ private:
         testBasicPaymentEngine();
         testAMMTokens();
         testAmendment();
+#endif
+        testTransferFee();
     }
 
     void

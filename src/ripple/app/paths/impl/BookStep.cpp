@@ -18,6 +18,7 @@
 //==============================================================================
 
 #include <ripple/app/misc/AMM.h>
+#include <ripple/app/paths/AMMLiquidity.h>
 #include <ripple/app/paths/Credit.h>
 #include <ripple/app/paths/impl/FlatSets.h>
 #include <ripple/app/paths/impl/Steps.h>
@@ -31,7 +32,6 @@
 #include <ripple/protocol/Book.h>
 #include <ripple/protocol/Feature.h>
 #include <ripple/protocol/Quality.h>
-#include "ripple/app/paths/AMMLiquidity.h"
 
 #include <boost/container/flat_set.hpp>
 
@@ -233,7 +233,10 @@ private:
         TOut const& ownerGives) const;
 
     void
-    consumeAMMOffer(PaymentSandbox& sb, Amounts const& offer);
+    consumeAMMOffer(
+        PaymentSandbox& sb,
+        Amounts const& offer,
+        TOut const& ownerGives);
 
     // If clobQuality is available and has a better quality then return nullopt,
     // otherwise if amm liquidity is available return AMM offer adjusted based
@@ -250,6 +253,9 @@ private:
     // if AMM quality is best.
     std::optional<std::tuple<Quality, QualityFunction, bool>>
     getAMMOrCLOBQuality(ReadView const& view) const;
+
+    std::pair<std::uint32_t, std::uint32_t>
+    getTrRates(ReadView const& view) const;
 };
 
 //------------------------------------------------------------------------------
@@ -510,6 +516,30 @@ BookStep<TIn, TOut, TDerived>::equal(Step const& rhs) const
 }
 
 template <class TIn, class TOut, class TDerived>
+std::pair<std::uint32_t, std::uint32_t>
+BookStep<TIn, TOut, TDerived>::getTrRates(ReadView const& view) const
+{
+    auto const prevStepDebtDir = [&] {
+        if (prevStep_)
+            return prevStep_->debtDirection(view, StrandDirection::reverse);
+        return DebtDirection::issues;
+    }();
+    auto rate = [this, &view](AccountID const& id) -> std::uint32_t {
+        if (isXRP(id) || id == this->strandDst_)
+            return QUALITY_ONE;
+        return transferRate(view, id).value;
+    };
+
+    std::uint32_t const trIn =
+        redeems(prevStepDebtDir) ? rate(book_.in.account) : QUALITY_ONE;
+    // Always charge the transfer fee, even if the owner is the issuer
+    std::uint32_t const trOut =
+        ownerPaysTransferFee_ ? rate(book_.out.account) : QUALITY_ONE;
+
+    return {trIn, trOut};
+}
+
+template <class TIn, class TOut, class TDerived>
 std::pair<std::optional<Quality>, DebtDirection>
 BookStep<TIn, TOut, TDerived>::qualityUpperBound(
     ReadView const& v,
@@ -763,6 +793,13 @@ BookStep<TIn, TOut, TDerived>::consumeOffer(
             Throw<FlowException>(cr);
     }
 
+    /*std::cout << "consume offer " << to_string(offer.owner()) << " book "
+              << offer.issueIn() << " " << offer.issueOut() << " owner gives "
+              << to_string(ownerGives) << " " << to_string(offer.amount().in)
+              << " " << to_string(offer.amount().out) << " consumed "
+              << to_string(ofrAmt.in) << " " << to_string(ofrAmt.out)
+              << std::endl;*/
+
     offer.consume(sb, ofrAmt);
 }
 
@@ -776,11 +813,13 @@ BookStep<TIn, TOut, TDerived>::getAMMOffer(
 {
     if (ammLiquidity_)
     {
+        auto const [trIn, trOut] = getTrRates(view);
+
         auto const cache = cache_ ? std::optional<TAmounts<TIn, TOut>>(
                                         TAmounts{cache_->in, cache_->out})
                                   : std::nullopt;
         return ammLiquidity_->getOffer(
-            view, clobQuality, remainingIn, remainingOut, cache);
+            view, clobQuality, trIn, trOut, remainingIn, remainingOut, cache);
     }
     return std::nullopt;
 }
@@ -816,24 +855,24 @@ template <class TIn, class TOut, class TDerived>
 void
 BookStep<TIn, TOut, TDerived>::consumeAMMOffer(
     PaymentSandbox& sb,
-    Amounts const& offer)
+    Amounts const& offer,
+    TOut const& ownerGives)
 {
     assert(ammLiquidity_);
 
-    if (auto const res = ammSend(
-            sb,
-            offer.in.issue().account,
-            ammLiquidity_->ammAccount(),
-            offer.in,
-            j_);
+    /*std::cout << "consume AMM offer " << offer.in << " " << offer.out
+              << std::endl;*/
+
+    if (auto const res = accountSend(
+            sb, book_.in.account, ammLiquidity_->ammAccount(), offer.in, j_);
         res != tesSUCCESS)
         Throw<FlowException>(res);
 
-    if (auto const res = ammSend(
+    if (auto const res = accountSend(
             sb,
             ammLiquidity_->ammAccount(),
-            offer.out.issue().account,
-            offer.out,
+            book_.out.account,
+            toSTAmount(ownerGives, book_.out),
             j_);
         res != tesSUCCESS)
         Throw<FlowException>(res);
@@ -891,7 +930,19 @@ BookStep<TIn, TOut, TDerived>::revImp(
                     quality))
                 return false;
 
-            consumeAMMOffer(sb, *offer);
+            auto const [trIn, trOut] = getTrRates(sb);
+
+            auto const stpIn = mulRatio(
+                get<TIn>(offer->in), trIn, QUALITY_ONE, /*roundUp*/ true);
+
+            consumeAMMOffer(
+                sb,
+                *offer,
+                mulRatio(
+                    get<TOut>(offer->out),
+                    trOut,
+                    QUALITY_ONE,
+                    /*roundUp*/ false));
 
             remainingOut -= get<TOut>(offer->out);
             // AMM and offer have the same quality.
@@ -899,12 +950,12 @@ BookStep<TIn, TOut, TDerived>::revImp(
             // CLOB offers at the same quality.
             if (clobQuality && quality == *clobQuality)
             {
-                savedIns.insert(get<TIn>(offer->in));
+                savedIns.insert(stpIn);
                 savedOuts.insert(get<TOut>(offer->out));
             }
             else
             {
-                result.in = get<TIn>(offer->in);
+                result.in = stpIn;
                 result.out = get<TOut>(offer->out);
                 return true;
             }
@@ -1058,18 +1109,30 @@ BookStep<TIn, TOut, TDerived>::fwdImp(
                     quality))
                 return false;
 
-            consumeAMMOffer(sb, *offer);
+            auto const [trIn, trOut] = getTrRates(sb);
 
-            remainingIn -= get<TIn>(offer->in);
+            auto const stpIn = mulRatio(
+                get<TIn>(offer->in), trIn, QUALITY_ONE, /*roundUp*/ true);
+
+            consumeAMMOffer(
+                sb,
+                *offer,
+                mulRatio(
+                    get<TOut>(offer->out),
+                    trOut,
+                    QUALITY_ONE,
+                    /*roundUp*/ false));
+
+            remainingIn -= stpIn;
             // AMM and CLOB offer have the same quality
             if (quality == clobQuality)
             {
-                savedIns.insert(get<TIn>(offer->in));
+                savedIns.insert(stpIn);
                 savedOuts.insert(get<TOut>(offer->out));
             }
             else
             {
-                result.in = get<TIn>(offer->in);
+                result.in = stpIn;
                 result.out = get<TOut>(offer->out);
                 return true;
             }
