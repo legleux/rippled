@@ -40,130 +40,8 @@
 
 namespace ripple {
 
-/** Wrapper for either AMM or CLOB offer to provide uniform API
- * to forEachOffer() and its callback.
- */
 template <class TIn, class TOut>
-class EitherOffer
-{
-private:
-    // Amounts is either fib seq offer if multi-path else pool's balance
-    using AMMOffer = std::pair<Amounts, std::reference_wrapper<AMMLiquidity>>;
-    using CLOBOffer = std::reference_wrapper<TOffer<TIn, TOut>>;
-    mutable std::variant<AMMOffer, CLOBOffer> offer_;
-
-public:
-    EitherOffer(TOffer<TIn, TOut>& offer) : offer_(std::ref(offer))
-    {
-    }
-    EitherOffer(Amounts const& offer, AMMLiquidity& ammLiquidity)
-        : offer_(std::make_pair(offer, std::ref(ammLiquidity)))
-    {
-    }
-    ~EitherOffer() = default;
-    EitherOffer(EitherOffer const&) = delete;
-    EitherOffer&
-    operator=(EitherOffer const&) = delete;
-    Quality const
-    quality() const noexcept
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            return Quality{std::get<AMMOffer>(offer_).first};
-        return std::get<CLOBOffer>(offer_).get().quality();
-    }
-    Issue
-    issueIn() const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            return std::get<AMMOffer>(offer_).first.in.issue();
-        return std::get<CLOBOffer>(offer_).get().issueIn();
-    }
-    Issue
-    issueOut() const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            return std::get<AMMOffer>(offer_).first.out.issue();
-        return std::get<CLOBOffer>(offer_).get().issueOut();
-    }
-    AccountID const&
-    owner() const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            return std::get<AMMOffer>(offer_).second.get().ammAccount();
-        return std::get<CLOBOffer>(offer_).get().owner();
-    }
-    uint256
-    key() const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            return uint256{};
-        return std::get<CLOBOffer>(offer_).get().key();
-    }
-    TAmounts<TIn, TOut>
-    amount() const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-        {
-            auto const& amt = std::get<AMMOffer>(offer_).first;
-            return {get<TIn>(amt.in), get<TOut>(amt.out)};
-        }
-        return std::get<CLOBOffer>(offer_).get().amount();
-    }
-    void
-    consume(ApplyView& view, TAmounts<TIn, TOut> const& consumed)
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            std::get<AMMOffer>(offer_).second.get().consumed();
-        else
-            std::get<CLOBOffer>(offer_).get().consume(view, consumed);
-    }
-    bool
-    fully_consumed() const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-            return true;
-        return std::get<CLOBOffer>(offer_).get().fully_consumed();
-    }
-    TAmounts<TIn, TOut>
-    limitOut(TAmounts<TIn, TOut> const& ofrAmt, TOut const& limit) const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-        {
-            if (std::get<AMMOffer>(offer_).second.get().multiPath())
-                return Quality{std::get<AMMOffer>(offer_).first}.ceil_out(
-                    ofrAmt, limit);
-            return {
-                get<TIn>(
-                    std::get<AMMOffer>(offer_).second.get().swapOut(limit)),
-                limit};
-        }
-        return std::get<CLOBOffer>(offer_).get().quality().ceil_out(
-            ofrAmt, limit);
-    }
-    TAmounts<TIn, TOut>
-    limitIn(
-        TAmounts<TIn, TOut> const& ofrAmt,
-        std::uint32_t transferRateIn,
-        TIn const& limit) const
-    {
-        if (std::holds_alternative<AMMOffer>(offer_))
-        {
-            if (std::get<AMMOffer>(offer_).second.get().multiPath())
-                return Quality{std::get<AMMOffer>(offer_).first}.ceil_in(
-                    ofrAmt, limit);
-            return {
-                limit,
-                get<TOut>(
-                    std::get<AMMOffer>(offer_).second.get().swapIn(limit))};
-        }
-        return get<CLOBOffer>(offer_).get().quality().ceil_in(ofrAmt, limit);
-    }
-    bool
-    isAMM() const
-    {
-        return std::holds_alternative<AMMOffer>(offer_);
-    }
-};
+class EitherOffer;
 
 template <class TIn, class TOut, class TDerived>
 class BookStep : public StepImp<TIn, TOut, BookStep<TIn, TOut, TDerived>>
@@ -369,6 +247,131 @@ private:
     // if AMM quality is best.
     std::optional<std::tuple<Quality, QualityFunction, bool>>
     getAMMOrCLOBQuality(ReadView const& view) const;
+};
+
+/** Wrapper for AMM and CLOB offer to provide uniform API
+ * to forEachOffer() and its callback.
+ */
+template <class TIn, class TOut>
+class EitherOffer
+{
+private:
+    // Amounts is fib seq offer if multi-path else pool's balance
+    using AMMOffer = std::pair<Amounts, std::reference_wrapper<AMMLiquidity>>;
+    using CLOBOffer = std::reference_wrapper<TOffer<TIn, TOut>>;
+    std::variant<AMMOffer, CLOBOffer> offer_;
+
+public:
+    EitherOffer(TOffer<TIn, TOut>& offer) : offer_(std::ref(offer))
+    {
+    }
+    EitherOffer(Amounts const& offer, AMMLiquidity& ammLiquidity)
+        : offer_(std::make_pair(offer, std::ref(ammLiquidity)))
+    {
+    }
+    ~EitherOffer() = default;
+    EitherOffer(EitherOffer const&) = delete;
+    EitherOffer&
+    operator=(EitherOffer const&) = delete;
+    Quality const
+    quality() const noexcept
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            return Quality{std::get<AMMOffer>(offer_).first};
+        return std::get<CLOBOffer>(offer_).get().quality();
+    }
+    Issue
+    issueIn() const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            return std::get<AMMOffer>(offer_).first.in.issue();
+        return std::get<CLOBOffer>(offer_).get().issueIn();
+    }
+    Issue
+    issueOut() const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            return std::get<AMMOffer>(offer_).first.out.issue();
+        return std::get<CLOBOffer>(offer_).get().issueOut();
+    }
+    AccountID const&
+    owner() const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            return std::get<AMMOffer>(offer_).second.get().ammAccount();
+        return std::get<CLOBOffer>(offer_).get().owner();
+    }
+    uint256
+    key() const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            return uint256{};
+        return std::get<CLOBOffer>(offer_).get().key();
+    }
+    TAmounts<TIn, TOut>
+    amount() const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+        {
+            auto const& amt = std::get<AMMOffer>(offer_).first;
+            return {get<TIn>(amt.in), get<TOut>(amt.out)};
+        }
+        return std::get<CLOBOffer>(offer_).get().amount();
+    }
+    void
+    consume(ApplyView& view, TAmounts<TIn, TOut> const& consumed)
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            std::get<AMMOffer>(offer_).second.get().consumed();
+        else
+            std::get<CLOBOffer>(offer_).get().consume(view, consumed);
+    }
+    bool
+    fully_consumed() const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+            return true;
+        return std::get<CLOBOffer>(offer_).get().fully_consumed();
+    }
+    TAmounts<TIn, TOut>
+    limitOut(TAmounts<TIn, TOut> const& ofrAmt, TOut const& limit) const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+        {
+            if (std::get<AMMOffer>(offer_).second.get().multiPath())
+                return Quality{std::get<AMMOffer>(offer_).first}.ceil_out(
+                    ofrAmt, limit);
+            return {
+                get<TIn>(
+                    std::get<AMMOffer>(offer_).second.get().swapOut(limit)),
+                limit};
+        }
+        return std::get<CLOBOffer>(offer_).get().quality().ceil_out(
+            ofrAmt, limit);
+    }
+    TAmounts<TIn, TOut>
+    limitIn(
+        TAmounts<TIn, TOut> const& ofrAmt,
+        std::uint32_t transferRateIn,
+        TIn const& limit) const
+    {
+        if (std::holds_alternative<AMMOffer>(offer_))
+        {
+            if (std::get<AMMOffer>(offer_).second.get().multiPath())
+                return Quality{std::get<AMMOffer>(offer_).first}.ceil_in(
+                    ofrAmt, limit);
+            return {
+                limit,
+                get<TOut>(
+                    std::get<AMMOffer>(offer_).second.get().swapIn(limit))};
+        }
+        return get<CLOBOffer>(offer_).get().quality().ceil_in(ofrAmt, limit);
+    }
+    bool
+    isAMM() const
+    {
+        return std::holds_alternative<AMMOffer>(offer_);
+    }
 };
 
 //------------------------------------------------------------------------------
@@ -835,6 +838,7 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
             offer, ofrAmt, stpAmt, ownerGives, ofrInRate, ofrOutRate);
     };
 
+    // At any payment engine iteration, AMM offer can only be consumed once.
     bool triedAMM = false;
     auto tryAMM = [&](std::optional<Quality> const& quality) {
         if (!triedAMM)
@@ -858,6 +862,7 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
         if (!execOffer(eoffer))
             break;
     }
+    // Might have AMM offer if there is no CLOB offers.
     tryAMM(std::nullopt);
 
     return {offers.permToRemove(), counter.count()};
