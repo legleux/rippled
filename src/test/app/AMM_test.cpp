@@ -114,7 +114,7 @@ IPE(Issue const& iss)
         iss.account);
 }
 
-}  // namespace detail
+}  // namespace
 
 template <class... Args>
 STPath
