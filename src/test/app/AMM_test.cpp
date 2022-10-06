@@ -121,7 +121,7 @@ STPath
 stpath(Args const&... args)
 {
     STPath st;
-    /*ammdetail::*/stpath_append(st, args...);
+    stpath_append(st, args...);
     return st;
 }
 
@@ -130,7 +130,7 @@ bool
 same(STPathSet const& st1, Args const&... args)
 {
     STPathSet st2;
-    /*ammdetail::*/stpathset_append(st2, args...);
+    stpathset_append(st2, args...);
     if (st1.size() != st2.size())
         return false;
 
