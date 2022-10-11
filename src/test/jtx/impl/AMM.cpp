@@ -95,9 +95,8 @@ AMM::create(
     env_.close();
     if (!ter_)
     {
-        if (auto const amm = getAMMSle(
-                *env_.current(),
-                calcAMMGroupHash(asset1_.issue(), asset2_.issue())))
+        if (auto const amm = env_.current()->read(keylet::amm(
+                calcAMMGroupHash(asset1_.issue(), asset2_.issue()))))
         {
             ammAccount_ = amm->getAccountID(sfAMMAccount);
             lptIssue_ = ripple::calcLPTIssue(ammAccount_);
@@ -144,7 +143,7 @@ AMM::expectBalances(
     std::optional<AccountID> const& account,
     std::optional<std::string> const& ledger_index) const
 {
-    if (auto const amm = getAMMSle(*env_.current(), ammID_))
+    if (auto const amm = env_.current()->read(keylet::amm(ammID_)))
     {
         auto const ammAccountID = amm->getAccountID(sfAMMAccount);
         auto const [asset1Balance, asset2Balance] = ammPoolHolds(
@@ -162,10 +161,18 @@ AMM::expectBalances(
     return false;
 }
 
+IOUAmount
+AMM::getLPTokensBalance() const
+{
+    if (auto const amm = env_.current()->read(keylet::amm(ammID_)))
+        return amm->getFieldAmount(sfLPTokenBalance).iou();
+    return IOUAmount{0};
+}
+
 bool
 AMM::expectLPTokens(AccountID const& account, IOUAmount const& expTokens) const
 {
-    if (auto const amm = getAMMSle(*env_.current(), ammID_))
+    if (auto const amm = env_.current()->read(keylet::amm(ammID_)))
     {
         auto const ammAccountID = amm->getAccountID(sfAMMAccount);
         auto const lptAMMBalance =
@@ -182,7 +189,7 @@ AMM::expectAuctionSlot(
     IOUAmount const& price,
     std::optional<std::string> const& ledger_index) const
 {
-    if (auto const amm = getAMMSle(*env_.current(), ammID_);
+    if (auto const amm = env_.current()->read(keylet::amm(ammID_));
         amm && amm->isFieldPresent(sfAuctionSlot))
     {
         auto const& auctionSlot =
@@ -201,7 +208,7 @@ AMM::expectAuctionSlot(
 bool
 AMM::expectTradingFee(std::uint16_t fee) const
 {
-    if (auto const amm = getAMMSle(*env_.current(), ammID_);
+    if (auto const amm = env_.current()->read(keylet::amm(ammID_));
         amm && amm->getFieldU16(sfTradingFee) == fee)
         return true;
     return false;

@@ -38,7 +38,9 @@
 namespace ripple {
 namespace test {
 
-#if 0
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+// Functions used in debugging
 static Json::Value
 readOffers(jtx::Env& env, AccountID const& acct)
 {
@@ -54,7 +56,7 @@ readLines(jtx::Env& env, AccountID const& acctId)
     jv[jss::account] = to_string(acctId);
     return env.rpc("json", "account_lines", to_string(jv));
 }
-#endif
+#pragma GCC diagnostic pop
 
 /* TODO Path finding duplicate */
 /******************************************************************************/
@@ -755,6 +757,42 @@ private:
             AMM ammAlice(env, alice, XRP(10000), USD(10000), ter(tecFROZEN));
             BEAST_EXPECT(!ammAlice.ammExists());
         }
+
+        // Insufficient reserve, XRP/IOU
+        {
+            Env env(*this);
+            auto const starting_xrp =
+                XRP(1000) + reserve(env, 3) + env.current()->fees().base * 4;
+            env.fund(starting_xrp, gw);
+            env.fund(starting_xrp, alice);
+            env.trust(USD(2000), alice);
+            env.close();
+            env(pay(gw, alice, USD(2000)));
+            env.close();
+            env(offer(alice, XRP(101), USD(100)));
+            env(offer(alice, XRP(102), USD(100)));
+            AMM ammAlice(
+                env, alice, XRP(1000), USD(1000), ter(tecUNFUNDED_AMM));
+        }
+
+        // Insufficient reserve, IOU/IOU
+        {
+            Env env(*this);
+            auto const starting_xrp =
+                reserve(env, 4) + env.current()->fees().base * 5;
+            env.fund(starting_xrp, gw);
+            env.fund(starting_xrp, alice);
+            env.trust(USD(2000), alice);
+            env.trust(EUR(2000), alice);
+            env.close();
+            env(pay(gw, alice, USD(2000)));
+            env(pay(gw, alice, EUR(2000)));
+            env.close();
+            env(offer(alice, EUR(101), USD(100)));
+            env(offer(alice, EUR(102), USD(100)));
+            AMM ammAlice(
+                env, alice, EUR(1000), USD(1000), ter(tecINSUF_RESERVE_LINE));
+        }
     }
 
     void
@@ -933,6 +971,62 @@ private:
                 std::nullopt,
                 ter(tecUNFUNDED_AMM));
         });
+
+        // Insufficient reserve, XRP/IOU
+        {
+            Env env(*this);
+            auto const starting_xrp =
+                reserve(env, 4) + env.current()->fees().base * 4;
+            env.fund(XRP(10000), gw);
+            env.fund(XRP(10000), alice);
+            env.fund(starting_xrp, carol);
+            env.trust(USD(2000), alice);
+            env.trust(USD(2000), carol);
+            env.close();
+            env(pay(gw, alice, USD(2000)));
+            env(pay(gw, carol, USD(2000)));
+            env.close();
+            env(offer(carol, XRP(100), USD(101)));
+            env(offer(carol, XRP(100), USD(102)));
+            AMM ammAlice(env, alice, XRP(1000), USD(1000));
+            ammAlice.deposit(
+                carol,
+                XRPAmount(100),
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(tecUNFUNDED_AMM));
+        }
+
+        // Insufficient reserve, IOU/IOU
+        {
+            Env env(*this);
+            auto const starting_xrp =
+                reserve(env, 4) + env.current()->fees().base * 4;
+            env.fund(XRP(10000), gw);
+            env.fund(XRP(10000), alice);
+            env.fund(starting_xrp, carol);
+            env.trust(USD(2000), alice);
+            env.trust(EUR(2000), alice);
+            env.trust(USD(2000), carol);
+            env.trust(EUR(2000), carol);
+            env.close();
+            env(pay(gw, alice, USD(2000)));
+            env(pay(gw, alice, EUR(2000)));
+            env(pay(gw, carol, USD(2000)));
+            env(pay(gw, carol, EUR(2000)));
+            env.close();
+            env(offer(carol, XRP(100), USD(101)));
+            env(offer(carol, XRP(100), USD(102)));
+            AMM ammAlice(env, alice, XRP(1000), USD(1000));
+            ammAlice.deposit(
+                carol,
+                XRPAmount(100),
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(tecINSUF_RESERVE_LINE));
+        }
     }
 
     void
@@ -1910,6 +2004,35 @@ private:
                 }
                 BEAST_EXPECT(ammAlice.expectBalances(
                     XRP(12000), USD(12000), IOUAmount{1199488908260979, -8}));
+                // Discounted payment
+                ammAlice.deposit(carol, USD(100));
+                auto tokens = ammAlice.getLPTokensBalance();
+                BEAST_EXPECT(
+                    ammAlice.expectBalances(XRP(12000), USD(12100), tokens));
+                env(pay(carol, bob, USD(100)), path(~USD), sendmax(XRP(110)));
+                env.close();
+                BEAST_EXPECT(
+                    ammAlice.expectBalances(XRP(12100), USD(12000), tokens));
+                // Payment with the fee
+                env(pay(alice, carol, XRP(100)), path(~XRP), sendmax(USD(110)));
+                env.close();
+                BEAST_EXPECT(ammAlice.expectBalances(
+                    XRP(12000),
+                    STAmount{USD, UINT64_C(121010101010101), -10},
+                    tokens));
+                // Auction slot expired, no discounted fee
+                ammAlice.withdraw(
+                    carol, STAmount{USD, UINT64_C(10101010101), -10});
+                tokens = ammAlice.getLPTokensBalance();
+                BEAST_EXPECT(
+                    ammAlice.expectBalances(XRP(12000), USD(12100), tokens));
+                env.close(seconds(24 * 3600 + 1));
+                // clock is parent's based
+                env.close();
+                env(pay(carol, bob, USD(100)), path(~USD), sendmax(XRP(110)));
+                env.close();
+                BEAST_EXPECT(ammAlice.expectBalances(
+                    XRPAmount(12101010102), USD(12000), tokens));
             },
             std::nullopt,
             1000);
@@ -3453,9 +3576,8 @@ private:
         FeatureBitset const all{supported_amendments()};
         FeatureBitset const noAMM{all - featureAMM};
         FeatureBitset const noNumber{all - fixUniversalNumber};
-        FeatureBitset const noFlowCross{all - featureFlowCross};
 
-        for (auto const& feature : {noAMM, noNumber, noFlowCross})
+        for (auto const& feature : {noAMM, noNumber})
         {
             Env env{*this, feature};
             fund(env, gw, {alice}, {USD(1000)}, Fund::All);
@@ -3911,6 +4033,25 @@ private:
         path_find_02();
         path_find_05();
         path_find_06();
+    }
+
+    void
+    testReserve()
+    {
+        testcase("Reserve");
+        using namespace jtx;
+        Env env(*this);
+        auto const starting_xrp =
+            XRP(1000) + reserve(env, 3) + env.current()->fees().base * 4;
+        env.fund(starting_xrp, gw);
+        env.fund(starting_xrp, alice);
+        env.trust(USD(20000), alice);
+        env.close();
+        env(pay(gw, alice, USD(15000)));
+        env.close();
+        for (int i = 0; i < 2; ++i)
+            env(offer(alice, XRP(101), USD(100)), txflags(tfPassive));
+        AMM ammAlice(env, alice, XRP(1000), USD(1000));
     }
 
     void

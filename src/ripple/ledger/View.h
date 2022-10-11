@@ -98,6 +98,14 @@ accountHolds(
     beast::Journal j);
 
 [[nodiscard]] STAmount
+accountHolds(
+    ReadView const& view,
+    AccountID const& account,
+    Issue const& issue,
+    FreezeHandling zeroIfFrozen,
+    beast::Journal j);
+
+[[nodiscard]] STAmount
 accountFunds(
     ReadView const& view,
     AccountID const& id,
