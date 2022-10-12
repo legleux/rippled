@@ -259,7 +259,7 @@ AMMBid::applyGuts(Sandbox& sb)
             }
             else if (maxBidSlotPrice)
             {
-                if (computedPrice < *maxBidSlotPrice)
+                if (computedPrice <= *maxBidSlotPrice)
                     return computedPrice;
                 JLOG(ctx_.journal.debug()) << "AMM Bid: not in range "
                                            << computedPrice << *maxBidSlotPrice;
@@ -281,7 +281,7 @@ AMMBid::applyGuts(Sandbox& sb)
             sb,
             account_,
             auctionSlot[sfAccount],
-            toSTAmount(lpTokens.issue(), fractionRemaining * payPrice.value()),
+            toSTAmount(lpTokens.issue(), fractionRemaining * *payPrice),
             ctx_.journal);
         if (res != tesSUCCESS)
         {

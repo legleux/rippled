@@ -167,22 +167,25 @@ getTradingFee(ReadView const& view, SLE const& ammSle, AccountID const& account)
     using namespace std::chrono;
     if (ammSle.isFieldPresent(sfAuctionSlot))
     {
-        std::uint32_t constexpr totalSlotTimeSecs = 24 * 3600;
         auto const& auctionSlot =
             static_cast<STObject const&>(ammSle.peekAtField(sfAuctionSlot));
-        auto const timeStamp = auctionSlot[~sfTimeStamp];
-        auto const current = duration_cast<seconds>(
-                                 view.info().parentCloseTime.time_since_epoch())
-                                 .count();
-        if (auctionSlot[~sfAccount] == account && *timeStamp &&
-            current <= (totalSlotTimeSecs - *timeStamp))
-            return auctionSlot[sfDiscountedFee];
-        if (auctionSlot.isFieldPresent(sfAuthAccounts))
+        if (auto const timeStamp = auctionSlot[~sfTimeStamp])
         {
-            for (auto const& acct : auctionSlot.getFieldArray(sfAuthAccounts))
-                if (acct[~sfAccount] == account && timeStamp &&
-                    current <= (totalSlotTimeSecs - *timeStamp))
-                    return auctionSlot[sfDiscountedFee];
+            std::uint32_t constexpr totalSlotTimeSecs = 24 * 3600;
+            auto const notExpired =
+                (duration_cast<seconds>(
+                     view.info().parentCloseTime.time_since_epoch())
+                     .count() -
+                 *timeStamp) <= totalSlotTimeSecs;
+            if (auctionSlot[~sfAccount] == account && notExpired)
+                return auctionSlot[sfDiscountedFee];
+            if (auctionSlot.isFieldPresent(sfAuthAccounts))
+            {
+                for (auto const& acct :
+                     auctionSlot.getFieldArray(sfAuthAccounts))
+                    if (acct[~sfAccount] == account && notExpired)
+                        return auctionSlot[sfDiscountedFee];
+            }
         }
     }
     return ammSle[sfTradingFee];

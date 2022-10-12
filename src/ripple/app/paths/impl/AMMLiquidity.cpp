@@ -171,8 +171,7 @@ AMMLiquidity::getOffer(
         if (offerCounter_.multiPath())
         {
             auto const offer = generateFibSeqOffer(balances);
-            auto const quality = Quality{offer};
-            if (clobQuality && quality < clobQuality.value())
+            if (clobQuality && Quality{offer} < *clobQuality)
                 return std::nullopt;
             return offer;
         }
