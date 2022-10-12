@@ -165,22 +165,20 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
         return temBAD_AMM_TOKENS;
     }
 
-    // Adjust the reserve by 1 for the LPToken trustline
-    STAmount const xrpBalance = xrpLiquid(ctx.view, accountID, 1, ctx.j);
-    // Insufficient reserve
-    if (xrpBalance <= beast::zero)
+    // Check the reserve for LPToken trustline if not LP
+    if (lpHolds(ctx.view, (*ammSle)[sfAMMAccount], accountID, ctx.j) ==
+        beast::zero)
     {
-        JLOG(ctx.j.debug()) << "AMM Instance: insufficient reserves";
-        return tecINSUF_RESERVE_LINE;
+        STAmount const xrpBalance = xrpLiquid(ctx.view, accountID, 1, ctx.j);
+        // Insufficient reserve
+        if (xrpBalance <= beast::zero)
+        {
+            JLOG(ctx.j.debug()) << "AMM Instance: insufficient reserves";
+            return tecINSUF_RESERVE_LINE;
+        }
     }
 
     return tesSUCCESS;
-}
-
-void
-AMMDeposit::preCompute()
-{
-    return Transactor::preCompute();
 }
 
 std::pair<TER, bool>
@@ -298,7 +296,7 @@ AMMDeposit::deposit(
         if (isXRP(asset))
         {
             auto const& lpIssue = lpTokensDeposit.issue();
-            // adjust the reserve if LP doesn't have LPToken trustline
+            // Adjust the reserve if LP doesn't have LPToken trustline
             auto const sle = view.read(
                 keylet::line(account_, lpIssue.account, lpIssue.currency));
             return xrpLiquid(view, account_, !sle, j_) >= asset;

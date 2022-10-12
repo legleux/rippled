@@ -1770,19 +1770,6 @@ private:
                 ter(temINVALID_FLAG));
         });
 
-        // Invalid bid options with [Min,Max]SlotPrice
-        testAMM([&](AMM& ammAlice, Env& env) {
-            ammAlice.deposit(carol, 1000000);
-            ammAlice.bid(
-                carol,
-                100,
-                100,
-                {},
-                std::nullopt,
-                std::nullopt,
-                ter(temBAD_AMM_OPTIONS));
-        });
-
         // Invalid Bid price 0
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.deposit(carol, 1000000);
@@ -1805,6 +1792,19 @@ private:
                 std::nullopt,
                 std::nullopt,
                 ter(temBAD_AMM_TOKENS));
+        });
+
+        // Invlaid Min/Max combination
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.deposit(carol, 1000000);
+            ammAlice.bid(
+                carol,
+                200,
+                100,
+                {},
+                std::nullopt,
+                std::nullopt,
+                ter(tecAMM_INVALID_TOKENS));
         });
 
         // Invalid Account
@@ -1832,6 +1832,18 @@ private:
                 std::nullopt,
                 std::nullopt,
                 ter(terNO_ACCOUNT));
+        });
+
+        // Account is not LP
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.bid(
+                carol,
+                100,
+                std::nullopt,
+                {},
+                std::nullopt,
+                std::nullopt,
+                ter(tecAMM_INVALID_TOKENS));
         });
 
         // Auth account is invalid.
@@ -1928,9 +1940,25 @@ private:
                 std::nullopt,
                 std::nullopt,
                 ter(tecAMM_FAILED_BID));
-            // Bid MaxSlotPrice succeeds.
+            // Bid MaxSlotPrice succeeds - pay computed price
             ammAlice.bid(carol, std::nullopt, 135);
-            BEAST_EXPECT(ammAlice.expectAuctionSlot(0, 0, IOUAmount{135, 0}));
+            BEAST_EXPECT(
+                ammAlice.expectAuctionSlot(0, 0, IOUAmount{121275, -3}));
+
+            // Bid Min/MaxSlotPrice fails because the computed price is not in
+            // range
+            ammAlice.bid(
+                carol,
+                10,
+                100,
+                {},
+                std::nullopt,
+                std::nullopt,
+                ter(tecAMM_FAILED_BID));
+            // Bid Min/MaxSlotPrice succeeds - pay computed price
+            ammAlice.bid(carol, 100, 150);
+            BEAST_EXPECT(
+                ammAlice.expectAuctionSlot(0, 0, IOUAmount{12733875, -5}));
         });
 
         // Slot states.
@@ -4033,25 +4061,6 @@ private:
         path_find_02();
         path_find_05();
         path_find_06();
-    }
-
-    void
-    testReserve()
-    {
-        testcase("Reserve");
-        using namespace jtx;
-        Env env(*this);
-        auto const starting_xrp =
-            XRP(1000) + reserve(env, 3) + env.current()->fees().base * 4;
-        env.fund(starting_xrp, gw);
-        env.fund(starting_xrp, alice);
-        env.trust(USD(20000), alice);
-        env.close();
-        env(pay(gw, alice, USD(15000)));
-        env.close();
-        for (int i = 0; i < 2; ++i)
-            env(offer(alice, XRP(101), USD(100)), txflags(tfPassive));
-        AMM ammAlice(env, alice, XRP(1000), USD(1000));
     }
 
     void

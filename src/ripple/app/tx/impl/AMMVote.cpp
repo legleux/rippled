@@ -76,12 +76,6 @@ AMMVote::preclaim(PreclaimContext const& ctx)
     return tesSUCCESS;
 }
 
-void
-AMMVote::preCompute()
-{
-    return Transactor::preCompute();
-}
-
 std::pair<TER, bool>
 AMMVote::applyGuts(Sandbox& sb)
 {

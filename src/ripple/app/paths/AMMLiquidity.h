@@ -55,14 +55,6 @@ public:
     FibSeqHelper&
     operator=(FibSeqHelper const&) = delete;
 
-    /** Get current sequence
-     */
-    Amounts const&
-    current() const
-    {
-        return curSeq_;
-    }
-
     /** Generate first sequence.
      * @param balances current AMM pool balances.
      * @param tfee trading fee in basis points.

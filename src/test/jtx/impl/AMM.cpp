@@ -118,8 +118,22 @@ AMM::ammRpcInfo(
         jv[jss::ledger_index] = *ledgerIndex;
     if (useAssets)
     {
-        asset1_.setJson(jv[jss::asset1]);
-        asset2_.setJson(jv[jss::asset2]);
+        auto setIssue = [&](STAmount const& a,
+                            Json::StaticString const& field) {
+            if (!a.native())
+            {
+                a.setJson(jv[field]);
+                jv[field].removeMember("value");
+            }
+            else
+            {
+                Json::Value v;
+                v[jss::currency] = "XRP";
+                jv[field] = v;
+            }
+        };
+        setIssue(asset1_, jss::asset1);
+        setIssue(asset2_, jss::asset2);
     }
     else if (ammID)
     {

@@ -116,7 +116,7 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
         return tecFROZEN;
     }
 
-    // Adjust the reserve by 1 for the LPToken trustline
+    // Check the reserve for LPToken trustline
     STAmount const xrpBalance = xrpLiquid(ctx.view, accountID, 1, ctx.j);
     // Insufficient reserve
     if (xrpBalance <= beast::zero)
@@ -145,12 +145,6 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
     }
 
     return tesSUCCESS;
-}
-
-void
-AMMCreate::preCompute()
-{
-    return Transactor::preCompute();
 }
 
 std::pair<TER, bool>

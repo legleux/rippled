@@ -136,7 +136,7 @@ AMMLiquidity::generateFibSeqOffer(const Amounts& balances)
     if (!fibSeqHelper_.has_value())
     {
         fibSeqHelper_.emplace();
-        return fibSeqHelper_->firstSeq(balances, tradingFee_);
+        fibSeqHelper_->firstSeq(balances, tradingFee_);
     }
     // advance to next sequence
     return fibSeqHelper_->nextNthSeq(

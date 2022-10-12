@@ -179,12 +179,6 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
     return tesSUCCESS;
 }
 
-void
-AMMWithdraw::preCompute()
-{
-    return Transactor::preCompute();
-}
-
 std::pair<TER, bool>
 AMMWithdraw::applyGuts(Sandbox& sb)
 {

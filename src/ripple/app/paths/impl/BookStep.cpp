@@ -976,7 +976,7 @@ BookStep<TIn, TOut, TDerived>::revImp(
       amounts - tho always <=)
       Return true to continue to receive offers, false to stop receiving offers.
     */
-    auto eachOffer = [&](auto& offer,
+    auto eachOffer = [&](EitherOffer<TIn, TOut>& offer,
                          TAmounts<TIn, TOut> const& ofrAmt,
                          TAmounts<TIn, TOut> const& stpAmt,
                          TOut const& ownerGives,
@@ -1095,7 +1095,7 @@ BookStep<TIn, TOut, TDerived>::fwdImp(
 
     // amt fed will be adjusted by owner funds (and may differ from the offer's
     // amounts - tho always <=)
-    auto eachOffer = [&](auto& offer,
+    auto eachOffer = [&](EitherOffer<TIn, TOut>& offer,
                          TAmounts<TIn, TOut> const& ofrAmt,
                          TAmounts<TIn, TOut> const& stpAmt,
                          TOut const& ownerGives,

@@ -51,12 +51,6 @@ AMMBid::preflight(PreflightContext const& ctx)
         return temINVALID_FLAG;
     }
 
-    if (ctx.tx[~sfMinSlotPrice] && ctx.tx[~sfMaxSlotPrice])
-    {
-        JLOG(ctx.j.debug()) << "AMM Bid: invalid options.";
-        return temBAD_AMM_OPTIONS;
-    }
-
     if (invalidAMMAmount(ctx.tx[~sfMinSlotPrice]) ||
         invalidAMMAmount(ctx.tx[~sfMaxSlotPrice]))
     {
@@ -107,41 +101,45 @@ AMMBid::preclaim(PreclaimContext const& ctx)
         lpHolds(ctx.view, (*ammSle)[sfAMMAccount], ctx.tx[sfAccount], ctx.j);
     auto const lpTokensBalance = (*ammSle)[sfLPTokenBalance];
 
-    if (auto const minSlotPrice = ctx.tx[~sfMinSlotPrice])
+    auto const minBidSlotPrice = ctx.tx[~sfMinSlotPrice];
+
+    if (minBidSlotPrice)
     {
-        if (*minSlotPrice > lpTokens || *minSlotPrice >= lpTokensBalance)
+        if (*minBidSlotPrice > lpTokens || *minBidSlotPrice >= lpTokensBalance)
         {
             JLOG(ctx.j.debug()) << "AMM Bid: Invalid Tokens.";
             return tecAMM_INVALID_TOKENS;
         }
-        if (minSlotPrice->issue() != lpTokens.issue())
+        if (minBidSlotPrice->issue() != lpTokens.issue())
         {
             JLOG(ctx.j.debug()) << "AMM Bid: Invalid LPToken.";
             return temBAD_AMM_TOKENS;
         }
     }
 
-    if (auto const maxSlotPrice = ctx.tx[~sfMaxSlotPrice])
+    auto const maxBidSlotPrice = ctx.tx[~sfMaxSlotPrice];
+    if (maxBidSlotPrice)
     {
-        if (*maxSlotPrice > lpTokens || *maxSlotPrice >= lpTokensBalance)
+        if (*maxBidSlotPrice > lpTokens || *maxBidSlotPrice >= lpTokensBalance)
         {
             JLOG(ctx.j.debug()) << "AMM Bid: Invalid Tokens.";
             return tecAMM_INVALID_TOKENS;
         }
-        if (maxSlotPrice->issue() != lpTokens.issue())
+        if (maxBidSlotPrice->issue() != lpTokens.issue())
         {
             JLOG(ctx.j.debug()) << "AMM Bid: Invalid LPToken.";
             return temBAD_AMM_TOKENS;
         }
+    }
+
+    if (minBidSlotPrice && maxBidSlotPrice &&
+        minBidSlotPrice >= maxBidSlotPrice)
+    {
+        JLOG(ctx.j.debug()) << "AMM Bid: Invalid Max/MinSlotPrice.";
+        return tecAMM_INVALID_TOKENS;
     }
 
     return tesSUCCESS;
-}
-
-void
-AMMBid::preCompute()
-{
-    return Transactor::preCompute();
 }
 
 std::pair<TER, bool>
@@ -214,19 +212,10 @@ AMMBid::applyGuts(Sandbox& sb)
 
     TER res = tesSUCCESS;
 
-    auto const minSlotPrice = ctx_.tx[~sfMinSlotPrice];
-    auto const maxSlotPrice = ctx_.tx[~sfMaxSlotPrice];
+    auto const minBidSlotPrice = ctx_.tx[~sfMinSlotPrice];
+    auto const maxBidSlotPrice = ctx_.tx[~sfMaxSlotPrice];
 
     Number const MinSlotPrice = lptAMMBalance / 100000;  // 0.001% TBD
-    // Arbitrager's bid price
-    auto const bidPrice = [&]() -> Number {
-        if (minSlotPrice)
-            return *minSlotPrice;
-        else if (maxSlotPrice)
-            return *maxSlotPrice;
-        else
-            return 0;
-    }();
 
     // No one owns the slot or expired slot.
     // The bidder pays MinSlotPrice
@@ -251,26 +240,39 @@ AMMBid::applyGuts(Sandbox& sb)
                     MinSlotPrice;
         }();
 
-        // If max pricePurchased then don't pay more than the max
-        // pricePurchased.
-        if (maxSlotPrice && computedPrice > *maxSlotPrice)
-        {
-            JLOG(ctx_.journal.debug()) << "AMM Bid: computed pricePurchased "
-                                          "exceeds max pricePurchased.";
-            return {tecAMM_FAILED_BID, false};
-        }
-
-        auto const payPrice = [&]() -> Number {
+        auto const payPrice = [&]() -> std::optional<Number> {
+            // Both min/max bid price are defined
+            if (minBidSlotPrice && maxBidSlotPrice)
+            {
+                if (computedPrice >= *minBidSlotPrice &&
+                    computedPrice <= *maxBidSlotPrice)
+                    return computedPrice;
+                JLOG(ctx_.journal.debug())
+                    << "AMM Bid: not in range " << computedPrice
+                    << *minBidSlotPrice << " " << *maxBidSlotPrice;
+                return std::nullopt;
+            }
             // Bidder pays max(bidPrice, computedPrice)
-            if (minSlotPrice)
-                return bidPrice > computedPrice ? bidPrice : computedPrice;
-            else if (maxSlotPrice)
-                return bidPrice;  // max slot price is less than computed price
+            if (minBidSlotPrice)
+            {
+                return std::max(computedPrice, Number(*minBidSlotPrice));
+            }
+            else if (maxBidSlotPrice)
+            {
+                if (computedPrice < *maxBidSlotPrice)
+                    return computedPrice;
+                JLOG(ctx_.journal.debug()) << "AMM Bid: not in range "
+                                           << computedPrice << *maxBidSlotPrice;
+                return std::nullopt;
+            }
             else
                 return computedPrice;
         }();
 
-        res = updateSlot(0, payPrice, payPrice * (1 - fractionRemaining));
+        if (!payPrice)
+            return {tecAMM_FAILED_BID, false};
+
+        res = updateSlot(0, *payPrice, *payPrice * (1 - fractionRemaining));
         if (res != tesSUCCESS)
             return {res, false};
         // Refund the previous owner. If the time slot is 0 then
@@ -279,7 +281,7 @@ AMMBid::applyGuts(Sandbox& sb)
             sb,
             account_,
             auctionSlot[sfAccount],
-            toSTAmount(lpTokens.issue(), fractionRemaining * payPrice),
+            toSTAmount(lpTokens.issue(), fractionRemaining * payPrice.value()),
             ctx_.journal);
         if (res != tesSUCCESS)
         {
