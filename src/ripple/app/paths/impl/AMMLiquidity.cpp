@@ -101,7 +101,7 @@ AMMLiquidity::ammAccountHolds(
              !isFrozen(view, ammAccountID, issue.currency, issue.account))
     {
         auto amount = (*sle)[sfBalance];
-        if (amount.negative())
+        if (ammAccountID > issue.account)
             amount.negate();
         amount.setIssuer(issue.account);
         return amount;
