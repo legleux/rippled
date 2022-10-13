@@ -235,9 +235,8 @@ AMMBid::applyGuts(Sandbox& sb)
             if (*timeSlot == 0)
                 return pricePurchased * p1_05;
             // Other intervals slot price
-            else
-                return pricePurchased * p1_05 * (1 - power(fractionUsed, 60)) +
-                    MinSlotPrice;
+            return pricePurchased * p1_05 * (1 - power(fractionUsed, 60)) +
+                MinSlotPrice;
         }();
 
         auto const payPrice = [&]() -> std::optional<Number> {

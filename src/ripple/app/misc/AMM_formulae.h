@@ -31,11 +31,45 @@
 
 namespace ripple {
 
-/** When converting Number to XRP as the result of swap in/out
- * operation, round downward/upward respectively to maintain
- * the invariant - the new pool product is greater or equal
- * to the previous pool product.
+namespace {
+
+/** RAII to save/restore rounding mode on swap in/out.
+ * AMM pool invariant - the product (A * B) after swap in/out has to remain
+ * at least the same: (A + in) * (A - out) >= A * B
+ * XRP round-off may result in a smaller product after swap in/out.
+ * To fix this:
+ *     - if on swapIn the out is XRP then the amount is round-off
+ *       downward, making the product slightly larger since out
+ *       value is reduced.
+ *     - if on swapOut the in is XRP then the amount is round-off
+ *       upward, making the product slightly larger since in
+ *       value is increased.
  */
+class RoundingMode
+{
+    Number::rounding_mode mode_;
+
+public:
+    template <typename Amt>
+    RoundingMode(Amt const& a, Number::rounding_mode mode)
+        : mode_(Number::getround())
+    {
+        if constexpr (!std::is_same_v<Amt, IOUAmount>)
+            if (isXRP(a))
+                Number::setround(mode);
+    }
+    RoundingMode(Number::rounding_mode mode) : mode_(Number::getround())
+    {
+        Number::setround(mode);
+    }
+    ~RoundingMode()
+    {
+        Number::setround(mode_);
+    }
+};
+
+}  // namespace
+
 inline STAmount
 toSTAmount(
     Issue const& issue,
@@ -44,10 +78,8 @@ toSTAmount(
 {
     if (isXRP(issue))
     {
-        Number::setround(mode);
-        auto const res = STAmount{issue, (std::int64_t)n};
-        Number::setround(Number::rounding_mode::to_nearest);
-        return res;
+        RoundingMode rm(mode);
+        return STAmount{issue, static_cast<std::int64_t>(n)};
     }
     return STAmount{issue, n.mantissa(), n.exponent()};
 }
@@ -205,9 +237,73 @@ changeSpotPriceQuality(
  * @param tfee trading fee in basis points
  * @return
  */
+template <typename TIn, typename TOut>
+TOut
+swapAssetIn(
+    TAmounts<TIn, TOut> const& pool,
+    TIn const& assetIn,
+    std::uint16_t tfee)
+{
+    auto const res =
+        pool.out - (pool.in * pool.out) / (pool.in + assetIn * feeMult(tfee));
+    {
+        RoundingMode rm(pool.out, Number::rounding_mode::downward);
+        if constexpr (std::is_same_v<TOut, IOUAmount>)
+            return IOUAmount(res);
+        if constexpr (std::is_same_v<TOut, XRPAmount>)
+            return XRPAmount(static_cast<std::int64_t>(res));
+        if constexpr (std::is_same_v<TOut, STAmount>)
+        {
+            if (isXRP(pool.out))
+                return STAmount(
+                    pool.out.issue(), static_cast<std::int64_t>(res));
+            return STAmount(pool.out.issue(), res.mantissa(), res.exponent());
+        }
+    }
+}
+
+/** Swap assetOut out of the pool and swap in a proportional amount
+ * of the other asset.
+ * @param pool current AMM pool balances
+ * @param assetOut amount to swap out
+ * @param tfee trading fee in basis points
+ * @return
+ */
+template <typename TIn, typename TOut>
+TIn
+swapAssetOut(
+    TAmounts<TIn, TOut> const& pool,
+    TOut const& assetOut,
+    std::uint16_t tfee)
+{
+    auto const res = ((pool.in * pool.out) / (pool.out - assetOut) - pool.in) /
+        feeMult(tfee);
+    {
+        RoundingMode rm(pool.in, Number::rounding_mode::upward);
+        if constexpr (std::is_same_v<TIn, IOUAmount>)
+            return IOUAmount(res);
+        if constexpr (std::is_same_v<TIn, XRPAmount>)
+            return XRPAmount((std::int64_t)res);
+        if constexpr (std::is_same_v<TIn, STAmount>)
+        {
+            if (isXRP(pool.in))
+                return STAmount(
+                    pool.in.issue(), static_cast<std::int64_t>(res));
+            return STAmount(pool.in.issue(), res.mantissa(), res.exponent());
+        }
+    }
+}
+
+/** Swap assetIn into the pool and swap out a proportional amount
+ * of the other asset.
+ * @param pool current AMM pool balances
+ * @param assetIn amount to swap in
+ * @param tfee trading fee in basis points
+ * @return
+ */
 template <typename TIn>
 STAmount
-swapAssetIn(Amounts const& pool, TIn const& assetIn, std::uint16_t tfee)
+swapAssetInCvt(Amounts const& pool, TIn const& assetIn, std::uint16_t tfee)
 {
     auto const res = toSTAmount(
         pool.out.issue(),
@@ -225,7 +321,7 @@ swapAssetIn(Amounts const& pool, TIn const& assetIn, std::uint16_t tfee)
  */
 template <typename TOut>
 STAmount
-swapAssetOut(Amounts const& pool, TOut const& assetOut, std::uint16_t tfee)
+swapAssetOutCvt(Amounts const& pool, TOut const& assetOut, std::uint16_t tfee)
 {
     auto const res = toSTAmount(
         pool.in.issue(),

@@ -17,8 +17,8 @@
 */
 //==============================================================================
 
-#ifndef RIPPLE_APP_PATHS_IMPL_AMMOFFERCOUNTER_H_INCLUDED
-#define RIPPLE_APP_PATHS_IMPL_AMMOFFERCOUNTER_H_INCLUDED
+#ifndef RIPPLE_APP_PATHS_IMPL_AMMCONTEXT_H_INCLUDED
+#define RIPPLE_APP_PATHS_IMPL_AMMCONTEXT_H_INCLUDED
 
 #include <ripple/protocol/AccountID.h>
 #include <cstdint>
@@ -32,7 +32,7 @@ namespace ripple {
  * The reference is percolated through calls to AMMLiquidity class,
  * which handles AMM offer generation.
  */
-class AMMOfferCounter
+class AMMContext
 {
 private:
     // Tx account owner is required to get the AMM trading fee in BookStep
@@ -45,14 +45,14 @@ private:
     std::uint16_t ammIters_{0};
 
 public:
-    AMMOfferCounter(AccountID const& account, bool multiPath)
+    AMMContext(AccountID const& account, bool multiPath)
         : account_(account), multiPath_(multiPath)
     {
     }
-    ~AMMOfferCounter() = default;
-    AMMOfferCounter(AMMOfferCounter const&) = delete;
-    AMMOfferCounter&
-    operator=(AMMOfferCounter const&) = delete;
+    ~AMMContext() = default;
+    AMMContext(AMMContext const&) = delete;
+    AMMContext&
+    operator=(AMMContext const&) = delete;
 
     bool
     multiPath() const
@@ -98,8 +98,14 @@ public:
     {
         return account_;
     }
+
+    void
+    reset()
+    {
+        ammCounter_ = 0;
+    }
 };
 
 }  // namespace ripple
 
-#endif  // RIPPLE_APP_PATHS_IMPL_AMMOFFERCOUNTER_H_INCLUDED
+#endif  // RIPPLE_APP_PATHS_IMPL_AMMCONTEXT_H_INCLUDED
