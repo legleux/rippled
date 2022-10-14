@@ -33,23 +33,14 @@ namespace ripple {
 
 namespace {
 
-/** Save/restore rounding mode.
+/** Save, set, restore Number rounding mode.
+ * Applies to XRP only.
  */
 class RoundingMode
 {
     Number::rounding_mode mode_;
 
 public:
-    template <typename Amt>
-    RoundingMode(Amt const& a, Number::rounding_mode mode)
-        : mode_(Number::getround())
-    {
-        if constexpr (!std::is_same_v<Amt, IOUAmount>)
-        {
-            if (isXRP(a))
-                Number::setround(mode);
-        }
-    }
     RoundingMode(Issue const& issue, Number::rounding_mode mode)
         : mode_(Number::getround())
     {
