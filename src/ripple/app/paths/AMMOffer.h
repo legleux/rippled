@@ -28,7 +28,7 @@ namespace ripple {
 template <typename TIn, typename TOut>
 class AMMLiquidity;
 
-/** Represents synthetic AMMOffer in BookStep. AMMOffer mirrors TOffer
+/** Represents synthetic AMM offer in BookStep. AMMOffer mirrors TOffer
  * methods for use in generic BookStep methods. AMMOffer amounts
  * are changed indirectly in BookStep limiting steps.
  */
@@ -42,7 +42,7 @@ private:
     // if the offer is consumed then its pool SP quality is equal to
     // competing CLOB offer quality.
     TAmounts<TIn, TOut> const amounts_;
-    // If seated then pool balances. Used in one-path limiting steps
+    // If seated then current pool balances. Used in one-path limiting steps
     // to swap in/out.
     std::optional<TAmounts<TIn, TOut>> const balances_;
 
@@ -85,9 +85,17 @@ public:
         return true;
     }
 
+    /** Limit out of the provided offer. If one-path then swapOut
+     * using current balances. If multi-path then ceil_out using
+     * current quality.
+     */
     TAmounts<TIn, TOut>
     limitOut(TAmounts<TIn, TOut> const& offrAmt, TOut const& limit) const;
 
+    /** Limit in of the provided offer. If one-path then swapIn
+     * using current balances. If multi-path then ceil_in using
+     * current quality.
+     */
     TAmounts<TIn, TOut>
     limitIn(TAmounts<TIn, TOut> const& offrAmt, TIn const& limit) const;
 };

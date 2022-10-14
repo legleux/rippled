@@ -84,17 +84,6 @@ public:
     getOffer(ReadView const& view, std::optional<Quality> const& clobQuality)
         const;
 
-    /** Called when AMM offer is consumed. Sets dirty flag
-     * to indicate that the balances may have changed and
-     * increments offer counter to indicate that AMM offer
-     * is used in the strand.
-     */
-    /*void
-    consumed()
-    {
-        ammContext_.incrementCounter();
-    }*/
-
     AccountID const&
     ammAccount() const
     {
@@ -132,7 +121,7 @@ public:
     }
 
 private:
-    /** Fetches AMM balances if balances_ is empty()
+    /** Fetches current AMM balances.
      */
     TAmounts<TIn, TOut>
     fetchBalances(ReadView const& view) const;
@@ -140,7 +129,7 @@ private:
     /** Generate AMM offers with the offer size based on Fibonacci sequence.
      * The sequence corresponds to the payment engine iterations with AMM
      * liquidity. Iterations that don't consume AMM offers don't count.
-     * We max out at four iterations with AMM offers.
+     * Max out at four iterations with AMM offers.
      */
     TAmounts<TIn, TOut>
     generateFibSeqOffer(TAmounts<TIn, TOut> const& balances) const;

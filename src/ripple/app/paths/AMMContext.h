@@ -40,8 +40,8 @@ private:
     AccountID account_;
     // true if payment has multiple paths
     bool multiPath_{false};
-    // Counter of consumed AMM at payment engine iteration
-    std::uint16_t ammCounter_{0};
+    // Is true if AMM offer is consumed at a payment engine iteration.
+    bool ammUsed_{false};
     // Counter of payment engine iterations with consumed AMM
     std::uint16_t ammIters_{0};
 
@@ -68,18 +68,18 @@ public:
     }
 
     void
-    incrementCounter()
+    setAMMUsed()
     {
         if (multiPath_)
-            ++ammCounter_;
+            ammUsed_ = true;
     }
 
     void
     updateIters()
     {
-        if (ammCounter_ > 0)
+        if (ammUsed_ > 0)
             ++ammIters_;
-        ammCounter_ = 0;
+        ammUsed_ = false;
     }
 
     bool
@@ -100,10 +100,13 @@ public:
         return account_;
     }
 
+    /** Stand execution may fail. Reset the flag at the start
+     * of each payment engine iteration.
+     */
     void
     clear()
     {
-        ammCounter_ = 0;
+        ammUsed_ = false;
     }
 };
 

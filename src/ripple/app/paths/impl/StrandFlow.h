@@ -633,6 +633,8 @@ flow(
             return {telFAILED_PROCESSING, std::move(ofrsToRmOnFail)};
         }
 
+        ammContext.clear();
+
         activeStrands.activateNext(sb, limitQuality);
 
         ammContext.setMultiPath(activeStrands.size() > 1);
@@ -658,7 +660,6 @@ flow(
              strandIndex != sie;
              ++strandIndex)
         {
-            ammContext.reset();
             Strand const* strand = activeStrands.get(strandIndex);
             if (!strand)
             {

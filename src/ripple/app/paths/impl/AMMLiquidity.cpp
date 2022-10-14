@@ -95,9 +95,8 @@ AMMLiquidity<TIn, TOut>::getOffer(
     ReadView const& view,
     std::optional<Quality> const& clobQuality) const
 {
-    // Can't generate more offers. Only applies if generating
-    // based on Fibonacci sequence.
-    if (ammContext_.maxItersReached())
+    // Can't generate more offers if multi-path.
+    if (ammContext_.multiPath() && ammContext_.maxItersReached())
         return std::nullopt;
 
     auto const balances = fetchBalances(view);

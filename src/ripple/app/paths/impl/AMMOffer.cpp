@@ -65,7 +65,7 @@ AMMOffer<TIn, TOut>::consume(
     TAmounts<TIn, TOut> const& consumed)
 {
     // Let the context know AMM offer is consumed
-    ammLiquidity_.context().incrementCounter();
+    ammLiquidity_.context().setAMMUsed();
 }
 
 template <typename TIn, typename TOut>
