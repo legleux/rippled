@@ -65,7 +65,7 @@ protected:
     // If set, AMM liquidity might be available
     // if AMM offer quality is better than CLOB offer
     // quality or there is no CLOB offer.
-    mutable std::optional<AMMLiquidity> ammLiquidity_;
+    std::optional<AMMLiquidity<TIn, TOut>> ammLiquidity_;
     beast::Journal const j_;
 
     struct Cache
@@ -785,7 +785,7 @@ BookStep<TIn, TOut, TDerived>::getAMMOffer(
     ReadView const& view,
     std::optional<Quality> const& clobQuality) const
 {
-    return ammLiquidity_ ? ammLiquidity_->getOffer<TIn, TOut>(view, clobQuality)
+    return ammLiquidity_ ? ammLiquidity_->getOffer(view, clobQuality)
                          : std::nullopt;
 }
 

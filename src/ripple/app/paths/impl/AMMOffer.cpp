@@ -23,7 +23,7 @@ namespace ripple {
 
 template <typename TIn, typename TOut>
 AMMOffer<TIn, TOut>::AMMOffer(
-    AMMLiquidity const& ammLiquidity,
+    AMMLiquidity<TIn, TOut> const& ammLiquidity,
     TAmounts<TIn, TOut> const& offer,
     std::optional<TAmounts<TIn, TOut>> const& balances)
     : ammLiquidity_(ammLiquidity), amounts_(offer), balances_(balances)
@@ -64,7 +64,8 @@ AMMOffer<TIn, TOut>::consume(
     ApplyView& view,
     TAmounts<TIn, TOut> const& consumed)
 {
-    ammLiquidity_.counter().incrementCounter();
+    // Let the context know AMM offer is consumed
+    ammLiquidity_.context().incrementCounter();
 }
 
 template <typename TIn, typename TOut>

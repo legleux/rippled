@@ -48,14 +48,17 @@ class AMMOffer;
  * that the new AMM's pool spot price quality is equal to the CLOB's
  * offer quality.
  */
+template <typename TIn, typename TOut>
 class AMMLiquidity
 {
 private:
-    AMMContext& offerCounter_;
+    AMMContext& ammContext_;
     AccountID const ammAccountID_;
     std::uint32_t const tradingFee_;
+    Issue const issueIn_;
+    Issue const issueOut_;
     // Initial AMM pool balances
-    Amounts initialBalances_;
+    TAmounts<TIn, TOut> const initialBalances_;
     beast::Journal const j_;
 
 public:
@@ -65,7 +68,7 @@ public:
         std::uint32_t tradingFee,
         Issue const& in,
         Issue const& out,
-        AMMContext& offerCounter,
+        AMMContext& ammContext,
         beast::Journal j);
     ~AMMLiquidity() = default;
     AMMLiquidity(AMMLiquidity const&) = delete;
@@ -77,7 +80,6 @@ public:
      * If clobQuality is provided then AMM offer size is set based on the
      * quality.
      */
-    template <typename TIn, typename TOut>
     std::optional<AMMOffer<TIn, TOut>>
     getOffer(ReadView const& view, std::optional<Quality> const& clobQuality)
         const;
@@ -87,11 +89,11 @@ public:
      * increments offer counter to indicate that AMM offer
      * is used in the strand.
      */
-    void
+    /*void
     consumed()
     {
-        offerCounter_.incrementCounter();
-    }
+        ammContext_.incrementCounter();
+    }*/
 
     AccountID const&
     ammAccount() const
@@ -102,7 +104,7 @@ public:
     bool
     multiPath() const
     {
-        return offerCounter_.multiPath();
+        return ammContext_.multiPath();
     }
 
     std::uint32_t
@@ -112,27 +114,27 @@ public:
     }
 
     AMMContext&
-    counter() const
+    context() const
     {
-        return offerCounter_;
+        return ammContext_;
     }
 
     Issue const&
     issueIn() const
     {
-        return initialBalances_.in.issue();
+        return issueIn_;
     }
 
     Issue const&
     issueOut() const
     {
-        return initialBalances_.out.issue();
+        return issueOut_;
     }
 
 private:
     /** Fetches AMM balances if balances_ is empty()
      */
-    Amounts
+    TAmounts<TIn, TOut>
     fetchBalances(ReadView const& view) const;
 
     /** Generate AMM offers with the offer size based on Fibonacci sequence.
@@ -140,8 +142,8 @@ private:
      * liquidity. Iterations that don't consume AMM offers don't count.
      * We max out at four iterations with AMM offers.
      */
-    Amounts
-    generateFibSeqOffer(Amounts const& balances) const;
+    TAmounts<TIn, TOut>
+    generateFibSeqOffer(TAmounts<TIn, TOut> const& balances) const;
 };
 
 }  // namespace ripple

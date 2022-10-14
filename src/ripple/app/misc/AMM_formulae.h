@@ -33,17 +33,7 @@ namespace ripple {
 
 namespace {
 
-/** RAII to save/restore rounding mode on swap in/out.
- * AMM pool invariant - the product (A * B) after swap in/out has to remain
- * at least the same: (A + in) * (A - out) >= A * B
- * XRP round-off may result in a smaller product after swap in/out.
- * To fix this:
- *     - if on swapIn the out is XRP then the amount is round-off
- *       downward, making the product slightly larger since out
- *       value is reduced.
- *     - if on swapOut the in is XRP then the amount is round-off
- *       upward, making the product slightly larger since in
- *       value is increased.
+/** Save/restore rounding mode.
  */
 class RoundingMode
 {
@@ -55,12 +45,16 @@ public:
         : mode_(Number::getround())
     {
         if constexpr (!std::is_same_v<Amt, IOUAmount>)
+        {
             if (isXRP(a))
                 Number::setround(mode);
+        }
     }
-    RoundingMode(Number::rounding_mode mode) : mode_(Number::getround())
+    RoundingMode(Issue const& issue, Number::rounding_mode mode)
+        : mode_(Number::getround())
     {
-        Number::setround(mode);
+        if (isXRP(issue))
+            Number::setround(mode);
     }
     ~RoundingMode()
     {
@@ -70,29 +64,68 @@ public:
 
 }  // namespace
 
+template <typename T>
+Issue
+getIssue(T const& amt)
+{
+    if constexpr (std::is_same_v<IOUAmount, T>)
+        return noIssue();
+    if constexpr (std::is_same_v<XRPAmount, T>)
+        return xrpIssue();
+    if constexpr (std::is_same_v<STAmount, T>)
+        return amt.issue();
+}
+
+template <typename T>
+T
+toAmount(
+    Issue const& issue,
+    Number const& n,
+    Number::rounding_mode mode = Number::getround())
+{
+    RoundingMode rm(issue, mode);
+    if constexpr (std::is_same_v<IOUAmount, T>)
+        return IOUAmount(n);
+    if constexpr (std::is_same_v<XRPAmount, T>)
+        return XRPAmount(static_cast<std::int64_t>(n));
+    if constexpr (std::is_same_v<STAmount, T>)
+    {
+        if (isXRP(issue))
+            return STAmount(issue, static_cast<std::int64_t>(n));
+        return STAmount(issue, n.mantissa(), n.exponent());
+    }
+}
+
 inline STAmount
 toSTAmount(
     Issue const& issue,
     Number const& n,
-    Number::rounding_mode mode = Number::rounding_mode::to_nearest)
+    Number::rounding_mode mode = Number::getround())
 {
-    if (isXRP(issue))
-    {
-        RoundingMode rm(mode);
-        return STAmount{issue, static_cast<std::int64_t>(n)};
-    }
-    return STAmount{issue, n.mantissa(), n.exponent()};
+    return toAmount<STAmount>(issue, n, mode);
 }
 
-template <typename A>
+template <typename T>
 STAmount
-toSTAmount(A const& a, Issue const& issue)
+toSTAmount(T const& a, Issue const& issue)
 {
-    if constexpr (std::is_same_v<IOUAmount, A>)
+    if constexpr (std::is_same_v<IOUAmount, T>)
         return toSTAmount(a, issue);
-    else if constexpr (std::is_same_v<XRPAmount, A>)
+    if constexpr (std::is_same_v<XRPAmount, T>)
         return toSTAmount(a);
-    else
+    if constexpr (std::is_same_v<STAmount, T>)
+        return a;
+}
+
+template <typename T>
+T
+get(STAmount const& a)
+{
+    if constexpr (std::is_same_v<IOUAmount, T>)
+        return a.iou();
+    if constexpr (std::is_same_v<XRPAmount, T>)
+        return a.xrp();
+    if constexpr (std::is_same_v<STAmount, T>)
         return a;
 }
 
@@ -191,32 +224,6 @@ calcWithdrawalByTokens(
     STAmount const& lpTokens,
     std::uint32_t tfee);
 
-/** Calculate AMM's Spot Price
- * @param asset1Balance current AMM asset1 balance
- * @param asset2Balance current AMM asset2 balance
- * @param tfee trading fee in basis points
- * @return spot price
- */
-STAmount
-calcSpotPrice(
-    STAmount const& asset1Balance,
-    STAmount const& asset2Balance,
-    std::uint16_t tfee);
-
-/** Get asset2 amount based on new AMM's Spot Price.
- * @param asset1Balance current AMM asset1 balance
- * @param asset2Balance current AMM asset2 balance
- * @param newSP requested SP of asset1 relative to asset2
- * @param tfee trading fee in basis points
- * @return
- */
-std::optional<STAmount>
-changeSpotPrice(
-    STAmount const& assetInBalance,
-    STAmount const& assetOuBalance,
-    STAmount const& newSP,
-    std::uint16_t tfee);
-
 /** Find in/out amounts to change the spot price quality to the requested
  * quality.
  * @param pool AMM pool balances
@@ -224,11 +231,37 @@ changeSpotPrice(
  * @param tfee trading fee in basis points
  * @return seated in/out amounts if the quality can be changed
  */
-std::optional<Amounts>
+template <typename TIn, typename TOut>
+std::optional<TAmounts<TIn, TOut>>
 changeSpotPriceQuality(
-    Amounts const& pool,
+    TAmounts<TIn, TOut> const& pool,
     Quality const& quality,
-    std::uint32_t tfee);
+    std::uint32_t tfee)
+{
+    auto const curQuality = Quality(pool);
+    auto const takerPays =
+        pool.in * (root2(quality.rate() / curQuality.rate()) - 1);
+    if (takerPays > 0)
+    {
+        auto const saTakerPays = toAmount<TIn>(
+            getIssue(pool.in), takerPays, Number::rounding_mode::upward);
+        return TAmounts<TIn, TOut>{
+            saTakerPays, swapAssetIn(pool, saTakerPays, tfee)};
+    }
+    return std::nullopt;
+}
+
+/** AMM pool invariant - the product (A * B) after swap in/out has to remain
+ * at least the same: (A + in) * (B - out) >= A * B
+ * XRP round-off may result in a smaller product after swap in/out.
+ * To address this:
+ *   - if on swapIn the out is XRP then the amount is round-off
+ *     downward, making the product slightly larger since out
+ *     value is reduced.
+ *   - if on swapOut the in is XRP then the amount is round-off
+ *     upward, making the product slightly larger since in
+ *     value is increased.
+ */
 
 /** Swap assetIn into the pool and swap out a proportional amount
  * of the other asset.
@@ -244,22 +277,10 @@ swapAssetIn(
     TIn const& assetIn,
     std::uint16_t tfee)
 {
-    auto const res =
-        pool.out - (pool.in * pool.out) / (pool.in + assetIn * feeMult(tfee));
-    {
-        RoundingMode rm(pool.out, Number::rounding_mode::downward);
-        if constexpr (std::is_same_v<TOut, IOUAmount>)
-            return IOUAmount(res);
-        if constexpr (std::is_same_v<TOut, XRPAmount>)
-            return XRPAmount(static_cast<std::int64_t>(res));
-        if constexpr (std::is_same_v<TOut, STAmount>)
-        {
-            if (isXRP(pool.out))
-                return STAmount(
-                    pool.out.issue(), static_cast<std::int64_t>(res));
-            return STAmount(pool.out.issue(), res.mantissa(), res.exponent());
-        }
-    }
+    return toAmount<TOut>(
+        getIssue(pool.out),
+        pool.out - (pool.in * pool.out) / (pool.in + assetIn * feeMult(tfee)),
+        Number::rounding_mode::downward);
 }
 
 /** Swap assetOut out of the pool and swap in a proportional amount
@@ -276,73 +297,11 @@ swapAssetOut(
     TOut const& assetOut,
     std::uint16_t tfee)
 {
-    auto const res = ((pool.in * pool.out) / (pool.out - assetOut) - pool.in) /
-        feeMult(tfee);
-    {
-        RoundingMode rm(pool.in, Number::rounding_mode::upward);
-        if constexpr (std::is_same_v<TIn, IOUAmount>)
-            return IOUAmount(res);
-        if constexpr (std::is_same_v<TIn, XRPAmount>)
-            return XRPAmount((std::int64_t)res);
-        if constexpr (std::is_same_v<TIn, STAmount>)
-        {
-            if (isXRP(pool.in))
-                return STAmount(
-                    pool.in.issue(), static_cast<std::int64_t>(res));
-            return STAmount(pool.in.issue(), res.mantissa(), res.exponent());
-        }
-    }
-}
-
-/** Swap assetIn into the pool and swap out a proportional amount
- * of the other asset.
- * @param pool current AMM pool balances
- * @param assetIn amount to swap in
- * @param tfee trading fee in basis points
- * @return
- */
-template <typename TIn>
-STAmount
-swapAssetInCvt(Amounts const& pool, TIn const& assetIn, std::uint16_t tfee)
-{
-    auto const res = toSTAmount(
-        pool.out.issue(),
-        pool.out - (pool.in * pool.out) / (pool.in + assetIn * feeMult(tfee)),
-        Number::rounding_mode::downward);
-    return res;
-}
-
-/** Swap assetOut out of the pool and swap in a proportional amount
- * of the other asset.
- * @param pool current AMM pool balances
- * @param assetOut amount to swap out
- * @param tfee trading fee in basis points
- * @return
- */
-template <typename TOut>
-STAmount
-swapAssetOutCvt(Amounts const& pool, TOut const& assetOut, std::uint16_t tfee)
-{
-    auto const res = toSTAmount(
-        pool.in.issue(),
+    return toAmount<TIn>(
+        getIssue(pool.in),
         ((pool.in * pool.out) / (pool.out - assetOut) - pool.in) /
             feeMult(tfee),
         Number::rounding_mode::upward);
-    return res;
-}
-
-/** Get T amount
- */
-template <typename T>
-T
-get(STAmount const& a)
-{
-    if constexpr (std::is_same_v<T, IOUAmount>)
-        return a.iou();
-    else if constexpr (std::is_same_v<T, XRPAmount>)
-        return a.xrp();
-    else
-        return a;
 }
 
 /** Return square of n.

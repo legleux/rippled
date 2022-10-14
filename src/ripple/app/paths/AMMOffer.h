@@ -25,6 +25,7 @@
 
 namespace ripple {
 
+template <typename TIn, typename TOut>
 class AMMLiquidity;
 
 /** Represents synthetic AMMOffer in BookStep. AMMOffer mirrors TOffer
@@ -35,7 +36,7 @@ template <typename TIn, typename TOut>
 class AMMOffer
 {
 private:
-    AMMLiquidity const& ammLiquidity_;
+    AMMLiquidity<TIn, TOut> const& ammLiquidity_;
     // Initial offer amounts. It is fibonacci seq generated for multi-path.
     // For one-path it is either the pool balances or the size such that
     // if the offer is consumed then its pool SP quality is equal to
@@ -47,7 +48,7 @@ private:
 
 public:
     AMMOffer(
-        AMMLiquidity const& ammLiquidity,
+        AMMLiquidity<TIn, TOut> const& ammLiquidity,
         TAmounts<TIn, TOut> const& offer,
         std::optional<TAmounts<TIn, TOut>> const& balances);
 

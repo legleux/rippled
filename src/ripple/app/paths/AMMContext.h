@@ -25,9 +25,10 @@
 
 namespace ripple {
 
-/** Maintains multiPath_ flag for the payment engine for one-path optimization.
- * Maintains counters of amm offers executed at a payment engine iteration
- * and the number of iterations that include AMM offers.
+/** Maintains multiPath_ flag for the payment engine for one-path optimization,
+ * counters of amm offers executed at a payment engine iteration
+ * and the number of iterations that include AMM offers, Tx's owner account ID
+ * to figure out the trading fee during payment engine execution.
  * Only one instance of this class is created in Flow.cpp::flow().
  * The reference is percolated through calls to AMMLiquidity class,
  * which handles AMM offer generation.
@@ -100,7 +101,7 @@ public:
     }
 
     void
-    reset()
+    clear()
     {
         ammCounter_ = 0;
     }
