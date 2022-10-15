@@ -639,8 +639,7 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
         else if (*ofrQ != offer.quality())
             return false;
 
-        if (offer.key() != beast::zero &&
-            static_cast<TDerived const*>(this)->limitSelfCrossQuality(
+        if (static_cast<TDerived const*>(this)->limitSelfCrossQuality(
                 strandSrc_, strandDst_, offer, ofrQ, offers, offerAttempted))
             return true;
 

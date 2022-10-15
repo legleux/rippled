@@ -85,7 +85,7 @@ AMMBid::preclaim(PreclaimContext const& ctx)
 
     if (ctx.tx.isFieldPresent(sfAuthAccounts))
     {
-        for (auto& account : ctx.tx.getFieldArray(sfAuthAccounts))
+        for (auto const& account : ctx.tx.getFieldArray(sfAuthAccounts))
         {
             if (!ctx.view.read(keylet::account(account[sfAccount])))
             {
@@ -234,7 +234,7 @@ AMMBid::applyGuts(Sandbox& sb)
         STAmount const pricePurchased = auctionSlot[sfPrice];
         auto const fractionUsed = (Number(*timeSlot) + 1) / nIntervals;
         auto const fractionRemaining = Number(1) - fractionUsed;
-        auto computedPrice = [&]() -> Number {
+        auto const computedPrice = [&]() -> Number {
             auto const p1_05 = Number(105, -2);
             // First interval slot price
             if (*timeSlot == 0)

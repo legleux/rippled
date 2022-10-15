@@ -64,6 +64,12 @@ AMMOffer<TIn, TOut>::consume(
     ApplyView& view,
     TAmounts<TIn, TOut> const& consumed)
 {
+    // Consumed offer must be less or equal to the original
+    if (consumed.in > amounts_.in || consumed.out > amounts_.out)
+        Throw<std::logic_error>("Invalid consumed AMM offer.");
+    // AMM pool is updated when the amounts are transferred
+    // in BookStep::consumeOffer().
+
     // Let the context know AMM offer is consumed
     ammLiquidity_.context().setAMMUsed();
 }

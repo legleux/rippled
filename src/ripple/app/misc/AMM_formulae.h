@@ -38,18 +38,20 @@ namespace {
  */
 class RoundingMode
 {
+    bool xrp_;
     Number::rounding_mode mode_;
 
 public:
     RoundingMode(Issue const& issue, Number::rounding_mode mode)
-        : mode_(Number::getround())
+        : xrp_(isXRP(issue)), mode_(Number::getround())
     {
-        if (isXRP(issue))
+        if (xrp_)
             Number::setround(mode);
     }
     ~RoundingMode()
     {
-        Number::setround(mode_);
+        if (xrp_)
+            Number::setround(mode_);
     }
 };
 
@@ -229,15 +231,14 @@ changeSpotPriceQuality(
     Quality const& quality,
     std::uint32_t tfee)
 {
-    auto const curQuality = Quality(pool);
-    auto const takerPays =
-        pool.in * (root2(quality.rate() / curQuality.rate()) - 1);
-    if (takerPays > 0)
+    if (auto const nTakerPays =
+            pool.in * (root2(quality.rate() / Quality(pool).rate()) - 1);
+        nTakerPays > 0)
     {
-        auto const saTakerPays = toAmount<TIn>(
-            getIssue(pool.in), takerPays, Number::rounding_mode::upward);
+        auto const takerPays = toAmount<TIn>(
+            getIssue(pool.in), nTakerPays, Number::rounding_mode::upward);
         return TAmounts<TIn, TOut>{
-            saTakerPays, swapAssetIn(pool, saTakerPays, tfee)};
+            takerPays, swapAssetIn(pool, takerPays, tfee)};
     }
     return std::nullopt;
 }

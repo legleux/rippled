@@ -96,7 +96,7 @@ AMMLiquidity<TIn, TOut>::getOffer(
     std::optional<Quality> const& clobQuality) const
 {
     // Can't generate more offers if multi-path.
-    if (ammContext_.multiPath() && ammContext_.maxItersReached())
+    if (ammContext_.maxItersReached())
         return std::nullopt;
 
     auto const balances = fetchBalances(view);

@@ -25,10 +25,8 @@
 
 namespace ripple {
 
-/** Maintains multiPath_ flag for the payment engine for one-path optimization,
- * counters of amm offers executed at a payment engine iteration
- * and the number of iterations that include AMM offers, Tx's owner account ID
- * to figure out the trading fee during payment engine execution.
+/** Maintains AMM info per overall payment engine execution and
+ * individual iteration.
  * Only one instance of this class is created in Flow.cpp::flow().
  * The reference is percolated through calls to AMMLiquidity class,
  * which handles AMM offer generation.
@@ -36,6 +34,7 @@ namespace ripple {
 class AMMContext
 {
 private:
+    constexpr inline static std::uint8_t MaxIterations = 4;
     // Tx account owner is required to get the AMM trading fee in BookStep
     AccountID account_;
     // true if payment has multiple paths
@@ -85,7 +84,7 @@ public:
     bool
     maxItersReached() const
     {
-        return ammIters_ >= 4;
+        return multiPath_ && ammIters_ >= MaxIterations;
     }
 
     std::uint16_t
