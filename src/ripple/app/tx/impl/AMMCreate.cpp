@@ -142,44 +142,50 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
     return tesSUCCESS;
 }
 
-std::pair<TER, bool>
-AMMCreate::applyGuts(Sandbox& sb)
+static inline std::pair<TER, bool>
+applyGuts(
+    ApplyContext& ctx_,
+    Sandbox& sb,
+    AccountID const& account_,
+    beast::Journal j_)
 {
     auto const saAsset1 = ctx_.tx[sfAsset1];
     auto const saAsset2 = ctx_.tx[sfAsset2];
 
-    auto const ammID = calcAMMGroupHash(saAsset1.issue(), saAsset2.issue());
+    auto const ammID = ammGroupHash(saAsset1.issue(), saAsset2.issue());
 
     // Check if AMM already exists for the token pair
-    if (sb.peek(keylet::amm(ammID)))
+    if (sb.read(keylet::amm(ammID)))
     {
         JLOG(j_.debug()) << "AMM Instance: ltAMM already exists.";
         return {tecAMM_EXISTS, false};
     }
 
-    auto const ammAccountID = calcAMMAccountID(sb.info().parentHash, ammID);
+    auto const ammAccount = ammAccountID(sb.info().parentHash, ammID);
 
     // AMM account already exists (should not happen)
-    if (sb.peek(keylet::account(ammAccountID)))
+    if (sb.read(keylet::account(ammAccount)))
     {
         JLOG(j_.debug()) << "AMM Instance: AMM already exists.";
         return {tecAMM_EXISTS, false};
     }
 
     // LP Token already exists. (should not happen)
-    auto const lptIssue = calcLPTIssue(ammAccountID);
-    if (sb.read(keylet::line(ammAccountID, lptIssue)))
+    auto const lptIss = lpTIssue(ammAccount);
+    if (sb.read(keylet::line(ammAccount, lptIss)))
     {
         JLOG(j_.debug()) << "AMM Instance: LP Token already exists.";
         return {tecAMM_EXISTS, false};
     }
 
     // Create AMM Root Account.
-    auto sleAMMRoot = std::make_shared<SLE>(keylet::account(ammAccountID));
-    sleAMMRoot->setAccountID(sfAccount, ammAccountID);
+    auto sleAMMRoot = std::make_shared<SLE>(keylet::account(ammAccount));
+    sleAMMRoot->setAccountID(sfAccount, ammAccount);
     sleAMMRoot->setFieldAmount(sfBalance, STAmount{});
     std::uint32_t const seqno{
-        view().rules().enabled(featureDeletableAccounts) ? view().seq() : 1};
+        ctx_.view().rules().enabled(featureDeletableAccounts)
+            ? ctx_.view().seq()
+            : 1};
     sleAMMRoot->setFieldU32(sfSequence, seqno);
     // Ignore reserves requirement, disable the master key, and allow default
     // rippling (AMM LPToken can be used as a token in another AMM, which must
@@ -189,17 +195,15 @@ AMMCreate::applyGuts(Sandbox& sb)
     sb.insert(sleAMMRoot);
 
     // Calculate initial LPT balance.
-    auto const lpTokens = calcAMMLPT(saAsset1, saAsset2, lptIssue);
+    auto const lpTokens = ammLPTokens(saAsset1, saAsset2, lptIss);
 
     // Create ltAMM
     auto ammSle = std::make_shared<SLE>(keylet::amm(ammID));
     ammSle->setFieldU16(sfTradingFee, ctx_.tx[sfTradingFee]);
-    ammSle->setAccountID(sfAMMAccount, ammAccountID);
+    ammSle->setAccountID(sfAMMAccount, ammAccount);
     ammSle->setFieldAmount(sfLPTokenBalance, lpTokens);
-    auto const& issue1 = saAsset1.issue() < saAsset2.issue() ? saAsset1.issue()
-                                                             : saAsset2.issue();
-    auto const& issue2 =
-        issue1 == saAsset1.issue() ? saAsset2.issue() : saAsset1.issue();
+    auto const& [issue1, issue2] =
+        std::minmax(saAsset1.issue(), saAsset2.issue());
     ammSle->makeFieldPresent(sfAMMToken);
     auto& ammToken = ammSle->peekFieldObject(sfAMMToken);
     auto setToken = [&](SField const& field, Issue const& issue) {
@@ -213,7 +217,7 @@ AMMCreate::applyGuts(Sandbox& sb)
     sb.insert(ammSle);
 
     // Send LPT to LP.
-    auto res = accountSend(sb, ammAccountID, account_, lpTokens, ctx_.journal);
+    auto res = accountSend(sb, ammAccount, account_, lpTokens, ctx_.journal);
     if (res != tesSUCCESS)
     {
         JLOG(j_.debug()) << "AMM Instance: failed to send LPT " << lpTokens;
@@ -221,7 +225,7 @@ AMMCreate::applyGuts(Sandbox& sb)
     }
 
     // Send asset1.
-    res = ammSend(sb, account_, ammAccountID, saAsset1, ctx_.journal);
+    res = ammSend(sb, account_, ammAccount, saAsset1, ctx_.journal);
     if (res != tesSUCCESS)
     {
         JLOG(j_.debug()) << "AMM Instance: failed to send " << saAsset1;
@@ -229,13 +233,13 @@ AMMCreate::applyGuts(Sandbox& sb)
     }
 
     // Send asset2.
-    res = ammSend(sb, account_, ammAccountID, saAsset2, ctx_.journal);
+    res = ammSend(sb, account_, ammAccount, saAsset2, ctx_.journal);
     if (res != tesSUCCESS)
         JLOG(j_.debug()) << "AMM Instance: failed to send " << saAsset2;
     else
     {
-        JLOG(j_.debug()) << "AMM Instance: success " << ammAccountID << " "
-                         << ammID << " " << lptIssue << " " << saAsset1 << " "
+        JLOG(j_.debug()) << "AMM Instance: success " << ammAccount << " "
+                         << ammID << " " << lptIss << " " << saAsset1 << " "
                          << saAsset2;
         auto addOrderBook = [&](Issue const& issueIn,
                                 Issue const& issueOut,
@@ -267,7 +271,7 @@ AMMCreate::doApply()
     // if the order isn't going to be placed, to avoid wasting the work we did.
     Sandbox sbCancel(&ctx_.view());
 
-    auto const result = applyGuts(sb);
+    auto const result = applyGuts(ctx_, sb, account_, j_);
     if (result.second)
         sb.apply(ctx_.rawView());
     else

@@ -100,7 +100,7 @@ public:
         , j_(ctx.j)
     {
         if (auto const ammSle =
-                ctx.view.read(keylet::amm(calcAMMGroupHash(in, out))))
+                ctx.view.read(keylet::amm(ammGroupHash(in, out))))
             ammLiquidity_.emplace(
                 ctx.view,
                 (*ammSle)[sfAMMAccount],
@@ -537,9 +537,13 @@ BookStep<TIn, TOut, TDerived>::getQF(
     if (!res)
         return {std::nullopt, dir};
 
+    // AMM - no fee adjustment
+    if (std::get<bool>(*res))
+        return {std::get<QualityFunction>(*res), dir};
+
     Quality const q = static_cast<TDerived const*>(this)->adjustQualityWithFees(
         v, std::get<Quality>(*res), prevStepDir);
-    return {q, dir};
+    return {QualityFunction{q, QualityFunction::CLOBLikeTag{}}, dir};
 }
 
 template <class TIn, class TOut, class TDerived>
@@ -805,12 +809,17 @@ BookStep<TIn, TOut, TDerived>::tipOfferQuality(ReadView const& view) const
         auto const ammQ{ammOffer->quality()};
         // AMM quality is better or no CLOB offer
         if ((clobQuality && ammQ > clobQuality) || !clobQuality)
-            return std::make_tuple(ammQ, ammQ, true);
+            return std::make_tuple(
+                ammQ,
+                QualityFunction(ammOffer->amount(), QualityFunction::AMMTag{}),
+                true);
     }
     // CLOB quality is better or no AMM offer
     if (clobQuality)
         return std::make_tuple(
-            *clobQuality, QualityFunction{*clobQuality}, false);
+            *clobQuality,
+            QualityFunction{*clobQuality, QualityFunction::CLOBLikeTag{}},
+            false);
     // Neither CLOB nor AMM offer is available
     return std::nullopt;
 }

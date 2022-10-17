@@ -59,21 +59,15 @@ public:
     static TxConsequences
     makeTxConsequences(PreflightContext const& ctx);
 
-    /** Enforce constraints beyond those of the Transactor base class. */
     static NotTEC
     preflight(PreflightContext const& ctx);
 
-    /** Enforce constraints beyond those of the Transactor base class. */
     static TER
     preclaim(PreclaimContext const& ctx);
 
     /** Attempt to create the AMM instance. */
     TER
     doApply() override;
-
-private:
-    std::pair<TER, bool>
-    applyGuts(Sandbox& view);
 };
 
 }  // namespace ripple

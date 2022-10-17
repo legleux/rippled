@@ -846,6 +846,39 @@ private:
                 alice, 0, std::nullopt, std::nullopt, ter(temBAD_AMM_TOKENS));
         });
 
+        // Depositing mismatched token, invalid Asset1In.issue
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.deposit(
+                alice,
+                GBP(100),
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(temBAD_AMM_TOKENS));
+        });
+
+        // Depositing mismatched token, invalid Asset2In.issue
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.deposit(
+                alice,
+                USD(100),
+                GBP(100),
+                std::nullopt,
+                std::nullopt,
+                ter(temBAD_AMM_TOKENS));
+        });
+
+        // Depositing mismatched token, Asset1In.issue == Asset2In.issue
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.deposit(
+                alice,
+                USD(100),
+                USD(100),
+                std::nullopt,
+                std::nullopt,
+                ter(temBAD_AMM_TOKENS));
+        });
+
         // Invalid amount value
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.deposit(
@@ -1234,6 +1267,36 @@ private:
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.withdraw(
                 alice, 0, std::nullopt, std::nullopt, ter(temBAD_AMM_TOKENS));
+        });
+
+        // Mismatched token, invalid Asset1Out issue
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.withdraw(
+                alice,
+                GBP(100),
+                std::nullopt,
+                std::nullopt,
+                ter(temBAD_AMM_TOKENS));
+        });
+
+        // Mismatched token, invalid Asset2Out issue
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.withdraw(
+                alice,
+                USD(100),
+                GBP(100),
+                std::nullopt,
+                ter(temBAD_AMM_TOKENS));
+        });
+
+        // Mismatched token, Asset1Out.issue == Asset2Out.issue
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.withdraw(
+                alice,
+                USD(100),
+                USD(100),
+                std::nullopt,
+                ter(temBAD_AMM_TOKENS));
         });
 
         // Invalid amount value
@@ -4441,7 +4504,7 @@ class AMMCalc_test : public beast::unit_test::suite
                     auto const LPT = amm["LPT"];
                     std::cout
                         << to_string(
-                               calcAMMLPT(pool->first.in, pool->first.out, LPT)
+                               ammLPTokens(pool->first.in, pool->first.out, LPT)
                                    .iou())
                         << std::endl;
                     return true;

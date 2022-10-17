@@ -155,7 +155,7 @@ doAMMInfo(RPC::JsonContext& context)
             return result;
         else
             token2Issue = *i;
-        ammID = calcAMMGroupHash(token1Issue, token2Issue);
+        ammID = ammGroupHash(token1Issue, token2Issue);
     }
     else if (!ammID.parseHex(params[jss::amm_id].asString()))
     {
