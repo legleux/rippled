@@ -35,15 +35,15 @@ ammAccountID(uint256 const& parentHash, uint256 const& ammID)
 }
 
 Currency
-lpTCurrency(AccountID const& ammAccountID)
+lptCurrency(AccountID const& ammAccountID)
 {
     return Currency::fromVoid(ammAccountID.data());
 }
 
 Issue
-lpTIssue(AccountID const& ammAccountID)
+lptIssue(AccountID const& ammAccountID)
 {
-    return Issue(lpTCurrency(ammAccountID), ammAccountID);
+    return Issue(lptCurrency(ammAccountID), ammAccountID);
 }
 
 std::pair<STAmount, STAmount>
@@ -111,7 +111,7 @@ lpHolds(
     AccountID const& lpAccount,
     beast::Journal const j)
 {
-    auto const lptIss = lpTIssue(ammAccountID);
+    auto const lptIss = lptIssue(ammAccountID);
     return accountHolds(
         view,
         lpAccount,

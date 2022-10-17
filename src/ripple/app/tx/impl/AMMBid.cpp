@@ -140,8 +140,8 @@ AMMBid::preclaim(PreclaimContext const& ctx)
     return tesSUCCESS;
 }
 
-static inline std::pair<TER, bool>
-applyGuts(
+static std::pair<TER, bool>
+applyBid(
     ApplyContext& ctx_,
     Sandbox& sb,
     AccountID const& account_,
@@ -313,7 +313,7 @@ AMMBid::doApply()
     // if the order isn't going to be placed, to avoid wasting the work we did.
     Sandbox sbCancel(&ctx_.view());
 
-    auto const result = applyGuts(ctx_, sb, account_, j_);
+    auto const result = applyBid(ctx_, sb, account_, j_);
     if (result.second)
         sb.apply(ctx_.rawView());
     else

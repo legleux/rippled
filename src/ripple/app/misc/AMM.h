@@ -46,12 +46,12 @@ ammAccountID(uint256 const& parentHash, uint256 const& ammID);
 /** Calculate Liquidity Provider Token (LPT) Currency.
  */
 Currency
-lpTCurrency(AccountID const& ammAccountID);
+lptCurrency(AccountID const& ammAccountID);
 
 /** Calculate LPT Issue.
  */
 Issue
-lpTIssue(AccountID const& ammAccountID);
+lptIssue(AccountID const& ammAccountID);
 
 /** Get AMM pool balances.
  */

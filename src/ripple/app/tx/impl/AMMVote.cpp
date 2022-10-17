@@ -70,8 +70,8 @@ AMMVote::preclaim(PreclaimContext const& ctx)
     return tesSUCCESS;
 }
 
-static inline std::pair<TER, bool>
-applyGuts(
+static std::pair<TER, bool>
+applyVote(
     ApplyContext& ctx_,
     Sandbox& sb,
     AccountID const& account_,
@@ -110,7 +110,7 @@ applyGuts(
         if (lpTokens == beast::zero)
         {
             JLOG(j_.debug())
-                << "AMMVote::applyGuts, account " << account << " is not LP";
+                << "AMMVote::applyVote, account " << account << " is not LP";
             continue;
         }
         auto feeVal = entry[sfFeeVal];
@@ -180,7 +180,7 @@ applyGuts(
         // All slots are full and the account does not hold more LPTokens
         else
         {
-            JLOG(j_.debug()) << "AMMVote::applyGuts, insufficient tokens to "
+            JLOG(j_.debug()) << "AMMVote::applyVote, insufficient tokens to "
                                 "override other votes";
             return {tecAMM_FAILED_VOTE, false};
         }
@@ -206,7 +206,7 @@ AMMVote::doApply()
     // if the order isn't going to be placed, to avoid wasting the work we did.
     Sandbox sbCancel(&ctx_.view());
 
-    auto const result = applyGuts(ctx_, sb, account_, j_);
+    auto const result = applyVote(ctx_, sb, account_, j_);
     if (result.second)
         sb.apply(ctx_.rawView());
     else

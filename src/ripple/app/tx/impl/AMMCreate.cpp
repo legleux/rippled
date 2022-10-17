@@ -142,8 +142,8 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
     return tesSUCCESS;
 }
 
-static inline std::pair<TER, bool>
-applyGuts(
+static std::pair<TER, bool>
+applyCreate(
     ApplyContext& ctx_,
     Sandbox& sb,
     AccountID const& account_,
@@ -171,7 +171,7 @@ applyGuts(
     }
 
     // LP Token already exists. (should not happen)
-    auto const lptIss = lpTIssue(ammAccount);
+    auto const lptIss = lptIssue(ammAccount);
     if (sb.read(keylet::line(ammAccount, lptIss)))
     {
         JLOG(j_.debug()) << "AMM Instance: LP Token already exists.";
@@ -272,7 +272,7 @@ AMMCreate::doApply()
     // if the order isn't going to be placed, to avoid wasting the work we did.
     Sandbox sbCancel(&ctx_.view());
 
-    auto const result = applyGuts(ctx_, sb, account_, j_);
+    auto const result = applyCreate(ctx_, sb, account_, j_);
     if (result.second)
         sb.apply(ctx_.rawView());
     else
