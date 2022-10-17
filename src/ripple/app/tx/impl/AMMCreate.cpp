@@ -152,16 +152,16 @@ applyGuts(
     auto const saAsset1 = ctx_.tx[sfAsset1];
     auto const saAsset2 = ctx_.tx[sfAsset2];
 
-    auto const ammID = ammGroupHash(saAsset1.issue(), saAsset2.issue());
+    auto const ammKeylet = keylet::amm(saAsset1.issue(), saAsset2.issue());
 
     // Check if AMM already exists for the token pair
-    if (sb.read(keylet::amm(ammID)))
+    if (sb.read(ammKeylet))
     {
         JLOG(j_.debug()) << "AMM Instance: ltAMM already exists.";
         return {tecAMM_EXISTS, false};
     }
 
-    auto const ammAccount = ammAccountID(sb.info().parentHash, ammID);
+    auto const ammAccount = ammAccountID(sb.info().parentHash, ammKeylet.key);
 
     // AMM account already exists (should not happen)
     if (sb.read(keylet::account(ammAccount)))
@@ -187,18 +187,19 @@ applyGuts(
             ? ctx_.view().seq()
             : 1};
     sleAMMRoot->setFieldU32(sfSequence, seqno);
-    // Ignore reserves requirement, disable the master key, and allow default
+    // Ignore reserves requirement, disable the master key, allow default
     // rippling (AMM LPToken can be used as a token in another AMM, which must
-    // support payments and offer crossing).
+    // support payments and offer crossing), and enable deposit autherization to
+    // prevent payments into AMM.
     sleAMMRoot->setFieldU32(
-        sfFlags, lsfAMM | lsfDisableMaster | lsfDefaultRipple);
+        sfFlags, lsfAMM | lsfDisableMaster | lsfDefaultRipple | lsfDepositAuth);
     sb.insert(sleAMMRoot);
 
     // Calculate initial LPT balance.
     auto const lpTokens = ammLPTokens(saAsset1, saAsset2, lptIss);
 
     // Create ltAMM
-    auto ammSle = std::make_shared<SLE>(keylet::amm(ammID));
+    auto ammSle = std::make_shared<SLE>(ammKeylet);
     ammSle->setFieldU16(sfTradingFee, ctx_.tx[sfTradingFee]);
     ammSle->setAccountID(sfAMMAccount, ammAccount);
     ammSle->setFieldAmount(sfLPTokenBalance, lpTokens);
@@ -239,8 +240,8 @@ applyGuts(
     else
     {
         JLOG(j_.debug()) << "AMM Instance: success " << ammAccount << " "
-                         << ammID << " " << lptIss << " " << saAsset1 << " "
-                         << saAsset2;
+                         << ammKeylet.key << " " << lptIss << " " << saAsset1
+                         << " " << saAsset2;
         auto addOrderBook = [&](Issue const& issueIn,
                                 Issue const& issueOut,
                                 std::uint64_t uRate) {

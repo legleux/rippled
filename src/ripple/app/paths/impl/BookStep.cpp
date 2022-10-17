@@ -99,8 +99,7 @@ public:
         , ammLiquidity_{}
         , j_(ctx.j)
     {
-        if (auto const ammSle =
-                ctx.view.read(keylet::amm(ammGroupHash(in, out))))
+        if (auto const ammSle = ctx.view.read(keylet::amm(in, out)))
             ammLiquidity_.emplace(
                 ctx.view,
                 (*ammSle)[sfAMMAccount],

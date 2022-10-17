@@ -317,8 +317,9 @@ AMMDeposit::deposit(
     std::optional<STAmount> const& asset2Deposit,
     STAmount const& lpTokensDeposit)
 {
-    // Check account has sufficient funds
-    auto balance = [&](auto const& assetDeposit) {
+    // Check account has sufficient funds.
+    // Return true if it does, false otherwise.
+    auto balance = [&](auto const& assetDeposit) -> bool {
         if (isXRP(assetDeposit))
         {
             auto const& lpIssue = lpTokensDeposit.issue();
