@@ -95,8 +95,8 @@ AMM::create(
     env_.close();
     if (!ter_)
     {
-        if (auto const amm = env_.current()->read(keylet::amm(
-                ammGroupHash(asset1_.issue(), asset2_.issue()))))
+        if (auto const amm = env_.current()->read(
+                keylet::amm(ammGroupHash(asset1_.issue(), asset2_.issue()))))
         {
             ammAccount_ = amm->getAccountID(sfAMMAccount);
             lptIssue_ = ripple::lpTIssue(ammAccount_);
