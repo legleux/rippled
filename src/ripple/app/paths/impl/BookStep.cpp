@@ -808,10 +808,7 @@ BookStep<TIn, TOut, TDerived>::tipOfferQuality(ReadView const& view) const
         auto const ammQ{ammOffer->quality()};
         // AMM quality is better or no CLOB offer
         if ((clobQuality && ammQ > clobQuality) || !clobQuality)
-            return std::make_tuple(
-                ammQ,
-                QualityFunction(ammOffer->amount(), QualityFunction::AMMTag{}),
-                true);
+            return std::make_tuple(ammQ, ammOffer->getQF(), true);
     }
     // CLOB quality is better or no AMM offer
     if (clobQuality)

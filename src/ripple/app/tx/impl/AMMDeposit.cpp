@@ -73,14 +73,14 @@ AMMDeposit::preflight(PreflightContext const& ctx)
 
     if (asset1In && asset2In && asset1In->issue() == asset2In->issue())
     {
-        JLOG(ctx.j.debug()) << "AMM Deposit: invalid tokens."
+        JLOG(ctx.j.debug()) << "AMM Deposit: invalid tokens, same issue."
                             << asset1In->issue() << " " << asset2In->issue();
         return temBAD_AMM_TOKENS;
     }
 
     if (lpTokens && *lpTokens <= beast::zero)
     {
-        JLOG(ctx.j.debug()) << "AMM Deposit: invalid LPTokens, same issue.";
+        JLOG(ctx.j.debug()) << "AMM Deposit: invalid LPTokens";
         return temBAD_AMM_TOKENS;
     }
 

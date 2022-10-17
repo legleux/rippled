@@ -99,7 +99,7 @@ AMM::create(
                 keylet::amm(asset1_.issue(), asset2_.issue())))
         {
             ammAccount_ = amm->getAccountID(sfAMMAccount);
-            lptIssue_ = ripple::lpTIssue(ammAccount_);
+            lptIssue_ = ripple::lptIssue(ammAccount_);
         }
     }
 }
