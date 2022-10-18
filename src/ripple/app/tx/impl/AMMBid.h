@@ -64,7 +64,7 @@ class Sandbox;
 class AMMBid : public Transactor
 {
 public:
-    static constexpr ConsequencesFactoryType ConsequencesFactory{Custom};
+    static constexpr ConsequencesFactoryType ConsequencesFactory{Normal};
 
     explicit AMMBid(ApplyContext& ctx) : Transactor(ctx)
     {

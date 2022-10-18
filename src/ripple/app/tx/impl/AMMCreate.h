@@ -57,7 +57,7 @@ class Sandbox;
 class AMMCreate : public Transactor
 {
 public:
-    static constexpr ConsequencesFactoryType ConsequencesFactory{Custom};
+    static constexpr ConsequencesFactoryType ConsequencesFactory{Normal};
 
     explicit AMMCreate(ApplyContext& ctx) : Transactor(ctx)
     {

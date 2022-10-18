@@ -50,7 +50,7 @@ class Sandbox;
 class AMMVote : public Transactor
 {
 public:
-    static constexpr ConsequencesFactoryType ConsequencesFactory{Custom};
+    static constexpr ConsequencesFactoryType ConsequencesFactory{Normal};
 
     explicit AMMVote(ApplyContext& ctx) : Transactor(ctx)
     {
