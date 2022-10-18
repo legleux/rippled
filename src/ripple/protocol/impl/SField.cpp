@@ -151,10 +151,9 @@ CONSTRUCT_TYPED_SFIELD(sfMintedNFTokens,        "MintedNFTokens",       UINT32, 
 CONSTRUCT_TYPED_SFIELD(sfBurnedNFTokens,        "BurnedNFTokens",       UINT32,    44);
 CONSTRUCT_TYPED_SFIELD(sfHookStateCount,        "HookStateCount",       UINT32,    45);
 CONSTRUCT_TYPED_SFIELD(sfEmitGeneration,        "EmitGeneration",       UINT32,    46);
-CONSTRUCT_TYPED_SFIELD(sfFeeVal,                "FeeVal",               UINT32,    47);
-CONSTRUCT_TYPED_SFIELD(sfVoteWeight,            "VoteWeight",           UINT32,    48);
-CONSTRUCT_TYPED_SFIELD(sfTimeStamp,             "TimeStamp",            UINT32,    49);
-CONSTRUCT_TYPED_SFIELD(sfDiscountedFee,         "DiscountedFee",        UINT32,    50);
+CONSTRUCT_TYPED_SFIELD(sfVoteWeight,            "VoteWeight",           UINT32,    47);
+CONSTRUCT_TYPED_SFIELD(sfTimeStamp,             "TimeStamp",            UINT32,    48);
+CONSTRUCT_TYPED_SFIELD(sfDiscountedFee,         "DiscountedFee",        UINT32,    49);
 
 // 64-bit integers (common)
 CONSTRUCT_TYPED_SFIELD(sfIndexNext,             "IndexNext",            UINT64,     1);
@@ -249,10 +248,11 @@ CONSTRUCT_TYPED_SFIELD(sfAsset1In,              "Asset1In",             AMOUNT, 
 CONSTRUCT_TYPED_SFIELD(sfAsset2In,              "Asset2In",             AMOUNT,    21);
 CONSTRUCT_TYPED_SFIELD(sfAsset1Out,             "Asset1Out",            AMOUNT,    22);
 CONSTRUCT_TYPED_SFIELD(sfAsset2Out,             "Asset2Out",            AMOUNT,    23);
-CONSTRUCT_TYPED_SFIELD(sfLPToken,               "LPToken",              AMOUNT,    24);
-CONSTRUCT_TYPED_SFIELD(sfEPrice,                "EPrice",               AMOUNT,    25);
-CONSTRUCT_TYPED_SFIELD(sfPrice,                 "Price",                AMOUNT,    26);
-CONSTRUCT_TYPED_SFIELD(sfLPTokenBalance,        "LPTokenBalance",       AMOUNT,    27);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenOut,            "LPTokenOut",           AMOUNT,    24);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenIn,             "LPTokenIn",            AMOUNT,    25);
+CONSTRUCT_TYPED_SFIELD(sfEPrice,                "EPrice",               AMOUNT,    26);
+CONSTRUCT_TYPED_SFIELD(sfPrice,                 "Price",                AMOUNT,    27);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenBalance,        "LPTokenBalance",       AMOUNT,    28);
 
 // variable length (common)
 CONSTRUCT_TYPED_SFIELD(sfPublicKey,             "PublicKey",            VL,         1);
