@@ -307,6 +307,10 @@ CONSTRUCT_TYPED_SFIELD(sfNFTokenOffers,         "NFTokenOffers",        VECTOR25
 // path set
 CONSTRUCT_UNTYPED_SFIELD(sfPaths,               "Paths",                PATHSET,    1);
 
+// issue
+CONSTRUCT_TYPED_SFIELD(sfToken1,                "Token1",               ISSUE,      1);
+CONSTRUCT_TYPED_SFIELD(sfToken2,                "Token2",               ISSUE,      2);
+
 // inner object
 // OBJECT/1 is reserved for end of object
 CONSTRUCT_UNTYPED_SFIELD(sfTransactionMetaData, "TransactionMetaData",  OBJECT,     2);
@@ -322,7 +326,6 @@ CONSTRUCT_UNTYPED_SFIELD(sfSignerEntry,         "SignerEntry",          OBJECT, 
 CONSTRUCT_UNTYPED_SFIELD(sfNFToken,             "NFToken",              OBJECT,    12);
 CONSTRUCT_UNTYPED_SFIELD(sfEmitDetails,         "EmitDetails",          OBJECT,    13);
 CONSTRUCT_UNTYPED_SFIELD(sfHook,                "Hook",                 OBJECT,    14);
-CONSTRUCT_UNTYPED_SFIELD(sfAMM,                 "AMM",                  OBJECT,    15);
 
 // inner object (uncommon)
 CONSTRUCT_UNTYPED_SFIELD(sfSigner,              "Signer",               OBJECT,    16);
@@ -337,9 +340,6 @@ CONSTRUCT_UNTYPED_SFIELD(sfHookGrant,           "HookGrant",            OBJECT, 
 CONSTRUCT_UNTYPED_SFIELD(sfVoteEntry,           "VoteEntry",            OBJECT,    25);
 CONSTRUCT_UNTYPED_SFIELD(sfAuctionSlot,         "AuctionSlot",          OBJECT,    27);
 CONSTRUCT_UNTYPED_SFIELD(sfAuthAccount,         "AuthAccount",          OBJECT,    28);
-CONSTRUCT_UNTYPED_SFIELD(sfAMMToken,            "AMMToken",             OBJECT,    29);
-CONSTRUCT_UNTYPED_SFIELD(sfToken1,              "Token1",               OBJECT,    30);
-CONSTRUCT_UNTYPED_SFIELD(sfToken2,              "Token2",               OBJECT,    31);
 
 // array of objects
 //                                                                            ARRAY/1 is reserved for end of array

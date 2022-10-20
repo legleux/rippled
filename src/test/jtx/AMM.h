@@ -39,7 +39,6 @@ class AMM
 {
     Env& env_;
     Account const creatorAccount_;
-    uint256 const ammID_;
     AccountID ammAccount_;
     Issue lptIssue_;
     STAmount const asset1_;
@@ -71,8 +70,7 @@ public:
     ammRpcInfo(
         std::optional<AccountID> const& account = std::nullopt,
         std::optional<std::string> const& ledgerIndex = std::nullopt,
-        std::optional<uint256> const& ammID = std::nullopt,
-        bool useAssets = false) const;
+        std::optional<std::pair<Issue, Issue>> tokens = std::nullopt) const;
 
     /** Verify the AMM balances.
      */
@@ -199,12 +197,6 @@ public:
         return ammAccount_;
     }
 
-    uint256
-    ammID() const
-    {
-        return ammID_;
-    }
-
     Issue
     lptIssue() const
     {
@@ -221,6 +213,9 @@ public:
     getLPTokensBalance() const;
 
 private:
+    void
+    setTokens(Json::Value& jv);
+
     void
     create(
         std::uint32_t tfee = 0,

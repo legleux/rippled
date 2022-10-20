@@ -25,6 +25,7 @@
 #include <ripple/ledger/View.h>
 #include <ripple/protocol/Feature.h>
 #include <ripple/protocol/STAccount.h>
+#include <ripple/protocol/STIssue.h>
 #include <ripple/protocol/TER.h>
 #include <ripple/protocol/TxFlags.h>
 
@@ -52,6 +53,12 @@ AMMBid::preflight(PreflightContext const& ctx)
         return temINVALID_FLAG;
     }
 
+    if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
+    {
+        JLOG(ctx.j.debug()) << "AMM Bid: Invalid token pair.";
+        return res;
+    }
+
     if (invalidAMMAmount(ctx.tx[~sfMinSlotPrice]) ||
         invalidAMMAmount(ctx.tx[~sfMaxSlotPrice]))
     {
@@ -76,10 +83,10 @@ AMMBid::preflight(PreflightContext const& ctx)
 TER
 AMMBid::preclaim(PreclaimContext const& ctx)
 {
-    auto const ammSle = ctx.view.read(keylet::amm(ctx.tx[sfAMMID]));
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
     if (!ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Bid: Invalid AMM account.";
+        JLOG(ctx.j.debug()) << "AMM Bid: Invalid token pair.";
         return terNO_ACCOUNT;
     }
 
@@ -96,8 +103,8 @@ AMMBid::preclaim(PreclaimContext const& ctx)
     }
 
     auto const lpTokens =
-        lpHolds(ctx.view, (*ammSle)[sfAMMAccount], ctx.tx[sfAccount], ctx.j);
-    auto const lpTokensBalance = (*ammSle)[sfLPTokenBalance];
+        lpHolds(ctx.view, (**ammSle)[sfAMMAccount], ctx.tx[sfAccount], ctx.j);
+    auto const lpTokensBalance = (**ammSle)[sfLPTokenBalance];
 
     auto const minBidSlotPrice = ctx.tx[~sfMinSlotPrice];
 
@@ -148,15 +155,15 @@ applyBid(
     beast::Journal j_)
 {
     using namespace std::chrono;
-    auto const amm = sb.peek(keylet::amm(ctx_.tx[sfAMMID]));
+    auto const amm = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
     if (!amm)
-        return {tecINTERNAL, false};
-    auto const ammAccount = (*amm)[sfAMMAccount];
-    STAmount const lptAMMBalance = (*amm)[sfLPTokenBalance];
+        return {amm.error(), false};
+    auto const ammAccount = (**amm)[sfAMMAccount];
+    STAmount const lptAMMBalance = (**amm)[sfLPTokenBalance];
     auto const lpTokens = lpHolds(sb, ammAccount, account_, ctx_.journal);
-    if (!amm->isFieldPresent(sfAuctionSlot))
-        amm->makeFieldPresent(sfAuctionSlot);
-    auto& auctionSlot = amm->peekFieldObject(sfAuctionSlot);
+    if (!(*amm)->isFieldPresent(sfAuctionSlot))
+        (*amm)->makeFieldPresent(sfAuctionSlot);
+    auto& auctionSlot = (*amm)->peekFieldObject(sfAuctionSlot);
     auto const current =
         duration_cast<seconds>(
             ctx_.view().info().parentCloseTime.time_since_epoch())
@@ -214,8 +221,8 @@ applyBid(
             JLOG(ctx_.journal.debug()) << "AMM Bid: failed to redeem.";
             return res;
         }
-        amm->setFieldAmount(sfLPTokenBalance, lptAMMBalance - saBurn);
-        sb.update(amm);
+        (*amm)->setFieldAmount(sfLPTokenBalance, lptAMMBalance - saBurn);
+        sb.update(*amm);
         return tesSUCCESS;
     };
 

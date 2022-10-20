@@ -76,6 +76,12 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
         return temBAD_AMM_OPTIONS;
     }
 
+    if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
+    {
+        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid token pair.";
+        return res;
+    }
+
     if (asset1Out && asset2Out && asset1Out->issue() == asset2Out->issue())
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid tokens, same issue."
@@ -115,18 +121,19 @@ TER
 AMMWithdraw::preclaim(PreclaimContext const& ctx)
 {
     auto const accountID = ctx.tx[sfAccount];
-    auto const ammSle = ctx.view.read(keylet::amm(ctx.tx[sfAMMID]));
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
     if (!ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid AMM account.";
+        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid token pair.";
         return terNO_ACCOUNT;
     }
 
     auto const asset1Out = ctx.tx[~sfAsset1Out];
     auto const asset2Out = ctx.tx[~sfAsset2Out];
-    auto const ammAccountID = (*ammSle)[sfAMMAccount];
+    auto const ammAccountID = (**ammSle)[sfAMMAccount];
 
-    auto const [issue1, issue2] = getTokensIssue(*ammSle);
+    auto const issue1 = (**ammSle)[sfToken1];
+    auto const issue2 = (**ammSle)[sfToken2];
 
     if (asset1Out)
     {
@@ -205,18 +212,18 @@ AMMWithdraw::applyGuts(Sandbox& sb)
     auto const asset1Out = ctx_.tx[~sfAsset1Out];
     auto const asset2Out = ctx_.tx[~sfAsset2Out];
     auto const ePrice = ctx_.tx[~sfEPrice];
-    auto ammSle = sb.peek(keylet::amm(ctx_.tx[sfAMMID]));
+    auto ammSle = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
     if (!ammSle)
-        return {tecINTERNAL, false};
-    auto const ammAccountID = (*ammSle)[sfAMMAccount];
+        return {ammSle.error(), false};
+    auto const ammAccountID = (**ammSle)[sfAMMAccount];
     auto const lpTokensWithdraw =
         getTxLPTokens(ctx_.view(), ammAccountID, ctx_.tx, ctx_.journal);
 
-    auto const tfee = getTradingFee(ctx_.view(), *ammSle, account_);
+    auto const tfee = getTradingFee(ctx_.view(), **ammSle, account_);
 
     auto const expected = ammHolds(
         sb,
-        *ammSle,
+        **ammSle,
         asset1Out ? asset1Out->issue() : std::optional<Issue>{},
         asset2Out ? asset2Out->issue() : std::optional<Issue>{},
         ctx_.journal);
@@ -277,9 +284,9 @@ AMMWithdraw::applyGuts(Sandbox& sb)
 
     if (result == tesSUCCESS && withdrawnTokens != beast::zero)
     {
-        ammSle->setFieldAmount(
+        (*ammSle)->setFieldAmount(
             sfLPTokenBalance, lptAMMBalance - withdrawnTokens);
-        sb.update(ammSle);
+        sb.update(*ammSle);
     }
 
     return {result, result == tesSUCCESS};
@@ -307,10 +314,10 @@ AMMWithdraw::doApply()
 }
 
 TER
-AMMWithdraw::deleteAccount(Sandbox& view, AccountID const& ammAccountID)
+AMMWithdraw::deleteAccount(Sandbox& sb, AccountID const& ammAccountID)
 {
-    auto sleAMMRoot = view.peek(keylet::account(ammAccountID));
-    auto sleAMM = view.peek(keylet::amm(ctx_.tx[sfAMMID]));
+    auto sleAMMRoot = sb.peek(keylet::account(ammAccountID));
+    auto sleAMM = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
 
     if (!sleAMMRoot || !sleAMM)
         return tecINTERNAL;
@@ -318,8 +325,8 @@ AMMWithdraw::deleteAccount(Sandbox& view, AccountID const& ammAccountID)
     // Note, the AMM trust lines are deleted since the balance
     // goes to 0. It also means there are no linked
     // ledger objects.
-    view.erase(sleAMM);
-    view.erase(sleAMMRoot);
+    sb.erase(*sleAMM);
+    sb.erase(sleAMMRoot);
 
     return tesSUCCESS;
 }
@@ -333,12 +340,13 @@ AMMWithdraw::withdraw(
     STAmount const& lptAMMBalance,
     STAmount const& lpTokensWithdraw)
 {
-    auto const ammSle = view.read(keylet::amm(ctx_.tx[sfAMMID]));
+    auto const ammSle =
+        getAMMSle(ctx_.view(), ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
     if (!ammSle)
-        return {tecINTERNAL, STAmount{}};
+        return {ammSle.error(), STAmount{}};
     auto const lpTokens = lpHolds(view, ammAccount, account_, ctx_.journal);
     auto const expected =
-        ammHolds(view, *ammSle, asset1Withdraw.issue(), std::nullopt, j_);
+        ammHolds(view, **ammSle, asset1Withdraw.issue(), std::nullopt, j_);
     if (!expected)
         return {expected.error(), STAmount{}};
     auto const [asset1, asset2, _] = *expected;

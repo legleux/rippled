@@ -22,6 +22,7 @@
 
 #include <ripple/basics/safe_cast.h>
 #include <ripple/json/json_value.h>
+
 #include <cstdint>
 #include <map>
 #include <utility>
@@ -42,6 +43,7 @@ Some fields have a different meaning for their
 // Forwards
 class STAccount;
 class STAmount;
+class STIssue;
 class STBlob;
 template <std::size_t>
 class STBitString;
@@ -76,6 +78,7 @@ enum SerializedTypeID {
     STI_UINT192 = 21,
     STI_UINT384 = 22,
     STI_UINT512 = 23,
+    STI_ISSUE = 24,
 
     // high level types
     // cannot be serialized inside other types
@@ -318,6 +321,7 @@ using SF_UINT512 = TypedField<STBitString<512>>;
 
 using SF_ACCOUNT = TypedField<STAccount>;
 using SF_AMOUNT = TypedField<STAmount>;
+using SF_ISSUE = TypedField<STIssue>;
 using SF_VL = TypedField<STBlob>;
 using SF_VECTOR256 = TypedField<STVector256>;
 
@@ -549,6 +553,10 @@ extern SF_ACCOUNT const sfHookAccount;
 // path set
 extern SField const sfPaths;
 
+// issue
+extern SF_ISSUE const sfToken1;
+extern SF_ISSUE const sfToken2;
+
 // vector of 256-bit
 extern SF_VECTOR256 const sfIndexes;
 extern SF_VECTOR256 const sfHashes;
@@ -573,9 +581,6 @@ extern SField const sfHook;
 extern SField const sfVoteEntry;
 extern SField const sfAuctionSlot;
 extern SField const sfAuthAccount;
-extern SField const sfAMMToken;
-extern SField const sfToken1;
-extern SField const sfToken2;
 
 extern SField const sfSigner;
 extern SField const sfMajority;

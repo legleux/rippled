@@ -44,6 +44,12 @@ AMMVote::preflight(PreflightContext const& ctx)
     if (!isTesSuccess(ret))
         return ret;
 
+    if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
+    {
+        JLOG(ctx.j.debug()) << "AMM Vote: invalid token pair.";
+        return res;
+    }
+
     if (ctx.tx.getFlags() & tfUniversalMask)
     {
         JLOG(ctx.j.debug()) << "AMM Vote: invalid flags.";
@@ -62,9 +68,11 @@ AMMVote::preflight(PreflightContext const& ctx)
 TER
 AMMVote::preclaim(PreclaimContext const& ctx)
 {
-    if (!ctx.view.read(keylet::amm(ctx.tx[sfAMMID])))
+    if (auto const ammSle =
+            getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
+        !ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Vote: Invalid AMM account.";
+        JLOG(ctx.j.debug()) << "AMM Vote: Invalid token pair.";
         return terNO_ACCOUNT;
     }
 
@@ -79,11 +87,11 @@ applyVote(
     beast::Journal j_)
 {
     auto const feeNew = ctx_.tx[sfTradingFee];
-    auto const amm = sb.peek(keylet::amm(ctx_.tx[sfAMMID]));
+    auto const amm = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
     if (!amm)
-        return {tecINTERNAL, false};
-    auto const ammAccount = (*amm)[sfAMMAccount];
-    STAmount const lptAMMBalance = (*amm)[sfLPTokenBalance];
+        return {amm.error(), false};
+    auto const ammAccount = (**amm)[sfAMMAccount];
+    STAmount const lptAMMBalance = (**amm)[sfLPTokenBalance];
     auto const lpTokensNew = lpHolds(sb, ammAccount, account_, ctx_.journal);
     if (lpTokensNew == beast::zero)
     {
@@ -104,7 +112,7 @@ applyVote(
     // per current total tokens balance and each LP tokens balance.
     // Find the entry with the least tokens and whether the account
     // has the vote entry.
-    for (auto const& entry : amm->getFieldArray(sfVoteSlots))
+    for (auto const& entry : (*amm)->getFieldArray(sfVoteSlots))
     {
         auto const account = entry[sfAccount];
         auto lpTokens = lpHolds(sb, ammAccount, account, ctx_.journal);
@@ -188,9 +196,9 @@ applyVote(
     }
 
     // Update the vote entries and the trading fee.
-    amm->setFieldArray(sfVoteSlots, updatedVoteSlots);
-    amm->setFieldU16(sfTradingFee, static_cast<std::int64_t>(num / den));
-    sb.update(amm);
+    (*amm)->setFieldArray(sfVoteSlots, updatedVoteSlots);
+    (*amm)->setFieldU16(sfTradingFee, static_cast<std::int64_t>(num / den));
+    sb.update(*amm);
 
     return {tesSUCCESS, true};
 }

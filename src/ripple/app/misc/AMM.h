@@ -43,13 +43,10 @@ std::uint16_t constexpr TradingFeeThreshold = 1000;  // 1%
 /** Calculate AMM account ID.
  */
 AccountID
-ammAccountID(uint256 const& parentHash, uint256 const& ammID);
-
-/** Calculate AMM group hash. The ltAMM object
- * contains all AMM's for the same issues.
- */
-uint256
-ammIndex(Issue const& issue1, Issue const& issue2);
+ammAccountID(
+    std::uint16_t prefix,
+    uint256 const& parentHash,
+    uint256 const& ammID);
 
 /** Calculate Liquidity Provider Token (LPT) Currency.
  */
@@ -99,6 +96,12 @@ lpHolds(
 NotTEC
 invalidAMMAmount(std::optional<STAmount> const& a, bool nonNegative = false);
 
+NotTEC
+invalidAMMIssue(Issue const& issue);
+
+NotTEC
+invalidAMMIssues(Issue const& issue1, Issue const& issue2);
+
 /** Check if the line is frozen from the issuer.
  */
 bool
@@ -120,11 +123,6 @@ getTradingFee(
     ReadView const& view,
     SLE const& ammSle,
     AccountID const& account);
-
-/** Get Issue from sfToken1/sfToken2 fields.
- */
-std::pair<Issue, Issue>
-getTokensIssue(SLE const& ammSle);
 
 /** Send w/o fees. Either from or to must be AMM account.
  */
@@ -153,6 +151,12 @@ ammAccountHolds(
     ReadView const& view,
     AccountID const& ammAccountID,
     const Issue& issue);
+
+Expected<std::shared_ptr<SLE const>, TER>
+getAMMSle(ReadView const& view, Issue const& issue1, Issue const& issue2);
+
+Expected<std::shared_ptr<SLE>, TER>
+getAMMSle(Sandbox& sb, Issue const& issue1, Issue const& issue2);
 
 }  // namespace ripple
 

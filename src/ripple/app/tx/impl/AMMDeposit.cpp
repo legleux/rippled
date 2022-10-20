@@ -71,6 +71,12 @@ AMMDeposit::preflight(PreflightContext const& ctx)
         return temBAD_AMM_OPTIONS;
     }
 
+    if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
+    {
+        JLOG(ctx.j.debug()) << "AMM Withdraw: invalid token pair.";
+        return res;
+    }
+
     if (asset1In && asset2In && asset1In->issue() == asset2In->issue())
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid tokens, same issue."
@@ -110,17 +116,18 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
 {
     auto const accountID = ctx.tx[sfAccount];
 
-    auto const ammSle = ctx.view.read(keylet::amm(ctx.tx[sfAMMID]));
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
     if (!ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Deposit: Invalid AMMID.";
+        JLOG(ctx.j.debug()) << "AMM Deposit: Invalid token pair.";
         return terNO_ACCOUNT;
     }
 
     auto const asset1In = ctx.tx[~sfAsset1In];
     auto const asset2In = ctx.tx[~sfAsset2In];
 
-    auto const [issue1, issue2] = getTokensIssue(*ammSle);
+    auto const issue1 = (**ammSle)[sfToken1];
+    auto const issue2 = (**ammSle)[sfToken2];
 
     if (asset1In)
     {
@@ -169,7 +176,7 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
     }
 
     auto const expected =
-        ammHolds(ctx.view, *ammSle, std::nullopt, std::nullopt, ctx.j);
+        ammHolds(ctx.view, **ammSle, std::nullopt, std::nullopt, ctx.j);
     if (!expected)
         return expected.error();
     auto const [asset1, asset2, lptAMMBalance] = *expected;
@@ -189,7 +196,7 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
     }
 
     // Check the reserve for LPToken trustline if not LP
-    if (lpHolds(ctx.view, (*ammSle)[sfAMMAccount], accountID, ctx.j) ==
+    if (lpHolds(ctx.view, (**ammSle)[sfAMMAccount], accountID, ctx.j) ==
         beast::zero)
     {
         STAmount const xrpBalance = xrpLiquid(ctx.view, accountID, 1, ctx.j);
@@ -211,16 +218,16 @@ AMMDeposit::applyGuts(Sandbox& sb)
     auto const asset2In = ctx_.tx[~sfAsset2In];
     auto const ePrice = ctx_.tx[~sfEPrice];
     auto const lpTokensDeposit = ctx_.tx[~sfLPTokenOut];
-    auto ammSle = sb.peek(keylet::amm(ctx_.tx[sfAMMID]));
+    auto ammSle = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
     if (!ammSle)
-        return {tecINTERNAL, false};
-    auto const ammAccountID = (*ammSle)[sfAMMAccount];
+        return {ammSle.error(), false};
+    auto const ammAccountID = (**ammSle)[sfAMMAccount];
 
-    auto const tfee = getTradingFee(ctx_.view(), *ammSle, account_);
+    auto const tfee = getTradingFee(ctx_.view(), **ammSle, account_);
 
     auto const expected = ammHolds(
         sb,
-        *ammSle,
+        **ammSle,
         asset1In ? asset1In->issue() : std::optional<Issue>{},
         asset2In ? asset2In->issue() : std::optional<Issue>{},
         ctx_.journal);
@@ -280,9 +287,9 @@ AMMDeposit::applyGuts(Sandbox& sb)
 
     if (result == tesSUCCESS && depositedTokens != beast::zero)
     {
-        ammSle->setFieldAmount(
+        (*ammSle)->setFieldAmount(
             sfLPTokenBalance, lptAMMBalance + depositedTokens);
-        sb.update(ammSle);
+        sb.update(*ammSle);
     }
 
     return {result, result == tesSUCCESS};

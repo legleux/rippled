@@ -77,6 +77,7 @@ target_sources (xrpl_core PRIVATE
   src/ripple/protocol/impl/Indexes.cpp
   src/ripple/protocol/impl/InnerObjectFormats.cpp
   src/ripple/protocol/impl/Issue.cpp
+  src/ripple/protocol/impl/STIssue.cpp
   src/ripple/protocol/impl/Keylet.cpp
   src/ripple/protocol/impl/LedgerFormats.cpp
   src/ripple/protocol/impl/PublicKey.cpp
@@ -220,6 +221,7 @@ install (
     src/ripple/protocol/SOTemplate.h
     src/ripple/protocol/STAccount.h
     src/ripple/protocol/STAmount.h
+    src/ripple/protocol/STIssue.h
     src/ripple/protocol/STArray.h
     src/ripple/protocol/STBase.h
     src/ripple/protocol/STBitString.h

@@ -96,8 +96,7 @@ constexpr static ErrorInfo unorderedErrorInfos[]{
     {rpcUNKNOWN_COMMAND,         "unknownCmd",             "Unknown method."},
     {rpcSENDMAX_MALFORMED,       "sendMaxMalformed",       "SendMax amount malformed."},
     {rpcOBJECT_NOT_FOUND,        "objectNotFound",         "The requested object was not found."},
-    {rpcAMM_CUR_MALFORMED,       "ammCurMalformed",        "AMM asset currency is malformed."},
-    {rpcAMM_ISR_MALFORMED,       "ammIsrMalformed",        "AMM asset issuer is malformed."}};
+    {rpcAMM_ISSUE_MALFORMED,     "ammIssueMalformed",      "AMM issue is malformed."}};
 // clang-format on
 
 // C++ does not allow you to return an array from a function.  You must

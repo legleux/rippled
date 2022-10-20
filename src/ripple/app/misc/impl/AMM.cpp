@@ -26,19 +26,15 @@
 namespace ripple {
 
 AccountID
-ammAccountID(uint256 const& parentHash, uint256 const& ammID)
+ammAccountID(
+    std::uint16_t prefix,
+    uint256 const& parentHash,
+    uint256 const& ammID)
 {
     ripesha_hasher rsh;
-    auto hash = sha512Half(parentHash, ammID);
+    auto hash = sha512Half(prefix, parentHash, ammID);
     rsh(hash.data(), hash.size());
     return AccountID{static_cast<ripesha_hasher::result_type>(rsh)};
-}
-
-uint256
-ammIndex(Issue const& issue1, Issue const& issue2)
-{
-    auto const& [minI, maxI] = std::minmax(issue1, issue2);
-    return sha512Half(minI.account, minI.currency, maxI.account, maxI.currency);
 }
 
 Currency
@@ -79,7 +75,8 @@ ammHolds(
     auto const issues = [&]() -> std::optional<std::pair<Issue, Issue>> {
         if (optIssue1 && optIssue2)
             return {{*optIssue1, *optIssue2}};
-        auto const [issue1, issue2] = getTokensIssue(ammSle);
+        auto const issue1 = ammSle[sfToken1];
+        auto const issue2 = ammSle[sfToken2];
         if (optIssue1)
         {
             if (*optIssue1 == issue1)
@@ -129,14 +126,34 @@ lpHolds(
 }
 
 NotTEC
+invalidAMMIssue(Issue const& issue)
+{
+    if (badCurrency() == issue.currency)
+        return temBAD_CURRENCY;
+    if (isXRP(issue) && true != !issue.account)
+        return temBAD_ISSUER;
+    return tesSUCCESS;
+}
+
+NotTEC
+invalidAMMIssues(Issue const& issue1, Issue const& issue2)
+{
+    if (auto const res = invalidAMMIssue(issue1))
+        return res;
+    if (auto const res = invalidAMMIssue(issue2))
+        return res;
+    if (issue1 == issue2)
+        return temBAD_AMM_TOKENS;
+    return tesSUCCESS;
+}
+
+NotTEC
 invalidAMMAmount(std::optional<STAmount> const& a, bool nonNegative)
 {
     if (!a)
         return tesSUCCESS;
-    if (badCurrency() == a->getCurrency())
-        return temBAD_CURRENCY;
-    if (a->native() && a->native() != !a->getIssuer())
-        return temBAD_ISSUER;
+    if (auto const res = invalidAMMIssue(a->issue()))
+        return res;
     if (!nonNegative && *a <= beast::zero)
         return temBAD_AMOUNT;
     return tesSUCCESS;
@@ -197,22 +214,6 @@ getTradingFee(ReadView const& view, SLE const& ammSle, AccountID const& account)
         }
     }
     return ammSle[sfTradingFee];
-}
-
-std::pair<Issue, Issue>
-getTokensIssue(SLE const& ammSle)
-{
-    auto const ammToken =
-        static_cast<STObject const&>(ammSle.peekAtField(sfAMMToken));
-    auto getIssue = [&](SField const& field) {
-        auto const token =
-            static_cast<STObject const&>(ammToken.peekAtField(field));
-        Issue issue;
-        issue.currency = token[sfTokenCurrency];
-        issue.account = token[sfTokenIssuer];
-        return issue;
-    };
-    return {getIssue(sfToken1), getIssue(sfToken2)};
 }
 
 TER
@@ -286,6 +287,24 @@ ammAccountHolds(
     }
 
     return STAmount{issue};
+}
+
+Expected<std::shared_ptr<SLE const>, TER>
+getAMMSle(ReadView const& view, Issue const& issue1, Issue const& issue2)
+{
+    if (auto const ammSle = view.read(keylet::amm(issue1, issue2)))
+        return ammSle;
+    else
+        return Unexpected(tecINTERNAL);
+}
+
+Expected<std::shared_ptr<SLE>, TER>
+getAMMSle(Sandbox& sb, Issue const& issue1, Issue const& issue2)
+{
+    if (auto ammSle = sb.peek(keylet::amm(issue1, issue2)))
+        return ammSle;
+    else
+        return Unexpected(tecINTERNAL);
 }
 
 }  // namespace ripple
