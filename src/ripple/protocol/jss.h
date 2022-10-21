@@ -57,12 +57,12 @@ JSS(AMMVote);                // transaction type
 JSS(AMMWithdraw);            // transaction type
 JSS(Amendments);             // ledger type.
 JSS(Amount);                 // in: TransactionSign; field.
-JSS(Asset1);                 // in/out: AMM IOU/XRP pool amount
-JSS(Asset2);                 // in/out: AMM IOU pool amount
-JSS(Asset1In);               // in: AMM Deposit option
-JSS(Asset2In);               // in: AMM Deposit option
-JSS(Asset1Out);              // in: AMM Withdraw option
-JSS(Asset2Out);              // in: AMM Withdraw option
+JSS(Asset1Amount);           // in/out: AMM IOU/XRP pool amount
+JSS(Asset2Amount);           // in/out: AMM IOU pool amount
+JSS(Asset1AmountIn);         // in: AMM Deposit option
+JSS(Asset2AmountIn);         // in: AMM Deposit option
+JSS(Asset1AmountOut);        // in: AMM Withdraw option
+JSS(Asset2AmountOut);        // in: AMM Withdraw option
 JSS(AuctionSlot);            // out: AMM Auction Slot
 JSS(AuthAccount);            // in: AMM Auction Slot
 JSS(AuthAccounts);           // in: AMM Auction Slot
@@ -130,8 +130,8 @@ JSS(TakerPays);              // field.
 JSS(Ticket);                 // ledger type.
 JSS(TicketCreate);           // transaction type.
 JSS(TimeInterval);           // out: AMM Auction Slot
-JSS(Token1);                 // in: AMM Token1 issue
-JSS(Token2);                 // in: AMM Token2 issue
+JSS(Asset1);                 // in: AMM Asset1
+JSS(Asset2);                 // in: AMM Asset2
 JSS(TxnSignature);           // field.
 JSS(TradingFee);             // in/out: AMM trading fee
 JSS(TransactionType);        // in: TransactionSign.
@@ -604,8 +604,8 @@ JSS(time);
 JSS(timeouts);                // out: InboundLedger
 JSS(track);                   // out: PeerImp
 JSS(traffic);                 // out: Overlay
-JSS(token1);                  // int: AMM info
-JSS(token2);                  // int: AMM info
+JSS(asset1);                  // int: AMM info
+JSS(asset2);                  // int: AMM info
 JSS(total);                   // out: counters
 JSS(totalCoins);              // out: LedgerToJson
 JSS(total_bytes_recv);        // out: Peers

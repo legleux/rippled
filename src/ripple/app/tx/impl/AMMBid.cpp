@@ -53,7 +53,7 @@ AMMBid::preflight(PreflightContext const& ctx)
         return temINVALID_FLAG;
     }
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
+    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset1], ctx.tx[sfAsset2]))
     {
         JLOG(ctx.j.debug()) << "AMM Bid: Invalid asset pair.";
         return res;
@@ -83,7 +83,7 @@ AMMBid::preflight(PreflightContext const& ctx)
 TER
 AMMBid::preclaim(PreclaimContext const& ctx)
 {
-    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAsset1], ctx.tx[sfAsset2]);
     if (!ammSle)
     {
         JLOG(ctx.j.debug()) << "AMM Bid: Invalid asset pair.";
@@ -155,7 +155,7 @@ applyBid(
     beast::Journal j_)
 {
     using namespace std::chrono;
-    auto const amm = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
+    auto const amm = getAMMSle(sb, ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
     if (!amm)
         return {amm.error(), false};
     auto const ammAccount = (**amm)[sfAMMAccount];

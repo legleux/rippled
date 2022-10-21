@@ -75,8 +75,8 @@ ammHolds(
     auto const issues = [&]() -> std::optional<std::pair<Issue, Issue>> {
         if (optIssue1 && optIssue2)
             return {{*optIssue1, *optIssue2}};
-        auto const issue1 = ammSle[sfToken1];
-        auto const issue2 = ammSle[sfToken2];
+        auto const issue1 = ammSle[sfAsset1];
+        auto const issue2 = ammSle[sfAsset2];
         if (optIssue1)
         {
             if (*optIssue1 == issue1)

@@ -487,12 +487,12 @@ extern SF_AMOUNT const sfHighLimit;
 extern SF_AMOUNT const sfFee;
 extern SF_AMOUNT const sfSendMax;
 extern SF_AMOUNT const sfDeliverMin;
-extern SF_AMOUNT const sfAsset1;
-extern SF_AMOUNT const sfAsset2;
-extern SF_AMOUNT const sfAsset1In;
-extern SF_AMOUNT const sfAsset2In;
-extern SF_AMOUNT const sfAsset1Out;
-extern SF_AMOUNT const sfAsset2Out;
+extern SF_AMOUNT const sfAsset1Amount;
+extern SF_AMOUNT const sfAsset2Amount;
+extern SF_AMOUNT const sfAsset1AmountIn;
+extern SF_AMOUNT const sfAsset2AmountIn;
+extern SF_AMOUNT const sfAsset1AmountOut;
+extern SF_AMOUNT const sfAsset2AmountOut;
 extern SF_AMOUNT const sfEPrice;
 extern SF_AMOUNT const sfMinSlotPrice;
 extern SF_AMOUNT const sfMaxSlotPrice;
@@ -554,8 +554,8 @@ extern SF_ACCOUNT const sfHookAccount;
 extern SField const sfPaths;
 
 // issue
-extern SF_ISSUE const sfToken1;
-extern SF_ISSUE const sfToken2;
+extern SF_ISSUE const sfAsset1;
+extern SF_ISSUE const sfAsset2;
 
 // vector of 256-bit
 extern SF_VECTOR256 const sfIndexes;

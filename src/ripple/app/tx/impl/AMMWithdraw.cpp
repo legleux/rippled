@@ -53,8 +53,8 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
     }
     bool const withdrawAll = uFlags & tfAMMWithdrawAll;
 
-    auto const asset1Out = ctx.tx[~sfAsset1Out];
-    auto const asset2Out = ctx.tx[~sfAsset2Out];
+    auto const asset1Out = ctx.tx[~sfAsset1AmountOut];
+    auto const asset2Out = ctx.tx[~sfAsset2AmountOut];
     auto const ePrice = ctx.tx[~sfEPrice];
     auto const lpTokens = ctx.tx[~sfLPTokenIn];
     // Valid combinations are:
@@ -76,7 +76,7 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
         return temBAD_AMM_OPTIONS;
     }
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
+    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset1], ctx.tx[sfAsset2]))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid asset pair.";
         return res;
@@ -121,19 +121,19 @@ TER
 AMMWithdraw::preclaim(PreclaimContext const& ctx)
 {
     auto const accountID = ctx.tx[sfAccount];
-    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAsset1], ctx.tx[sfAsset2]);
     if (!ammSle)
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid asset pair.";
         return terNO_AMM;
     }
 
-    auto const asset1Out = ctx.tx[~sfAsset1Out];
-    auto const asset2Out = ctx.tx[~sfAsset2Out];
+    auto const asset1Out = ctx.tx[~sfAsset1AmountOut];
+    auto const asset2Out = ctx.tx[~sfAsset2AmountOut];
     auto const ammAccountID = (**ammSle)[sfAMMAccount];
 
-    auto const issue1 = (**ammSle)[sfToken1];
-    auto const issue2 = (**ammSle)[sfToken2];
+    auto const issue1 = (**ammSle)[sfAsset1];
+    auto const issue2 = (**ammSle)[sfAsset2];
 
     if (asset1Out)
     {
@@ -175,7 +175,7 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
         }
     }
 
-    if (isFrozen(ctx.view, asset1Out) || isFrozen(ctx.view, sfAsset2Out))
+    if (isFrozen(ctx.view, asset1Out) || isFrozen(ctx.view, sfAsset2AmountOut))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw involves frozen asset.";
         return tecFROZEN;
@@ -209,10 +209,10 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
 std::pair<TER, bool>
 AMMWithdraw::applyGuts(Sandbox& sb)
 {
-    auto const asset1Out = ctx_.tx[~sfAsset1Out];
-    auto const asset2Out = ctx_.tx[~sfAsset2Out];
+    auto const asset1Out = ctx_.tx[~sfAsset1AmountOut];
+    auto const asset2Out = ctx_.tx[~sfAsset2AmountOut];
     auto const ePrice = ctx_.tx[~sfEPrice];
-    auto ammSle = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
+    auto ammSle = getAMMSle(sb, ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
     if (!ammSle)
         return {ammSle.error(), false};
     auto const ammAccountID = (**ammSle)[sfAMMAccount];
@@ -317,7 +317,7 @@ TER
 AMMWithdraw::deleteAccount(Sandbox& sb, AccountID const& ammAccountID)
 {
     auto sleAMMRoot = sb.peek(keylet::account(ammAccountID));
-    auto sleAMM = getAMMSle(sb, ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
+    auto sleAMM = getAMMSle(sb, ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
 
     if (!sleAMMRoot || !sleAMM)
         return tecINTERNAL;
@@ -341,7 +341,7 @@ AMMWithdraw::withdraw(
     STAmount const& lpTokensWithdraw)
 {
     auto const ammSle =
-        getAMMSle(ctx_.view(), ctx_.tx[sfToken1], ctx_.tx[sfToken2]);
+        getAMMSle(ctx_.view(), ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
     if (!ammSle)
         return {ammSle.error(), STAmount{}};
     auto const lpTokens = lpHolds(view, ammAccount, account_, ctx_.journal);
