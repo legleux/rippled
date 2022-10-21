@@ -1030,6 +1030,7 @@ private:
                     std::get<3>(it),
                     std::nullopt,
                     std::nullopt,
+                    std::nullopt,
                     ter(temBAD_AMM_OPTIONS));
             });
         }
@@ -1106,6 +1107,7 @@ private:
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 seq(1),
                 ter(terNO_ACCOUNT));
         });
@@ -1114,7 +1116,19 @@ private:
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.withdrawAll(alice);
             ammAlice.deposit(
-                alice, 10000, std::nullopt, std::nullopt, ter(terNO_ACCOUNT));
+                alice, 10000, std::nullopt, std::nullopt, ter(terNO_AMM));
+        });
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.deposit(
+                alice,
+                1000,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                {{USD, GBP}},
+                std::nullopt,
+                ter(terNO_AMM));
         });
 
         // Frozen asset
@@ -1178,6 +1192,7 @@ private:
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(tecUNFUNDED_AMM));
         });
 
@@ -1191,6 +1206,7 @@ private:
             ammAlice.deposit(
                 bob,
                 10000000,
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
@@ -1388,6 +1404,7 @@ private:
                 std::nullopt,
                 tfPartialPayment,
                 std::nullopt,
+                std::nullopt,
                 ter(temINVALID_FLAG));
         });
 
@@ -1452,6 +1469,7 @@ private:
                     std::get<2>(it),
                     std::get<3>(it),
                     std::get<4>(it),
+                    std::nullopt,
                     std::nullopt,
                     ter(temBAD_AMM_OPTIONS));
             });
@@ -1529,6 +1547,7 @@ private:
                     std::nullopt,
                     tfAMMWithdrawAll,
                     std::nullopt,
+                    std::nullopt,
                     ter(tecAMM_BALANCE));
             });
         }
@@ -1554,6 +1573,7 @@ private:
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 seq(1),
                 ter(terNO_ACCOUNT));
         });
@@ -1562,7 +1582,19 @@ private:
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.withdrawAll(alice);
             ammAlice.withdraw(
-                alice, 10000, std::nullopt, std::nullopt, ter(terNO_ACCOUNT));
+                alice, 10000, std::nullopt, std::nullopt, ter(terNO_AMM));
+        });
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.withdraw(
+                alice,
+                1000,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                {{USD, GBP}},
+                std::nullopt,
+                ter(terNO_AMM));
         });
 
         // Frozen asset
@@ -1873,6 +1905,7 @@ private:
                 1000,
                 tfAMMWithdrawAll,
                 std::nullopt,
+                std::nullopt,
                 ter(temINVALID_FLAG));
         });
 
@@ -1883,6 +1916,7 @@ private:
                 1001,
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(temBAD_FEE));
             BEAST_EXPECT(ammAlice.expectTradingFee(0));
         });
@@ -1891,14 +1925,34 @@ private:
         testAMM([&](AMM& ammAlice, Env& env) {
             Account bad("bad");
             env.memoize(bad);
-            ammAlice.vote(bad, 1000, std::nullopt, seq(1), ter(terNO_ACCOUNT));
+            ammAlice.vote(
+                bad,
+                1000,
+                std::nullopt,
+                seq(1),
+                std::nullopt,
+                ter(terNO_ACCOUNT));
         });
 
         // Invalid AMM
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.withdrawAll(alice);
             ammAlice.vote(
-                alice, 1000, std::nullopt, std::nullopt, ter(terNO_ACCOUNT));
+                alice,
+                1000,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(terNO_AMM));
+        });
+        testAMM([&](AMM& ammAlice, Env& env) {
+            ammAlice.vote(
+                alice,
+                1000,
+                std::nullopt,
+                std::nullopt,
+                {{USD, GBP}},
+                ter(terNO_AMM));
         });
 
         // Account is not LP
@@ -1906,6 +1960,7 @@ private:
             ammAlice.vote(
                 carol,
                 1000,
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 ter(tecAMM_INVALID_TOKENS));
@@ -1921,7 +1976,13 @@ private:
                 Account a(std::to_string(i));
                 fund(env, gw, {a}, {USD(1000)}, Fund::Acct);
                 ammAlice.deposit(a, tokens);
-                ammAlice.vote(a, 50 * (i + 1), std::nullopt, std::nullopt, ter);
+                ammAlice.vote(
+                    a,
+                    50 * (i + 1),
+                    std::nullopt,
+                    std::nullopt,
+                    std::nullopt,
+                    ter);
             };
             for (int i = 0; i < 8; ++i)
                 vote(i, 100);
@@ -2023,6 +2084,7 @@ private:
                 {},
                 tfAMMWithdrawAll,
                 std::nullopt,
+                std::nullopt,
                 ter(temINVALID_FLAG));
         });
 
@@ -2036,6 +2098,7 @@ private:
                 {},
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(temBAD_AMM_TOKENS));
         });
         testAMM([&](AMM& ammAlice, Env& env) {
@@ -2045,6 +2108,7 @@ private:
                 std::nullopt,
                 0,
                 {},
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 ter(temBAD_AMM_TOKENS));
@@ -2058,6 +2122,7 @@ private:
                 200,
                 100,
                 {},
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 ter(tecAMM_INVALID_TOKENS));
@@ -2074,6 +2139,7 @@ private:
                 {},
                 std::nullopt,
                 seq(1),
+                std::nullopt,
                 ter(terNO_ACCOUNT));
         });
 
@@ -2087,7 +2153,8 @@ private:
                 {},
                 std::nullopt,
                 std::nullopt,
-                ter(terNO_ACCOUNT));
+                std::nullopt,
+                ter(terNO_AMM));
         });
 
         // Account is not LP
@@ -2097,6 +2164,7 @@ private:
                 100,
                 std::nullopt,
                 {},
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 ter(tecAMM_INVALID_TOKENS));
@@ -2109,6 +2177,7 @@ private:
                 100,
                 std::nullopt,
                 {bob},
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 ter(terNO_ACCOUNT));
@@ -2130,6 +2199,7 @@ private:
                 {bob, ed, bill, scott, james},
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(temBAD_AMM_OPTIONS));
         });
 
@@ -2143,6 +2213,7 @@ private:
                 {},
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(tecAMM_INVALID_TOKENS));
             ammAlice.bid(
                 carol,
@@ -2151,7 +2222,21 @@ private:
                 {},
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(tecAMM_INVALID_TOKENS));
+        });
+
+        // Invalid Assets
+        testAMM([&](AMM& ammAlice, Env&) {
+            ammAlice.bid(
+                alice,
+                std::nullopt,
+                100,
+                {},
+                std::nullopt,
+                std::nullopt,
+                {{USD, GBP}},
+                ter(terNO_AMM));
         });
     }
 
@@ -2195,6 +2280,7 @@ private:
                 {},
                 std::nullopt,
                 std::nullopt,
+                std::nullopt,
                 ter(tecAMM_FAILED_BID));
             // Bid MaxSlotPrice succeeds - pay computed price
             ammAlice.bid(carol, std::nullopt, 135);
@@ -2208,6 +2294,7 @@ private:
                 10,
                 100,
                 {},
+                std::nullopt,
                 std::nullopt,
                 std::nullopt,
                 ter(tecAMM_FAILED_BID));

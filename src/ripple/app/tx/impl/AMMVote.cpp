@@ -46,7 +46,7 @@ AMMVote::preflight(PreflightContext const& ctx)
 
     if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
     {
-        JLOG(ctx.j.debug()) << "AMM Vote: invalid token pair.";
+        JLOG(ctx.j.debug()) << "AMM Vote: invalid asset pair.";
         return res;
     }
 
@@ -72,8 +72,8 @@ AMMVote::preclaim(PreclaimContext const& ctx)
             getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
         !ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Vote: Invalid token pair.";
-        return terNO_ACCOUNT;
+        JLOG(ctx.j.debug()) << "AMM Vote: Invalid asset pair.";
+        return terNO_AMM;
     }
 
     return tesSUCCESS;

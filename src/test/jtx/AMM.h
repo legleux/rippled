@@ -131,6 +131,7 @@ public:
         std::optional<STAmount> const& asset2In,
         std::optional<STAmount> const& maxEP,
         std::optional<std::uint32_t> const& flags,
+        std::optional<std::pair<Issue, Issue>> const& assets,
         std::optional<jtx::seq> const& seq,
         std::optional<ter> const& ter = std::nullopt);
 
@@ -171,6 +172,7 @@ public:
         std::optional<STAmount> const& asset2Out,
         std::optional<IOUAmount> const& maxEP,
         std::optional<std::uint32_t> const& flags,
+        std::optional<std::pair<Issue, Issue>> const& assets,
         std::optional<jtx::seq> const& seq,
         std::optional<ter> const& ter = std::nullopt);
 
@@ -180,6 +182,7 @@ public:
         std::uint32_t feeVal,
         std::optional<std::uint32_t> const& flags = std::nullopt,
         std::optional<jtx::seq> const& seq = std::nullopt,
+        std::optional<std::pair<Issue, Issue>> const& assets = std::nullopt,
         std::optional<ter> const& ter = std::nullopt);
 
     void
@@ -189,6 +192,7 @@ public:
         std::vector<Account> const& authAccounts = {},
         std::optional<std::uint32_t> const& flags = std::nullopt,
         std::optional<jtx::seq> const& seq = std::nullopt,
+        std::optional<std::pair<Issue, Issue>> const& assets = std::nullopt,
         std::optional<ter> const& ter = std::nullopt);
 
     AccountID const&
@@ -214,7 +218,9 @@ public:
 
 private:
     void
-    setTokens(Json::Value& jv);
+    setTokens(
+        Json::Value& jv,
+        std::optional<std::pair<Issue, Issue>> const& assets = std::nullopt);
 
     void
     create(
@@ -226,6 +232,7 @@ private:
     deposit(
         std::optional<Account> const& account,
         Json::Value& jv,
+        std::optional<std::pair<Issue, Issue>> const& assets = std::nullopt,
         std::optional<jtx::seq> const& seq = std::nullopt);
 
     void
@@ -233,6 +240,7 @@ private:
         std::optional<Account> const& account,
         Json::Value& jv,
         std::optional<jtx::seq> const& seq,
+        std::optional<std::pair<Issue, Issue>> const& assets = std::nullopt,
         std::optional<ter> const& ter = std::nullopt);
 
     void

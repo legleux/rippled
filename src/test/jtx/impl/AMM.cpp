@@ -272,22 +272,35 @@ AMM::expectAmmInfo(
 }
 
 void
-AMM::setTokens(Json::Value& jv)
+AMM::setTokens(
+    Json::Value& jv,
+    std::optional<std::pair<Issue, Issue>> const& assets)
 {
-    jv[jss::Token1] =
-        STIssue(sfToken1, asset1_.issue()).getJson(JsonOptions::none);
-    jv[jss::Token2] =
-        STIssue(sfToken1, asset2_.issue()).getJson(JsonOptions::none);
+    if (assets)
+    {
+        jv[jss::Token1] =
+            STIssue(sfToken1, assets->first).getJson(JsonOptions::none);
+        jv[jss::Token2] =
+            STIssue(sfToken1, assets->second).getJson(JsonOptions::none);
+    }
+    else
+    {
+        jv[jss::Token1] =
+            STIssue(sfToken1, asset1_.issue()).getJson(JsonOptions::none);
+        jv[jss::Token2] =
+            STIssue(sfToken1, asset2_.issue()).getJson(JsonOptions::none);
+    }
 }
 
 void
 AMM::deposit(
     std::optional<Account> const& account,
     Json::Value& jv,
+    std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<jtx::seq> const& seq)
 {
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
-    setTokens(jv);
+    setTokens(jv, assets);
     jv[jss::TransactionType] = jss::AMMDeposit;
     if (log_)
         std::cout << jv.toStyledString();
@@ -316,6 +329,7 @@ AMM::deposit(
         std::nullopt,
         flags,
         std::nullopt,
+        std::nullopt,
         ter);
 }
 
@@ -337,6 +351,7 @@ AMM::deposit(
         maxEP,
         flags,
         std::nullopt,
+        std::nullopt,
         ter);
 }
 
@@ -348,6 +363,7 @@ AMM::deposit(
     std::optional<STAmount> const& asset2In,
     std::optional<STAmount> const& maxEP,
     std::optional<std::uint32_t> const& flags,
+    std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<jtx::seq> const& seq,
     std::optional<ter> const& ter)
 {
@@ -367,7 +383,7 @@ AMM::deposit(
         maxEP->setJson(jv[jss::EPrice]);
     if (flags)
         jv[jss::Flags] = *flags;
-    deposit(account, jv, seq);
+    deposit(account, jv, assets, seq);
 }
 
 void
@@ -375,10 +391,11 @@ AMM::withdraw(
     std::optional<Account> const& account,
     Json::Value& jv,
     std::optional<jtx::seq> const& seq,
+    std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<ter> const& ter)
 {
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
-    setTokens(jv);
+    setTokens(jv, assets);
     jv[jss::TransactionType] = jss::AMMWithdraw;
     if (log_)
         std::cout << jv.toStyledString();
@@ -407,6 +424,7 @@ AMM::withdraw(
         std::nullopt,
         flags,
         std::nullopt,
+        std::nullopt,
         ter);
 }
 
@@ -427,6 +445,7 @@ AMM::withdraw(
         maxEP,
         std::nullopt,
         std::nullopt,
+        std::nullopt,
         ter);
 }
 
@@ -438,6 +457,7 @@ AMM::withdraw(
     std::optional<STAmount> const& asset2Out,
     std::optional<IOUAmount> const& maxEP,
     std::optional<std::uint32_t> const& flags,
+    std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<jtx::seq> const& seq,
     std::optional<ter> const& ter)
 {
@@ -458,7 +478,7 @@ AMM::withdraw(
     }
     if (flags)
         jv[jss::Flags] = *flags;
-    withdraw(account, jv, seq, ter);
+    withdraw(account, jv, seq, assets, ter);
 }
 
 void
@@ -467,11 +487,12 @@ AMM::vote(
     std::uint32_t feeVal,
     std::optional<std::uint32_t> const& flags,
     std::optional<jtx::seq> const& seq,
+    std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<ter> const& ter)
 {
     Json::Value jv;
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
-    setTokens(jv);
+    setTokens(jv, assets);
     jv[jss::TradingFee] = feeVal;
     jv[jss::TransactionType] = jss::AMMVote;
     if (flags)
@@ -495,11 +516,12 @@ AMM::bid(
     std::vector<Account> const& authAccounts,
     std::optional<std::uint32_t> const& flags,
     std::optional<jtx::seq> const& seq,
+    std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<ter> const& ter)
 {
     Json::Value jv;
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
-    setTokens(jv);
+    setTokens(jv, assets);
     if (minSlotPrice)
     {
         STAmount saTokens{lptIssue_, *minSlotPrice, 0};

@@ -78,7 +78,7 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
 
     if (auto const res = invalidAMMIssues(ctx.tx[sfToken1], ctx.tx[sfToken2]))
     {
-        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid token pair.";
+        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid asset pair.";
         return res;
     }
 
@@ -124,8 +124,8 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
     auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfToken1], ctx.tx[sfToken2]);
     if (!ammSle)
     {
-        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid token pair.";
-        return terNO_ACCOUNT;
+        JLOG(ctx.j.debug()) << "AMM Withdraw: Invalid asset pair.";
+        return terNO_AMM;
     }
 
     auto const asset1Out = ctx.tx[~sfAsset1Out];
