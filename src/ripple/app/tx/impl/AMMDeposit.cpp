@@ -352,7 +352,8 @@ AMMDeposit::deposit(
             << asset1Deposit;
         return {tecUNFUNDED_AMM, STAmount{}};
     }
-    auto res = ammSend(view, account_, ammAccount, asset1Deposit, ctx_.journal);
+    auto res =
+        accountSend(view, account_, ammAccount, asset1Deposit, ctx_.journal);
     if (res != tesSUCCESS)
     {
         JLOG(ctx_.journal.debug())
@@ -370,7 +371,8 @@ AMMDeposit::deposit(
                 << *asset2Deposit;
             return {tecUNFUNDED_AMM, STAmount{}};
         }
-        res = ammSend(view, account_, ammAccount, *asset2Deposit, ctx_.journal);
+        res = accountSend(
+            view, account_, ammAccount, *asset2Deposit, ctx_.journal);
         if (res != tesSUCCESS)
         {
             JLOG(ctx_.journal.debug())

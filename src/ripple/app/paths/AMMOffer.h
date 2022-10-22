@@ -102,6 +102,28 @@ public:
 
     QualityFunction
     getQF() const;
+
+    template <typename... Args>
+    TER
+    send(Args&&...) const;
+
+    bool
+    unlimitedFunds() const
+    {
+        return true;
+    }
+
+    TAmounts<TIn, TOut>
+    stpAmt(std::uint32_t ofrInRate) const
+    {
+        return amounts_;
+    }
+
+    TOut
+    ownerGives(std::uint32_t ofrOutRate) const
+    {
+        return amounts_.out;
+    }
 };
 
 }  // namespace ripple

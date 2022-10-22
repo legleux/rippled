@@ -768,9 +768,10 @@ private:
             AMM ammAlice(env, alice, USD(20000), BTC(0.5));
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
-            // Transfer fee is not charged.
-            BEAST_EXPECT(expectLine(env, alice, USD(5000)));
-            BEAST_EXPECT(expectLine(env, alice, BTC(0.125)));
+            // 25,000 - 20,000(AMM) - 0.25*20,000=5,000(fee) = 0
+            BEAST_EXPECT(expectLine(env, alice, USD(0)));
+            // 0.625 - 0.5(AMM) - 0.25*0.5=0.125(fee) = 0
+            BEAST_EXPECT(expectLine(env, alice, BTC(0)));
         }
 
         // Require authorization is set, account is authorized
@@ -1374,16 +1375,16 @@ private:
             AMM ammAlice(env, alice, USD(20000), BTC(0.5));
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
-            // Transfer fee is not charged.
-            BEAST_EXPECT(expectLine(env, alice, USD(5000)));
-            BEAST_EXPECT(expectLine(env, alice, BTC(0.125)));
-            // LP deposits, doesn't pay transfer fee.
+            BEAST_EXPECT(expectLine(env, alice, USD(0)));
+            BEAST_EXPECT(expectLine(env, alice, BTC(0)));
             fund(env, gw, {carol}, {USD(2500), BTC(0.0625)}, Fund::Acct);
             ammAlice.deposit(carol, 10);
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(22000), BTC(0.55), IOUAmount{110, 0}));
-            BEAST_EXPECT(expectLine(env, carol, USD(500)));
-            BEAST_EXPECT(expectLine(env, carol, BTC(0.0125)));
+            // 2,500 - 2,000(AMM) - 0.25*2,000=500(fee)=0
+            BEAST_EXPECT(expectLine(env, carol, USD(0)));
+            // 0.0625 - 0.05(AMM) - 0.25*0.05=0.0125(fee)=0
+            BEAST_EXPECT(expectLine(env, carol, BTC(0)));
         }
     }
 
@@ -1872,23 +1873,23 @@ private:
             AMM ammAlice(env, alice, USD(20000), BTC(0.5));
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
-            // Transfer fee is not charged.
-            BEAST_EXPECT(expectLine(env, alice, USD(5000)));
-            BEAST_EXPECT(expectLine(env, alice, BTC(0.125)));
-            // LP deposits, doesn't pay transfer fee.
+            BEAST_EXPECT(expectLine(env, alice, USD(0)));
+            BEAST_EXPECT(expectLine(env, alice, BTC(0)));
             fund(env, gw, {carol}, {USD(2500), BTC(0.0625)}, Fund::Acct);
             ammAlice.deposit(carol, 10);
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(22000), BTC(0.55), IOUAmount{110, 0}));
-            BEAST_EXPECT(expectLine(env, carol, USD(500)));
-            BEAST_EXPECT(expectLine(env, carol, BTC(0.0125)));
+            BEAST_EXPECT(expectLine(env, carol, USD(0)));
+            BEAST_EXPECT(expectLine(env, carol, BTC(0)));
             // LP withdraws, AMM doesn't pay the transfer fee.
             ammAlice.withdraw(carol, 10);
             BEAST_EXPECT(ammAlice.expectBalances(
                 USD(20000), BTC(0.5), IOUAmount{100, 0}));
             ammAlice.expectLPTokens(carol, IOUAmount{0, 0});
-            BEAST_EXPECT(expectLine(env, carol, USD(2500)));
-            BEAST_EXPECT(expectLine(env, carol, BTC(0.0625)));
+            // 2,500 - 0.25*2,000=500(deposit fee)=2,000
+            BEAST_EXPECT(expectLine(env, carol, USD(2000)));
+            // 0.0625 - 0.025*0.5=0.0125(deposit fee)=0.05
+            BEAST_EXPECT(expectLine(env, carol, BTC(0.05)));
         }
     }
 

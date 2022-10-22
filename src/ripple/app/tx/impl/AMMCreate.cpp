@@ -230,7 +230,7 @@ applyCreate(
     }
 
     // Send asset1.
-    res = ammSend(sb, account_, *ammAccount, saAsset1, ctx_.journal);
+    res = accountSend(sb, account_, *ammAccount, saAsset1, ctx_.journal);
     if (res != tesSUCCESS)
     {
         JLOG(j_.debug()) << "AMM Instance: failed to send " << saAsset1;
@@ -238,7 +238,7 @@ applyCreate(
     }
 
     // Send asset2.
-    res = ammSend(sb, account_, *ammAccount, saAsset2, ctx_.journal);
+    res = accountSend(sb, account_, *ammAccount, saAsset2, ctx_.journal);
     if (res != tesSUCCESS)
         JLOG(j_.debug()) << "AMM Instance: failed to send " << saAsset2;
     else

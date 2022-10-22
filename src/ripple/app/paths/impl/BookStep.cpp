@@ -690,19 +690,14 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
                 prevStep_, offer.owner(), strandDst_, trOut);
 
         auto ofrAmt = offer.amount();
-        TAmounts stpAmt{
-            mulRatio(ofrAmt.in, ofrInRate, QUALITY_ONE, /*roundUp*/ true),
-            ofrAmt.out};
+        auto stpAmt = offer.stpAmt(ofrInRate);
+        auto ownerGives = offer.ownerGives(ofrOutRate);
 
-        // owner pays the transfer fee.
-        auto ownerGives =
-            mulRatio(ofrAmt.out, ofrOutRate, QUALITY_ONE, /*roundUp*/ false);
-
-        auto const funds = (offer.key() == beast::zero ||
-                            offer.owner() == offer.issueOut().account)
+        auto const funds = offer.unlimitedFunds()
             ? ownerGives  // Offer owner is issuer; they have unlimited funds
             : offers.ownerFunds();
 
+        // Only if CLOB offer
         if (funds < ownerGives)
         {
             // We already know offer.owner()!=offer.issueOut().account
@@ -755,7 +750,7 @@ BookStep<TIn, TOut, TDerived>::consumeOffer(
     // The offer owner gets the ofrAmt. The difference between ofrAmt and
     // stepAmt is a transfer fee that goes to book_.in.account
     {
-        auto const dr = accountSend(
+        auto const dr = offer.send(
             sb,
             book_.in.account,
             offer.owner(),
@@ -768,7 +763,7 @@ BookStep<TIn, TOut, TDerived>::consumeOffer(
     // The offer owner pays `ownerGives`. The difference between ownerGives and
     // stepAmt is a transfer fee that goes to book_.out.account
     {
-        auto const cr = accountSend(
+        auto const cr = offer.send(
             sb,
             offer.owner(),
             book_.out.account,
