@@ -109,7 +109,7 @@ AMMOffer<TIn, TOut>::getQF() const
 template <typename TIn, typename TOut>
 template <typename... Args>
 TER
-AMMOffer<TIn, TOut>::send(Args&&... args) const
+AMMOffer<TIn, TOut>::send(Args&&... args)
 {
     return ammSend(std::forward<Args>(args)...);
 }

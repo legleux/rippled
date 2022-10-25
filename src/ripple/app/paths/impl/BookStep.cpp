@@ -183,6 +183,9 @@ public:
         return inactive_;
     }
 
+    bool
+    overridesTransferFee(ReadView const&) const override;
+
 protected:
     std::string
     logStringImpl(char const* name) const
@@ -323,8 +326,11 @@ public:
             return transferRate(v, id);
         };
 
-        auto const trIn =
-            redeems(prevStepDir) ? rate(this->book_.in.account) : parityRate;
+        auto const prevStepPaysTrFee =
+            !this->prevStep_ || !this->prevStep_->overridesTransferFee(v);
+        auto const trIn = prevStepPaysTrFee && redeems(prevStepDir)
+            ? rate(this->book_.in.account)
+            : parityRate;
         // Always charge the transfer fee, even if the owner is the issuer
         auto const trOut = this->ownerPaysTransferFee_
             ? rate(this->book_.out.account)
@@ -416,7 +422,8 @@ public:
             strandSrc == offer.owner() && strandDst == offer.owner())
         {
             // Remove this offer even if no crossing occurs.
-            offers.permRmOffer(offer.key());
+            if (offer.removable())
+                offers.permRmOffer(offer.key());
 
             // If no offers have been attempted yet then it's okay to move to
             // a different quality.
@@ -619,8 +626,11 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
         return transferRate(sb, id).value;
     };
 
-    std::uint32_t const trIn =
-        redeems(prevStepDir) ? rate(book_.in.account) : QUALITY_ONE;
+    auto const prevStepPaysTrFee =
+        !prevStep_ || !prevStep_->overridesTransferFee(sb);
+    std::uint32_t const trIn = redeems(prevStepDir) && prevStepPaysTrFee
+        ? rate(book_.in.account)
+        : QUALITY_ONE;
     // Always charge the transfer fee, even if the owner is the issuer
     std::uint32_t const trOut =
         ownerPaysTransferFee_ ? rate(book_.out.account) : QUALITY_ONE;
@@ -667,7 +677,7 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
                 {
                     // Offer owner not authorized to hold IOU from issuer.
                     // Remove this offer even if no crossing occurs.
-                    if (offer.key() != beast::zero)
+                    if (offer.removable())
                         offers.permRmOffer(offer.key());
                     if (!offerAttempted)
                         // Change quality only if no previous offers were tried.
@@ -682,16 +692,20 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
                 offer.quality()))
             return false;
 
-        auto const ofrInRate = static_cast<TDerived const*>(this)->getOfrInRate(
-            prevStep_, offer.owner(), trIn);
-
-        auto const ofrOutRate =
+        auto const [ofrInRate, ofrOutRate] = offer.adjustRates(
+            static_cast<TDerived const*>(this)->getOfrInRate(
+                prevStep_, offer.owner(), trIn),
             static_cast<TDerived const*>(this)->getOfrOutRate(
-                prevStep_, offer.owner(), strandDst_, trOut);
+                prevStep_, offer.owner(), strandDst_, trOut));
 
         auto ofrAmt = offer.amount();
-        auto stpAmt = offer.stpAmt(ofrInRate);
-        auto ownerGives = offer.ownerGives(ofrOutRate);
+        TAmounts stpAmt{
+            mulRatio(ofrAmt.in, ofrInRate, QUALITY_ONE, /*roundUp*/ true),
+            ofrAmt.out};
+
+        // owner pays the transfer fee.
+        auto ownerGives =
+            mulRatio(ofrAmt.out, ofrOutRate, QUALITY_ONE, /*roundUp*/ false);
 
         auto const funds = offer.unlimitedFunds()
             ? ownerGives  // Offer owner is issuer; they have unlimited funds
@@ -813,6 +827,16 @@ BookStep<TIn, TOut, TDerived>::tipOfferQuality(ReadView const& view) const
             false);
     // Neither CLOB nor AMM offer is available
     return std::nullopt;
+}
+
+template <class TIn, class TOut, class TDerived>
+bool
+BookStep<TIn, TOut, TDerived>::overridesTransferFee(ReadView const& view) const
+{
+    if (auto const res = tipOfferQuality(view))
+        // This step doesn't pay the transfer fee if AMM
+        return std::get<bool>(*res);
+    return false;
 }
 
 template <class TCollection>

@@ -143,8 +143,8 @@ public:
     limitIn(TAmounts<TIn, TOut> const& offrAmt, TIn const& limit) const;
 
     template <typename... Args>
-    TER
-    send(Args&&... args) const;
+    static TER
+    send(Args&&... args);
 
     bool
     unlimitedFunds() const
@@ -153,11 +153,20 @@ public:
         return m_account == issueOut().account;
     }
 
-    TAmounts<TIn, TOut>
-    stpAmt(std::uint32_t ofrInRate) const;
+    static std::pair<std::uint32_t, std::uint32_t>
+    adjustRates(std::uint32_t ofrInRate, std::uint32_t ofrOutRate)
+    {
+        // CLOB offer pays the transfer fee
+        return {ofrInRate, ofrOutRate};
+    }
 
-    TOut
-    ownerGives(std::uint32_t ofrOutRate) const;
+    /** CLOB offer can be permanently removed
+     */
+    static bool
+    removable()
+    {
+        return true;
+    }
 };
 
 using Offer = TOffer<>;
@@ -220,26 +229,9 @@ TOffer<TIn, TOut>::limitIn(TAmounts<TIn, TOut> const& offrAmt, TIn const& limit)
 template <class TIn, class TOut>
 template <typename... Args>
 TER
-TOffer<TIn, TOut>::send(Args&&... args) const
+TOffer<TIn, TOut>::send(Args&&... args)
 {
     return accountSend(std::forward<Args>(args)...);
-}
-
-template <class TIn, class TOut>
-TAmounts<TIn, TOut>
-TOffer<TIn, TOut>::stpAmt(std::uint32_t ofrInRate) const
-{
-    return {
-        mulRatio(m_amounts.in, ofrInRate, QUALITY_ONE, /*roundUp*/ true),
-        m_amounts.out};
-}
-
-template <class TIn, class TOut>
-TOut
-TOffer<TIn, TOut>::ownerGives(std::uint32_t ofrOutRate) const
-{
-    // owner pays the transfer fee
-    return mulRatio(m_amounts.out, ofrOutRate, QUALITY_ONE, /*roundUp*/ false);
 }
 
 template <>

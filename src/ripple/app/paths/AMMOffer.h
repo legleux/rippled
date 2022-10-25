@@ -83,6 +83,7 @@ public:
     bool
     fully_consumed() const
     {
+        // AMM offer always is fully consumed
         return true;
     }
 
@@ -103,26 +104,32 @@ public:
     QualityFunction
     getQF() const;
 
+    /** Send funds without incurring the transfer fee
+     */
     template <typename... Args>
-    TER
-    send(Args&&...) const;
+    static TER
+    send(Args&&...);
 
     bool
     unlimitedFunds() const
     {
+        // AMM offer is fully funded by the pool
         return true;
     }
 
-    TAmounts<TIn, TOut>
-    stpAmt(std::uint32_t ofrInRate) const
+    static std::pair<std::uint32_t, std::uint32_t>
+    adjustRates(std::uint32_t ofrInRate, std::uint32_t ofrOutRate)
     {
-        return amounts_;
+        // AMM doesn't pay transfer fee on Payment tx
+        return {ofrInRate, QUALITY_ONE};
     }
 
-    TOut
-    ownerGives(std::uint32_t ofrOutRate) const
+    /** AMM offer can not be permanently removed.
+     */
+    static bool
+    removable()
     {
-        return amounts_.out;
+        return false;
     }
 };
 
