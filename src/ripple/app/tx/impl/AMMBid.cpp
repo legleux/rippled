@@ -53,17 +53,22 @@ AMMBid::preflight(PreflightContext const& ctx)
         return temINVALID_FLAG;
     }
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset1], ctx.tx[sfAsset2]))
+    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset], ctx.tx[sfAsset2]))
     {
         JLOG(ctx.j.debug()) << "AMM Bid: Invalid asset pair.";
         return res;
     }
 
-    if (invalidAMMAmount(ctx.tx[~sfMinSlotPrice]) ||
-        invalidAMMAmount(ctx.tx[~sfMaxSlotPrice]))
+    if (auto const res = invalidAMMAmount(ctx.tx[~sfMinSlotPrice]))
     {
         JLOG(ctx.j.debug()) << "AMM Bid: invalid min slot price.";
-        return temBAD_AMM_TOKENS;
+        return res;
+    }
+
+    if (auto const res = invalidAMMAmount(ctx.tx[~sfMaxSlotPrice]))
+    {
+        JLOG(ctx.j.debug()) << "AMM Bid: invalid max slot price.";
+        return res;
     }
 
     if (ctx.tx.isFieldPresent(sfAuthAccounts))
@@ -83,7 +88,7 @@ AMMBid::preflight(PreflightContext const& ctx)
 TER
 AMMBid::preclaim(PreclaimContext const& ctx)
 {
-    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAsset1], ctx.tx[sfAsset2]);
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAsset], ctx.tx[sfAsset2]);
     if (!ammSle)
     {
         JLOG(ctx.j.debug()) << "AMM Bid: Invalid asset pair.";
@@ -155,7 +160,7 @@ applyBid(
     beast::Journal j_)
 {
     using namespace std::chrono;
-    auto const amm = getAMMSle(sb, ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
+    auto const amm = getAMMSle(sb, ctx_.tx[sfAsset], ctx_.tx[sfAsset2]);
     if (!amm)
         return {amm.error(), false};
     auto const ammAccount = (**amm)[sfAMMAccount];

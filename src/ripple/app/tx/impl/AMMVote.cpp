@@ -44,7 +44,7 @@ AMMVote::preflight(PreflightContext const& ctx)
     if (!isTesSuccess(ret))
         return ret;
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset1], ctx.tx[sfAsset2]))
+    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset], ctx.tx[sfAsset2]))
     {
         JLOG(ctx.j.debug()) << "AMM Vote: invalid asset pair.";
         return res;
@@ -69,7 +69,7 @@ TER
 AMMVote::preclaim(PreclaimContext const& ctx)
 {
     if (auto const ammSle =
-            getAMMSle(ctx.view, ctx.tx[sfAsset1], ctx.tx[sfAsset2]);
+            getAMMSle(ctx.view, ctx.tx[sfAsset], ctx.tx[sfAsset2]);
         !ammSle)
     {
         JLOG(ctx.j.debug()) << "AMM Vote: Invalid asset pair.";
@@ -87,7 +87,7 @@ applyVote(
     beast::Journal j_)
 {
     auto const feeNew = ctx_.tx[sfTradingFee];
-    auto const amm = getAMMSle(sb, ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
+    auto const amm = getAMMSle(sb, ctx_.tx[sfAsset], ctx_.tx[sfAsset2]);
     if (!amm)
         return {amm.error(), false};
     auto const ammAccount = (**amm)[sfAMMAccount];

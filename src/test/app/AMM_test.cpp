@@ -2100,7 +2100,7 @@ private:
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
-                ter(temBAD_AMM_TOKENS));
+                ter(temBAD_AMOUNT));
         });
         testAMM([&](AMM& ammAlice, Env& env) {
             ammAlice.deposit(carol, 1000000);
@@ -2112,7 +2112,7 @@ private:
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
-                ter(temBAD_AMM_TOKENS));
+                ter(temBAD_AMOUNT));
         });
 
         // Invlaid Min/Max combination
@@ -2948,23 +2948,21 @@ private:
             env.trust(USD1(20000), alice, bob, carol, dan);
             env.trust(USD2(1000), alice, bob, carol, dan);
 
-            env(pay(gw1, dan, USD1(10000)));
+            env(pay(gw1, dan, USD1(10050)));
             env(pay(gw1, bob, USD1(50)));
             env(pay(gw2, bob, USD2(50)));
 
-            AMM ammDan(env, dan, XRP(10000), USD1(10000));
+            AMM ammDan(env, dan, XRP(10000), USD1(10050));
 
             env(pay(alice, carol, USD2(50)),
                 path(~USD1, bob),
-                sendmax(XRP(60)),
+                sendmax(XRP(50)),
                 txflags(tfNoRippleDirect));
             BEAST_EXPECT(ammDan.expectBalances(
-                XRPAmount{10050251257}, USD1(9950), ammDan.tokens()));
+                XRP(10050), USD1(10000), ammDan.tokens()));
 
             BEAST_EXPECT(expectLedgerEntryRoot(
-                env,
-                alice,
-                20000 * dropsPerXRP - XRPAmount{50251257} - txfee(env, 1)));
+                env, alice, XRP(20000) - XRP(50) - txfee(env, 1)));
             BEAST_EXPECT(expectLine(env, bob, USD1(100)));
             BEAST_EXPECT(expectLine(env, bob, USD2(0)));
             BEAST_EXPECT(expectLine(env, carol, USD2(50)));

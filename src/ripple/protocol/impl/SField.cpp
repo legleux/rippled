@@ -234,25 +234,20 @@ CONSTRUCT_TYPED_SFIELD(sfHighLimit,             "HighLimit",            AMOUNT, 
 CONSTRUCT_TYPED_SFIELD(sfFee,                   "Fee",                  AMOUNT,     8);
 CONSTRUCT_TYPED_SFIELD(sfSendMax,               "SendMax",              AMOUNT,     9);
 CONSTRUCT_TYPED_SFIELD(sfDeliverMin,            "DeliverMin",           AMOUNT,    10);
-CONSTRUCT_TYPED_SFIELD(sfAsset1Amount,          "Asset1Amount",               AMOUNT,    11);
-CONSTRUCT_TYPED_SFIELD(sfAsset2Amount,          "Asset2Amount",               AMOUNT,    12);
-CONSTRUCT_TYPED_SFIELD(sfMinSlotPrice,          "MinSlotPrice",         AMOUNT,    13);
-CONSTRUCT_TYPED_SFIELD(sfMaxSlotPrice,          "MaxSlotPrice",         AMOUNT,    14);
+CONSTRUCT_TYPED_SFIELD(sfAmount2,               "Amount2",              AMOUNT,    11);
+CONSTRUCT_TYPED_SFIELD(sfMinSlotPrice,          "MinSlotPrice",         AMOUNT,    12);
+CONSTRUCT_TYPED_SFIELD(sfMaxSlotPrice,          "MaxSlotPrice",         AMOUNT,    13);
 
 // currency amount (uncommon)
 CONSTRUCT_TYPED_SFIELD(sfMinimumOffer,          "MinimumOffer",         AMOUNT,    16);
 CONSTRUCT_TYPED_SFIELD(sfRippleEscrow,          "RippleEscrow",         AMOUNT,    17);
 CONSTRUCT_TYPED_SFIELD(sfDeliveredAmount,       "DeliveredAmount",      AMOUNT,    18);
 CONSTRUCT_TYPED_SFIELD(sfNFTokenBrokerFee,      "NFTokenBrokerFee",     AMOUNT,    19);
-CONSTRUCT_TYPED_SFIELD(sfAsset1AmountIn,        "Asset1AmountIn",             AMOUNT,    20);
-CONSTRUCT_TYPED_SFIELD(sfAsset2AmountIn,        "Asset2AmountIn",             AMOUNT,    21);
-CONSTRUCT_TYPED_SFIELD(sfAsset1AmountOut,       "Asset1AmountOut",            AMOUNT,    22);
-CONSTRUCT_TYPED_SFIELD(sfAsset2AmountOut,       "Asset2AmountOut",            AMOUNT,    23);
-CONSTRUCT_TYPED_SFIELD(sfLPTokenOut,            "LPTokenOut",           AMOUNT,    24);
-CONSTRUCT_TYPED_SFIELD(sfLPTokenIn,             "LPTokenIn",            AMOUNT,    25);
-CONSTRUCT_TYPED_SFIELD(sfEPrice,                "EPrice",               AMOUNT,    26);
-CONSTRUCT_TYPED_SFIELD(sfPrice,                 "Price",                AMOUNT,    27);
-CONSTRUCT_TYPED_SFIELD(sfLPTokenBalance,        "LPTokenBalance",       AMOUNT,    28);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenOut,            "LPTokenOut",            AMOUNT,   20);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenIn,             "LPTokenIn",            AMOUNT,    21);
+CONSTRUCT_TYPED_SFIELD(sfEPrice,                "EPrice",               AMOUNT,    22);
+CONSTRUCT_TYPED_SFIELD(sfPrice,                 "Price",                AMOUNT,    23);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenBalance,        "LPTokenBalance",       AMOUNT,    24);
 
 // variable length (common)
 CONSTRUCT_TYPED_SFIELD(sfPublicKey,             "PublicKey",            VL,         1);
@@ -308,7 +303,7 @@ CONSTRUCT_TYPED_SFIELD(sfNFTokenOffers,         "NFTokenOffers",        VECTOR25
 CONSTRUCT_UNTYPED_SFIELD(sfPaths,               "Paths",                PATHSET,    1);
 
 // issue
-CONSTRUCT_TYPED_SFIELD(sfAsset1,                "Asset1",               ISSUE,      1);
+CONSTRUCT_TYPED_SFIELD(sfAsset,                 "Asset",                ISSUE,      1);
 CONSTRUCT_TYPED_SFIELD(sfAsset2,                "Asset2",               ISSUE,      2);
 
 // inner object

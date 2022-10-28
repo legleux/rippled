@@ -52,8 +52,8 @@ AMMCreate::preflight(PreflightContext const& ctx)
         return temINVALID_FLAG;
     }
 
-    auto const saAsset1 = ctx.tx[sfAsset1Amount];
-    auto const saAsset2 = ctx.tx[sfAsset2Amount];
+    auto const saAsset1 = ctx.tx[sfAmount];
+    auto const saAsset2 = ctx.tx[sfAmount2];
 
     if (saAsset1.issue() == saAsset2.issue())
     {
@@ -87,8 +87,8 @@ TER
 AMMCreate::preclaim(PreclaimContext const& ctx)
 {
     auto const accountID = ctx.tx[sfAccount];
-    auto const saAsset1 = ctx.tx[sfAsset1Amount];
-    auto const saAsset2 = ctx.tx[sfAsset2Amount];
+    auto const saAsset1 = ctx.tx[sfAmount];
+    auto const saAsset2 = ctx.tx[sfAmount2];
 
     if (auto const ter = requireAuth(ctx.view, saAsset1.issue(), accountID);
         ter != tesSUCCESS)
@@ -150,8 +150,8 @@ applyCreate(
     AccountID const& account_,
     beast::Journal j_)
 {
-    auto const saAsset1 = ctx_.tx[sfAsset1Amount];
-    auto const saAsset2 = ctx_.tx[sfAsset2Amount];
+    auto const saAsset1 = ctx_.tx[sfAmount];
+    auto const saAsset2 = ctx_.tx[sfAmount2];
 
     auto const ammKeylet = keylet::amm(saAsset1.issue(), saAsset2.issue());
 
@@ -201,7 +201,7 @@ applyCreate(
     sleAMMRoot->setFieldU32(sfSequence, seqno);
     // Ignore reserves requirement, disable the master key, allow default
     // rippling (AMM LPToken can be used as a token in another AMM, which must
-    // support payments and offer crossing), and enable deposit autherization to
+    // support payments and offer crossing), and enable deposit authorization to
     // prevent payments into AMM.
     sleAMMRoot->setFieldU32(
         sfFlags, lsfAMM | lsfDisableMaster | lsfDefaultRipple | lsfDepositAuth);
@@ -217,7 +217,7 @@ applyCreate(
     ammSle->setFieldAmount(sfLPTokenBalance, lpTokens);
     auto const& [issue1, issue2] =
         std::minmax(saAsset1.issue(), saAsset2.issue());
-    ammSle->setFieldIssue(sfAsset1, STIssue{sfAsset1, issue1});
+    ammSle->setFieldIssue(sfAsset, STIssue{sfAsset, issue1});
     ammSle->setFieldIssue(sfAsset2, STIssue{sfAsset2, issue2});
     sb.insert(ammSle);
 

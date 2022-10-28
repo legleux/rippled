@@ -216,6 +216,14 @@ public:
     IOUAmount
     getLPTokensBalance() const;
 
+    friend std::ostream&
+    operator<<(std::ostream& s, AMM const& amm)
+    {
+        if (auto const res = amm.ammRpcInfo())
+            s << res->toStyledString();
+        return s;
+    }
+
 private:
     void
     setTokens(

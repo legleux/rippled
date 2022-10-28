@@ -50,8 +50,8 @@ AMMDeposit::preflight(PreflightContext const& ctx)
         return temINVALID_FLAG;
     }
 
-    auto const asset1In = ctx.tx[~sfAsset1AmountIn];
-    auto const asset2In = ctx.tx[~sfAsset2AmountIn];
+    auto const asset1In = ctx.tx[~sfAmount];
+    auto const asset2In = ctx.tx[~sfAmount2];
     auto const ePrice = ctx.tx[~sfEPrice];
     auto const lpTokens = ctx.tx[~sfLPTokenOut];
     // Valid options are:
@@ -71,7 +71,7 @@ AMMDeposit::preflight(PreflightContext const& ctx)
         return temBAD_AMM_OPTIONS;
     }
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset1], ctx.tx[sfAsset2]))
+    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset], ctx.tx[sfAsset2]))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid asset pair.";
         return res;
@@ -116,17 +116,17 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
 {
     auto const accountID = ctx.tx[sfAccount];
 
-    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAsset1], ctx.tx[sfAsset2]);
+    auto const ammSle = getAMMSle(ctx.view, ctx.tx[sfAsset], ctx.tx[sfAsset2]);
     if (!ammSle)
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: Invalid asset pair.";
         return terNO_AMM;
     }
 
-    auto const asset1In = ctx.tx[~sfAsset1AmountIn];
-    auto const asset2In = ctx.tx[~sfAsset2AmountIn];
+    auto const asset1In = ctx.tx[~sfAmount];
+    auto const asset2In = ctx.tx[~sfAmount2];
 
-    auto const issue1 = (**ammSle)[sfAsset1];
+    auto const issue1 = (**ammSle)[sfAsset];
     auto const issue2 = (**ammSle)[sfAsset2];
 
     if (asset1In)
@@ -214,11 +214,11 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
 std::pair<TER, bool>
 AMMDeposit::applyGuts(Sandbox& sb)
 {
-    auto const asset1In = ctx_.tx[~sfAsset1AmountIn];
-    auto const asset2In = ctx_.tx[~sfAsset2AmountIn];
+    auto const asset1In = ctx_.tx[~sfAmount];
+    auto const asset2In = ctx_.tx[~sfAmount2];
     auto const ePrice = ctx_.tx[~sfEPrice];
     auto const lpTokensDeposit = ctx_.tx[~sfLPTokenOut];
-    auto ammSle = getAMMSle(sb, ctx_.tx[sfAsset1], ctx_.tx[sfAsset2]);
+    auto ammSle = getAMMSle(sb, ctx_.tx[sfAsset], ctx_.tx[sfAsset2]);
     if (!ammSle)
         return {ammSle.error(), false};
     auto const ammAccountID = (**ammSle)[sfAMMAccount];

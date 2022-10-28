@@ -71,13 +71,13 @@ doAMMInfo(RPC::JsonContext& context)
     Issue issue1;
     Issue issue2;
 
-    if (!params.isMember(jss::asset1) || !params.isMember(jss::asset2))
+    if (!params.isMember(jss::asset) || !params.isMember(jss::asset2))
     {
         RPC::inject_error(rpcINVALID_PARAMS, result);
         return result;
     }
 
-    if (auto const i = getIssue(params, jss::asset1, context.j); !i)
+    if (auto const i = getIssue(params, jss::asset, context.j); !i)
     {
         RPC::inject_error(i.error(), result);
         return result;
@@ -120,8 +120,8 @@ doAMMInfo(RPC::JsonContext& context)
         ? lpHolds(*ledger, ammAccountID, *accountID, context.j)
         : (*amm)[sfLPTokenBalance];
 
-    asset1Balance.setJson(result[jss::Asset1Amount]);
-    asset2Balance.setJson(result[jss::Asset2Amount]);
+    asset1Balance.setJson(result[jss::Amount]);
+    asset2Balance.setJson(result[jss::Amount2]);
     lptAMMBalance.setJson(result[jss::LPToken]);
     result[jss::TradingFee] = (*amm)[sfTradingFee];
     result[jss::AMMAccount] = to_string(ammAccountID);
@@ -154,7 +154,10 @@ doAMMInfo(RPC::JsonContext& context)
     }
     result[jss::AMMID] = to_string(ammKeylet.key);
 
-    return result;
+    Json::Value ammResult;
+    ammResult[jss::amm] = result;
+
+    return ammResult;
 }
 
 }  // namespace ripple

@@ -77,8 +77,8 @@ AMM::create(
 {
     Json::Value jv;
     jv[jss::Account] = creatorAccount_.human();
-    jv[jss::Asset1Amount] = asset1_.getJson(JsonOptions::none);
-    jv[jss::Asset2Amount] = asset2_.getJson(JsonOptions::none);
+    jv[jss::Amount] = asset1_.getJson(JsonOptions::none);
+    jv[jss::Amount2] = asset2_.getJson(JsonOptions::none);
     jv[jss::TradingFee] = tfee;
     jv[jss::TransactionType] = jss::AMMCreate;
     if (flags)
@@ -116,15 +116,15 @@ AMM::ammRpcInfo(
         jv[jss::ledger_index] = *ledgerIndex;
     if (tokens)
     {
-        jv[jss::asset1] =
-            STIssue(sfAsset1, tokens->first).getJson(JsonOptions::none);
+        jv[jss::asset] =
+            STIssue(sfAsset, tokens->first).getJson(JsonOptions::none);
         jv[jss::asset2] =
             STIssue(sfAsset2, tokens->first).getJson(JsonOptions::none);
     }
     else
     {
-        jv[jss::asset1] =
-            STIssue(sfAsset1, asset1_.issue()).getJson(JsonOptions::none);
+        jv[jss::asset] =
+            STIssue(sfAsset, asset1_.issue()).getJson(JsonOptions::none);
         jv[jss::asset2] =
             STIssue(sfAsset2, asset2_.issue()).getJson(JsonOptions::none);
     }
@@ -246,16 +246,19 @@ AMM::expectAmmInfo(
     STAmount const& asset1,
     STAmount const& asset2,
     IOUAmount const& balance,
-    Json::Value const& jv) const
+    Json::Value const& jvres) const
 {
-    if (!jv.isMember(jss::Asset1Amount) || !jv.isMember(jss::Asset2Amount) ||
+    if (!jvres.isMember(jss::amm))
+        return false;
+    auto const jv = jvres[jss::amm];
+    if (!jv.isMember(jss::Amount) || !jv.isMember(jss::Amount2) ||
         !jv.isMember(jss::LPToken))
         return false;
     STAmount asset1Info;
-    if (!amountFromJsonNoThrow(asset1Info, jv[jss::Asset1Amount]))
+    if (!amountFromJsonNoThrow(asset1Info, jv[jss::Amount]))
         return false;
     STAmount asset2Info;
-    if (!amountFromJsonNoThrow(asset2Info, jv[jss::Asset2Amount]))
+    if (!amountFromJsonNoThrow(asset2Info, jv[jss::Amount2]))
         return false;
     STAmount lptBalance;
     if (!amountFromJsonNoThrow(lptBalance, jv[jss::LPToken]))
@@ -278,17 +281,17 @@ AMM::setTokens(
 {
     if (assets)
     {
-        jv[jss::Asset1] =
-            STIssue(sfAsset1, assets->first).getJson(JsonOptions::none);
+        jv[jss::Asset] =
+            STIssue(sfAsset, assets->first).getJson(JsonOptions::none);
         jv[jss::Asset2] =
-            STIssue(sfAsset1, assets->second).getJson(JsonOptions::none);
+            STIssue(sfAsset, assets->second).getJson(JsonOptions::none);
     }
     else
     {
-        jv[jss::Asset1] =
-            STIssue(sfAsset1, asset1_.issue()).getJson(JsonOptions::none);
+        jv[jss::Asset] =
+            STIssue(sfAsset, asset1_.issue()).getJson(JsonOptions::none);
         jv[jss::Asset2] =
-            STIssue(sfAsset1, asset2_.issue()).getJson(JsonOptions::none);
+            STIssue(sfAsset, asset2_.issue()).getJson(JsonOptions::none);
     }
 }
 
@@ -376,9 +379,9 @@ AMM::deposit(
         saTokens.setJson(jv[jss::LPTokenOut]);
     }
     if (asset1In)
-        asset1In->setJson(jv[jss::Asset1AmountIn]);
+        asset1In->setJson(jv[jss::Amount]);
     if (asset2In)
-        asset2In->setJson(jv[jss::Asset2AmountIn]);
+        asset2In->setJson(jv[jss::Amount2]);
     if (maxEP)
         maxEP->setJson(jv[jss::EPrice]);
     if (flags)
@@ -468,9 +471,9 @@ AMM::withdraw(
         saTokens.setJson(jv[jss::LPTokenIn]);
     }
     if (asset1Out)
-        asset1Out->setJson(jv[jss::Asset1AmountOut]);
+        asset1Out->setJson(jv[jss::Amount]);
     if (asset2Out)
-        asset2Out->setJson(jv[jss::Asset2AmountOut]);
+        asset2Out->setJson(jv[jss::Amount2]);
     if (maxEP)
     {
         STAmount const saMaxEP{*maxEP, lptIssue_};
