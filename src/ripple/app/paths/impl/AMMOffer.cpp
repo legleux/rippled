@@ -106,14 +106,6 @@ AMMOffer<TIn, TOut>::getQF() const
     return QualityFunction{amounts_, QualityFunction::AMMTag{}};
 }
 
-template <typename TIn, typename TOut>
-template <typename... Args>
-TER
-AMMOffer<TIn, TOut>::send(Args&&... args)
-{
-    return ammSend(std::forward<Args>(args)...);
-}
-
 template class AMMOffer<STAmount, STAmount>;
 template class AMMOffer<IOUAmount, IOUAmount>;
 template class AMMOffer<XRPAmount, IOUAmount>;

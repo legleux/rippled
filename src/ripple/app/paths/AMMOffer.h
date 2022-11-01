@@ -108,7 +108,10 @@ public:
      */
     template <typename... Args>
     static TER
-    send(Args&&...);
+    send(Args&&... args)
+    {
+        return ammSend(std::forward<Args>(args)...);
+    }
 
     bool
     unlimitedFunds() const
