@@ -46,6 +46,11 @@ class AMM
     IOUAmount const initialLPTokens_;
     std::optional<ter> ter_;
     bool log_ = false;
+    // Predict next purchase price
+    IOUAmount lastPurchasePrice_;
+    Number minSlotPrice_;
+    std::optional<IOUAmount> minBidPrice_;
+    std::optional<IOUAmount> maxBidPrice_;
 
 public:
     AMM(Env& env,
@@ -85,11 +90,15 @@ public:
     bool
     expectLPTokens(AccountID const& account, IOUAmount const& tokens) const;
 
+    /**
+     * @param timeSlot expected time slot
+     * @param purchasedTimeSlot time slot corresponding to the purchased price
+     */
     bool
     expectAuctionSlot(
         std::uint32_t fee,
-        std::uint32_t timeInterval,
-        IOUAmount const& price,
+        std::optional<std::uint8_t> timeSlot,
+        std::optional<std::uint8_t> purchasedTimeSlot = std::nullopt,
         std::optional<std::string> const& ledger_index = std::nullopt) const;
 
     bool
@@ -263,6 +272,11 @@ private:
         STAmount const& asset2,
         IOUAmount const& balance,
         Json::Value const& jv) const;
+
+    IOUAmount
+    expectedPurchasePrice(
+        std::optional<std::uint8_t> timeSlot,
+        IOUAmount const& lastPurchasePrice) const;
 };
 
 namespace amm {

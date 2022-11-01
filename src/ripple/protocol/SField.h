@@ -372,7 +372,6 @@ extern SF_UINT32 const sfTransferRate;
 extern SF_UINT32 const sfWalletSize;
 extern SF_UINT32 const sfOwnerCount;
 extern SF_UINT32 const sfDestinationTag;
-extern SF_UINT32 const sfTimeStamp;
 extern SF_UINT32 const sfDiscountedFee;
 
 // 32-bit integers (uncommon)
@@ -489,8 +488,8 @@ extern SF_AMOUNT const sfSendMax;
 extern SF_AMOUNT const sfDeliverMin;
 extern SF_AMOUNT const sfAmount2;
 extern SF_AMOUNT const sfEPrice;
-extern SF_AMOUNT const sfMinSlotPrice;
-extern SF_AMOUNT const sfMaxSlotPrice;
+extern SF_AMOUNT const sfMinBidPrice;
+extern SF_AMOUNT const sfMaxBidPrice;
 extern SF_AMOUNT const sfPrice;
 extern SF_AMOUNT const sfLPTokenBalance;
 

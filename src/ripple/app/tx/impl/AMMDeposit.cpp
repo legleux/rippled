@@ -44,7 +44,8 @@ AMMDeposit::preflight(PreflightContext const& ctx)
     if (!isTesSuccess(ret))
         return ret;
 
-    if (ctx.tx.getFlags() & tfUniversalMask)
+    auto const flags = ctx.tx.getFlags();
+    if (flags & tfAMMDepositMask)
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid flags.";
         return temINVALID_FLAG;
@@ -58,20 +59,43 @@ AMMDeposit::preflight(PreflightContext const& ctx)
     //   LPTokens
     //   Asset1In
     //   Asset1In and Asset2In
-    //   Asset1In and LPTokens
+    //   AssetLPToken and LPTokens
     //   Asset1In and EPrice
-    if ((asset1In && asset2In && (lpTokens || ePrice)) ||
-        (asset1In && lpTokens && (asset2In || ePrice)) ||
-        (asset1In && ePrice && (asset2In || lpTokens)) ||
-        (ePrice && !asset1In) || (asset2In && !asset1In) ||
-        (!lpTokens && !asset1In))
+    if (auto const subTxType = std::bitset<32>(flags & tfAMMSubTx);
+        subTxType.none() || subTxType.count() > 1)
     {
-        JLOG(ctx.j.debug()) << "AMM Deposit: invalid combination of "
-                               "deposit fields.";
-        return temBAD_AMM_OPTIONS;
+        JLOG(ctx.j.debug()) << "AMM Deposit: invalid flags.";
+        return temINVALID_FLAG;
+    }
+    else if (flags & tfLPToken)
+    {
+        if (!lpTokens || asset1In || asset2In || ePrice)
+            return temBAD_AMM_OPTIONS;
+    }
+    else if (flags & tfSingleAsset)
+    {
+        if (!asset1In || lpTokens || asset2In || ePrice)
+            return temBAD_AMM_OPTIONS;
+    }
+    else if (flags & tfTwoAsset)
+    {
+        if (!asset1In || !asset2In || lpTokens || ePrice)
+            return temBAD_AMM_OPTIONS;
+    }
+    else if (flags & tfOneAssetLPToken)
+    {
+        if (!asset1In || !lpTokens || asset2In || ePrice)
+            return temBAD_AMM_OPTIONS;
+    }
+    else if (flags & tfLimitLPToken)
+    {
+        if (!asset1In || !ePrice || lpTokens || asset2In)
+            return temBAD_AMM_OPTIONS;
     }
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset], ctx.tx[sfAsset2]))
+    auto const asset = ctx.tx[sfAsset];
+    auto const asset2 = ctx.tx[sfAsset2];
+    if (auto const res = invalidAMMAssetPair(asset, asset2))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid asset pair.";
         return res;
@@ -90,19 +114,21 @@ AMMDeposit::preflight(PreflightContext const& ctx)
         return temBAD_AMM_TOKENS;
     }
 
-    if (auto const res = invalidAMMAmount(asset1In, (lpTokens || ePrice)))
+    if (auto const res =
+            invalidAMMAmount(asset1In, {{asset, asset2}}, lpTokens || ePrice))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid Asset1In";
         return res;
     }
 
-    if (auto const res = invalidAMMAmount(asset2In))
+    if (auto const res = invalidAMMAmount(asset2In, {{asset, asset2}}))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid Asset2InAmount";
         return res;
     }
 
-    if (auto const res = invalidAMMAmount(ePrice))
+    if (auto const res =
+            invalidAMMAmount(ePrice, {{asset1In->issue(), asset1In->issue()}}))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid EPrice";
         return res;
@@ -126,19 +152,8 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
     auto const asset1In = ctx.tx[~sfAmount];
     auto const asset2In = ctx.tx[~sfAmount2];
 
-    auto const issue1 = (**ammSle)[sfAsset];
-    auto const issue2 = (**ammSle)[sfAsset2];
-
     if (asset1In)
     {
-        if (asset1In->issue() != issue1 && asset1In->issue() != issue2)
-        {
-            JLOG(ctx.j.debug())
-                << "AMM Deposit: token mismatch, " << asset1In->issue() << " "
-                << issue1 << " " << issue2;
-            return temBAD_AMM_TOKENS;
-        }
-
         if (auto const ter =
                 requireAuth(ctx.view, asset1In->issue(), accountID);
             ter != tesSUCCESS)
@@ -151,14 +166,6 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
 
     if (asset2In)
     {
-        if (asset2In->issue() != issue1 && asset2In->issue() != issue2)
-        {
-            JLOG(ctx.j.debug())
-                << "AMM Deposit: token mismatch, " << asset2In->issue() << " "
-                << issue1 << " " << issue2;
-            return temBAD_AMM_TOKENS;
-        }
-
         if (auto const ter =
                 requireAuth(ctx.view, asset2In->issue(), accountID);
             ter != tesSUCCESS)
@@ -196,8 +203,7 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
     }
 
     // Check the reserve for LPToken trustline if not LP
-    if (lpHolds(ctx.view, (**ammSle)[sfAMMAccount], accountID, ctx.j) ==
-        beast::zero)
+    if (ammLPHolds(ctx.view, **ammSle, accountID, ctx.j) == beast::zero)
     {
         STAmount const xrpBalance = xrpLiquid(ctx.view, accountID, 1, ctx.j);
         // Insufficient reserve
@@ -235,44 +241,43 @@ AMMDeposit::applyGuts(Sandbox& sb)
         return {expected.error(), false};
     auto const [asset1, asset2, lptAMMBalance] = *expected;
 
+    auto const subTxType = ctx_.tx.getFlags() & tfAMMSubTx;
+
     auto const [result, depositedTokens] =
         [&,
          &asset1 = asset1,
          &asset2 = asset2,
          &lptAMMBalance = lptAMMBalance]() -> std::pair<TER, STAmount> {
-        if (asset1In)
-        {
-            if (asset2In)
-                return equalDepositLimit(
-                    sb,
-                    ammAccountID,
-                    asset1,
-                    asset2,
-                    lptAMMBalance,
-                    *asset1In,
-                    *asset2In);
-            else if (lpTokensDeposit)
-                return singleDepositTokens(
-                    sb,
-                    ammAccountID,
-                    asset1,
-                    lptAMMBalance,
-                    *lpTokensDeposit,
-                    tfee);
-            else if (ePrice)
-                return singleDepositEPrice(
-                    sb,
-                    ammAccountID,
-                    asset1,
-                    *asset1In,
-                    lptAMMBalance,
-                    *ePrice,
-                    tfee);
-            else
-                return singleDeposit(
-                    sb, ammAccountID, asset1, lptAMMBalance, *asset1In, tfee);
-        }
-        else if (lpTokensDeposit)
+        if (subTxType & tfTwoAsset)
+            return equalDepositLimit(
+                sb,
+                ammAccountID,
+                asset1,
+                asset2,
+                lptAMMBalance,
+                *asset1In,
+                *asset2In);
+        if (subTxType == tfOneAssetLPToken)
+            return singleDepositTokens(
+                sb,
+                ammAccountID,
+                asset1,
+                lptAMMBalance,
+                *lpTokensDeposit,
+                tfee);
+        if (subTxType == tfLimitLPToken)
+            return singleDepositEPrice(
+                sb,
+                ammAccountID,
+                asset1,
+                *asset1In,
+                lptAMMBalance,
+                *ePrice,
+                tfee);
+        if (subTxType == tfSingleAsset)
+            return singleDeposit(
+                sb, ammAccountID, asset1, lptAMMBalance, *asset1In, tfee);
+        if (subTxType == tfLPToken)
             return equalDepositTokens(
                 sb,
                 ammAccountID,

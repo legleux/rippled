@@ -54,6 +54,10 @@ AMM::AMM(
     , initialLPTokens_((IOUAmount)root2(number(asset1) * number(asset2)))
     , ter_(ter)
     , log_(log)
+    , lastPurchasePrice_(0)
+    , minSlotPrice_(0)
+    , minBidPrice_()
+    , maxBidPrice_()
 {
     create(tfee, flags, seq);
 }
@@ -98,7 +102,10 @@ AMM::create(
                 keylet::amm(asset1_.issue(), asset2_.issue())))
         {
             ammAccount_ = amm->getAccountID(sfAMMAccount);
-            lptIssue_ = ripple::lptIssue(ammAccount_);
+            lptIssue_ = ripple::ammLPTIssue(
+                asset1_.issue().currency,
+                asset2_.issue().currency,
+                ammAccount_);
         }
     }
 }
@@ -154,7 +161,7 @@ AMM::expectBalances(
             asset2.issue(),
             env_.journal);
         auto const lptAMMBalance = account
-            ? lpHolds(*env_.current(), ammAccountID, *account, env_.journal)
+            ? ammLPHolds(*env_.current(), *amm, *account, env_.journal)
             : amm->getFieldAmount(sfLPTokenBalance);
         return asset1 == asset1Balance && asset2 == asset2Balance &&
             lptAMMBalance == STAmount{lpt, lptIssue_};
@@ -177,9 +184,8 @@ AMM::expectLPTokens(AccountID const& account, IOUAmount const& expTokens) const
     if (auto const amm =
             env_.current()->read(keylet::amm(asset1_.issue(), asset2_.issue())))
     {
-        auto const ammAccountID = amm->getAccountID(sfAMMAccount);
         auto const lptAMMBalance =
-            lpHolds(*env_.current(), ammAccountID, account, env_.journal);
+            ammLPHolds(*env_.current(), *amm, account, env_.journal);
         return lptAMMBalance == STAmount{expTokens, lptIssue_};
     }
     return false;
@@ -188,8 +194,8 @@ AMM::expectLPTokens(AccountID const& account, IOUAmount const& expTokens) const
 bool
 AMM::expectAuctionSlot(
     std::uint32_t fee,
-    std::uint32_t timeInterval,
-    IOUAmount const& price,
+    std::optional<std::uint8_t> timeSlot,
+    std::optional<std::uint8_t> purchasedTimeSlot,
     std::optional<std::string> const& ledger_index) const
 {
     if (auto const amm =
@@ -200,10 +206,26 @@ AMM::expectAuctionSlot(
             static_cast<STObject const&>(amm->peekAtField(sfAuctionSlot));
         if (auctionSlot.isFieldPresent(sfAccount))
         {
-            return auctionSlot.getFieldU32(sfDiscountedFee) == fee &&
-                timeSlot(env_.app().timeKeeper().now(), auctionSlot) ==
-                timeInterval &&
-                auctionSlot.getFieldAmount(sfPrice).iou() == price;
+            auto const slotFee = auctionSlot.getFieldU32(sfDiscountedFee);
+            auto const slotInterval = ammAuctionTimeSlot(
+                env_.app().timeKeeper().now().time_since_epoch().count(),
+                auctionSlot);
+            auto const slotPrice = auctionSlot[sfPrice].iou();
+            if (!purchasedTimeSlot)
+                purchasedTimeSlot = timeSlot;
+
+            auto const lastPurchasePrice = !timeSlot && !purchasedTimeSlot
+                ? IOUAmount{0}
+                : lastPurchasePrice_;
+            auto const expectedPrice =
+                expectedPurchasePrice(purchasedTimeSlot, lastPurchasePrice);
+
+            return slotFee == fee &&
+                // Auction slot might be expired, in which case slotInterval is
+                // 0
+                ((!timeSlot && slotInterval == 0) ||
+                 slotInterval == timeSlot) &&
+                slotPrice == expectedPrice;
         }
     }
     return false;
@@ -384,8 +406,23 @@ AMM::deposit(
         asset2In->setJson(jv[jss::Amount2]);
     if (maxEP)
         maxEP->setJson(jv[jss::EPrice]);
+    std::uint32_t jvflags = 0;
     if (flags)
-        jv[jss::Flags] = *flags;
+        jvflags = *flags;
+    if (!(jvflags & tfAMMSubTx))
+    {
+        if (tokens && !asset1In)
+            jvflags |= tfLPToken;
+        else if (tokens && asset1In)
+            jvflags |= tfOneAssetLPToken;
+        else if (asset1In && asset2In)
+            jvflags |= tfTwoAsset;
+        else if (maxEP)
+            jvflags |= tfLimitLPToken;
+        else if (asset1In)
+            jvflags |= tfSingleAsset;
+    }
+    jv[jss::Flags] = jvflags;
     deposit(account, jv, assets, seq);
 }
 
@@ -479,8 +516,23 @@ AMM::withdraw(
         STAmount const saMaxEP{*maxEP, lptIssue_};
         saMaxEP.setJson(jv[jss::EPrice]);
     }
+    std::uint32_t jvflags = 0;
     if (flags)
-        jv[jss::Flags] = *flags;
+        jvflags = *flags;
+    if (!(jvflags & tfAMMSubTx))
+    {
+        if ((tokens || (jvflags & tfAMMWithdrawAll)) && !asset1Out)
+            jvflags |= tfLPToken;
+        else if ((tokens || (jvflags & tfAMMWithdrawAll)) && asset1Out)
+            jvflags |= tfOneAssetLPToken;
+        else if (asset1Out && asset2Out)
+            jvflags |= tfTwoAsset;
+        else if (maxEP)
+            jvflags |= tfLimitLPToken;
+        else if (asset1Out)
+            jvflags |= tfSingleAsset;
+    }
+    jv[jss::Flags] = jvflags;
     withdraw(account, jv, seq, assets, ter);
 }
 
@@ -522,18 +574,34 @@ AMM::bid(
     std::optional<std::pair<Issue, Issue>> const& assets,
     std::optional<ter> const& ter)
 {
+    if (auto const amm =
+            env_.current()->read(keylet::amm(asset1_.issue(), asset2_.issue())))
+    {
+        if (amm->isFieldPresent(sfAuctionSlot))
+        {
+            auto const& auctionSlot =
+                static_cast<STObject const&>(amm->peekAtField(sfAuctionSlot));
+            lastPurchasePrice_ = auctionSlot[sfPrice].iou();
+        }
+        minSlotPrice_ = (*amm)[sfLPTokenBalance].iou() / 100000;
+    }
+    minBidPrice_ = std::nullopt;
+    maxBidPrice_ = std::nullopt;
+
     Json::Value jv;
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
     setTokens(jv, assets);
     if (minSlotPrice)
     {
         STAmount saTokens{lptIssue_, *minSlotPrice, 0};
-        saTokens.setJson(jv[jss::MinSlotPrice]);
+        saTokens.setJson(jv[jss::MinBidPrice]);
+        minBidPrice_ = saTokens.iou();
     }
     if (maxSlotPrice)
     {
         STAmount saTokens{lptIssue_, *maxSlotPrice, 0};
-        saTokens.setJson(jv[jss::MaxSlotPrice]);
+        saTokens.setJson(jv[jss::MaxBidPrice]);
+        maxBidPrice_ = saTokens.iou();
     }
     if (authAccounts.size() > 0)
     {
@@ -560,6 +628,33 @@ AMM::bid(
     else
         env_(jv);
     env_.close();
+}
+
+IOUAmount
+AMM::expectedPurchasePrice(
+    std::optional<std::uint8_t> timeSlot,
+    IOUAmount const& lastPurchasePrice) const
+{
+    auto const p1_05 = Number(105, -2);
+    std::uint32_t constexpr nIntervals = 20;
+
+    if (!timeSlot)
+        return IOUAmount(minSlotPrice_);
+
+    auto const computedPrice = [&]() {
+        if (timeSlot == 0)
+            return IOUAmount(lastPurchasePrice * p1_05 + minSlotPrice_);
+
+        auto const fractionUsed = (Number(*timeSlot) + 1) / nIntervals;
+        return IOUAmount(
+            lastPurchasePrice * p1_05 * (1 - power(fractionUsed, 60)) +
+            minSlotPrice_);
+    }();
+
+    // assume price is in range
+    if (minBidPrice_ && !maxBidPrice_)
+        return std::max(computedPrice, *minBidPrice_);
+    return computedPrice;
 }
 
 namespace amm {

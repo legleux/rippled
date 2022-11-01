@@ -215,16 +215,6 @@ private:
      */
     TER
     deleteAccount(Sandbox& view, AccountID const& ammAccountID);
-
-    /** Get transaction's LP Tokens. If tfAMMWithdrawAll flag is et
-     * then return all LP Tokens of LP.
-     */
-    static std::optional<STAmount>
-    getTxLPTokens(
-        ReadView const& view,
-        AccountID const& ammAccount,
-        STTx const& tx,
-        beast::Journal const journal);
 };
 
 }  // namespace ripple

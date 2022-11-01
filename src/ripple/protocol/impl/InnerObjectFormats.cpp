@@ -72,7 +72,7 @@ InnerObjectFormats::InnerObjectFormats()
         sfAuctionSlot.getCode(),
         {
             {sfAccount, soeREQUIRED},
-            {sfTimeStamp, soeREQUIRED},
+            {sfExpiration, soeREQUIRED},
             {sfDiscountedFee, soeREQUIRED},
             {sfPrice, soeREQUIRED},
             {sfAuthAccounts, soeOPTIONAL},

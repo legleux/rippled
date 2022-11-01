@@ -51,12 +51,15 @@ ammAccountID(
 /** Calculate Liquidity Provider Token (LPT) Currency.
  */
 Currency
-lptCurrency(AccountID const& ammAccountID);
+ammLPTCurrency(Currency const& cur1, Currency const& cur2);
 
-/** Calculate LPT Issue.
+/** Calculate LPT Issue from AMM asset pair.
  */
 Issue
-lptIssue(AccountID const& ammAccountID);
+ammLPTIssue(
+    Currency const& cur1,
+    Currency const& cur2,
+    AccountID const& ammAccountID);
 
 /** Get AMM pool balances.
  */
@@ -83,24 +86,42 @@ ammHolds(
 /** Get the balance of LP tokens.
  */
 STAmount
-lpHolds(
+ammLPHolds(
     ReadView const& view,
-    AccountID const& ammAccountID,
+    Currency const& cur1,
+    Currency const& cur2,
+    AccountID const& ammAccount,
+    AccountID const& lpAccount,
+    beast::Journal const j);
+
+STAmount
+ammLPHolds(
+    ReadView const& view,
+    SLE const& ammSle,
     AccountID const& lpAccount,
     beast::Journal const j);
 
 /** Validate the amount.
  * If zero is false and amount is beast::zero then invalid amount.
  * Return error code if invalid amount.
+ * If pair then validate amount's issue matches one of the pair's issue.
  */
 NotTEC
-invalidAMMAmount(std::optional<STAmount> const& a, bool nonNegative = false);
+invalidAMMAmount(
+    std::optional<STAmount> const& a,
+    std::optional<std::pair<Issue, Issue>> const& pair = std::nullopt,
+    bool nonNegative = false);
 
 NotTEC
-invalidAMMIssue(Issue const& issue);
+invalidAMMAsset(
+    Issue const& issue,
+    std::optional<std::pair<Issue, Issue>> const& pair = std::nullopt);
 
 NotTEC
-invalidAMMIssues(Issue const& issue1, Issue const& issue2);
+invalidAMMAssetPair(
+    Issue const& issue1,
+    Issue const& issue2,
+    std::optional<std::pair<Issue, Issue>> const& pair = std::nullopt);
 
 /** Check if the line is frozen from the issuer.
  */
@@ -136,8 +157,8 @@ ammSend(
 
 /** Get time slot of the auction slot.
  */
-std::uint16_t
-timeSlot(NetClock::time_point const& clock, STObject const& auctionSlot);
+std::optional<std::uint8_t>
+ammAuctionTimeSlot(std::uint64_t current, STObject const& auctionSlot);
 
 /** Return true if required AMM amendments are enabled
  */

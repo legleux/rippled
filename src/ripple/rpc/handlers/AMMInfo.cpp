@@ -117,7 +117,7 @@ doAMMInfo(RPC::JsonContext& context)
     auto const [asset1Balance, asset2Balance] =
         ammPoolHolds(*ledger, ammAccountID, issue1, issue2, context.j);
     auto const lptAMMBalance = accountID
-        ? lpHolds(*ledger, ammAccountID, *accountID, context.j)
+        ? ammLPHolds(*ledger, *amm, *accountID, context.j)
         : (*amm)[sfLPTokenBalance];
 
     asset1Balance.setJson(result[jss::Amount]);
@@ -145,8 +145,10 @@ doAMMInfo(RPC::JsonContext& context)
         if (auctionSlot.isFieldPresent(sfAccount))
         {
             Json::Value auction;
-            auction[jss::TimeInterval] =
-                timeSlot(ledger->info().parentCloseTime, auctionSlot);
+            auto const timeSlot = ammAuctionTimeSlot(
+                ledger->info().parentCloseTime.time_since_epoch().count(),
+                auctionSlot);
+            auction[jss::TimeInterval] = timeSlot ? *timeSlot : 0;
             auctionSlot[sfPrice].setJson(auction[jss::Price]);
             auction[jss::DiscountedFee] = auctionSlot[sfDiscountedFee];
             result[jss::AuctionSlot] = auction;

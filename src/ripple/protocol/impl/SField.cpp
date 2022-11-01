@@ -152,8 +152,7 @@ CONSTRUCT_TYPED_SFIELD(sfBurnedNFTokens,        "BurnedNFTokens",       UINT32, 
 CONSTRUCT_TYPED_SFIELD(sfHookStateCount,        "HookStateCount",       UINT32,    45);
 CONSTRUCT_TYPED_SFIELD(sfEmitGeneration,        "EmitGeneration",       UINT32,    46);
 CONSTRUCT_TYPED_SFIELD(sfVoteWeight,            "VoteWeight",           UINT32,    47);
-CONSTRUCT_TYPED_SFIELD(sfTimeStamp,             "TimeStamp",            UINT32,    48);
-CONSTRUCT_TYPED_SFIELD(sfDiscountedFee,         "DiscountedFee",        UINT32,    49);
+CONSTRUCT_TYPED_SFIELD(sfDiscountedFee,         "DiscountedFee",        UINT32,    48);
 
 // 64-bit integers (common)
 CONSTRUCT_TYPED_SFIELD(sfIndexNext,             "IndexNext",            UINT64,     1);
@@ -235,8 +234,8 @@ CONSTRUCT_TYPED_SFIELD(sfFee,                   "Fee",                  AMOUNT, 
 CONSTRUCT_TYPED_SFIELD(sfSendMax,               "SendMax",              AMOUNT,     9);
 CONSTRUCT_TYPED_SFIELD(sfDeliverMin,            "DeliverMin",           AMOUNT,    10);
 CONSTRUCT_TYPED_SFIELD(sfAmount2,               "Amount2",              AMOUNT,    11);
-CONSTRUCT_TYPED_SFIELD(sfMinSlotPrice,          "MinSlotPrice",         AMOUNT,    12);
-CONSTRUCT_TYPED_SFIELD(sfMaxSlotPrice,          "MaxSlotPrice",         AMOUNT,    13);
+CONSTRUCT_TYPED_SFIELD(sfMinBidPrice,           "MinBidPrice",         AMOUNT,    12);
+CONSTRUCT_TYPED_SFIELD(sfMaxBidPrice,           "MaxBidPrice",         AMOUNT,    13);
 
 // currency amount (uncommon)
 CONSTRUCT_TYPED_SFIELD(sfMinimumOffer,          "MinimumOffer",         AMOUNT,    16);

@@ -44,7 +44,7 @@ AMMVote::preflight(PreflightContext const& ctx)
     if (!isTesSuccess(ret))
         return ret;
 
-    if (auto const res = invalidAMMIssues(ctx.tx[sfAsset], ctx.tx[sfAsset2]))
+    if (auto const res = invalidAMMAssetPair(ctx.tx[sfAsset], ctx.tx[sfAsset2]))
     {
         JLOG(ctx.j.debug()) << "AMM Vote: invalid asset pair.";
         return res;
@@ -90,9 +90,8 @@ applyVote(
     auto const amm = getAMMSle(sb, ctx_.tx[sfAsset], ctx_.tx[sfAsset2]);
     if (!amm)
         return {amm.error(), false};
-    auto const ammAccount = (**amm)[sfAMMAccount];
     STAmount const lptAMMBalance = (**amm)[sfLPTokenBalance];
-    auto const lpTokensNew = lpHolds(sb, ammAccount, account_, ctx_.journal);
+    auto const lpTokensNew = ammLPHolds(sb, **amm, account_, ctx_.journal);
     if (lpTokensNew == beast::zero)
     {
         JLOG(ctx_.journal.debug()) << "AMM Vote: account is not LP.";
@@ -115,7 +114,7 @@ applyVote(
     for (auto const& entry : (*amm)->getFieldArray(sfVoteSlots))
     {
         auto const account = entry[sfAccount];
-        auto lpTokens = lpHolds(sb, ammAccount, account, ctx_.journal);
+        auto lpTokens = ammLPHolds(sb, **amm, account, ctx_.journal);
         if (lpTokens == beast::zero)
         {
             JLOG(j_.debug())
