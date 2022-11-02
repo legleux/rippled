@@ -41,8 +41,8 @@ Currency
 ammLPTCurrency(Currency const& cur1, Currency const& cur2)
 {
     std::int32_t constexpr AMMCurrencyCode = 0x03;
-    auto const [min, max] = std::minmax(cur1, cur2);
-    auto const hash = sha512Half(min, max);
+    auto const [minC, maxC] = std::minmax(cur1, cur2);
+    auto const hash = sha512Half(minC, maxC);
     Currency currency;
     *currency.begin() = AMMCurrencyCode;
     std::copy(

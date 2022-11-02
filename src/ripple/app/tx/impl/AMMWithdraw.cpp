@@ -357,21 +357,37 @@ AMMWithdraw::withdraw(
     auto const [amountBalance, amount2Balance, _] = *expected;
     (void)_;
 
+    auto actualAmountWithdraw = amountWithdraw;
+    auto actualAmount2Withdraw = amount2Withdraw;
+    auto actualLPTokensWithdraw = lpTokensWithdraw;
+    // Because of the round-off, lpTokensWithdraw may exceed the balance.
+    // Withdraw the balances in this case.
+    if (lpTokensWithdraw > lptAMMBalance)
+    {
+        actualLPTokensWithdraw = lptAMMBalance;
+        actualAmountWithdraw = amountBalance;
+        actualAmount2Withdraw = amount2Balance;
+        JLOG(ctx_.journal.debug())
+            << "AMM Withdraw: adjusting withdraw amounts " << lpTokensWithdraw
+            << " " << lptAMMBalance << " " << amountWithdraw << " "
+            << amountBalance << " "
+            << (amount2Withdraw ? to_string(*amount2Withdraw) : "") << " "
+            << amount2Balance;
+    }
+
     // Invalid tokens or withdrawing more than own.
-    // TODO Note, the balances might be different due to round-off. Need to
-    // handle. Fail for now.
-    if (lpTokensWithdraw == beast::zero || lpTokensWithdraw > lpTokens ||
-        lpTokensWithdraw > lptAMMBalance)
+    if (actualLPTokensWithdraw == beast::zero ||
+        actualLPTokensWithdraw > lpTokens)
     {
         JLOG(ctx_.journal.debug())
             << "AMM Withdraw: failed to withdraw, invalid LP tokens "
-            << " tokens: " << lpTokensWithdraw << " " << lpTokens;
+            << " tokens: " << actualLPTokensWithdraw << " " << lpTokens;
         return {tecAMM_INVALID_TOKENS, STAmount{}};
     }
     // Withdrawing all tokens but balances are not 0.
-    if (lpTokensWithdraw == lptAMMBalance &&
-        (amountWithdraw != amountBalance ||
-         (amount2Withdraw && *amount2Withdraw != amount2Balance)))
+    if (actualLPTokensWithdraw == lptAMMBalance &&
+        (actualAmountWithdraw != amountBalance ||
+         (actualAmount2Withdraw && *actualAmount2Withdraw != amount2Balance)))
     {
         JLOG(ctx_.journal.debug())
             << "AMM Withdraw: failed to withdraw, invalid LP balance "
@@ -381,7 +397,7 @@ AMMWithdraw::withdraw(
         return {tecAMM_BALANCE, STAmount{}};
     }
     // Withdrawing one side of the pool
-    if (amountWithdraw == amountBalance && !amount2Withdraw)
+    if (actualAmountWithdraw == amountBalance && !actualAmount2Withdraw)
     {
         JLOG(ctx_.journal.debug())
             << "AMM Withdraw: failed to withdraw one side of the pool "
@@ -393,23 +409,23 @@ AMMWithdraw::withdraw(
 
     // Withdraw amountWithdraw
     auto res =
-        ammSend(view, ammAccount, account_, amountWithdraw, ctx_.journal);
+        ammSend(view, ammAccount, account_, actualAmountWithdraw, ctx_.journal);
     if (res != tesSUCCESS)
     {
         JLOG(ctx_.journal.debug())
-            << "AMM Withdraw: failed to withdraw " << amountWithdraw;
+            << "AMM Withdraw: failed to withdraw " << actualAmountWithdraw;
         return {res, STAmount{}};
     }
 
     // Withdraw amount2Withdraw
-    if (amount2Withdraw)
+    if (actualAmount2Withdraw)
     {
-        res =
-            ammSend(view, ammAccount, account_, *amount2Withdraw, ctx_.journal);
+        res = ammSend(
+            view, ammAccount, account_, *actualAmount2Withdraw, ctx_.journal);
         if (res != tesSUCCESS)
         {
-            JLOG(ctx_.journal.debug())
-                << "AMM Withdraw: failed to withdraw " << *amount2Withdraw;
+            JLOG(ctx_.journal.debug()) << "AMM Withdraw: failed to withdraw "
+                                       << *actualAmount2Withdraw;
             return {res, STAmount{}};
         }
     }
@@ -418,8 +434,8 @@ AMMWithdraw::withdraw(
     res = redeemIOU(
         view,
         account_,
-        lpTokensWithdraw,
-        lpTokensWithdraw.issue(),
+        actualLPTokensWithdraw,
+        actualLPTokensWithdraw.issue(),
         ctx_.journal);
     if (res != tesSUCCESS)
     {
@@ -428,10 +444,10 @@ AMMWithdraw::withdraw(
         return {res, STAmount{}};
     }
 
-    if (lpTokensWithdraw == lptAMMBalance)
+    if (actualLPTokensWithdraw == lptAMMBalance)
         return {deleteAccount(view, ammAccount), STAmount{}};
 
-    return {tesSUCCESS, lpTokensWithdraw};
+    return {tesSUCCESS, actualLPTokensWithdraw};
 }
 
 /** Proportional withdrawal of pool assets for the amount of LPTokens.

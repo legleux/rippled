@@ -162,7 +162,7 @@ applyCreate(
         return {tecAMM_EXISTS, false};
     }
 
-    // Mitigate same account exists probability
+    // Mitigate same account exists possibility
     auto const ammAccount = [&]() -> Expected<AccountID, TER> {
         std::uint16_t constexpr MaxAccountAttempts = 256;
         for (auto p = 0; p < MaxAccountAttempts; ++p)

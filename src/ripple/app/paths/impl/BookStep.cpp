@@ -328,7 +328,7 @@ public:
 
         auto const prevStepPaysTrFee =
             !this->prevStep_ || !this->prevStep_->overridesTransferFee(v);
-        auto const trIn = prevStepPaysTrFee && redeems(prevStepDir)
+        auto const trIn = redeems(prevStepDir) && prevStepPaysTrFee
             ? rate(this->book_.in.account)
             : parityRate;
         // Always charge the transfer fee, even if the owner is the issuer
