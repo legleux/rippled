@@ -242,7 +242,7 @@ CONSTRUCT_TYPED_SFIELD(sfMinimumOffer,          "MinimumOffer",         AMOUNT, 
 CONSTRUCT_TYPED_SFIELD(sfRippleEscrow,          "RippleEscrow",         AMOUNT,    17);
 CONSTRUCT_TYPED_SFIELD(sfDeliveredAmount,       "DeliveredAmount",      AMOUNT,    18);
 CONSTRUCT_TYPED_SFIELD(sfNFTokenBrokerFee,      "NFTokenBrokerFee",     AMOUNT,    19);
-CONSTRUCT_TYPED_SFIELD(sfLPTokenOut,            "LPTokenOut",            AMOUNT,   20);
+CONSTRUCT_TYPED_SFIELD(sfLPTokenOut,            "LPTokenOut",           AMOUNT,    20);
 CONSTRUCT_TYPED_SFIELD(sfLPTokenIn,             "LPTokenIn",            AMOUNT,    21);
 CONSTRUCT_TYPED_SFIELD(sfEPrice,                "EPrice",               AMOUNT,    22);
 CONSTRUCT_TYPED_SFIELD(sfPrice,                 "Price",                AMOUNT,    23);

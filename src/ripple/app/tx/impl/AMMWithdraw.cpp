@@ -53,16 +53,16 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
     }
     bool const withdrawAll = flags & tfAMMWithdrawAll;
 
-    auto const asset1Out = ctx.tx[~sfAmount];
-    auto const asset2Out = ctx.tx[~sfAmount2];
+    auto const amount = ctx.tx[~sfAmount];
+    auto const amount2 = ctx.tx[~sfAmount2];
     auto const ePrice = ctx.tx[~sfEPrice];
     auto const lpTokens = ctx.tx[~sfLPTokenIn];
     // Valid combinations are:
     //   LPTokens|tfAMMWithdrawAll
-    //   Asset1Out
-    //   Asset1Out and Asset2Out
+    //   Amount
+    //   Amount and Amount2
     //   AssetLPToken and [LPTokens|tfAMMWithdrawAll]
-    //   Asset1Out and EPrice
+    //   Amount and EPrice
     if (auto const subTxType = std::bitset<32>(flags & tfAMMSubTx);
         subTxType.none() || subTxType.count() > 1)
     {
@@ -72,28 +72,28 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
     else if (flags & tfLPToken)
     {
         if ((!lpTokens && !withdrawAll) || (lpTokens && withdrawAll) ||
-            asset1Out || asset2Out || ePrice)
+            amount || amount2 || ePrice)
             return temBAD_AMM_OPTIONS;
     }
     else if (flags & tfSingleAsset)
     {
-        if (!asset1Out || lpTokens || withdrawAll || asset2Out || ePrice)
+        if (!amount || lpTokens || withdrawAll || amount2 || ePrice)
             return temBAD_AMM_OPTIONS;
     }
     else if (flags & tfTwoAsset)
     {
-        if (!asset1Out || !asset2Out || lpTokens || withdrawAll || ePrice)
+        if (!amount || !amount2 || lpTokens || withdrawAll || ePrice)
             return temBAD_AMM_OPTIONS;
     }
     else if (flags & tfOneAssetLPToken)
     {
-        if (!asset1Out || (!lpTokens && !withdrawAll) ||
-            (lpTokens && withdrawAll) || asset2Out || ePrice)
+        if (!amount || (!lpTokens && !withdrawAll) ||
+            (lpTokens && withdrawAll) || amount2 || ePrice)
             return temBAD_AMM_OPTIONS;
     }
     else if (flags & tfLimitLPToken)
     {
-        if (!asset1Out || !ePrice || lpTokens || withdrawAll || asset2Out)
+        if (!amount || !ePrice || lpTokens || withdrawAll || amount2)
             return temBAD_AMM_OPTIONS;
     }
 
@@ -105,10 +105,10 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
         return res;
     }
 
-    if (asset1Out && asset2Out && asset1Out->issue() == asset2Out->issue())
+    if (amount && amount2 && amount->issue() == amount2->issue())
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid tokens, same issue."
-                            << asset1Out->issue() << " " << asset2Out->issue();
+                            << amount->issue() << " " << amount2->issue();
         return temBAD_AMM_TOKENS;
     }
 
@@ -119,13 +119,13 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
     }
 
     if (auto const res = invalidAMMAmount(
-            asset1Out, {{asset, asset2}}, withdrawAll || lpTokens || ePrice))
+            amount, {{asset, asset2}}, withdrawAll || lpTokens || ePrice))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid Asset1Out";
         return res;
     }
 
-    if (auto const res = invalidAMMAmount(asset2Out, {{asset, asset2}}))
+    if (auto const res = invalidAMMAmount(amount2, {{asset, asset2}}))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid Asset2OutAmount";
         return res;
@@ -152,34 +152,32 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
         return terNO_AMM;
     }
 
-    auto const asset1Out = ctx.tx[~sfAmount];
-    auto const asset2Out = ctx.tx[~sfAmount2];
+    auto const amount = ctx.tx[~sfAmount];
+    auto const amount2 = ctx.tx[~sfAmount2];
 
-    if (asset1Out)
+    if (amount)
     {
-        if (auto const ter =
-                requireAuth(ctx.view, asset1Out->issue(), accountID);
+        if (auto const ter = requireAuth(ctx.view, amount->issue(), accountID);
             ter != tesSUCCESS)
         {
             JLOG(ctx.j.debug()) << "AMM Instance: account is not authorized, "
-                                << asset1Out->issue();
+                                << amount->issue();
             return ter;
         }
     }
 
-    if (asset2Out)
+    if (amount2)
     {
-        if (auto const ter =
-                requireAuth(ctx.view, asset2Out->issue(), accountID);
+        if (auto const ter = requireAuth(ctx.view, amount2->issue(), accountID);
             ter != tesSUCCESS)
         {
             JLOG(ctx.j.debug()) << "AMM Instance: account is not authorized, "
-                                << asset2Out->issue();
+                                << amount2->issue();
             return ter;
         }
     }
 
-    if (isFrozen(ctx.view, asset1Out) || isFrozen(ctx.view, sfAmount2))
+    if (isFrozen(ctx.view, amount) || isFrozen(ctx.view, sfAmount2))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw involves frozen asset.";
         return tecFROZEN;
@@ -215,8 +213,8 @@ AMMWithdraw::preclaim(PreclaimContext const& ctx)
 std::pair<TER, bool>
 AMMWithdraw::applyGuts(Sandbox& sb)
 {
-    auto const asset1Out = ctx_.tx[~sfAmount];
-    auto const asset2Out = ctx_.tx[~sfAmount2];
+    auto const amount = ctx_.tx[~sfAmount];
+    auto const amount2 = ctx_.tx[~sfAmount2];
     auto const ePrice = ctx_.tx[~sfEPrice];
     auto ammSle = getAMMSle(sb, ctx_.tx[sfAsset], ctx_.tx[sfAsset2]);
     if (!ammSle)
@@ -232,56 +230,56 @@ AMMWithdraw::applyGuts(Sandbox& sb)
     auto const expected = ammHolds(
         sb,
         **ammSle,
-        asset1Out ? asset1Out->issue() : std::optional<Issue>{},
-        asset2Out ? asset2Out->issue() : std::optional<Issue>{},
+        amount ? amount->issue() : std::optional<Issue>{},
+        amount2 ? amount2->issue() : std::optional<Issue>{},
         ctx_.journal);
     if (!expected)
         return {expected.error(), false};
-    auto const [asset1, asset2, lptAMMBalance] = *expected;
+    auto const [amountBalance, amount2Balance, lptAMMBalance] = *expected;
 
     auto const subTxType = ctx_.tx.getFlags() & tfAMMSubTx;
 
     auto const [result, withdrawnTokens] =
         [&,
-         &asset1 = asset1,
-         &asset2 = asset2,
+         &amountBalance = amountBalance,
+         &amount2Balance = amount2Balance,
          &lptAMMBalance = lptAMMBalance]() -> std::pair<TER, STAmount> {
         if (subTxType == tfTwoAsset)
-            return equalWithdrawalLimit(
+            return equalWithdrawLimit(
                 sb,
                 ammAccountID,
-                asset1,
-                asset2,
+                amountBalance,
+                amount2Balance,
                 lptAMMBalance,
-                *asset1Out,
-                *asset2Out);
+                *amount,
+                *amount2);
         if (subTxType == tfOneAssetLPToken)
-            return singleWithdrawalTokens(
+            return singleWithdrawTokens(
                 sb,
                 ammAccountID,
-                asset1,
+                amountBalance,
                 lptAMMBalance,
-                *asset1Out,
+                *amount,
                 *lpTokensWithdraw,
                 tfee);
         if (subTxType == tfLimitLPToken)
-            return singleWithdrawalEPrice(
+            return singleWithdrawEPrice(
                 sb,
                 ammAccountID,
-                asset1,
+                amountBalance,
                 lptAMMBalance,
-                *asset1Out,
+                *amount,
                 *ePrice,
                 tfee);
         if (subTxType == tfSingleAsset)
-            return singleWithdrawal(
-                sb, ammAccountID, asset1, lptAMMBalance, *asset1Out, tfee);
+            return singleWithdraw(
+                sb, ammAccountID, amountBalance, lptAMMBalance, *amount, tfee);
         if (subTxType == tfLPToken)
-            return equalWithdrawalTokens(
+            return equalWithdrawTokens(
                 sb,
                 ammAccountID,
-                asset1,
-                asset2,
+                amountBalance,
+                amount2Balance,
                 lptAMMBalance,
                 *lpTokensWithdraw);
         // should not happen.
@@ -342,8 +340,8 @@ std::pair<TER, STAmount>
 AMMWithdraw::withdraw(
     Sandbox& view,
     AccountID const& ammAccount,
-    STAmount const& asset1Withdraw,
-    std::optional<STAmount> const& asset2Withdraw,
+    STAmount const& amountWithdraw,
+    std::optional<STAmount> const& amount2Withdraw,
     STAmount const& lptAMMBalance,
     STAmount const& lpTokensWithdraw)
 {
@@ -353,14 +351,17 @@ AMMWithdraw::withdraw(
         return {ammSle.error(), STAmount{}};
     auto const lpTokens = ammLPHolds(view, **ammSle, account_, ctx_.journal);
     auto const expected =
-        ammHolds(view, **ammSle, asset1Withdraw.issue(), std::nullopt, j_);
+        ammHolds(view, **ammSle, amountWithdraw.issue(), std::nullopt, j_);
     if (!expected)
         return {expected.error(), STAmount{}};
-    auto const [asset1, asset2, _] = *expected;
+    auto const [amountBalance, amount2Balance, _] = *expected;
     (void)_;
 
     // Invalid tokens or withdrawing more than own.
-    if (lpTokensWithdraw == beast::zero || lpTokensWithdraw > lpTokens)
+    // TODO Note, the balances might be different due to round-off. Need to
+    // handle. Fail for now.
+    if (lpTokensWithdraw == beast::zero || lpTokensWithdraw > lpTokens ||
+        lpTokensWithdraw > lptAMMBalance)
     {
         JLOG(ctx_.journal.debug())
             << "AMM Withdraw: failed to withdraw, invalid LP tokens "
@@ -368,46 +369,47 @@ AMMWithdraw::withdraw(
         return {tecAMM_INVALID_TOKENS, STAmount{}};
     }
     // Withdrawing all tokens but balances are not 0.
-    if (lpTokensWithdraw == lptAMMBalance && asset1Withdraw != asset1 &&
-        (!asset2Withdraw || *asset2Withdraw != asset2))
+    if (lpTokensWithdraw == lptAMMBalance &&
+        (amountWithdraw != amountBalance ||
+         (amount2Withdraw && *amount2Withdraw != amount2Balance)))
     {
         JLOG(ctx_.journal.debug())
             << "AMM Withdraw: failed to withdraw, invalid LP balance "
-            << " asset1: " << asset1 << " " << asset1Withdraw
-            << " asset2: " << asset2
-            << (asset2Withdraw ? to_string(*asset2Withdraw) : "");
+            << " amountBalance: " << amountBalance << " " << amountWithdraw
+            << " amount2Balance: " << amount2Balance << " "
+            << (amount2Withdraw ? to_string(*amount2Withdraw) : "");
         return {tecAMM_BALANCE, STAmount{}};
     }
     // Withdrawing one side of the pool
-    if (asset1Withdraw == asset1 && !asset2Withdraw)
+    if (amountWithdraw == amountBalance && !amount2Withdraw)
     {
         JLOG(ctx_.journal.debug())
             << "AMM Withdraw: failed to withdraw one side of the pool "
-            << " asset1: " << asset1 << " " << asset1Withdraw
+            << " amountBalance: " << amountBalance << " " << amountWithdraw
             << " lpTokens: " << lpTokensWithdraw << " lptBalance "
             << lptAMMBalance;
         return {tecAMM_BALANCE, STAmount{}};
     }
 
-    // Withdraw asset1Withdraw
+    // Withdraw amountWithdraw
     auto res =
-        ammSend(view, ammAccount, account_, asset1Withdraw, ctx_.journal);
+        ammSend(view, ammAccount, account_, amountWithdraw, ctx_.journal);
     if (res != tesSUCCESS)
     {
         JLOG(ctx_.journal.debug())
-            << "AMM Withdraw: failed to withdraw " << asset1Withdraw;
+            << "AMM Withdraw: failed to withdraw " << amountWithdraw;
         return {res, STAmount{}};
     }
 
-    // Withdraw asset2Withdraw
-    if (asset2Withdraw)
+    // Withdraw amount2Withdraw
+    if (amount2Withdraw)
     {
         res =
-            ammSend(view, ammAccount, account_, *asset2Withdraw, ctx_.journal);
+            ammSend(view, ammAccount, account_, *amount2Withdraw, ctx_.journal);
         if (res != tesSUCCESS)
         {
             JLOG(ctx_.journal.debug())
-                << "AMM Withdraw: failed to withdraw " << *asset2Withdraw;
+                << "AMM Withdraw: failed to withdraw " << *amount2Withdraw;
             return {res, STAmount{}};
         }
     }
@@ -435,11 +437,11 @@ AMMWithdraw::withdraw(
 /** Proportional withdrawal of pool assets for the amount of LPTokens.
  */
 std::pair<TER, STAmount>
-AMMWithdraw::equalWithdrawalTokens(
+AMMWithdraw::equalWithdrawTokens(
     Sandbox& view,
     AccountID const& ammAccount,
-    STAmount const& asset1Balance,
-    STAmount const& asset2Balance,
+    STAmount const& amountBalance,
+    STAmount const& amount2Balance,
     STAmount const& lptAMMBalance,
     STAmount const& lpTokensWithdraw)
 {
@@ -447,8 +449,8 @@ AMMWithdraw::equalWithdrawalTokens(
     return withdraw(
         view,
         ammAccount,
-        multiply(asset1Balance, frac, asset1Balance.issue()),
-        multiply(asset2Balance, frac, asset2Balance.issue()),
+        multiply(amountBalance, frac, amountBalance.issue()),
+        multiply(amount2Balance, frac, amount2Balance.issue()),
         lptAMMBalance,
         lpTokensWithdraw);
 }
@@ -479,55 +481,54 @@ AMMWithdraw::equalWithdrawalTokens(
  *   The amount of LPTokens redeemed is Q
  */
 std::pair<TER, STAmount>
-AMMWithdraw::equalWithdrawalLimit(
+AMMWithdraw::equalWithdrawLimit(
     Sandbox& view,
     AccountID const& ammAccount,
-    STAmount const& asset1Balance,
-    STAmount const& asset2Balance,
+    STAmount const& amountBalance,
+    STAmount const& amount2Balance,
     STAmount const& lptAMMBalance,
-    STAmount const& asset1Out,
-    STAmount const& asset2Out)
+    STAmount const& amount,
+    STAmount const& amount2)
 {
-    auto frac = Number{asset1Out} / asset1Balance;
-    auto const asset2Withdraw = asset2Balance * frac;
-    if (asset2Withdraw <= asset2Out)
+    auto frac = Number{amount} / amountBalance;
+    auto const amount2Withdraw = amount2Balance * frac;
+    if (amount2Withdraw <= amount2)
         return withdraw(
             view,
             ammAccount,
-            asset1Out,
-            toSTAmount(asset2Out.issue(), asset2Withdraw),
+            amount,
+            toSTAmount(amount2.issue(), amount2Withdraw),
             lptAMMBalance,
             toSTAmount(lptAMMBalance.issue(), lptAMMBalance * frac));
-    frac = Number{asset2Out} / asset2Balance;
-    auto const asset1Withdraw = asset1Balance * frac;
+    frac = Number{amount2} / amount2Balance;
+    auto const amountWithdraw = amountBalance * frac;
     return withdraw(
         view,
         ammAccount,
-        toSTAmount(asset1Out.issue(), asset1Withdraw),
-        asset2Out,
+        toSTAmount(amount.issue(), amountWithdraw),
+        amount2,
         lptAMMBalance,
         toSTAmount(lptAMMBalance.issue(), lptAMMBalance * frac));
 }
 
-/** Withdrawal of single asset equivalent to the amount specified in Asset1Out.
+/** Withdraw single asset equivalent to the amount specified in Asset1Out.
  *       t = T * (1 - sqrt(1 - b/(B * (1 - 0.5 * tfee)))) (7)
  * Use equation 7 to compute the t, given the amount in Asset1Out.
  */
 std::pair<TER, STAmount>
-AMMWithdraw::singleWithdrawal(
+AMMWithdraw::singleWithdraw(
     Sandbox& view,
     AccountID const& ammAccount,
-    STAmount const& asset1Balance,
+    STAmount const& amountBalance,
     STAmount const& lptAMMBalance,
-    STAmount const& asset1Out,
+    STAmount const& amount,
     std::uint16_t tfee)
 {
-    auto const tokens =
-        lpTokensOut(asset1Balance, asset1Out, lptAMMBalance, tfee);
+    auto const tokens = lpTokensOut(amountBalance, amount, lptAMMBalance, tfee);
     if (tokens == beast::zero)
         return {tecAMM_FAILED_WITHDRAW, STAmount{}};
     return withdraw(
-        view, ammAccount, asset1Out, std::nullopt, lptAMMBalance, tokens);
+        view, ammAccount, amount, std::nullopt, lptAMMBalance, tokens);
 }
 
 /** withdrawal of single asset specified in Asset1Out proportional
@@ -541,29 +542,29 @@ AMMWithdraw::singleWithdrawal(
  *   The amount of LPTokens redeemed is LPTokens
  */
 std::pair<TER, STAmount>
-AMMWithdraw::singleWithdrawalTokens(
+AMMWithdraw::singleWithdrawTokens(
     Sandbox& view,
     AccountID const& ammAccount,
-    STAmount const& asset1Balance,
+    STAmount const& amountBalance,
     STAmount const& lptAMMBalance,
-    STAmount const& asset1Out,
+    STAmount const& amount,
     STAmount const& lpTokensWithdraw,
     std::uint16_t tfee)
 {
-    auto const asset1Withdraw =
-        withdrawByTokens(asset1Balance, lptAMMBalance, lpTokensWithdraw, tfee);
-    if (asset1Out == beast::zero || asset1Withdraw >= asset1Out)
+    auto const amountWithdraw =
+        withdrawByTokens(amountBalance, lptAMMBalance, lpTokensWithdraw, tfee);
+    if (amount == beast::zero || amountWithdraw >= amount)
         return withdraw(
             view,
             ammAccount,
-            toSTAmount(asset1Out.issue(), asset1Withdraw),
+            toSTAmount(amount.issue(), amountWithdraw),
             std::nullopt,
             lptAMMBalance,
             lpTokensWithdraw);
     return {tecAMM_FAILED_WITHDRAW, STAmount{}};
 }
 
-/** Withdrawal of single asset with two constraints.
+/** Withdraw single asset with two constraints.
  * a. amount of asset1 if specified in Asset1Out specifies the minimum
  *     amount of asset1 that the trader is willing to withdraw.
  * b. The effective price of asset traded out does not exceed the amount
@@ -582,27 +583,27 @@ AMMWithdraw::singleWithdrawalTokens(
  *   The amount of LPTokens is given by X
  */
 std::pair<TER, STAmount>
-AMMWithdraw::singleWithdrawalEPrice(
+AMMWithdraw::singleWithdrawEPrice(
     Sandbox& view,
     AccountID const& ammAccount,
-    STAmount const& asset1Balance,
+    STAmount const& amountBalance,
     STAmount const& lptAMMBalance,
-    STAmount const& asset1Out,
+    STAmount const& amount,
     STAmount const& ePrice,
     std::uint16_t tfee)
 {
     auto const tokens = lptAMMBalance *
         (Number(2) -
-         lptAMMBalance / (asset1Balance * ePrice * feeMultHalf(tfee)));
+         lptAMMBalance / (amountBalance * ePrice * feeMultHalf(tfee)));
     if (tokens <= 0)
         return {tecAMM_FAILED_WITHDRAW, STAmount{}};
-    auto const asset1Out_ = toSTAmount(asset1Out.issue(), tokens / ePrice);
-    if (asset1Out == beast::zero ||
-        (asset1Out != beast::zero && asset1Out_ >= asset1Out))
+    auto const amountWithdraw = toSTAmount(amount.issue(), tokens / ePrice);
+    if (amount == beast::zero ||
+        (amount != beast::zero && amountWithdraw >= amount))
         return withdraw(
             view,
             ammAccount,
-            asset1Out_,
+            amountWithdraw,
             std::nullopt,
             lptAMMBalance,
             toSTAmount(lptAMMBalance.issue(), tokens));

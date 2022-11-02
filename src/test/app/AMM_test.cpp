@@ -1015,10 +1015,10 @@ private:
             std::optional<STAmount>>>
             invalidOptions = {
                 // tokens, asset1In, asset2in, EPrice
-                //{1000, std::nullopt, USD(100), std::nullopt},
-                //{1000, std::nullopt, std::nullopt, STAmount{USD, 1, -1}},
-                //{std::nullopt, std::nullopt, USD(100), STAmount{USD, 1, -1}},
-                //{std::nullopt, XRP(100), USD(100), STAmount{USD, 1, -1}},
+                {1000, std::nullopt, USD(100), std::nullopt},
+                {1000, std::nullopt, std::nullopt, STAmount{USD, 1, -1}},
+                {std::nullopt, std::nullopt, USD(100), STAmount{USD, 1, -1}},
+                {std::nullopt, XRP(100), USD(100), STAmount{USD, 1, -1}},
                 {1000, XRP(100), USD(100), std::nullopt}};
         for (auto const& it : invalidOptions)
         {
@@ -1323,16 +1323,46 @@ private:
 
         // Single deposit: 100000 tokens worth of USD
         testAMM([&](AMM& ammAlice, Env&) {
-            ammAlice.deposit(carol, 100000, USD(0));
+            ammAlice.deposit(carol, 100000, USD(205));
             BEAST_EXPECT(ammAlice.expectBalances(
                 XRP(10000), USD(10201), IOUAmount{10100000, 0}));
         });
 
         // Single deposit: 100000 tokens worth of XRP
         testAMM([&](AMM& ammAlice, Env&) {
-            ammAlice.deposit(carol, 100000, XRP(0));
+            ammAlice.deposit(carol, 100000, XRP(205));
             BEAST_EXPECT(ammAlice.expectBalances(
                 XRP(10201), USD(10000), IOUAmount{10100000, 0}));
+        });
+
+        // Single deposit: 100000 tokens worth of USD
+        // Amount to deposit exceeds Max
+        testAMM([&](AMM& ammAlice, Env&) {
+            ammAlice.deposit(
+                carol,
+                100000,
+                USD(200),
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(tecAMM_FAILED_DEPOSIT));
+        });
+
+        // Single deposit: 100000 tokens worth of XRP
+        // Amount to deposit exceeds Max
+        testAMM([&](AMM& ammAlice, Env&) {
+            ammAlice.deposit(
+                carol,
+                100000,
+                XRP(200),
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(tecAMM_FAILED_DEPOSIT));
         });
 
         // Single deposit with EP not exceeding specified:
@@ -4486,7 +4516,6 @@ private:
     void
     testCore()
     {
-#if 0
         testInvalidInstance();
         testInstanceCreate();
         testInvalidDeposit();
@@ -4496,22 +4525,19 @@ private:
         testInvalidFeeVote();
         testFeeVote();
         testInvalidBid();
-#endif
         testBid();
-#if 0
         testInvalidAMMPayment();
         testBasicPaymentEngine();
         testAMMTokens();
         testAmendment();
-#endif
     }
 
     void
     run() override
     {
         testCore();
-        // testOffers();
-        // testPaths();
+        testOffers();
+        testPaths();
     }
 };
 

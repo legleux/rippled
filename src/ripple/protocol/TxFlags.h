@@ -161,8 +161,7 @@ constexpr std::uint32_t tfAMMSubTx =
     tfLPToken | tfSingleAsset | tfTwoAsset | tfOneAssetLPToken | tfLimitLPToken;
 constexpr std::uint32_t tfAMMWithdrawMask =
     ~(tfUniversal | tfAMMSubTx | tfAMMWithdrawAll);
-constexpr std::uint32_t tfAMMDepositMask =
-    ~(tfUniversal | tfAMMSubTx | tfLimitLPToken);
+constexpr std::uint32_t tfAMMDepositMask = ~(tfUniversal | tfAMMSubTx);
 
 // clang-format on
 

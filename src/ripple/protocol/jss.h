@@ -58,6 +58,8 @@ JSS(AMMWithdraw);          // transaction type
 JSS(Amendments);           // ledger type.
 JSS(Amount);               // in: TransactionSign; field.
 JSS(Amount2);              // in/out: AMM IOU/XRP pool, deposit, withdraw amount
+JSS(Asset);                // in: AMM Asset1
+JSS(Asset2);               // in: AMM Asset2
 JSS(AuctionSlot);          // out: AMM Auction Slot
 JSS(AuthAccount);          // in: AMM Auction Slot
 JSS(AuthAccounts);         // in: AMM Auction Slot
@@ -125,8 +127,6 @@ JSS(TakerPays);              // field.
 JSS(Ticket);                 // ledger type.
 JSS(TicketCreate);           // transaction type.
 JSS(TimeInterval);           // out: AMM Auction Slot
-JSS(Asset);                  // in: AMM Asset1
-JSS(Asset2);                 // in: AMM Asset2
 JSS(TxnSignature);           // field.
 JSS(TradingFee);             // in/out: AMM trading fee
 JSS(TransactionType);        // in: TransactionSign.
@@ -167,6 +167,8 @@ JSS(api_version);            // in: many, out: Version
 JSS(api_version_low);        // out: Version
 JSS(applied);                // out: SubmitTransaction
 JSS(asks);                   // out: Subscribe
+JSS(asset);                  // int: AMM info
+JSS(asset2);                 // int: AMM info
 JSS(assets);                 // out: GatewayBalances
 JSS(authorized);             // out: AccountLines
 JSS(auth_change);            // out: AccountInfo
@@ -600,8 +602,6 @@ JSS(time);
 JSS(timeouts);                // out: InboundLedger
 JSS(track);                   // out: PeerImp
 JSS(traffic);                 // out: Overlay
-JSS(asset);                   // int: AMM info
-JSS(asset2);                  // int: AMM info
 JSS(total);                   // out: counters
 JSS(totalCoins);              // out: LedgerToJson
 JSS(total_bytes_recv);        // out: Peers

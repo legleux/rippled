@@ -83,7 +83,7 @@ public:
     bool
     fully_consumed() const
     {
-        // AMM offer always is fully consumed
+        // AMM offer is always fully consumed
         return true;
     }
 
