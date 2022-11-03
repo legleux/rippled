@@ -126,7 +126,7 @@ invalidAMMAssetPair(
 /** Check if the line is frozen from the issuer.
  */
 bool
-isFrozen(ReadView const& view, std::optional<STAmount> const& a);
+isFrozen(ReadView const& view, STAmount const& a);
 
 /** Check if the account requires authorization.
  *  Return terNO_AUTH or terNO_LINE if it does

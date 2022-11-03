@@ -136,7 +136,8 @@ AMMCreate::preclaim(PreclaimContext const& ctx)
 
     if (insufficientBalance(amount) || insufficientBalance(amount2))
     {
-        JLOG(ctx.j.debug()) << "AMM Instance: insufficient funds";
+        JLOG(ctx.j.debug())
+            << "AMM Instance: insufficient funds, " << amount << " " << amount2;
         return tecUNFUNDED_AMM;
     }
 

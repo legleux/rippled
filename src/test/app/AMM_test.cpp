@@ -903,7 +903,7 @@ private:
                 USD(10000),
                 false,
                 0,
-                tfAMMWithdrawAll,
+                tfWithdrawAll,
                 std::nullopt,
                 ter(temINVALID_FLAG));
             BEAST_EXPECT(!ammAlice.ammExists());
@@ -1003,7 +1003,7 @@ private:
                 alice,
                 1000000,
                 std::nullopt,
-                tfAMMWithdrawAll,
+                tfWithdrawAll,
                 ter(temINVALID_FLAG));
         });
 
@@ -1144,24 +1144,22 @@ private:
                 ter(tecFROZEN));
         });
 
-        // Frozen asset, balance is not available
+        // Frozen asset
         testAMM([&](AMM& ammAlice, Env& env) {
             env(fset(gw, asfGlobalFreeze));
             ammAlice.deposit(
-                carol,
-                1000000,
-                std::nullopt,
-                std::nullopt,
-                ter(tecAMM_BALANCE));
+                carol, 1000000, std::nullopt, std::nullopt, ter(tecFROZEN));
         });
 
         // Insufficient XRP balance
         testAMM([&](AMM& ammAlice, Env& env) {
             env.fund(XRP(1000), bob);
             env.close();
+            // Adds LPT trustline
+            ammAlice.deposit(bob, XRP(10));
             ammAlice.deposit(
                 bob,
-                XRP(1001),
+                XRP(1000),
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
@@ -1235,11 +1233,11 @@ private:
             AMM ammAlice(env, alice, XRP(1000), USD(1000));
             ammAlice.deposit(
                 carol,
-                XRPAmount(100),
+                XRP(100),
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
-                ter(tecUNFUNDED_AMM));
+                ter(tecINSUF_RESERVE_LINE));
         }
 
         // Insufficient reserve, IOU/IOU
@@ -1265,7 +1263,7 @@ private:
             AMM ammAlice(env, alice, XRP(1000), USD(1000));
             ammAlice.deposit(
                 carol,
-                XRPAmount(100),
+                XRP(100),
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
@@ -1448,7 +1446,7 @@ private:
             std::optional<std::uint32_t>,
             NotTEC>>
             invalidOptions = {
-                // tokens, asset1Out, asset2Out, EPrice, tfAMMWithdrawAll,
+                // tokens, asset1Out, asset2Out, EPrice, tfWithdrawAll,
                 // flags, ter
                 {std::nullopt,
                  std::nullopt,
@@ -1466,19 +1464,19 @@ private:
                  std::nullopt,
                  std::nullopt,
                  std::nullopt,
-                 tfAMMWithdrawAll,
+                 tfWithdrawAll,
                  temBAD_AMM_OPTIONS},
                 {std::nullopt,
                  USD(0),
                  XRP(100),
                  std::nullopt,
-                 tfAMMWithdrawAll | tfLPToken,
+                 tfWithdrawAll | tfLPToken,
                  temBAD_AMM_OPTIONS},
                 {std::nullopt,
                  std::nullopt,
                  USD(100),
                  std::nullopt,
-                 tfAMMWithdrawAll,
+                 tfWithdrawAll,
                  temBAD_AMM_OPTIONS},
                 {1000,
                  std::nullopt,
@@ -1490,7 +1488,7 @@ private:
                  std::nullopt,
                  std::nullopt,
                  IOUAmount{250, 0},
-                 tfAMMWithdrawAll,
+                 tfWithdrawAll,
                  temBAD_AMM_OPTIONS},
                 {1000,
                  std::nullopt,
@@ -1520,7 +1518,7 @@ private:
                  XRP(100),
                  USD(100),
                  std::nullopt,
-                 tfAMMWithdrawAll,
+                 tfWithdrawAll,
                  temBAD_AMM_OPTIONS}};
         for (auto const& it : invalidOptions)
         {
@@ -1608,10 +1606,10 @@ private:
                     USD(0),
                     std::nullopt,
                     std::nullopt,
-                    tfAMMWithdrawAll,
+                    tfWithdrawAll,
                     std::nullopt,
                     std::nullopt,
-                    ter(tecAMM_BALANCE));
+                    ter(tecAMM_FAILED_WITHDRAW));
             });
         }
 
@@ -1673,7 +1671,7 @@ private:
             env(fset(gw, asfGlobalFreeze));
             env.close();
             ammAlice.withdraw(
-                carol, 1000, std::nullopt, std::nullopt, ter(tecAMM_BALANCE));
+                carol, 1000, std::nullopt, std::nullopt, ter(tecFROZEN));
         });
 
         // Carol is not a Liquidity Provider
@@ -1723,7 +1721,7 @@ private:
                 USD(100),
                 std::nullopt,
                 IOUAmount{600, 0},
-                ter(tecAMM_INVALID_TOKENS));
+                ter(tecAMM_FAILED_WITHDRAW));
         });
 
         // Withdraw with EPrice limit. Fails to withdraw, amount1
@@ -1747,7 +1745,7 @@ private:
                 USD(10000),
                 std::nullopt,
                 std::nullopt,
-                ter(tecAMM_INVALID_TOKENS));
+                ter(tecAMM_FAILED_WITHDRAW));
         });
     }
 
@@ -1966,7 +1964,7 @@ private:
             ammAlice.vote(
                 std::nullopt,
                 1000,
-                tfAMMWithdrawAll,
+                tfWithdrawAll,
                 std::nullopt,
                 std::nullopt,
                 ter(temINVALID_FLAG));
@@ -2145,7 +2143,7 @@ private:
                 0,
                 std::nullopt,
                 {},
-                tfAMMWithdrawAll,
+                tfWithdrawAll,
                 std::nullopt,
                 std::nullopt,
                 ter(temINVALID_FLAG));

@@ -409,7 +409,7 @@ AMM::deposit(
     std::uint32_t jvflags = 0;
     if (flags)
         jvflags = *flags;
-    if (!(jvflags & tfAMMSubTx))
+    if (!(jvflags & tfSubTx))
     {
         if (tokens && !asset1In)
             jvflags |= tfLPToken;
@@ -519,11 +519,11 @@ AMM::withdraw(
     std::uint32_t jvflags = 0;
     if (flags)
         jvflags = *flags;
-    if (!(jvflags & tfAMMSubTx))
+    if (!(jvflags & tfSubTx))
     {
-        if ((tokens || (jvflags & tfAMMWithdrawAll)) && !asset1Out)
+        if ((tokens || (jvflags & tfWithdrawAll)) && !asset1Out)
             jvflags |= tfLPToken;
-        else if ((tokens || (jvflags & tfAMMWithdrawAll)) && asset1Out)
+        else if ((tokens || (jvflags & tfWithdrawAll)) && asset1Out)
             jvflags |= tfOneAssetLPToken;
         else if (asset1Out && asset2Out)
             jvflags |= tfTwoAsset;

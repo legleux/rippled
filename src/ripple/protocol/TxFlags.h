@@ -156,12 +156,12 @@ constexpr std::uint32_t tfSingleAsset                  = 0x00000002;
 constexpr std::uint32_t tfTwoAsset                     = 0x00000004;
 constexpr std::uint32_t tfOneAssetLPToken              = 0x00000008;
 constexpr std::uint32_t tfLimitLPToken                 = 0x00000010;
-constexpr std::uint32_t tfAMMWithdrawAll               = 0x00000020;
-constexpr std::uint32_t tfAMMSubTx =
+constexpr std::uint32_t tfWithdrawAll                  = 0x00000020;
+constexpr std::uint32_t tfSubTx =
     tfLPToken | tfSingleAsset | tfTwoAsset | tfOneAssetLPToken | tfLimitLPToken;
-constexpr std::uint32_t tfAMMWithdrawMask =
-    ~(tfUniversal | tfAMMSubTx | tfAMMWithdrawAll);
-constexpr std::uint32_t tfAMMDepositMask = ~(tfUniversal | tfAMMSubTx);
+constexpr std::uint32_t tfWithdrawMask =
+    ~(tfUniversal | tfSubTx | tfWithdrawAll);
+constexpr std::uint32_t tfDepositMask = ~(tfUniversal | tfSubTx);
 
 // clang-format on
 

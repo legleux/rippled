@@ -45,7 +45,7 @@ AMMDeposit::preflight(PreflightContext const& ctx)
         return ret;
 
     auto const flags = ctx.tx.getFlags();
-    if (flags & tfAMMDepositMask)
+    if (flags & tfDepositMask)
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid flags.";
         return temINVALID_FLAG;
@@ -61,7 +61,7 @@ AMMDeposit::preflight(PreflightContext const& ctx)
     //   Amount and Amount2
     //   AssetLPToken and LPTokens
     //   Amount and EPrice
-    if (auto const subTxType = std::bitset<32>(flags & tfAMMSubTx);
+    if (auto const subTxType = std::bitset<32>(flags & tfSubTx);
         subTxType.none() || subTxType.count() > 1)
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid flags.";
@@ -150,37 +150,6 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
         return terNO_AMM;
     }
 
-    auto const amount = ctx.tx[~sfAmount];
-    auto const amount2 = ctx.tx[~sfAmount2];
-
-    if (amount)
-    {
-        if (auto const ter = requireAuth(ctx.view, amount->issue(), accountID);
-            ter != tesSUCCESS)
-        {
-            JLOG(ctx.j.debug()) << "AMM Deposit: account is not authorized, "
-                                << amount->issue();
-            return ter;
-        }
-    }
-
-    if (amount2)
-    {
-        if (auto const ter = requireAuth(ctx.view, amount2->issue(), accountID);
-            ter != tesSUCCESS)
-        {
-            JLOG(ctx.j.debug()) << "AMM Deposit: account is not authorized, "
-                                << amount2->issue();
-            return ter;
-        }
-    }
-
-    if (isFrozen(ctx.view, amount) || isFrozen(ctx.view, amount2))
-    {
-        JLOG(ctx.j.debug()) << "AMM Deposit involves frozen asset.";
-        return tecFROZEN;
-    }
-
     auto const expected =
         ammHolds(ctx.view, **ammSle, std::nullopt, std::nullopt, ctx.j);
     if (!expected)
@@ -189,9 +158,76 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
     if (amountBalance <= beast::zero || amount2Balance <= beast::zero ||
         lptAMMBalance <= beast::zero)
     {
+        if (isFrozen(ctx.view, amountBalance) ||
+            isFrozen(ctx.view, amount2Balance))
+        {
+            JLOG(ctx.j.debug()) << "AMM Withdraw involves frozen asset.";
+            return tecFROZEN;
+        }
         JLOG(ctx.j.debug())
             << "AMM Deposit: reserves or tokens balance is zero.";
         return tecAMM_BALANCE;
+    }
+
+    // Check account has sufficient funds.
+    // Return tesSUCCESS if it does,  error otherwise.
+    // Have to check again in deposit() because
+    // amounts might be derived based on tokens or
+    // limits.
+    auto balance = [&](auto const& deposit) -> TER {
+        if (isXRP(deposit))
+        {
+            auto const lpIssue = (**ammSle)[sfLPTokenBalance].issue();
+            // Adjust the reserve if LP doesn't have LPToken trustline
+            auto const sle = ctx.view.read(
+                keylet::line(accountID, lpIssue.account, lpIssue.currency));
+            return (xrpLiquid(ctx.view, accountID, !sle, ctx.j) >= deposit)
+                ? TER(tesSUCCESS)
+                : (!sle ? tecINSUF_RESERVE_LINE : tecUNFUNDED_AMM);
+        }
+        return (accountHolds(
+                    ctx.view,
+                    accountID,
+                    deposit.issue(),
+                    FreezeHandling::fhZERO_IF_FROZEN,
+                    ctx.j) >= deposit)
+            ? TER(tesSUCCESS)
+            : tecUNFUNDED_AMM;
+    };
+
+    auto const amount = ctx.tx[~sfAmount];
+    auto const amount2 = ctx.tx[~sfAmount2];
+
+    if (amount)
+    {
+        if (auto const ter = requireAuth(ctx.view, amount->issue(), accountID))
+        {
+            JLOG(ctx.j.debug()) << "AMM Deposit: account is not authorized, "
+                                << amount->issue();
+            return ter;
+        }
+        if (auto const ter = balance(*amount))
+        {
+            JLOG(ctx.j.debug())
+                << "AMM Deposit: account has insufficient funds, " << *amount;
+            return ter;
+        }
+    }
+
+    if (amount2)
+    {
+        if (auto const ter = requireAuth(ctx.view, amount2->issue(), accountID))
+        {
+            JLOG(ctx.j.debug()) << "AMM Deposit: account is not authorized, "
+                                << amount2->issue();
+            return ter;
+        }
+        if (auto const ter = balance(*amount2))
+        {
+            JLOG(ctx.j.debug())
+                << "AMM Deposit: account has insufficient funds, " << *amount2;
+            return ter;
+        }
     }
 
     if (auto const lpTokens = ctx.tx[~sfLPTokenOut];
@@ -201,7 +237,8 @@ AMMDeposit::preclaim(PreclaimContext const& ctx)
         return temBAD_AMM_TOKENS;
     }
 
-    // Check the reserve for LPToken trustline if not LP
+    // Check the reserve for LPToken trustline if not LP.
+    // We checked above but need to check again if depositing IOU only.
     if (ammLPHolds(ctx.view, **ammSle, accountID, ctx.j) == beast::zero)
     {
         STAmount const xrpBalance = xrpLiquid(ctx.view, accountID, 1, ctx.j);
@@ -240,7 +277,7 @@ AMMDeposit::applyGuts(Sandbox& sb)
         return {expected.error(), false};
     auto const [amountBalance, amount2Balance, lptAMMBalance] = *expected;
 
-    auto const subTxType = ctx_.tx.getFlags() & tfAMMSubTx;
+    auto const subTxType = ctx_.tx.getFlags() & tfSubTx;
 
     auto const [result, depositedTokens] =
         [&,
@@ -343,8 +380,7 @@ AMMDeposit::deposit(
         return accountHolds(
                    view,
                    account_,
-                   deposit.issue().currency,
-                   deposit.issue().account,
+                   deposit.issue(),
                    FreezeHandling::fhZERO_IF_FROZEN,
                    ctx_.journal) >= deposit;
     };

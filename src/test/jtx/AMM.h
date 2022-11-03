@@ -161,7 +161,7 @@ public:
             account,
             std::nullopt,
             asset1OutDetails,
-            tfAMMWithdrawAll,
+            tfWithdrawAll,
             std::nullopt);
     }
 

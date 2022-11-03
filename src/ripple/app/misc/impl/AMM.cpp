@@ -198,9 +198,9 @@ invalidAMMAmount(
 }
 
 bool
-isFrozen(ReadView const& view, std::optional<STAmount> const& a)
+isFrozen(ReadView const& view, STAmount const& a)
 {
-    return a && !a->native() && isGlobalFrozen(view, a->getIssuer());
+    return !a.native() && isGlobalFrozen(view, a.getIssuer());
 }
 
 TER
