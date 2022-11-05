@@ -79,6 +79,7 @@ JSS(Escrow);               // ledger type.
 JSS(EscrowCancel);         // transaction type.
 JSS(EscrowCreate);         // transaction type.
 JSS(EscrowFinish);         // transaction type.
+JSS(Expiration);           // out: AMM info
 JSS(Fee);                  // in/out: TransactionSign; field.
 JSS(FeeSettings);          // ledger type.
 JSS(Flags);                // in/out: TransactionSign; field.

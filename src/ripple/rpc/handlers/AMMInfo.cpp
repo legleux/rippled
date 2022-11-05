@@ -131,6 +131,7 @@ doAMMInfo(RPC::JsonContext& context)
         for (auto const& voteEntry : amm->getFieldArray(sfVoteSlots))
         {
             Json::Value vote;
+            vote[jss::Account] = to_string(voteEntry.getAccountID(sfAccount));
             vote[jss::TradingFee] = voteEntry[sfTradingFee];
             vote[jss::VoteWeight] = voteEntry[sfVoteWeight];
             voteSlots.append(vote);
@@ -151,6 +152,21 @@ doAMMInfo(RPC::JsonContext& context)
             auction[jss::TimeInterval] = timeSlot ? *timeSlot : 0;
             auctionSlot[sfPrice].setJson(auction[jss::Price]);
             auction[jss::DiscountedFee] = auctionSlot[sfDiscountedFee];
+            auction[jss::Account] =
+                to_string(auctionSlot.getAccountID(sfAccount));
+            auction[jss::Expiration] = auctionSlot[sfExpiration];
+            if (auctionSlot.isFieldPresent(sfAuthAccounts))
+            {
+                Json::Value auth;
+                for (auto const& acct :
+                     auctionSlot.getFieldArray(sfAuthAccounts))
+                {
+                    Json::Value jv;
+                    jv[jss::Account] = to_string(acct.getAccountID(sfAccount));
+                    auth.append(jv);
+                }
+                auction = auth[jss::AuthAccounts];
+            }
             result[jss::AuctionSlot] = auction;
         }
     }
