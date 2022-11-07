@@ -131,8 +131,8 @@ TxFormats::TxFormats()
         {
             {sfAsset, soeREQUIRED},
             {sfAsset2, soeREQUIRED},
-            {sfMinBidPrice, soeOPTIONAL},
-            {sfMaxBidPrice, soeOPTIONAL},
+            {sfBidMin, soeOPTIONAL},
+            {sfBidMax, soeOPTIONAL},
             {sfAuthAccounts, soeOPTIONAL},
             {sfTicketSequence, soeOPTIONAL},
         },
