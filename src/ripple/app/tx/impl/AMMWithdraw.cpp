@@ -130,7 +130,7 @@ AMMWithdraw::preflight(PreflightContext const& ctx)
     if (auto const res = invalidAMMAmount(
             amount,
             {{asset, asset2}},
-            (flags & tfOneAssetWithdrawAll) || ePrice))
+            (flags & (tfOneAssetWithdrawAll | tfOneAssetLPToken)) || ePrice))
     {
         JLOG(ctx.j.debug()) << "AMM Withdraw: invalid Asset1Out";
         return res;
