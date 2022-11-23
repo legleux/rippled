@@ -121,14 +121,38 @@ AMMLiquidity<TIn, TOut>::getOffer(
             auto const offer = generateFibSeqOffer(balances);
             if (clobQuality && Quality{offer} < *clobQuality)
                 return std::nullopt;
-            return AMMOffer<TIn, TOut>(*this, offer, std::nullopt);
+            return AMMOffer<TIn, TOut>(
+                *this, offer, std::nullopt, Quality{offer});
         }
         else if (
             auto const offer = clobQuality
                 ? changeSpotPriceQuality(balances, *clobQuality, tradingFee_)
                 : balances)
         {
-            return AMMOffer<TIn, TOut>(*this, *offer, balances);
+            // If the offer size is equal to the balances then change the size
+            // to simulate output equal to the entire pool's amount and
+            // infinite input. This is handled in BookStep since there is
+            // always limit on deliver amount
+            if (balances == offer)
+            {
+                auto const in = [&]() -> TIn {
+                    if constexpr (std::is_same_v<TIn, XRPAmount>)
+                        return XRPAmount(STAmount::cMaxNative);
+                    else if constexpr (std::is_same_v<TIn, IOUAmount>)
+                        return IOUAmount(
+                            STAmount::cMaxValue / 2, STAmount::cMaxOffset);
+                    else if constexpr (std::is_same_v<TIn, STAmount>)
+                        return STAmount(
+                            STAmount::cMaxValue / 2, STAmount::cMaxOffset);
+                }();
+                return AMMOffer<TIn, TOut>(
+                    *this,
+                    TAmounts<TIn, TOut>{in, balances.out},
+                    balances,
+                    Quality{balances});
+            }
+            return AMMOffer<TIn, TOut>(
+                *this, *offer, balances, Quality{*offer});
         }
         return std::nullopt;
     }();
