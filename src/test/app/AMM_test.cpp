@@ -60,6 +60,36 @@ readLines(jtx::Env& env, AccountID const& acctId)
     jv[jss::account] = to_string(acctId);
     return env.rpc("json", "account_lines", to_string(jv));
 }
+
+template <typename... IOU>
+static Json::Value
+readLines(jtx::Env& env, AccountID const& acctId, IOU... ious)
+{
+    auto const jrr = readLines(env, acctId);
+    Json::Value res;
+    for (auto const& line : jrr["result"]["lines"])
+    {
+        for (auto const iou : {ious...})
+        {
+            if (line["currency"].asString() == to_string(iou.currency))
+            {
+                Json::Value v;
+                v["currency"] = line["currency"];
+                v["balance"] = line["balance"];
+                res.append(v);
+            }
+        }
+    }
+    if (!res.isNull())
+        return res;
+    return jrr;
+}
+
+static std::uint32_t
+ownersCnt(jtx::Env& env, jtx::Account const& id)
+{
+    return env.le(id)->getFieldU32(sfOwnerCount);
+}
 #pragma GCC diagnostic pop
 
 /* TODO Path finding duplicate */
@@ -463,6 +493,25 @@ channelBalance(ReadView const& view, uint256 const& chan)
 }
 
 /******************************************************************************/
+
+// Crossing limits
+static void
+n_offers(
+    jtx::Env& env,
+    std::size_t n,
+    jtx::Account const& account,
+    STAmount const& in,
+    STAmount const& out)
+{
+    using namespace jtx;
+    auto const ownerCount = env.le(account)->getFieldU32(sfOwnerCount);
+    for (std::size_t i = 0; i < n; i++)
+    {
+        env(offer(account, in, out));
+        env.close();
+    }
+    env.require(owners(account, ownerCount + n));
+}
 
 class Test : public jtx::AMMTest
 {
@@ -2240,7 +2289,7 @@ private:
             ammAlice.bid(
                 alice,
                 std::nullopt,
-                STAmount{USD.issue(), 100},
+                STAmount{USD, 100},
                 {},
                 std::nullopt,
                 std::nullopt,
@@ -2248,7 +2297,7 @@ private:
                 ter(temBAD_AMM_TOKENS));
             ammAlice.bid(
                 alice,
-                STAmount{USD.issue(), 100},
+                STAmount{USD, 100},
                 std::nullopt,
                 {},
                 std::nullopt,
@@ -3337,7 +3386,7 @@ private:
         // Will sell all 100 XRP and get more USD than asked for.
         env(offer(alice, USD(100), XRP(100)), json(jss::Flags, tfSell));
         BEAST_EXPECT(
-            ammBob.expectBalances(XRP(1100), USD(200), ammBob.tokens()));
+            ammBob.expectBalances(XRP(1100), USD(2000), ammBob.tokens()));
         BEAST_EXPECT(expectLine(env, alice, USD(200)));
         BEAST_EXPECT(expectLedgerEntryRoot(env, alice, XRP(250)));
         BEAST_EXPECT(expectOffers(env, alice, 0));
@@ -4108,7 +4157,8 @@ private:
         BEAST_EXPECT(sa == XRP(100000000));
         // Bob gets ~99.99USD. This is the amount Bob
         // can get out of AMM for 100,000,000XRP.
-        BEAST_EXPECT(equal(da, bob["USD"](99.9999000001)));
+        BEAST_EXPECT(equal(
+            da, STAmount{bob["USD"].issue(), UINT64_C(999999000001), -10}));
     }
 
     // carol holds gateway AUD, sells gateway AUD for XRP
@@ -4122,20 +4172,20 @@ private:
 
         Env env = pathTestEnv();
         auto const AUD = gw["AUD"];
-        env.fund(XRP(10000), "alice", "bob", "carol", gw);
+        env.fund(XRP(10000), alice, bob, carol, gw);
         env(rate(gw, 1.1));
-        env.trust(AUD(2000), "bob", "carol");
-        env(pay(gw, "carol", AUD(50)));
+        env.trust(AUD(2000), bob, carol);
+        env(pay(gw, carol, AUD(50)));
         env.close();
         AMM ammCarol(env, carol, XRP(40), AUD(50));
-        env(pay("alice", "bob", AUD(10)), sendmax(XRP(100)), paths(XRP));
+        env(pay(alice, bob, AUD(10)), sendmax(XRP(100)), paths(XRP));
         env.close();
         BEAST_EXPECT(
             ammCarol.expectBalances(XRP(50), AUD(40), ammCarol.tokens()));
         BEAST_EXPECT(expectLine(env, bob, AUD(10)));
 
         auto const result =
-            find_paths(env, "alice", "bob", Account("bob")["USD"](25));
+            find_paths(env, alice, bob, Account(bob)["USD"](25));
         BEAST_EXPECT(std::get<0>(result).empty());
     }
 
@@ -5070,6 +5120,149 @@ private:
     }
 
     void
+    testStepLimit(FeatureBitset features)
+    {
+        testcase("Step Limit");
+
+        using namespace jtx;
+        Env env(*this, features);
+        auto const dan = Account("dan");
+        auto const ed = Account("ed");
+
+        fund(env, gw, {ed}, XRP(100000000), {USD(11)});
+        env.fund(XRP(100000000), alice, bob, carol, dan);
+        env.trust(USD(1), bob);
+        env(pay(gw, bob, USD(1)));
+        env.trust(USD(1), dan);
+        env(pay(gw, dan, USD(1)));
+        n_offers(env, 2000, bob, XRP(1), USD(1));
+        n_offers(env, 1, dan, XRP(1), USD(1));
+        AMM ammEd(env, ed, XRP(9), USD(11));
+
+        // Alice offers to buy 1000 XRP for 1000 USD. She takes Bob's first
+        // offer, removes 999 more as unfunded, then hits the step limit.
+        env(offer(alice, USD(1000), XRP(1000)));
+        env.require(
+            balance(alice, STAmount{USD, UINT64_C(2050126257867565), -15}));
+        env.require(owners(alice, 2));
+        env.require(balance(bob, USD(0)));
+        env.require(owners(bob, 1001));
+        env.require(balance(dan, USD(1)));
+        env.require(owners(dan, 2));
+
+        // Carol offers to buy 1000 XRP for 1000 USD. She removes Bob's next
+        // 1000 offers as unfunded and hits the step limit.
+        env(offer(carol, USD(1000), XRP(1000)));
+        env.require(balance(carol, USD(none)));
+        env.require(owners(carol, 1));
+        env.require(balance(bob, USD(0)));
+        env.require(owners(bob, 1));
+        env.require(balance(dan, USD(1)));
+        env.require(owners(dan, 2));
+    }
+
+    void
+    test_convert_all_of_an_asset(FeatureBitset features)
+    {
+        testcase("Convert all of an asset using DeliverMin");
+
+        using namespace jtx;
+        auto const dan = Account("dan");
+
+        {
+            Env env(*this, features);
+            fund(env, gw, {alice, bob, carol}, XRP(10000));
+            env.trust(USD(100), alice, bob, carol);
+            env(pay(alice, bob, USD(10)),
+                delivermin(USD(10)),
+                ter(temBAD_AMOUNT));
+            env(pay(alice, bob, USD(10)),
+                delivermin(USD(-5)),
+                txflags(tfPartialPayment),
+                ter(temBAD_AMOUNT));
+            env(pay(alice, bob, USD(10)),
+                delivermin(XRP(5)),
+                txflags(tfPartialPayment),
+                ter(temBAD_AMOUNT));
+            env(pay(alice, bob, USD(10)),
+                delivermin(Account(carol)["USD"](5)),
+                txflags(tfPartialPayment),
+                ter(temBAD_AMOUNT));
+            env(pay(alice, bob, USD(10)),
+                delivermin(USD(15)),
+                txflags(tfPartialPayment),
+                ter(temBAD_AMOUNT));
+            env(pay(gw, carol, USD(50)));
+            AMM ammCarol(env, carol, XRP(10), USD(15));
+            env(pay(alice, bob, USD(10)),
+                paths(XRP),
+                delivermin(USD(7)),
+                txflags(tfPartialPayment),
+                sendmax(XRP(5)),
+                ter(tecPATH_PARTIAL));
+            env.require(balance(alice, XRP(9999.99999)));
+            env.require(balance(bob, XRP(10000)));
+        }
+
+        {
+            Env env(*this, features);
+            fund(env, gw, {alice, bob}, XRP(10000));
+            env.trust(USD(1100), alice, bob);
+            env(pay(gw, bob, USD(1100)));
+            AMM ammBob(env, bob, XRP(1000), USD(1100));
+            env(pay(alice, alice, USD(10000)),
+                paths(XRP),
+                delivermin(USD(100)),
+                txflags(tfPartialPayment),
+                sendmax(XRP(100)));
+            env.require(balance(alice, USD(100)));
+        }
+
+        {
+            Env env(*this, features);
+            fund(env, gw, {alice, bob, carol}, XRP(10000));
+            env.trust(USD(1200), bob, carol);
+            env(pay(gw, bob, USD(1200)));
+            AMM ammBob(env, bob, XRP(5500), USD(1200));
+            env(pay(alice, carol, USD(10000)),
+                paths(XRP),
+                delivermin(USD(200)),
+                txflags(tfPartialPayment),
+                sendmax(XRP(1000)),
+                ter(tecPATH_PARTIAL));
+            env(pay(alice, carol, USD(10000)),
+                paths(XRP),
+                delivermin(USD(200)),
+                txflags(tfPartialPayment),
+                sendmax(XRP(1100)));
+            BEAST_EXPECT(
+                ammBob.expectBalances(XRP(6600), USD(1000), ammBob.tokens()));
+            env.require(
+                balance(carol, STAmount{USD, UINT64_C(2000000000000001), -13}));
+        }
+
+        {
+            Env env(*this, features);
+            fund(env, gw, {alice, bob, carol, dan}, XRP(10000));
+            env.trust(USD(1100), bob, carol, dan);
+            env(pay(gw, bob, USD(100)));
+            env(pay(gw, dan, USD(1100)));
+            env(offer(bob, XRP(100), USD(100)));
+            env(offer(bob, XRP(1000), USD(100)));
+            AMM ammDan(env, dan, XRP(1000), USD(1100));
+            env(pay(alice, carol, USD(10000)),
+                paths(XRP),
+                delivermin(USD(200)),
+                txflags(tfPartialPayment),
+                sendmax(XRP(200)));
+            env.require(balance(bob, USD(0)));
+            env.require(balance(carol, USD(200)));
+            BEAST_EXPECT(
+                ammDan.expectBalances(XRP(1100), USD(1000), ammDan.tokens()));
+        }
+    }
+
+    void
     testPaths()
     {
         path_find_consume_all();
@@ -5097,6 +5290,22 @@ private:
     }
 
     void
+    testCrossingLimits()
+    {
+        using namespace jtx;
+        FeatureBitset const all{supported_amendments()};
+        testStepLimit(all);
+    }
+
+    void
+    testDeliverMin()
+    {
+        using namespace jtx;
+        FeatureBitset const all{supported_amendments()};
+        test_convert_all_of_an_asset(all);
+    }
+
+    void
     testCore()
     {
         testInvalidInstance();
@@ -5118,10 +5327,12 @@ private:
     void
     run() override
     {
-        // testCore();
-        // testOffers();
-        // testPaths();
+        testCore();
+        testOffers();
+        testPaths();
         testFlow();
+        testCrossingLimits();
+        testDeliverMin();
     }
 };
 
