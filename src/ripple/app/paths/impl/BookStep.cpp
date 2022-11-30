@@ -606,6 +606,26 @@ limitStepOut(
     }
 }
 
+template <typename F>
+auto
+ammExcepHandler(F&& f) -> decltype(f())
+{
+    try
+    {
+        return f();
+    }
+    catch (std::overflow_error const& ex)
+    {
+        // Overflow from Number, possible on swap
+        // and other AMM formulas
+        if (std::string(ex.what()).starts_with("Number"))
+            throw FlowException(tecPATH_DRY, ex.what());
+        throw ex;
+    }
+    decltype(f()) res{};
+    return res;
+}
+
 template <class TIn, class TOut, class TDerived>
 template <class Callback>
 std::pair<boost::container::flat_set<uint256>, std::uint32_t>
@@ -730,15 +750,17 @@ BookStep<TIn, TOut, TDerived>::forEachOffer(
 
     // At any payment engine iteration, AMM offer can only be consumed once.
     bool triedAMM = false;
-    auto tryAMM = [&](std::optional<Quality> const& quality) {
-        if (!triedAMM)
-        {
-            triedAMM = true;
-            if (auto ammOffer = getAMMOffer(sb, quality);
-                ammOffer && !execOffer(*ammOffer))
-                return false;
-        }
-        return true;
+    auto tryAMM = [&](std::optional<Quality> const& quality) -> bool {
+        return ammExcepHandler([&]() -> bool {
+            if (!triedAMM)
+            {
+                triedAMM = true;
+                if (auto ammOffer = getAMMOffer(sb, quality);
+                    ammOffer && !execOffer(*ammOffer))
+                    return false;
+            }
+            return true;
+        });
     };
     while (offers.step())
     {
@@ -796,8 +818,11 @@ BookStep<TIn, TOut, TDerived>::getAMMOffer(
     ReadView const& view,
     std::optional<Quality> const& clobQuality) const
 {
-    return ammLiquidity_ ? ammLiquidity_->getOffer(view, clobQuality)
-                         : std::nullopt;
+    return ammExcepHandler([&]() -> std::optional<AMMOffer<TIn, TOut>> {
+        return ammLiquidity_ ? std::optional<AMMOffer<TIn, TOut>>(
+                                   ammLiquidity_->getOffer(view, clobQuality))
+                             : std::nullopt;
+    });
 }
 
 template <class TIn, class TOut, class TDerived>

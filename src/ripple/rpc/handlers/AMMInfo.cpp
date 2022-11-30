@@ -135,17 +135,24 @@ doAMMInfo(RPC::JsonContext& context)
 
     auto const ammAccountID = amm->getAccountID(sfAMMAccount);
 
-    auto const [asset1Balance, asset2Balance] =
-        ammPoolHolds(*ledger, ammAccountID, issue1, issue2, context.j);
+    // provide funds if frozen, specify asset_frozen flag
+    auto const [asset1Balance, asset2Balance] = ammPoolHolds(
+        *ledger,
+        ammAccountID,
+        issue1,
+        issue2,
+        context.j,
+        FreezeHandling::fhIGNORE_FREEZE);
     auto const lptAMMBalance = accountID
         ? ammLPHolds(*ledger, *amm, *accountID, context.j)
         : (*amm)[sfLPTokenBalance];
 
-    asset1Balance.setJson(result[jss::Amount]);
-    asset2Balance.setJson(result[jss::Amount2]);
-    lptAMMBalance.setJson(result[jss::LPToken]);
-    result[jss::TradingFee] = (*amm)[sfTradingFee];
-    result[jss::AMMAccount] = to_string(ammAccountID);
+    Json::Value ammResult;
+    asset1Balance.setJson(ammResult[jss::Amount]);
+    asset2Balance.setJson(ammResult[jss::Amount2]);
+    lptAMMBalance.setJson(ammResult[jss::LPToken]);
+    ammResult[jss::TradingFee] = (*amm)[sfTradingFee];
+    ammResult[jss::AMMAccount] = to_string(ammAccountID);
     Json::Value voteSlots(Json::arrayValue);
     if (amm->isFieldPresent(sfVoteSlots))
     {
@@ -159,7 +166,7 @@ doAMMInfo(RPC::JsonContext& context)
         }
     }
     if (voteSlots.size() > 0)
-        result[jss::VoteSlots] = voteSlots;
+        ammResult[jss::VoteSlots] = voteSlots;
     if (amm->isFieldPresent(sfAuctionSlot))
     {
         auto const& auctionSlot =
@@ -170,7 +177,7 @@ doAMMInfo(RPC::JsonContext& context)
             auto const timeSlot = ammAuctionTimeSlot(
                 ledger->info().parentCloseTime.time_since_epoch().count(),
                 auctionSlot);
-            auction[jss::TimeInterval] = timeSlot ? *timeSlot : 0;
+            result[jss::time_interval] = timeSlot ? *timeSlot : 0;
             auctionSlot[sfPrice].setJson(auction[jss::Price]);
             auction[jss::DiscountedFee] = auctionSlot[sfDiscountedFee];
             auction[jss::Account] =
@@ -183,20 +190,29 @@ doAMMInfo(RPC::JsonContext& context)
                      auctionSlot.getFieldArray(sfAuthAccounts))
                 {
                     Json::Value jv;
-                    jv[jss::Account] = to_string(acct.getAccountID(sfAccount));
+                    jv[jss::AuthAccount][jss::Account] =
+                        to_string(acct.getAccountID(sfAccount));
                     auth.append(jv);
                 }
                 auction[jss::AuthAccounts] = auth;
             }
-            result[jss::AuctionSlot] = auction;
+            ammResult[jss::AuctionSlot] = auction;
         }
     }
-    result[jss::AMMID] = to_string(ammKeylet.key);
+    ammResult[jss::AMMID] = to_string(ammKeylet.key);
 
-    Json::Value ammResult;
-    ammResult[jss::amm] = result;
+    result[jss::amm] = ammResult;
+    result[jss::ledger_current_index] = ledger->info().seq;
+    result[jss::validated] =
+        RPC::isValidated(context.ledgerMaster, *ledger, context.app);
+    if (!isXRP(asset1Balance))
+        result[jss::asset_frozen] =
+            isFrozen(*ledger, ammAccountID, issue1.currency, issue1.account);
+    if (!isXRP(asset2Balance))
+        result[jss::asset2_frozen] =
+            isFrozen(*ledger, ammAccountID, issue2.currency, issue2.account);
 
-    return ammResult;
+    return result;
 }
 
 }  // namespace ripple

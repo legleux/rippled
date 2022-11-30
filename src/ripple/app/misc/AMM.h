@@ -21,6 +21,7 @@
 
 #include <ripple/basics/Expected.h>
 #include <ripple/beast/utility/Journal.h>
+#include <ripple/ledger/View.h>
 #include <ripple/protocol/Quality.h>
 #include <ripple/protocol/STAmount.h>
 #include <ripple/protocol/STArray.h>
@@ -69,7 +70,8 @@ ammPoolHolds(
     AccountID const& ammAccountID,
     Issue const& issue1,
     Issue const& issue2,
-    beast::Journal const j);
+    beast::Journal const j,
+    FreezeHandling freezeHandling = FreezeHandling::fhZERO_IF_FROZEN);
 
 /** Get AMM pool and LP token balances. If both optIssue are
  * provided then they are used as the AMM token pair issues.
@@ -81,7 +83,8 @@ ammHolds(
     SLE const& ammSle,
     std::optional<Issue> const& optIssue1,
     std::optional<Issue> const& optIssue2,
-    beast::Journal const j);
+    beast::Journal const j,
+    FreezeHandling freezeHandling = FreezeHandling::fhZERO_IF_FROZEN);
 
 /** Get the balance of LP tokens.
  */

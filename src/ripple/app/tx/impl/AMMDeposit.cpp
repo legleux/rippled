@@ -293,7 +293,7 @@ AMMDeposit::applyGuts(Sandbox& sb)
                 lptAMMBalance,
                 *amount,
                 *amount2);
-        if (subTxType == tfOneAssetLPToken)
+        if (subTxType & tfOneAssetLPToken)
             return singleDepositTokens(
                 sb,
                 ammAccountID,
@@ -302,7 +302,7 @@ AMMDeposit::applyGuts(Sandbox& sb)
                 lptAMMBalance,
                 *lpTokensDeposit,
                 tfee);
-        if (subTxType == tfLimitLPToken)
+        if (subTxType & tfLimitLPToken)
             return singleDepositEPrice(
                 sb,
                 ammAccountID,
@@ -311,10 +311,10 @@ AMMDeposit::applyGuts(Sandbox& sb)
                 lptAMMBalance,
                 *ePrice,
                 tfee);
-        if (subTxType == tfSingleAsset)
+        if (subTxType & tfSingleAsset)
             return singleDeposit(
                 sb, ammAccountID, amountBalance, lptAMMBalance, *amount, tfee);
-        if (subTxType == tfLPToken)
+        if (subTxType & tfLPToken)
             return equalDepositTokens(
                 sb,
                 ammAccountID,

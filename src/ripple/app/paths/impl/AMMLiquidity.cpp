@@ -101,6 +101,13 @@ AMMLiquidity<TIn, TOut>::getOffer(
 
     auto const balances = fetchBalances(view);
 
+    // Frozen accounts
+    if (balances.in == beast::zero || balances.out == beast::zero)
+    {
+        JLOG(j_.debug()) << "AMMLiquidity::getOffer, frozen accounts";
+        return std::nullopt;
+    }
+
     JLOG(j_.debug()) << "AMMLiquidity::getOffer balances "
                      << to_string(initialBalances_.in) << " "
                      << to_string(initialBalances_.out) << " new balances "

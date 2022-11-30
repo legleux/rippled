@@ -65,12 +65,13 @@ ammPoolHolds(
     AccountID const& ammAccountID,
     Issue const& issue1,
     Issue const& issue2,
-    beast::Journal const j)
+    beast::Journal const j,
+    FreezeHandling freezeHandling)
 {
-    auto const assetInBalance = accountHolds(
-        view, ammAccountID, issue1, FreezeHandling::fhZERO_IF_FROZEN, j);
-    auto const assetOutBalance = accountHolds(
-        view, ammAccountID, issue2, FreezeHandling::fhZERO_IF_FROZEN, j);
+    auto const assetInBalance =
+        accountHolds(view, ammAccountID, issue1, freezeHandling, j);
+    auto const assetOutBalance =
+        accountHolds(view, ammAccountID, issue2, freezeHandling, j);
     return std::make_pair(assetInBalance, assetOutBalance);
 }
 
@@ -80,7 +81,8 @@ ammHolds(
     SLE const& ammSle,
     std::optional<Issue> const& optIssue1,
     std::optional<Issue> const& optIssue2,
-    beast::Journal const j)
+    beast::Journal const j,
+    FreezeHandling freezeHandling)
 {
     auto const issues = [&]() -> std::optional<std::pair<Issue, Issue>> {
         if (optIssue1 && optIssue2)
@@ -114,7 +116,8 @@ ammHolds(
         ammSle.getAccountID(sfAMMAccount),
         issues->first,
         issues->second,
-        j);
+        j,
+        freezeHandling);
     return std::make_tuple(asset1, asset2, ammSle[sfLPTokenBalance]);
 }
 

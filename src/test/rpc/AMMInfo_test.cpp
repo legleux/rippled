@@ -122,12 +122,13 @@ public:
                     for (std::uint8_t i = 0; i < 4; ++i)
                     {
                         if (!authAccounts.contains(
-                                auctionSlot["AuthAccounts"][i]["Account"]
-                                    .asString()))
+                                auctionSlot["AuthAccounts"][i]["AuthAccount"]
+                                           ["Account"]
+                                               .asString()))
                             return false;
-                        authAccounts.erase(
-                            auctionSlot["AuthAccounts"][i]["Account"]
-                                .asString());
+                        authAccounts.erase(auctionSlot["AuthAccounts"][i]
+                                                      ["AuthAccount"]["Account"]
+                                                          .asString());
                     }
                     if (!authAccounts.empty())
                         return false;
@@ -150,11 +151,24 @@ public:
     }
 
     void
+    testFreeze()
+    {
+        using namespace jtx;
+        testAMM([&](AMM& ammAlice, Env& env) {
+            env(fset(gw, asfGlobalFreeze));
+            env.close();
+            auto const info = ammAlice.ammRpcInfo();
+            BEAST_EXPECT(info && (*info)[jss::asset2_frozen].asBool() == true);
+        });
+    }
+
+    void
     run() override
     {
         testErrors();
         testSimpleRpc();
         testVoteAndBid();
+        testFreeze();
     }
 };
 

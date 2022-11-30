@@ -43,8 +43,10 @@ AMM::AMM(
     STAmount const& asset2,
     bool log,
     std::uint32_t tfee,
+    std::uint32_t fee,
     std::optional<std::uint32_t> flags,
     std::optional<jtx::seq> seq,
+    std::optional<jtx::msig> ms,
     std::optional<ter> const& ter)
     : env_(env)
     , creatorAccount_(account)
@@ -57,6 +59,8 @@ AMM::AMM(
     , minSlotPrice_(0)
     , bidMin_()
     , bidMax_()
+    , msig_(ms)
+    , fee_(fee)
 {
     create(tfee, flags, seq);
 }
@@ -68,7 +72,17 @@ AMM::AMM(
     STAmount const& asset2,
     ter const& ter,
     bool log)
-    : AMM(env, account, asset1, asset2, log, 0, std::nullopt, std::nullopt, ter)
+    : AMM(env,
+          account,
+          asset1,
+          asset2,
+          log,
+          0,
+          0,
+          std::nullopt,
+          std::nullopt,
+          std::nullopt,
+          ter)
 {
 }
 
@@ -86,16 +100,11 @@ AMM::create(
     jv[jss::TransactionType] = jss::AMMCreate;
     if (flags)
         jv[jss::Flags] = *flags;
-    if (log_)
-        std::cout << jv.toStyledString();
-    if (ter_ && seq)
-        env_(jv, *seq, *ter_);
-    else if (ter_)
-        env_(jv, *ter_);
-    else
-        env_(jv);
-    env_.close();
-    if (!ter_)
+    if (fee_ != 0)
+        jv[jss::Fee] = std::to_string(fee_);
+    submit(jv, seq, ter_);
+
+    if (!ter_ || env_.ter() == tesSUCCESS)
     {
         if (auto const amm = env_.current()->read(
                 keylet::amm(asset1_.issue(), asset2_.issue())))
@@ -158,7 +167,8 @@ AMM::expectBalances(
             ammAccountID,
             asset1.issue(),
             asset2.issue(),
-            env_.journal);
+            env_.journal,
+            FreezeHandling::fhIGNORE_FREEZE);
         auto const lptAMMBalance = account
             ? ammLPHolds(*env_.current(), *amm, *account, env_.journal)
             : amm->getFieldAmount(sfLPTokenBalance);
@@ -326,15 +336,9 @@ AMM::deposit(
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
     setTokens(jv, assets);
     jv[jss::TransactionType] = jss::AMMDeposit;
-    if (log_)
-        std::cout << jv.toStyledString();
-    if (ter_ && seq)
-        env_(jv, *seq, *ter_);
-    else if (ter_)
-        env_(jv, *ter_);
-    else
-        env_(jv);
-    env_.close();
+    if (fee_ != 0)
+        jv[jss::Fee] = std::to_string(fee_);
+    submit(jv, seq, ter_);
 }
 
 void
@@ -436,15 +440,9 @@ AMM::withdraw(
     jv[jss::Account] = account ? account->human() : creatorAccount_.human();
     setTokens(jv, assets);
     jv[jss::TransactionType] = jss::AMMWithdraw;
-    if (log_)
-        std::cout << jv.toStyledString();
-    if (ter && seq)
-        env_(jv, *seq, *ter);
-    else if (ter)
-        env_(jv, *ter);
-    else
-        env_(jv);
-    env_.close();
+    if (fee_ != 0)
+        jv[jss::Fee] = std::to_string(fee_);
+    submit(jv, seq, ter);
 }
 
 void
@@ -551,15 +549,9 @@ AMM::vote(
     jv[jss::TransactionType] = jss::AMMVote;
     if (flags)
         jv[jss::Flags] = *flags;
-    if (log_)
-        std::cout << jv.toStyledString();
-    if (ter && seq)
-        env_(jv, *seq, *ter);
-    else if (ter)
-        env_(jv, *ter);
-    else
-        env_(jv);
-    env_.close();
+    if (fee_ != 0)
+        jv[jss::Fee] = std::to_string(fee_);
+    submit(jv, seq, ter);
 }
 
 void
@@ -622,15 +614,9 @@ AMM::bid(
     if (flags)
         jv[jss::Flags] = *flags;
     jv[jss::TransactionType] = jss::AMMBid;
-    if (log_)
-        std::cout << jv.toStyledString();
-    if (ter && seq)
-        env_(jv, *seq, *ter);
-    else if (ter)
-        env_(jv, *ter);
-    else
-        env_(jv);
-    env_.close();
+    if (fee_ != 0)
+        jv[jss::Fee] = std::to_string(fee_);
+    submit(jv, seq, ter);
 }
 
 IOUAmount
@@ -658,6 +644,36 @@ AMM::expectedPurchasePrice(
     if (bidMin_ && !bidMax_)
         return std::max(computedPrice, *bidMin_);
     return computedPrice;
+}
+
+void
+AMM::submit(
+    Json::Value const& jv,
+    std::optional<jtx::seq> const& seq,
+    std::optional<ter> const& ter)
+{
+    if (log_)
+        std::cout << jv.toStyledString();
+    if (msig_)
+    {
+        if (seq && ter)
+            env_(jv, *msig_, *seq, *ter);
+        else if (seq)
+            env_(jv, *msig_, *seq);
+        else if (ter)
+            env_(jv, *msig_, *ter);
+        else
+            env_(jv, *msig_);
+    }
+    else if (seq && ter)
+        env_(jv, *seq, *ter);
+    else if (seq)
+        env_(jv, *seq);
+    else if (ter)
+        env_(jv, *ter);
+    else
+        env_(jv);
+    env_.close();
 }
 
 namespace amm {
