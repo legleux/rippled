@@ -4438,117 +4438,6 @@ private:
     }
 
     void
-    testDeletedOfferIssuer(FeatureBitset features)
-    {
-        // Show that an offer who's issuer has been deleted cannot be crossed.
-        using namespace jtx;
-
-        testcase("Deleted offer issuer");
-
-        auto trustLineExists = [](jtx::Env const& env,
-                                  jtx::Account const& src,
-                                  jtx::Account const& dst,
-                                  Currency const& cur) -> bool {
-            return bool(env.le(keylet::line(src, dst, cur)));
-        };
-
-        Account const alice("alice");
-        Account const becky("becky");
-        Account const carol("carol");
-        Account const gw("gateway");
-        auto const USD = gw["USD"];
-        auto const BUX = alice["BUX"];
-
-        Env env{*this, features};
-
-        env.fund(XRP(10000), alice, carol, noripple(gw));
-        env.fund(XRP(10000), becky);
-        env.trust(USD(1000), becky);
-        env.trust(BUX(1000), becky);
-        env(pay(gw, becky, USD(200)));
-        env(pay(alice, becky, BUX(100)));
-        env.close();
-        BEAST_EXPECT(trustLineExists(env, gw, becky, USD.currency));
-
-        // Make offers that produce USD and can be crossed two ways:
-        // direct XRP -> USD
-        // direct BUX -> USD
-        //env(offer(becky, XRP(2), USD(2)), txflags(tfPassive));
-        //std::uint32_t const beckyBuxUsdSeq{env.seq(becky)};
-        //env(offer(becky, BUX(3), USD(3)), txflags(tfPassive));
-        //env.close();
-        AMM ammBeckyXRP_USD(env, becky, XRP(100), USD(100));
-        AMM ammBeckyBUX_USD(env, becky, BUX(100), USD(100));
-
-        // becky keeps the offers, but removes the trustline.
-        //env(pay(becky, gw, USD(5)));
-        env.trust(USD(0), becky);
-        env.close();
-        BEAST_EXPECT(!trustLineExists(env, gw, becky, USD.currency));
-        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
-        //BEAST_EXPECT(isOffer(env, becky, BUX(3), USD(3)));
-
-        // Delete gw's account.
-        {
-            // The ledger sequence needs to far enough ahead of the account
-            // sequence before the account can be deleted.
-            int const delta =
-                [&env, &gw, openLedgerSeq = env.current()->seq()]() -> int {
-                std::uint32_t const gwSeq{env.seq(gw)};
-                if (gwSeq + 255 > openLedgerSeq)
-                    return gwSeq - openLedgerSeq + 255;
-                return 0;
-            }();
-
-            for (int i = 0; i < delta; ++i)
-                env.close();
-
-            // Account deletion has a high fee.  Account for that.
-            env(acctdelete(gw, alice),
-                fee(drops(env.current()->fees().increment)));
-            env.close();
-
-            // Verify that gw's account root is gone from the ledger.
-            BEAST_EXPECT(!env.closed()->exists(keylet::account(gw.id())));
-        }
-
-        // alice crosses becky's first offer.  The offer create fails because
-        // the USD issuer is not in the ledger.
-        env(offer(alice, USD(2), XRP(2)), ter(tecNO_ISSUER));
-        env.close();
-        env.require(offers(alice, 0));
-        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
-        //BEAST_EXPECT(isOffer(env, becky, BUX(3), USD(3)));
-
-        // alice crosses becky's second offer.  Again, the offer create fails
-        // because the USD issuer is not in the ledger.
-        env(offer(alice, USD(3), BUX(3)), ter(tecNO_ISSUER));
-        env.require(offers(alice, 0));
-        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
-        //BEAST_EXPECT(isOffer(env, becky, BUX(3), USD(3)));
-
-        // Cancel becky's BUX -> USD offer so we can try auto-bridging.
-        //env(offer_cancel(becky, beckyBuxUsdSeq));
-        //env.close();
-        //BEAST_EXPECT(!isOffer(env, becky, BUX(3), USD(3)));
-
-        // alice creates an offer that can be auto-bridged with becky's
-        // remaining offer.
-        env.trust(BUX(1000), carol);
-        env(pay(alice, carol, BUX(2)));
-
-        env(offer(alice, BUX(2), XRP(2)));
-        env.close();
-
-        // carol attempts the auto-bridge.  Again, the offer create fails
-        // because the USD issuer is not in the ledger.
-        env(offer(carol, USD(2), BUX(2)), ter(tecNO_ISSUER));
-        env.close();
-        BEAST_EXPECT(isOffer(env, alice, BUX(2), XRP(2)));
-        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
-    }
-
-    void
     testAmendment()
     {
         testcase("Amendment");
@@ -4597,7 +4486,7 @@ private:
         // testSellOffer
         testSellWithFillOrKill(all);
         testTransferRateOffer(all);
-        // testSelfIssueOffer
+        testSelfIssueOffer(all);
         testBadPathAssert(all);
         testSellFlagBasic(all);
         testDirectToDirectPath(all);
@@ -4608,11 +4497,9 @@ private:
         // testTinyOffer
         // testSelfPayXferFeeOffer
         // testSelfPayXferFeeOffer
-        testRequireAuth(all);  // *
+        testRequireAuth(all);
         testMissingAuth(all);
         // testRCSmoketest
-        testSelfIssueOffer(all);
-        // testDeletedOfferIssuer
     }
 
     void
@@ -6613,16 +6500,16 @@ private:
     void
     run() override
     {
-        // testCore();
+        testCore();
         testOffers();
-        // testPaths();
-        // testFlow();
-        // testCrossingLimits();
-        // testDeliverMin();
-        // testDepositAuth();
-        // testFreeze();
-        // testMultisign();
-        // testPayStrand();
+        testPaths();
+        testFlow();
+        testCrossingLimits();
+        testDeliverMin();
+        testDepositAuth();
+        testFreeze();
+        testMultisign();
+        testPayStrand();
     }
 };
 

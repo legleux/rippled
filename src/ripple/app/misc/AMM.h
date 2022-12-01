@@ -111,7 +111,7 @@ ammLPHolds(
  */
 NotTEC
 invalidAMMAmount(
-    std::optional<STAmount> const& a,
+    std::optional<STAmount> const& amount,
     std::optional<std::pair<Issue, Issue>> const& pair = std::nullopt,
     bool nonNegative = false);
 

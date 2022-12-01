@@ -65,7 +65,7 @@ AMMLiquidity<TIn, TOut>::generateFibSeqOffer(
 
     cur.in = toAmount<TIn>(
         getIssue(balances.in),
-        (Number(5) / 20000) * initialBalances_.in,
+        InitialFibSeqPct * initialBalances_.in,
         Number::rounding_mode::upward);
     cur.out = swapAssetIn(initialBalances_, cur.in, tradingFee_);
     y = cur.out;
@@ -126,7 +126,7 @@ AMMLiquidity<TIn, TOut>::getOffer(
         if (ammContext_.multiPath())
         {
             auto const offer = generateFibSeqOffer(balances);
-            if (clobQuality && Quality{offer} < *clobQuality)
+            if (clobQuality && Quality{offer} < clobQuality)
                 return std::nullopt;
             return AMMOffer<TIn, TOut>(
                 *this, offer, std::nullopt, Quality{offer});

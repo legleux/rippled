@@ -455,11 +455,9 @@ public:
         auto const srcAcct =
             prevStep ? prevStep->directStepSrcAcct() : std::nullopt;
 
-        return                     // If offer crossing
-            srcAcct &&             // && prevStep is DirectI
-                owner == *srcAcct  // && src is offer owner
-            ? QUALITY_ONE
-            : trIn;  // then rate = QUALITY_ONE
+        return owner == srcAcct  // If offer crossing && prevStep is DirectI
+            ? QUALITY_ONE        // && src is offer owner
+            : trIn;              // then rate = QUALITY_ONE
     }
 
     // See comment on getOfrInRate().

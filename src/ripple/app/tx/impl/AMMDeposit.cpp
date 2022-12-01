@@ -114,22 +114,27 @@ AMMDeposit::preflight(PreflightContext const& ctx)
         return temBAD_AMM_TOKENS;
     }
 
-    if (auto const res =
-            invalidAMMAmount(amount, {{asset, asset2}}, ePrice.has_value()))
+    if (auto const res = invalidAMMAmount(
+            amount,
+            std::make_optional(std::make_pair(asset, asset2)),
+            ePrice.has_value()))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid Asset1In";
         return res;
     }
 
-    if (auto const res = invalidAMMAmount(amount2, {{asset, asset2}}))
+    if (auto const res = invalidAMMAmount(
+            amount2, std::make_optional(std::make_pair(asset, asset2))))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid Asset2InAmount";
         return res;
     }
 
     // must be amount issue
-    if (auto const res =
-            invalidAMMAmount(ePrice, {{amount->issue(), amount->issue()}}))
+    if (auto const res = invalidAMMAmount(
+            ePrice,
+            std::make_optional(
+                std::make_pair(amount->issue(), amount->issue()))))
     {
         JLOG(ctx.j.debug()) << "AMM Deposit: invalid EPrice";
         return res;
@@ -533,8 +538,8 @@ AMMDeposit::equalDepositLimit(
 
 /** Single asset deposit of the amount of asset specified by Asset1In.
  *       t = T * (sqrt(1 + (b - 0.5 * tfee * b) / B) - 1) (3)
- * Use equation 3 to compute amount of LPTokens to be issued, given
- * the amount in Asset1In.
+ * Use equation 3 @see singleDeposit to compute amount of LPTokens to be issued,
+ * given the amount in Asset1In.
  */
 std::pair<TER, STAmount>
 AMMDeposit::singleDeposit(
@@ -585,8 +590,8 @@ AMMDeposit::singleDepositTokens(
  *       of the tokens the trader sold or swapped in (Token B) and
  *       the token they got in return or swapped out (Token A).
  *       EP(B/A) = b/a (III)
- * Use equation 3 to compute the amount of LPTokens out, given the amount
- *   of Asset1In. Let this be X.
+ * Use equation 3 @see singleDeposit to compute the amount of LPTokens out,
+ *   given the amount of Asset1In. Let this be X.
  * Use equation III to compute the effective-price of the trade given
  *   Asset1In amount as the asset in and the LPTokens amount X as asset out.
  *   Let this be Y.
@@ -594,8 +599,8 @@ AMMDeposit::singleDepositTokens(
  *  The amount of asset1 to be deposited is given by amount in Asset1In
  *  The amount of LPTokens to be issued is X
  * If (Y>EPrice) OR (amount in Asset1In does not exist):
- *   Use equations 3 & III and the given EPrice to compute the following
- *     two variables:
+ *   Use equations 3 @see singleDeposit & III and the given EPrice to compute
+ *     the following two variables:
  *       The amount of asset1 in. Let this be Q
  *       The amount of LPTokens out. Let this be W
  *   The amount of asset1 to be deposited is Q
