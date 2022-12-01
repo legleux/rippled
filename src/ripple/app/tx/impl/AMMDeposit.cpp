@@ -393,6 +393,11 @@ AMMDeposit::deposit(
             << amountDeposit;
         return {tecUNFUNDED_AMM, STAmount{}};
     }
+    if (amountDeposit <= beast::zero)
+    {
+        JLOG(ctx_.journal.debug()) << "AMM Deposit: deposit is 0";
+        return {tecAMM_FAILED_DEPOSIT, STAmount{}};
+    }
     auto res =
         accountSend(view, account_, ammAccount, amountDeposit, ctx_.journal);
     if (res != tesSUCCESS)
@@ -411,6 +416,11 @@ AMMDeposit::deposit(
                 << "AMM Deposit: account has insufficient balance to deposit "
                 << *amount2Deposit;
             return {tecUNFUNDED_AMM, STAmount{}};
+        }
+        if (*amount2Deposit <= beast::zero)
+        {
+            JLOG(ctx_.journal.debug()) << "AMM Deposit: deposit2 is 0";
+            return {tecAMM_FAILED_DEPOSIT, STAmount{}};
         }
         res = accountSend(
             view, account_, ammAccount, *amount2Deposit, ctx_.journal);

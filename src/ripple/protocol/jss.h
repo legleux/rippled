@@ -127,6 +127,7 @@ JSS(TakerGets);             // field.
 JSS(TakerPays);             // field.
 JSS(Ticket);                // ledger type.
 JSS(TicketCreate);          // transaction type.
+// JSS(TimeInterval);           // out: AMM Auction Slot
 JSS(TxnSignature);           // field.
 JSS(TradingFee);             // in/out: AMM trading fee
 JSS(TransactionType);        // in: TransactionSign.

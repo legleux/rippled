@@ -102,7 +102,7 @@ ownersCnt(jtx::Env& env, jtx::Account const& id)
 }
 #pragma GCC diagnostic pop
 
-/* TODO Path finding duplicate */
+/* Path finding */
 /******************************************************************************/
 namespace {
 
@@ -295,6 +295,22 @@ ledgerEntryRoot(jtx::Env& env, jtx::Account const& acct)
 }
 
 static auto
+ledgerEntryState(
+    jtx::Env& env,
+    jtx::Account const& acct_a,
+    jtx::Account const& acct_b,
+    std::string const& currency)
+{
+    Json::Value jvParams;
+    jvParams[jss::ledger_index] = "current";
+    jvParams[jss::ripple_state][jss::currency] = currency;
+    jvParams[jss::ripple_state][jss::accounts] = Json::arrayValue;
+    jvParams[jss::ripple_state][jss::accounts].append(acct_a.human());
+    jvParams[jss::ripple_state][jss::accounts].append(acct_b.human());
+    return env.rpc("json", "ledger_entry", to_string(jvParams))[jss::result];
+}
+
+static auto
 accountBalance(jtx::Env& env, jtx::Account const& acct)
 {
     auto const jrr = ledgerEntryRoot(env, acct);
@@ -310,7 +326,7 @@ expectLedgerEntryRoot(
     return accountBalance(env, acct) == to_string(expectedValue.xrp());
 }
 
-/* TODO Escrow test duplicate */
+/* Escrow */
 /******************************************************************************/
 
 static Json::Value
@@ -409,9 +425,10 @@ public:
         jt.jv[sfFulfillment.jsonName] = value_;
     }
 };
+
+/* Payment Channel */
 /******************************************************************************/
-/* TODO Payment Channel test duplicate */
-/******************************************************************************/
+
 static Json::Value
 create(
     AccountID const& account,
@@ -502,9 +519,9 @@ channelBalance(ReadView const& view, uint256 const& chan)
     return (*slep)[sfBalance];
 }
 
+/* Crossing Limits */
 /******************************************************************************/
 
-// Crossing limits
 static void
 n_offers(
     jtx::Env& env,
@@ -522,8 +539,10 @@ n_offers(
     }
     env.require(owners(account, ownerCount + n));
 }
+
+/* Pay Strand */
 /***************************************************************/
-// PayStrand
+
 // Currency path element
 static STPathElement
 cpe(Currency const& c)
@@ -543,6 +562,7 @@ allpe(AccountID const& a, Issue const& iss)
         iss.currency,
         iss.account);
 };
+
 /***************************************************************/
 
 class Test : public jtx::AMMTest
@@ -1274,6 +1294,26 @@ private:
                 std::nullopt,
                 ter(tecINSUF_RESERVE_LINE));
         }
+
+        // Deposit amount is invalid
+        testAMM([&](AMM& ammAlice, Env&) {
+            // Calculated amount to deposit is 98,000,000
+            ammAlice.deposit(
+                alice,
+                USD(0),
+                std::nullopt,
+                STAmount{USD, 1, -1},
+                std::nullopt,
+                ter(tecUNFUNDED_AMM));
+            // Calculated amount is 0
+            ammAlice.deposit(
+                alice,
+                USD(0),
+                std::nullopt,
+                STAmount{USD, 2000, -6},
+                std::nullopt,
+                ter(tecAMM_FAILED_DEPOSIT));
+        });
     }
 
     void
@@ -3050,7 +3090,8 @@ private:
         using namespace jtx;
         Env env{*this, features};
 
-        fund(env, gw, {alice, bob, carol}, XRP(10000), {USD(2000), BTC(2000)});
+        fund(
+            env, gw, {alice, bob, carol}, XRP(10000), {USD(200000), BTC(2000)});
 
         // Must be two offers at the same quality
         // "taker gets" must be XRP
@@ -3063,9 +3104,8 @@ private:
         env(offer(carol, XRP(50), USD(50)));
         env(offer(carol, XRP(50), USD(50)));
 
-        // Offers for the good quality path
-        //env(offer(carol, BTC(1), USD(100)));
-        AMM ammCarol(env, carol, BTC(10), USD(1100));
+        // Good quality path
+        AMM ammCarol(env, carol, BTC(1000), USD(100100));
 
         PathSet paths(Path(XRP, USD), Path(USD));
 
@@ -3073,14 +3113,14 @@ private:
             json(paths.json()),
             sendmax(BTC(1000)),
             txflags(tfPartialPayment));
-        std::cout << ammCarol;
-        std::cout << getAccountLines(env, bob).toStyledString();
-        std::cout << getAccountOffers(env, carol).toStyledString();
 
-        env.require(balance(bob, USD(100)));
-        BEAST_EXPECT(
-            !isOffer(env, carol, BTC(1), USD(100)) &&
-            isOffer(env, carol, BTC(49), XRP(49)));
+        BEAST_EXPECT(ammCarol.expectBalances(
+            STAmount{BTC, UINT64_C(1001000000374812), -12},
+            USD(100000),
+            ammCarol.tokens()));
+
+        env.require(balance(bob, USD(200100)));
+        BEAST_EXPECT(isOffer(env, carol, BTC(49), XRP(49)));
     }
 
     void
@@ -3304,7 +3344,71 @@ private:
     }
 
     void
-    testCurrencyConversionPartial(FeatureBitset features)
+    testOfferCrossWithLimitOverride(FeatureBitset features)
+    {
+        testcase("Offer Crossing with Limit Override");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        env.fund(XRP(200000), gw, alice, bob);
+
+        env(trust(alice, USD(1000)));
+
+        env(pay(gw, alice, alice["USD"](500)));
+
+        AMM ammAlice(env, alice, XRP(150000), USD(51));
+        env(offer(bob, USD(1), XRP(3000)));
+
+        BEAST_EXPECT(
+            ammAlice.expectBalances(XRP(153000), USD(50), ammAlice.tokens()));
+
+        auto jrr = ledgerEntryState(env, bob, gw, "USD");
+        BEAST_EXPECT(jrr[jss::node][sfBalance.fieldName][jss::value] == "-1");
+        jrr = ledgerEntryRoot(env, bob);
+        BEAST_EXPECT(
+            jrr[jss::node][sfBalance.fieldName] ==
+            to_string((XRP(200000) - XRP(3000) - env.current()->fees().base * 1)
+                          .xrp()));
+    }
+
+    void
+    testCurrencyConversionEntire(FeatureBitset features)
+    {
+        testcase("Currency Conversion: Entire Offer");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        fund(env, gw, {alice, bob}, XRP(10000));
+        env.require(owners(bob, 0));
+
+        env(trust(alice, USD(100)));
+        env(trust(bob, USD(1000)));
+        env(pay(gw, bob, USD(1000)));
+
+        env.require(owners(alice, 1), owners(bob, 1));
+
+        env(pay(gw, alice, alice["USD"](100)));
+        AMM ammBob(env, bob, USD(200), XRP(1500));
+
+        env(pay(alice, alice, XRP(500)), sendmax(USD(100)));
+
+        BEAST_EXPECT(
+            ammBob.expectBalances(USD(300), XRP(1000), ammBob.tokens()));
+        BEAST_EXPECT(expectLine(env, alice, USD(0)));
+
+        auto jrr = ledgerEntryRoot(env, alice);
+        BEAST_EXPECT(
+            jrr[jss::node][sfBalance.fieldName] ==
+            to_string((XRP(10000) + XRP(500) - env.current()->fees().base * 2)
+                          .xrp()));
+    }
+
+    void
+    testCurrencyConversionInParts(FeatureBitset features)
     {
         testcase("Currency Conversion: In Parts");
 
@@ -3437,6 +3541,97 @@ private:
             ammCarol.tokens()));
         BEAST_EXPECT(expectOffers(env, dan, 1, {{Amounts{XRP(200), EUR(20)}}}));
         BEAST_EXPECT(expectLine(env, bob, STAmount{EUR1, 30}));
+    }
+
+    void
+    testOfferFeesConsumeFunds(FeatureBitset features)
+    {
+        testcase("Offer Fees Consume Funds");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        auto const gw1 = Account{"gateway_1"};
+        auto const gw2 = Account{"gateway_2"};
+        auto const gw3 = Account{"gateway_3"};
+        auto const alice = Account{"alice"};
+        auto const bob = Account{"bob"};
+        auto const USD1 = gw1["USD"];
+        auto const USD2 = gw2["USD"];
+        auto const USD3 = gw3["USD"];
+
+        // Provide micro amounts to compensate for fees to make results round
+        // nice.
+        // reserve: Alice has 3 entries in the ledger, via trust lines
+        // fees:
+        //  1 for each trust limit == 3 (alice < mtgox/amazon/bitstamp) +
+        //  1 for payment          == 4
+        auto const starting_xrp = XRP(100) +
+            env.current()->fees().accountReserve(3) +
+            env.current()->fees().base * 4;
+
+        env.fund(starting_xrp, gw1, gw2, gw3, alice);
+        env.fund(XRP(2000), bob);
+
+        env(trust(alice, USD1(1000)));
+        env(trust(alice, USD2(1000)));
+        env(trust(alice, USD3(1000)));
+        env(trust(bob, USD1(1200)));
+        env(trust(bob, USD2(1100)));
+
+        env(pay(gw1, bob, bob["USD"](1200)));
+
+        AMM ammBob(env, bob, XRP(1000), USD1(1200));
+        // Alice has 350 fees - a reserve of 50 = 250 reserve = 100 available.
+        // Ask for more than available to prove reserve works.
+        env(offer(alice, USD1(200), XRP(200)));
+
+        // The pool gets only 100XRP for ~109.09USD, even though
+        // it can exchange more.
+        BEAST_EXPECT(ammBob.expectBalances(
+            XRP(1100),
+            STAmount{USD1, UINT64_C(1090909090909091), -12},
+            ammBob.tokens()));
+
+        auto jrr = ledgerEntryState(env, alice, gw1, "USD");
+        BEAST_EXPECT(
+            jrr[jss::node][sfBalance.fieldName][jss::value] ==
+            "109.090909090909");
+        jrr = ledgerEntryRoot(env, alice);
+        BEAST_EXPECT(
+            jrr[jss::node][sfBalance.fieldName] == XRP(350).value().getText());
+    }
+
+    void
+    testOfferCreateThenCross(FeatureBitset features)
+    {
+        testcase("Offer Create, then Cross");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        fund(env, gw, {alice, bob}, XRP(200000));
+
+        env(rate(gw, 1.005));
+
+        env(trust(alice, USD(1000)));
+        env(trust(bob, USD(1000)));
+
+        env(pay(gw, bob, USD(1)));
+        env(pay(gw, alice, USD(200)));
+
+        AMM ammAlice(env, alice, USD(150), XRP(150100));
+        env(offer(bob, XRP(100), USD(0.1)));
+
+        BEAST_EXPECT(ammAlice.expectBalances(
+            USD(150.1), XRP(150000), ammAlice.tokens()));
+
+        auto const jrr = ledgerEntryState(env, bob, gw, "USD");
+        // Bob pays 0.005 transfer fee. Note 10**-10 round-off.
+        BEAST_EXPECT(
+            jrr[jss::node][sfBalance.fieldName][jss::value] == "-0.8995000001");
     }
 
     void
@@ -4060,6 +4255,72 @@ private:
     }
 
     void
+    testDirectToDirectPath(FeatureBitset features)
+    {
+        // The offer crossing code expects that a DirectStep is always
+        // preceded by a BookStep.  In one instance the default path
+        // was not matching that assumption.  Here we recreate that case
+        // so we can prove the bug stays fixed.
+        testcase("Direct to Direct path");
+
+        using namespace jtx;
+
+        Env env{*this, features};
+
+        auto const ann = Account("ann");
+        auto const bob = Account("bob");
+        auto const cam = Account("cam");
+        auto const carol = Account("carol");
+        auto const A_BUX = ann["BUX"];
+        auto const B_BUX = bob["BUX"];
+
+        auto const fee = env.current()->fees().base;
+        env.fund(XRP(1000), carol);
+        env.fund(reserve(env, 4) + (fee * 5), ann, bob, cam);
+        env.close();
+
+        env(trust(ann, B_BUX(40)));
+        env(trust(cam, A_BUX(40)));
+        env(trust(bob, A_BUX(30)));
+        env(trust(cam, B_BUX(40)));
+        env(trust(carol, B_BUX(400)));
+        env(trust(carol, A_BUX(400)));
+        env.close();
+
+        env(pay(ann, cam, A_BUX(35)));
+        env(pay(bob, cam, B_BUX(35)));
+        env(pay(bob, carol, B_BUX(400)));
+        env(pay(ann, carol, A_BUX(400)));
+
+        AMM ammCarol(env, carol, A_BUX(300), B_BUX(330));
+
+        // cam puts an offer on the books that her upcoming offer could cross.
+        // But this offer should be deleted, not crossed, by her upcoming
+        // offer.
+        env(offer(cam, A_BUX(29), B_BUX(30), tfPassive));
+        env.close();
+        env.require(balance(cam, A_BUX(35)));
+        env.require(balance(cam, B_BUX(35)));
+        env.require(offers(cam, 1));
+
+        // This offer caused the assert.
+        env(offer(cam, B_BUX(30), A_BUX(30)));
+
+        // AMM is consumed up to the first cam Offer quality
+        BEAST_EXPECT(ammCarol.expectBalances(
+            STAmount{A_BUX, UINT64_C(3093541659651603), -13},
+            STAmount{B_BUX, UINT64_C(3200215509984419), -13},
+            ammCarol.tokens()));
+        BEAST_EXPECT(expectOffers(
+            env,
+            cam,
+            1,
+            {{Amounts{
+                STAmount{B_BUX, UINT64_C(200215509984419), -13},
+                STAmount{A_BUX, UINT64_C(200215509984419), -13}}}}));
+    }
+
+    void
     testRequireAuth(FeatureBitset features)
     {
         testcase("lsfRequireAuth");
@@ -4177,6 +4438,117 @@ private:
     }
 
     void
+    testDeletedOfferIssuer(FeatureBitset features)
+    {
+        // Show that an offer who's issuer has been deleted cannot be crossed.
+        using namespace jtx;
+
+        testcase("Deleted offer issuer");
+
+        auto trustLineExists = [](jtx::Env const& env,
+                                  jtx::Account const& src,
+                                  jtx::Account const& dst,
+                                  Currency const& cur) -> bool {
+            return bool(env.le(keylet::line(src, dst, cur)));
+        };
+
+        Account const alice("alice");
+        Account const becky("becky");
+        Account const carol("carol");
+        Account const gw("gateway");
+        auto const USD = gw["USD"];
+        auto const BUX = alice["BUX"];
+
+        Env env{*this, features};
+
+        env.fund(XRP(10000), alice, carol, noripple(gw));
+        env.fund(XRP(10000), becky);
+        env.trust(USD(1000), becky);
+        env.trust(BUX(1000), becky);
+        env(pay(gw, becky, USD(200)));
+        env(pay(alice, becky, BUX(100)));
+        env.close();
+        BEAST_EXPECT(trustLineExists(env, gw, becky, USD.currency));
+
+        // Make offers that produce USD and can be crossed two ways:
+        // direct XRP -> USD
+        // direct BUX -> USD
+        //env(offer(becky, XRP(2), USD(2)), txflags(tfPassive));
+        //std::uint32_t const beckyBuxUsdSeq{env.seq(becky)};
+        //env(offer(becky, BUX(3), USD(3)), txflags(tfPassive));
+        //env.close();
+        AMM ammBeckyXRP_USD(env, becky, XRP(100), USD(100));
+        AMM ammBeckyBUX_USD(env, becky, BUX(100), USD(100));
+
+        // becky keeps the offers, but removes the trustline.
+        //env(pay(becky, gw, USD(5)));
+        env.trust(USD(0), becky);
+        env.close();
+        BEAST_EXPECT(!trustLineExists(env, gw, becky, USD.currency));
+        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
+        //BEAST_EXPECT(isOffer(env, becky, BUX(3), USD(3)));
+
+        // Delete gw's account.
+        {
+            // The ledger sequence needs to far enough ahead of the account
+            // sequence before the account can be deleted.
+            int const delta =
+                [&env, &gw, openLedgerSeq = env.current()->seq()]() -> int {
+                std::uint32_t const gwSeq{env.seq(gw)};
+                if (gwSeq + 255 > openLedgerSeq)
+                    return gwSeq - openLedgerSeq + 255;
+                return 0;
+            }();
+
+            for (int i = 0; i < delta; ++i)
+                env.close();
+
+            // Account deletion has a high fee.  Account for that.
+            env(acctdelete(gw, alice),
+                fee(drops(env.current()->fees().increment)));
+            env.close();
+
+            // Verify that gw's account root is gone from the ledger.
+            BEAST_EXPECT(!env.closed()->exists(keylet::account(gw.id())));
+        }
+
+        // alice crosses becky's first offer.  The offer create fails because
+        // the USD issuer is not in the ledger.
+        env(offer(alice, USD(2), XRP(2)), ter(tecNO_ISSUER));
+        env.close();
+        env.require(offers(alice, 0));
+        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
+        //BEAST_EXPECT(isOffer(env, becky, BUX(3), USD(3)));
+
+        // alice crosses becky's second offer.  Again, the offer create fails
+        // because the USD issuer is not in the ledger.
+        env(offer(alice, USD(3), BUX(3)), ter(tecNO_ISSUER));
+        env.require(offers(alice, 0));
+        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
+        //BEAST_EXPECT(isOffer(env, becky, BUX(3), USD(3)));
+
+        // Cancel becky's BUX -> USD offer so we can try auto-bridging.
+        //env(offer_cancel(becky, beckyBuxUsdSeq));
+        //env.close();
+        //BEAST_EXPECT(!isOffer(env, becky, BUX(3), USD(3)));
+
+        // alice creates an offer that can be auto-bridged with becky's
+        // remaining offer.
+        env.trust(BUX(1000), carol);
+        env(pay(alice, carol, BUX(2)));
+
+        env(offer(alice, BUX(2), XRP(2)));
+        env.close();
+
+        // carol attempts the auto-bridge.  Again, the offer create fails
+        // because the USD issuer is not in the ledger.
+        env(offer(carol, USD(2), BUX(2)), ter(tecNO_ISSUER));
+        env.close();
+        BEAST_EXPECT(isOffer(env, alice, BUX(2), XRP(2)));
+        //BEAST_EXPECT(isOffer(env, becky, XRP(2), USD(2)));
+    }
+
+    void
     testAmendment()
     {
         testcase("Amendment");
@@ -4204,30 +4576,42 @@ private:
     {
         using namespace jtx;
         FeatureBitset const all{supported_amendments()};
-        //testRmFundedOffer(all);
+        testRmFundedOffer(all);
         testEnforceNoRipple(all);
         testFillModes(all);
-        // testUnfundedCross
-        // testNegativeBalance
         testOfferCrossWithXRP(all);
-        // testOfferCrossWithLimitOverride
-        // testCurrencyConversionIntoDebt
-        testCurrencyConversionPartial(all);
+        testOfferCrossWithLimitOverride(all);
+        testCurrencyConversionEntire(all);
+        testCurrencyConversionInParts(all);
         testCrossCurrencyStartXRP(all);
         testCrossCurrencyEndXRP(all);
         testCrossCurrencyBridged(all);
-        // testBridgedSecondLegDry
-        testSellFlagBasic(all);
+        testOfferFeesConsumeFunds(all);
+        testOfferCreateThenCross(all);
         testSellFlagExceedLimit(all);
         testGatewayCrossCurrency(all);
+        // testPartialCross
+        // testXRPDirectCross
+        // testDirectCross
         testBridgedCross(all);
+        // testSellOffer
         testSellWithFillOrKill(all);
         testTransferRateOffer(all);
-        testSelfIssueOffer(all);
+        // testSelfIssueOffer
         testBadPathAssert(all);
-        testRequireAuth(all);
+        testSellFlagBasic(all);
+        testDirectToDirectPath(all);
+        // testSelfCrossLowQualityOffer
+        // testOfferInScaling
+        // testOfferInScalingWithXferRate
+        // testOfferThresholdWithReducedFunds
+        // testTinyOffer
+        // testSelfPayXferFeeOffer
+        // testSelfPayXferFeeOffer
+        testRequireAuth(all);  // *
         testMissingAuth(all);
         // testRCSmoketest
+        testSelfIssueOffer(all);
         // testDeletedOfferIssuer
     }
 
@@ -6229,16 +6613,16 @@ private:
     void
     run() override
     {
-        testCore();
+        // testCore();
         testOffers();
-        testPaths();
-        testFlow();
-        testCrossingLimits();
-        testDeliverMin();
-        testDepositAuth();
-        testFreeze();
-        testMultisign();
-        testPayStrand();
+        // testPaths();
+        // testFlow();
+        // testCrossingLimits();
+        // testDeliverMin();
+        // testDepositAuth();
+        // testFreeze();
+        // testMultisign();
+        // testPayStrand();
     }
 };
 
