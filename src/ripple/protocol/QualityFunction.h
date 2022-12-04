@@ -20,6 +20,7 @@
 #ifndef RIPPLE_PROTOCOL_QUALITYFUNCTION_H_INCLUDED
 #define RIPPLE_PROTOCOL_QUALITYFUNCTION_H_INCLUDED
 
+#include <ripple/app/misc/AMM_formulae.h>
 #include <ripple/basics/Number.h>
 
 namespace ripple {
@@ -48,7 +49,10 @@ public:
     };
     QualityFunction(Quality const& quality, CLOBLikeTag);
     template <typename TIn, typename TOut>
-    QualityFunction(TAmounts<TIn, TOut> const& amounts, AMMTag);
+    QualityFunction(
+        TAmounts<TIn, TOut> const& amounts,
+        std::uint32_t tfee,
+        AMMTag);
     QualityFunction();
 
     /** Combines QF with the next step QF
@@ -75,12 +79,13 @@ public:
 template <typename TIn, typename TOut>
 QualityFunction::QualityFunction(
     TAmounts<TIn, TOut> const& amounts,
+    std::uint32_t tfee,
     QualityFunction::AMMTag)
 {
     if (amounts.in <= beast::zero || amounts.out <= beast::zero)
         Throw<std::runtime_error>("QualityFunction amounts are 0.");
-    m_ = -1 / amounts.in;
-    b_ = amounts.out / amounts.in;
+    m_ = -feeMult(tfee) / amounts.in;
+    b_ = amounts.out * feeMult(tfee) / amounts.in;
 }
 
 }  // namespace ripple

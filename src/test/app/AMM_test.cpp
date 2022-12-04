@@ -2596,6 +2596,7 @@ private:
             env(claim(carol, chan, reqBal, authAmt), ter(tecNO_PERMISSION));
         });
 
+        // Deliver amounts close to one side of the pool
         testAMM(
             [&](AMM& ammAlice, Env& env) {
                 // Can't consume whole pool
@@ -2809,6 +2810,23 @@ private:
                 BEAST_EXPECT(expectOffers(env, bob, 0));
             },
             {{XRP(10000), USD(10100)}});
+
+        // Default path with AMM and Order Book offer.
+        // Order Book offer is consumed first.
+        // Remaining amount is consumed by AMM.
+        {
+            Env env(*this);
+            fund(env, gw, {alice, bob, carol}, XRP(20000), {USD(2000)});
+            env(offer(bob, XRP(50), USD(150)), txflags(tfPassive));
+            AMM ammAlice(env, alice, XRP(1000), USD(1050));
+            env(pay(alice, carol, USD(200)),
+                sendmax(XRP(200)),
+                txflags(tfPartialPayment));
+            BEAST_EXPECT(ammAlice.expectBalances(
+                XRP(1050), USD(1000), ammAlice.tokens()));
+            BEAST_EXPECT(expectLine(env, carol, USD(2200)));
+            BEAST_EXPECT(expectOffers(env, bob, 0));
+        }
 
         // Offer crossing XRP/IOU
         testAMM(

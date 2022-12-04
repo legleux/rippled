@@ -107,7 +107,8 @@ AMMOffer<TIn, TOut>::getQF() const
 {
     if (ammLiquidity_.multiPath())
         return QualityFunction{quality(), QualityFunction::CLOBLikeTag{}};
-    return QualityFunction{*balances_, QualityFunction::AMMTag{}};
+    return QualityFunction{
+        *balances_, ammLiquidity_.tradingFee(), QualityFunction::AMMTag{}};
 }
 
 template class AMMOffer<STAmount, STAmount>;
