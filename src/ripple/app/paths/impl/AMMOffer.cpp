@@ -76,7 +76,7 @@ AMMOffer<TIn, TOut>::consume(
     // in BookStep::consumeOffer().
 
     // Let the context know AMM offer is consumed
-    ammLiquidity_.context().setAMMUsed();
+    ammLiquidity_.consumedLiquidity();
 }
 
 template <typename TIn, typename TOut>

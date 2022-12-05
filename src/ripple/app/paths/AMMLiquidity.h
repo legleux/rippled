@@ -29,6 +29,8 @@
 #include "ripple/protocol/Quality.h"
 #include "ripple/protocol/STLedgerEntry.h"
 
+#include <functional>
+
 namespace ripple {
 
 template <typename TIn, typename TOut>
@@ -52,6 +54,12 @@ template <typename TIn, typename TOut>
 class AMMLiquidity
 {
 private:
+    template <typename TAmtIn, typename TAmtOut>
+    friend void
+    ammBalanceUpdater(
+        AMMLiquidity<TAmtIn, TAmtOut>& ammLiquidity,
+        ReadView const& view);
+    using AMMBalanceUpdater = std::function<void(ReadView const&)>;
     inline static const Number InitialFibSeqPct = Number(5) / 20000;
     AMMContext& ammContext_;
     AccountID const ammAccountID_;
@@ -60,6 +68,9 @@ private:
     Issue const issueOut_;
     // Initial AMM pool balances
     TAmounts<TIn, TOut> const initialBalances_;
+    // Balances updated after each payment engine iteration
+    TAmounts<TIn, TOut> balances_;
+    AMMBalanceUpdater updater_;
     beast::Journal const j_;
 
 public:
@@ -121,11 +132,22 @@ public:
         return issueOut_;
     }
 
+    void
+    consumedLiquidity() const
+    {
+        ammContext_.consumedLiquidity(updater_);
+    }
+
 private:
     /** Fetches current AMM balances.
      */
     TAmounts<TIn, TOut>
     fetchBalances(ReadView const& view) const;
+
+    /** Update AMM balances after payment engine iteration
+     */
+    void
+    updateBalances(ReadView const& view);
 
     /** Generate AMM offers with the offer size based on Fibonacci sequence.
      * The sequence corresponds to the payment engine iterations with AMM
@@ -135,6 +157,13 @@ private:
     TAmounts<TIn, TOut>
     generateFibSeqOffer(TAmounts<TIn, TOut> const& balances) const;
 };
+
+template <typename TIn, typename TOut>
+void
+ammBalanceUpdater(AMMLiquidity<TIn, TOut>& ammLiquidity, ReadView const& view)
+{
+    ammLiquidity.updateBalances(view);
+}
 
 }  // namespace ripple
 
