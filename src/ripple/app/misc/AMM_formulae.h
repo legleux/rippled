@@ -139,7 +139,7 @@ ammLPTokens(
 inline Number
 getFee(std::uint16_t tfee)
 {
-    return Number{tfee} / Number{100000};
+    return Number{tfee} / Number{10000};
 }
 
 /** Get fee multiplier (1 - tfee)
