@@ -135,6 +135,7 @@ ammLPTokens(
 
 /** Convert to the fee from the basis points
  * @param tfee  trading fee in basis points
+ * 1bp = 0.01%
  */
 inline Number
 getFee(std::uint16_t tfee)
