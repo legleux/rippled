@@ -614,7 +614,7 @@ ammExcepHandler(F&& f) -> decltype(f())
     }
     catch (std::overflow_error const& ex)
     {
-        // Overflow from Number, possible on swap
+        // Number overflow, possible on swap
         // and other AMM formulas
         if (std::string(ex.what()).starts_with("Number"))
             throw FlowException(tecPATH_DRY, ex.what());
