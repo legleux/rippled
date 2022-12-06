@@ -1013,6 +1013,25 @@ private:
             AMM ammAlice(
                 env, alice, EUR(1000), USD(1000), ter(tecINSUF_RESERVE_LINE));
         }
+
+        // Insufficient fee
+        {
+            Env env(*this);
+            auto const fee = env.current()->fees().increment.drops();
+            fund(env, gw, {gw, alice}, XRP(2000), {USD(2000), EUR(2000)});
+            AMM ammAlice(
+                env,
+                alice,
+                EUR(1000),
+                USD(1000),
+                false,
+                0,
+                fee - 1,
+                std::nullopt,
+                std::nullopt,
+                std::nullopt,
+                ter(telINSUF_FEE_P));
+        }
     }
 
     void

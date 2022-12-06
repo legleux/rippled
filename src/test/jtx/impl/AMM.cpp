@@ -102,6 +102,8 @@ AMM::create(
         jv[jss::Flags] = *flags;
     if (fee_ != 0)
         jv[jss::Fee] = std::to_string(fee_);
+    else
+        jv[jss::Fee] = std::to_string(env_.current()->fees().increment.drops());
     submit(jv, seq, ter_);
 
     if (!ter_ || env_.ter() == tesSUCCESS)

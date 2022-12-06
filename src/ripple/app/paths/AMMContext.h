@@ -20,11 +20,8 @@
 #ifndef RIPPLE_APP_PATHS_IMPL_AMMCONTEXT_H_INCLUDED
 #define RIPPLE_APP_PATHS_IMPL_AMMCONTEXT_H_INCLUDED
 
-#include <ripple/ledger/ReadView.h>
 #include <ripple/protocol/AccountID.h>
-
 #include <cstdint>
-#include <functional>
 
 namespace ripple {
 
@@ -37,7 +34,6 @@ namespace ripple {
 class AMMContext
 {
 private:
-    using AMMBalanceUpdater = std::function<void(ReadView const&)>;
     constexpr static std::uint8_t MaxIterations = 4;
     // Tx account owner is required to get the AMM trading fee in BookStep
     AccountID account_;
@@ -47,8 +43,6 @@ private:
     bool ammUsed_{false};
     // Counter of payment engine iterations with consumed AMM
     std::uint16_t ammIters_{0};
-    // Potentially consumed AMM liquidity, which requires balance update
-    std::vector<AMMBalanceUpdater> updaters_;
 
 public:
     AMMContext(AccountID const& account, bool multiPath)
@@ -73,21 +67,18 @@ public:
     }
 
     void
-    consumedLiquidity(AMMBalanceUpdater updater)
+    setAMMUsed()
     {
         if (multiPath_)
             ammUsed_ = true;
-        updaters_.push_back(updater);
     }
 
     void
-    update(ReadView const& view)
+    update()
     {
         if (ammUsed_ > 0)
             ++ammIters_;
         ammUsed_ = false;
-        for (auto updater : updaters_)
-            updater(view);
     }
 
     bool
@@ -115,7 +106,6 @@ public:
     clear()
     {
         ammUsed_ = false;
-        updaters_.clear();
     }
 };
 
