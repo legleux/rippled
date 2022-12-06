@@ -594,6 +594,12 @@ protected:
         return env.current()->fees().accountReserve(count);
     }
 
+    XRPAmount
+    ammCrtFee(jtx::Env& env)
+    {
+        return env.current()->fees().increment;
+    }
+
     /* TODO: code duplication with Path_test
      ***********************************************/
     class gate
@@ -1017,8 +1023,7 @@ private:
         // Insufficient fee
         {
             Env env(*this);
-            auto const fee = env.current()->fees().increment.drops();
-            fund(env, gw, {gw, alice}, XRP(2000), {USD(2000), EUR(2000)});
+            fund(env, gw, {alice}, XRP(2000), {USD(2000), EUR(2000)});
             AMM ammAlice(
                 env,
                 alice,
@@ -1026,7 +1031,7 @@ private:
                 USD(1000),
                 false,
                 0,
-                fee - 1,
+                ammCrtFee(env).drops() - 1,
                 std::nullopt,
                 std::nullopt,
                 std::nullopt,
@@ -2820,12 +2825,12 @@ private:
                 // Initial 30,000 + 200
                 BEAST_EXPECT(expectLine(env, carol, USD(30200)));
                 // Initial 30,000 - 10000(AMM pool LP) - 100(AMM offer) -
-                // - 100(offer) - 20(tx fee)
+                // - 100(offer) - 10(tx fee) - one reserve
                 BEAST_EXPECT(expectLedgerEntryRoot(
                     env,
                     alice,
                     XRP(30000) - XRP(10000) - XRP(100) - XRP(100) -
-                        txfee(env, 2)));
+                        ammCrtFee(env) - txfee(env, 1)));
                 BEAST_EXPECT(expectOffers(env, bob, 0));
             },
             {{XRP(10000), USD(10100)}});
@@ -3205,7 +3210,8 @@ private:
             auto const USD1 = gw1["USD"];
             auto const USD2 = gw2["USD"];
 
-            env.fund(XRP(20000), alice, bob, carol, dan, gw1, gw2);
+            env.fund(XRP(20000), alice, bob, carol, gw1, gw2);
+            env.fund(XRP(20000), dan);
             env.trust(USD1(20000), alice, bob, carol, dan);
             env.trust(USD2(1000), alice, bob, carol, dan);
 
@@ -3474,7 +3480,7 @@ private:
                     env,
                     alice,
                     XRP(30000) - XRP(10000) + XRPAmount{99009900} -
-                        txfee(env, 3)));
+                        ammCrtFee(env) - txfee(env, 2)));
             },
             {{XRP(10000), USD(10000)}},
             0,
@@ -4960,7 +4966,7 @@ private:
         // different from the original test
         fund(env, gw, {carol}, XRP(10000), {}, Fund::Acct);
         auto const AMMXRPPool = env.current()->fees().increment * 2;
-        env.fund(reserve(env, 5) + AMMXRPPool, bob);
+        env.fund(reserve(env, 5) + ammCrtFee(env) + AMMXRPPool, bob);
         env.trust(USD(1000), alice, bob, carol);
         env.trust(EUR(1000), alice, bob, carol);
 
@@ -5060,8 +5066,8 @@ private:
 
             BEAST_EXPECT(expectLedgerEntryRoot(
                 env, alice, xrpMinusFee(env, 10000 - 50)));
-            BEAST_EXPECT(
-                expectLedgerEntryRoot(env, bob, xrpMinusFee(env, 10000 - 100)));
+            BEAST_EXPECT(expectLedgerEntryRoot(
+                env, bob, XRP(10000) - XRP(100) - ammCrtFee(env)));
             BEAST_EXPECT(expectLine(env, bob, USD(0)));
             BEAST_EXPECT(expectLine(env, carol, USD(200)));
             BEAST_EXPECT(
@@ -5084,8 +5090,8 @@ private:
             env(pay(alice, carol, XRP(50)), path(~XRP), sendmax(USD(50)));
 
             BEAST_EXPECT(expectLine(env, alice, USD(50)));
-            BEAST_EXPECT(
-                expectLedgerEntryRoot(env, bob, xrpMinusFee(env, 10000 - 150)));
+            BEAST_EXPECT(expectLedgerEntryRoot(
+                env, bob, XRP(10000) - XRP(150) - ammCrtFee(env)));
             BEAST_EXPECT(expectLine(env, bob, USD(0)));
             BEAST_EXPECT(expectLedgerEntryRoot(env, carol, XRP(10000 + 50)));
             BEAST_EXPECT(
@@ -5095,7 +5101,8 @@ private:
             // test unfunded offers are removed when payment succeeds
             Env env(*this, features);
 
-            env.fund(XRP(10000), alice, bob, carol, gw);
+            env.fund(XRP(10000), alice, carol, gw);
+            env.fund(XRP(10000), bob);
             env.trust(USD(1000), alice, bob, carol);
             env.trust(BTC(1000), alice, bob, carol);
             env.trust(EUR(1000), alice, bob, carol);
@@ -6262,7 +6269,7 @@ private:
             USD(10000),
             false,
             0,
-            txfee(env, 3).drops(),
+            ammCrtFee(env).drops(),
             std::nullopt,
             std::nullopt,
             msig(becky, bogie),

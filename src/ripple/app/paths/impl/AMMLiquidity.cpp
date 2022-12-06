@@ -36,11 +36,6 @@ AMMLiquidity<TIn, TOut>::AMMLiquidity(
     , issueIn_(in)
     , issueOut_(out)
     , initialBalances_{fetchBalances(view)}
-    , balances_(initialBalances_)
-    , updater_(std::bind(
-          ammBalanceUpdater<TIn, TOut>,
-          std::ref(*this),
-          std::placeholders::_1))
     , j_(j)
 {
 }
@@ -56,13 +51,6 @@ AMMLiquidity<TIn, TOut>::fetchBalances(ReadView const& view) const
         Throw<std::runtime_error>("AMMLiquidity: invalid balances");
 
     return TAmounts{get<TIn>(assetIn), get<TOut>(assetOut)};
-}
-
-template <typename TIn, typename TOut>
-void
-AMMLiquidity<TIn, TOut>::updateBalances(ReadView const& view)
-{
-    balances_ = fetchBalances(view);
 }
 
 template <typename TIn, typename TOut>
@@ -111,22 +99,24 @@ AMMLiquidity<TIn, TOut>::getOffer(
     if (ammContext_.maxItersReached())
         return std::nullopt;
 
+    auto const balances = fetchBalances(view);
+
     // Frozen accounts
-    if (balances_.in == beast::zero || balances_.out == beast::zero)
+    if (balances.in == beast::zero || balances.out == beast::zero)
     {
         JLOG(j_.debug()) << "AMMLiquidity::getOffer, frozen accounts";
         return std::nullopt;
     }
 
-    JLOG(j_.debug()) << "AMMLiquidity::getOffer balances_ "
+    JLOG(j_.debug()) << "AMMLiquidity::getOffer balances "
                      << to_string(initialBalances_.in) << " "
-                     << to_string(initialBalances_.out) << " new balances_ "
-                     << to_string(balances_.in) << " "
-                     << to_string(balances_.out);
+                     << to_string(initialBalances_.out) << " new balances "
+                     << to_string(balances.in) << " "
+                     << to_string(balances.out);
 
     // Can't generate AMM with a better quality than CLOB's
     // quality if AMM's Spot Price quality is less than CLOB quality.
-    if (clobQuality && Quality{balances_} < *clobQuality)
+    if (clobQuality && Quality{balances} < *clobQuality)
     {
         JLOG(j_.debug()) << "AMMLiquidity::getOffer, higher clob quality";
         return std::nullopt;
@@ -135,7 +125,7 @@ AMMLiquidity<TIn, TOut>::getOffer(
     auto offer = [&]() -> std::optional<AMMOffer<TIn, TOut>> {
         if (ammContext_.multiPath())
         {
-            auto const offer = generateFibSeqOffer(balances_);
+            auto const offer = generateFibSeqOffer(balances);
             if (clobQuality && Quality{offer} < clobQuality)
                 return std::nullopt;
             return AMMOffer<TIn, TOut>(
@@ -143,14 +133,14 @@ AMMLiquidity<TIn, TOut>::getOffer(
         }
         else if (
             auto const offer = clobQuality
-                ? changeSpotPriceQuality(balances_, *clobQuality, tradingFee_)
-                : balances_)
+                ? changeSpotPriceQuality(balances, *clobQuality, tradingFee_)
+                : balances)
         {
-            // If the offer size is equal to the balances_ then change the size
+            // If the offer size is equal to the balances then change the size
             // to simulate output equal to the entire pool's amount and
             // infinite input. This is handled in BookStep since there is
             // always limit on deliver amount
-            if (balances_ == offer)
+            if (balances == offer)
             {
                 auto const in = [&]() -> TIn {
                     if constexpr (std::is_same_v<TIn, XRPAmount>)
@@ -164,12 +154,12 @@ AMMLiquidity<TIn, TOut>::getOffer(
                 }();
                 return AMMOffer<TIn, TOut>(
                     *this,
-                    TAmounts<TIn, TOut>{in, balances_.out},
-                    balances_,
-                    Quality{balances_});
+                    TAmounts<TIn, TOut>{in, balances.out},
+                    balances,
+                    Quality{balances});
             }
             return AMMOffer<TIn, TOut>(
-                *this, *offer, balances_, Quality{*offer});
+                *this, *offer, balances, Quality{*offer});
         }
         return std::nullopt;
     }();
@@ -178,8 +168,9 @@ AMMLiquidity<TIn, TOut>::getOffer(
         offer->amount().out > beast::zero)
     {
         JLOG(j_.debug()) << "AMMLiquidity::getOffer, created "
-                         << to_string(offer->amount().in) << issueIn_ << " "
-                         << to_string(offer->amount().out) << issueOut_;
+                         << to_string(offer->amount().in) << "/" << issueIn_
+                         << " " << to_string(offer->amount().out) << "/"
+                         << issueOut_;
         return offer;
     }
     else
