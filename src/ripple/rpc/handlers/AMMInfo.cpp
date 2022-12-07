@@ -148,25 +148,25 @@ doAMMInfo(RPC::JsonContext& context)
         : (*amm)[sfLPTokenBalance];
 
     Json::Value ammResult;
-    asset1Balance.setJson(ammResult[jss::Amount]);
-    asset2Balance.setJson(ammResult[jss::Amount2]);
-    lptAMMBalance.setJson(ammResult[jss::LPToken]);
-    ammResult[jss::TradingFee] = (*amm)[sfTradingFee];
-    ammResult[jss::AMMAccount] = to_string(ammAccountID);
+    asset1Balance.setJson(ammResult[jss::amount]);
+    asset2Balance.setJson(ammResult[jss::amount2]);
+    lptAMMBalance.setJson(ammResult[jss::lp_token]);
+    ammResult[jss::trading_fee] = (*amm)[sfTradingFee];
+    ammResult[jss::amm_account] = to_string(ammAccountID);
     Json::Value voteSlots(Json::arrayValue);
     if (amm->isFieldPresent(sfVoteSlots))
     {
         for (auto const& voteEntry : amm->getFieldArray(sfVoteSlots))
         {
             Json::Value vote;
-            vote[jss::Account] = to_string(voteEntry.getAccountID(sfAccount));
-            vote[jss::TradingFee] = voteEntry[sfTradingFee];
-            vote[jss::VoteWeight] = voteEntry[sfVoteWeight];
+            vote[jss::account] = to_string(voteEntry.getAccountID(sfAccount));
+            vote[jss::trading_fee] = voteEntry[sfTradingFee];
+            vote[jss::vote_weight] = voteEntry[sfVoteWeight];
             voteSlots.append(vote);
         }
     }
     if (voteSlots.size() > 0)
-        ammResult[jss::VoteSlots] = voteSlots;
+        ammResult[jss::vote_slots] = voteSlots;
     if (amm->isFieldPresent(sfAuctionSlot))
     {
         auto const& auctionSlot =
@@ -177,12 +177,13 @@ doAMMInfo(RPC::JsonContext& context)
             auto const timeSlot = ammAuctionTimeSlot(
                 ledger->info().parentCloseTime.time_since_epoch().count(),
                 auctionSlot);
-            result[jss::time_interval] = timeSlot ? *timeSlot : 0;
-            auctionSlot[sfPrice].setJson(auction[jss::Price]);
-            auction[jss::DiscountedFee] = auctionSlot[sfDiscountedFee];
-            auction[jss::Account] =
+            auction[jss::time_interval] = timeSlot ? *timeSlot : 0;
+            auctionSlot[sfPrice].setJson(auction[jss::price]);
+            auction[jss::discounted_fee] = auctionSlot[sfDiscountedFee];
+            auction[jss::account] =
                 to_string(auctionSlot.getAccountID(sfAccount));
-            auction[jss::Expiration] = auctionSlot[sfExpiration];
+            auction[jss::expiration] = to_string(NetClock::time_point{
+                NetClock::duration{auctionSlot[sfExpiration]}});
             if (auctionSlot.isFieldPresent(sfAuthAccounts))
             {
                 Json::Value auth;
@@ -190,27 +191,28 @@ doAMMInfo(RPC::JsonContext& context)
                      auctionSlot.getFieldArray(sfAuthAccounts))
                 {
                     Json::Value jv;
-                    jv[jss::AuthAccount][jss::Account] =
-                        to_string(acct.getAccountID(sfAccount));
+                    jv[jss::account] = to_string(acct.getAccountID(sfAccount));
                     auth.append(jv);
                 }
-                auction[jss::AuthAccounts] = auth;
+                auction[jss::auth_accounts] = auth;
             }
-            ammResult[jss::AuctionSlot] = auction;
+            ammResult[jss::auction_slot] = auction;
         }
     }
-    ammResult[jss::AMMID] = to_string(ammKeylet.key);
 
-    result[jss::amm] = ammResult;
-    result[jss::ledger_current_index] = ledger->info().seq;
-    result[jss::validated] =
-        RPC::isValidated(context.ledgerMaster, *ledger, context.app);
     if (!isXRP(asset1Balance))
-        result[jss::asset_frozen] =
+        ammResult[jss::asset_frozen] =
             isFrozen(*ledger, ammAccountID, issue1.currency, issue1.account);
     if (!isXRP(asset2Balance))
-        result[jss::asset2_frozen] =
+        ammResult[jss::asset2_frozen] =
             isFrozen(*ledger, ammAccountID, issue2.currency, issue2.account);
+
+    result[jss::amm] = ammResult;
+    if (!result.isMember(jss::ledger_index) &&
+        !result.isMember(jss::ledger_hash))
+        result[jss::ledger_current_index] = ledger->info().seq;
+    result[jss::validated] =
+        RPC::isValidated(context.ledgerMaster, *ledger, context.app);
 
     return result;
 }

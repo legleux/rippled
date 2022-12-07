@@ -284,17 +284,17 @@ AMM::expectAmmInfo(
     if (!jvres.isMember(jss::amm))
         return false;
     auto const jv = jvres[jss::amm];
-    if (!jv.isMember(jss::Amount) || !jv.isMember(jss::Amount2) ||
-        !jv.isMember(jss::LPToken))
+    if (!jv.isMember(jss::amount) || !jv.isMember(jss::amount2) ||
+        !jv.isMember(jss::lp_token))
         return false;
     STAmount asset1Info;
-    if (!amountFromJsonNoThrow(asset1Info, jv[jss::Amount]))
+    if (!amountFromJsonNoThrow(asset1Info, jv[jss::amount]))
         return false;
     STAmount asset2Info;
-    if (!amountFromJsonNoThrow(asset2Info, jv[jss::Amount2]))
+    if (!amountFromJsonNoThrow(asset2Info, jv[jss::amount2]))
         return false;
     STAmount lptBalance;
-    if (!amountFromJsonNoThrow(lptBalance, jv[jss::LPToken]))
+    if (!amountFromJsonNoThrow(lptBalance, jv[jss::lp_token]))
         return false;
     // ammRpcInfo returns unordered assets
     if (asset1Info.issue() != asset1.issue())
