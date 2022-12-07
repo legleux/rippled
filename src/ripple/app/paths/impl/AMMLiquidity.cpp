@@ -89,6 +89,20 @@ AMMLiquidity<TIn, TOut>::generateFibSeqOffer(
     return cur;
 }
 
+/** Simulate infinite amount
+ */
+template <typename T>
+T
+infAmount()
+{
+    if constexpr (std::is_same_v<T, XRPAmount>)
+        return XRPAmount(STAmount::cMaxNative);
+    else if constexpr (std::is_same_v<T, IOUAmount>)
+        return IOUAmount(STAmount::cMaxValue / 2, STAmount::cMaxOffset);
+    else if constexpr (std::is_same_v<T, STAmount>)
+        return STAmount(STAmount::cMaxValue / 2, STAmount::cMaxOffset);
+}
+
 template <typename TIn, typename TOut>
 std::optional<AMMOffer<TIn, TOut>>
 AMMLiquidity<TIn, TOut>::getOffer(
@@ -138,23 +152,14 @@ AMMLiquidity<TIn, TOut>::getOffer(
         {
             // If the offer size is equal to the balances then change the size
             // to simulate output equal to the entire pool's amount and
-            // infinite input. This is handled in BookStep since there is
-            // always limit on deliver amount
+            // "infinite" input. The size is going to be changed in BookStep
+            // per either deliver amount limit, or sendmax, or available
+            // output or input funds.
             if (balances == offer)
             {
-                auto const in = [&]() -> TIn {
-                    if constexpr (std::is_same_v<TIn, XRPAmount>)
-                        return XRPAmount(STAmount::cMaxNative);
-                    else if constexpr (std::is_same_v<TIn, IOUAmount>)
-                        return IOUAmount(
-                            STAmount::cMaxValue / 2, STAmount::cMaxOffset);
-                    else if constexpr (std::is_same_v<TIn, STAmount>)
-                        return STAmount(
-                            STAmount::cMaxValue / 2, STAmount::cMaxOffset);
-                }();
                 return AMMOffer<TIn, TOut>(
                     *this,
-                    TAmounts<TIn, TOut>{in, balances.out},
+                    TAmounts<TIn, TOut>{infAmount<TIn>(), balances.out},
                     balances,
                     Quality{balances});
             }
