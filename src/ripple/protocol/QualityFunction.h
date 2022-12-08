@@ -84,8 +84,9 @@ QualityFunction::QualityFunction(
 {
     if (amounts.in <= beast::zero || amounts.out <= beast::zero)
         Throw<std::runtime_error>("QualityFunction amounts are 0.");
-    m_ = -feeMult(tfee) / amounts.in;
-    b_ = amounts.out * feeMult(tfee) / amounts.in;
+    auto const cfee = feeMult(tfee);
+    m_ = -cfee / amounts.in;
+    b_ = amounts.out * cfee / amounts.in;
 }
 
 }  // namespace ripple

@@ -89,7 +89,7 @@ AMMLiquidity<TIn, TOut>::generateFibSeqOffer(
     return cur;
 }
 
-/** Simulate infinite amount
+/** Simulate infinite amount when swapping out one pool's side.
  */
 template <typename T>
 T
