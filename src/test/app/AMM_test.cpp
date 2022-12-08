@@ -2654,6 +2654,15 @@ private:
                     path(~XRP),
                     sendmax(USD(1000000000)),
                     ter(tecPATH_PARTIAL));
+                // This works, because of the sendmax limit
+                env(pay(alice, carol, USD(99.99)),
+                    path(~USD),
+                    sendmax(XRP(1)),
+                    ter(tesSUCCESS));
+                env(pay(alice, carol, USD(100)),
+                    path(~USD),
+                    sendmax(XRP(1)),
+                    ter(tesSUCCESS));
             },
             {{XRP(100), USD(100)}});
     }
@@ -4495,6 +4504,28 @@ private:
             fund(env, gw, {alice}, {USD(1000)}, Fund::All);
             AMM amm(env, alice, XRP(1000), USD(1000), ter(temDISABLED));
         }
+    }
+
+    void
+    testFlags()
+    {
+        testcase("Flags");
+        using namespace jtx;
+
+        testAMM([&](AMM& ammAlice, Env& env) {
+            auto const info = env.rpc(
+                "json",
+                "account_info",
+                std::string(
+                    "{\"account\": \"" + to_string(ammAlice.ammAccount()) +
+                    "\"}"));
+            auto const flags =
+                info[jss::result][jss::account_data][jss::Flags].asUInt();
+            BEAST_EXPECT(
+                flags &
+                (lsfAMM | lsfDisableMaster | lsfDefaultRipple |
+                 lsfDepositAuth));
+        });
     }
 
     void
@@ -6539,6 +6570,7 @@ private:
         testBasicPaymentEngine();
         testAMMTokens();
         testAmendment();
+        testFlags();
     }
 
     void
