@@ -245,11 +245,19 @@ private:
     getAMMOffer(ReadView const& view, std::optional<Quality> const& clobQuality)
         const;
 
-    // If seated then it is either AMM or CLOB quality (whichever is best),
-    // QualityFunction of the step, and the flag, which is set to true
-    // if AMM quality is best.
-    std::optional<std::tuple<Quality, QualityFunction, bool>>
+    // If seated then it is either order book tip quality or AMMOffer,
+    // whichever is a better quality.
+    std::optional<std::variant<Quality, AMMOffer<TIn, TOut>>>
+    tip(ReadView const& view) const;
+    // If seated then it is either AMM or CLOB quality,
+    // whichever is a better quality. The flag is true
+    // if AMM quality is better.
+    std::optional<std::pair<Quality, bool>>
     tipOfferQuality(ReadView const& view) const;
+    // If seated then it is either AMM or CLOB quality function,
+    // whichever is a better quality.
+    std::optional<QualityFunction>
+    tipOfferQualityF(ReadView const& view) const;
 };
 
 //------------------------------------------------------------------------------
@@ -537,16 +545,16 @@ BookStep<TIn, TOut, TDerived>::getQF(
 {
     auto const dir = this->debtDirection(v, StrandDirection::forward);
 
-    auto const res = tipOfferQuality(v);
+    auto const res = tipOfferQualityF(v);
     if (!res)
         return {std::nullopt, dir};
 
     // AMM - no fee adjustment
-    if (std::get<bool>(*res))
-        return {std::get<QualityFunction>(*res), dir};
+    if (!res->isConst())
+        return {*res, dir};
 
     Quality const q = static_cast<TDerived const*>(this)->adjustQualityWithFees(
-        v, std::get<Quality>(*res), prevStepDir);
+        v, *(res->quality()), prevStepDir);
     return {QualityFunction{q, QualityFunction::CLOBLikeTag{}}, dir};
 }
 
@@ -824,8 +832,8 @@ BookStep<TIn, TOut, TDerived>::getAMMOffer(
 }
 
 template <class TIn, class TOut, class TDerived>
-std::optional<std::tuple<Quality, QualityFunction, bool>>
-BookStep<TIn, TOut, TDerived>::tipOfferQuality(ReadView const& view) const
+std::optional<std::variant<Quality, AMMOffer<TIn, TOut>>>
+BookStep<TIn, TOut, TDerived>::tip(ReadView const& view) const
 {
     // This can be simplified (and sped up) if directories are never empty.
     Sandbox sb(&view, tapNONE);
@@ -837,19 +845,41 @@ BookStep<TIn, TOut, TDerived>::tipOfferQuality(ReadView const& view) const
     // For multi-path it returns the actual offer.
     if (auto const ammOffer = getAMMOffer(view, std::nullopt))
     {
-        auto const ammQ{ammOffer->quality()};
         // AMM quality is better or no CLOB offer
-        if ((clobQuality && ammQ > clobQuality) || !clobQuality)
-            return std::make_tuple(ammQ, ammOffer->getQF(), true);
+        if ((clobQuality && ammOffer->quality() > clobQuality) || !clobQuality)
+            return ammOffer;
     }
     // CLOB quality is better or no AMM offer
     if (clobQuality)
-        return std::make_tuple(
-            *clobQuality,
-            QualityFunction{*clobQuality, QualityFunction::CLOBLikeTag{}},
-            false);
+        return *clobQuality;
     // Neither CLOB nor AMM offer is available
     return std::nullopt;
+}
+
+template <class TIn, class TOut, class TDerived>
+std::optional<std::pair<Quality, bool>>
+BookStep<TIn, TOut, TDerived>::tipOfferQuality(ReadView const& view) const
+{
+    if (auto const res = tip(view); !res)
+        return std::nullopt;
+    else if (std::holds_alternative<Quality>(*res))
+        return std::make_pair(std::get<Quality>(*res), false);
+    else
+        return std::make_pair(
+            std::get<AMMOffer<TIn, TOut>>(*res).quality(), true);
+}
+
+template <class TIn, class TOut, class TDerived>
+std::optional<QualityFunction>
+BookStep<TIn, TOut, TDerived>::tipOfferQualityF(ReadView const& view) const
+{
+    if (auto const res = tip(view); !res)
+        return std::nullopt;
+    else if (std::holds_alternative<Quality>(*res))
+        return QualityFunction{
+            std::get<Quality>(*res), QualityFunction::CLOBLikeTag{}};
+    else
+        return std::get<AMMOffer<TIn, TOut>>(*res).getQF();
 }
 
 template <class TIn, class TOut, class TDerived>

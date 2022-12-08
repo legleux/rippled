@@ -6216,7 +6216,7 @@ private:
             STAmount{Issue{to_currency("USD"), ammA3.ammAccount()}, 0};
         env(trust(G1, a3am, tfSetFreeze));
         auto const info = ammA3.ammRpcInfo();
-        BEAST_EXPECT(info && (*info)[jss::asset2_frozen].asBool());
+        BEAST_EXPECT(info && (*info)[jss::amm][jss::asset2_frozen].asBool());
         auto affected =
             env.meta()->getJson(JsonOptions::none)[sfAffectedNodes.fieldName];
         if (!BEAST_EXPECT(checkArraySize(affected, 2u)))

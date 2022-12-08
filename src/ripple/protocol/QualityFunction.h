@@ -35,8 +35,13 @@ class Quality;
 class QualityFunction
 {
 private:
-    Number m_;  // slope
-    Number b_;  // intercept
+    // slope
+    Number m_;
+    // intercept
+    Number b_;
+    // seater if QF is for CLOB offer.
+    // note that m_ is 0 in this case
+    std::optional<Quality> quality_;
 
 public:
     struct AMMTag
@@ -72,7 +77,13 @@ public:
     bool
     isConst() const
     {
-        return m_ == 0;
+        return quality_.has_value();
+    }
+
+    std::optional<Quality>
+    quality() const
+    {
+        return quality_;
     }
 };
 
