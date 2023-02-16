@@ -4,13 +4,13 @@ if (validator_keys)
   git_branch (current_branch)
   # default to tracking VK develop branch unless we are on master/release
   if (NOT (current_branch STREQUAL "master" OR current_branch STREQUAL "release"))
-    set (current_branch "develop")
+    set (current_branch "Fix-build")
   endif ()
   message (STATUS "tracking ValidatorKeys branch: ${current_branch}")
 
   FetchContent_Declare (
     validator_keys_src
-    GIT_REPOSITORY https://github.com/ripple/validator-keys-tool.git
+    GIT_REPOSITORY https://github.com/legleux/validator-keys-tool.git
     GIT_TAG        "${current_branch}"
   )
   FetchContent_GetProperties (validator_keys_src)
