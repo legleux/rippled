@@ -44,7 +44,7 @@ class Xrpl(ConanFile):
         'fPIC': True,
         'jemalloc': False,
         'reporting': False,
-        'rocksdb': True,
+        'rocksdb': False,
         'shared': False,
         'static': True,
         'tests': True,
