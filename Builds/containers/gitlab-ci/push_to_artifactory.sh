@@ -15,8 +15,8 @@ cd build/dpkg/packages
 CURLARGS="-sk -X${action} -urippled:${ARTIFACTORY_DEPLOY_KEY_RIPPLED}"
 RIPPLED_PKG=$(ls rippled_*.deb)
 RIPPLED_REPORTING_PKG=$(ls rippled-reporting_*.deb)
-RIPPLED_DBG_PKG=$(ls rippled-dbgsym_*.deb)
-RIPPLED_REPORTING_DBG_PKG=$(ls rippled-reporting-dbgsym_*.deb)
+RIPPLED_DBG_PKG=$(ls rippled-dbgsym_*.*deb)
+RIPPLED_REPORTING_DBG_PKG=$(ls rippled-reporting-dbgsym_*.*deb)
 # TODO - where to upload src tgz?
 RIPPLED_SRC=$(ls rippled_*.orig.tar.gz)
 DEB_MATRIX=";deb.component=${COMPONENT};deb.architecture=amd64"
