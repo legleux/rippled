@@ -65,6 +65,7 @@ cmake -G Ninja \
      -Dstatic=true \
      -Dvalidator_keys=ON \
      -DCMAKE_BUILD_TYPE=Release \
+     -DCMAKE_VERBOSE_MAKEFILE=ON \
      ..
 
 cmake --build . --parallel $(nproc) --target rippled --target validator-keys
@@ -84,6 +85,7 @@ cmake -G Ninja \
      -Dvalidator_keys=ON \
      -DCMAKE_BUILD_TYPE=Release \
      -Dreporting=ON \
+     -DCMAKE_VERBOSE_MAKEFILE=ON \
      ..
 
 cmake --build . --parallel $(nproc) --target rippled

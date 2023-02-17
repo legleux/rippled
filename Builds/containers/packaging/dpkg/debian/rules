@@ -26,7 +26,7 @@ override_dh_auto_configure:
 		-DCMAKE_INSTALL_PREFIX=/opt/ripple \
 		-Dstatic=ON \
 		-Dunity=OFF \
-		-DCMAKE_VERBOSE_MAKEFILE=OFF \
+		-DCMAKE_VERBOSE_MAKEFILE=ON \
 		-Dvalidator_keys=ON \
 		-B bld/rippled
 
@@ -37,7 +37,7 @@ override_dh_auto_configure:
 		-DCMAKE_INSTALL_PREFIX=/opt/rippled-reporting \
 		-Dstatic=ON \
 		-Dunity=OFF \
-		-DCMAKE_VERBOSE_MAKEFILE=OFF \
+		-DCMAKE_VERBOSE_MAKEFILE=ON \
 		-Dreporting=ON \
 		-B bld/rippled-reporting
 
