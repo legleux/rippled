@@ -56,7 +56,7 @@ mkdir -p bld.rippled
 conan export external/rocksdb
 
 pushd bld.rippled
-conan install .. --output-folder . --build missing --settings build_type=Release
+conan install .. --output-folder . --build missing --settings build_type=Release --options fPIC=False
 cmake -G Ninja \
      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
      -DCMAKE_INSTALL_PREFIX=%{_prefix} \
@@ -73,7 +73,7 @@ popd
 mkdir -p bld.rippled-reporting
 pushd bld.rippled-reporting
 
-conan install .. --output-folder . --build missing --settings build_type=Release -s compiler.cppstd=17 --options reporting=True
+conan install .. --output-folder . --build missing --settings build_type=Release -s compiler.cppstd=17 --options reporting=True --options fPIC=False
 
 cmake -G Ninja \
      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
