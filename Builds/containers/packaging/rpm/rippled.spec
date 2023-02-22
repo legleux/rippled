@@ -40,21 +40,19 @@ rm -rf ~/.conan/profiles/default
 
 cp /opt/libcstd/libstdc++.so.6.0.22 /usr/lib64
 cp /opt/libcstd/libstdc++.so.6.0.22 /lib64
-ln -sf  /usr/lib64/libstdc++.so.6.0.22 /usr/lib64/libstdc++.so.6
-ln -sf  /lib64/libstdc++.so.6.0.22 /usr/lib64/libstdc++.so.6
+ln -sf /usr/lib64/libstdc++.so.6.0.22 /usr/lib64/libstdc++.so.6
+ln -sf /lib64/libstdc++.so.6.0.22 /usr/lib64/libstdc++.so.6
 
 source /opt/rh/rh-python38/enable
-pip install conan
+pip install conan<2
 conan profile new default --detect
 conan profile update settings.compiler.libcxx=libstdc++11 default
 conan profile update settings.compiler.cppstd=20 default
-
 
 cd rippled
 
 mkdir -p bld.rippled
 conan export external/snappy snappy/1.1.9@
-
 
 pushd bld.rippled
 conan install .. --output-folder . --build missing --settings build_type=Release
@@ -63,7 +61,7 @@ cmake -G Ninja \
      -DCMAKE_INSTALL_PREFIX=%{_prefix} \
      -DCMAKE_BUILD_TYPE=Release \
      -Dunity=OFF \
-     -Dstatic=true \
+     -Dstatic=ON \
      -Dvalidator_keys=ON \
      -DCMAKE_BUILD_TYPE=Release \
      -DCMAKE_VERBOSE_MAKEFILE=ON \
@@ -82,7 +80,7 @@ cmake -G Ninja \
      -DCMAKE_INSTALL_PREFIX=%{_prefix} \
      -DCMAKE_BUILD_TYPE=Release \
      -Dunity=OFF \
-     -Dstatic=true \
+     -Dstatic=ON \
      -Dvalidator_keys=ON \
      -DCMAKE_BUILD_TYPE=Release \
      -Dreporting=ON \

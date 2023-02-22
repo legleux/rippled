@@ -152,6 +152,9 @@ if [ "${CI_USE}" = true ] ; then
     update-alternatives --auto clang
 fi
 
-pip install conan && conan profile new default --detect && conan profile update settings.compiler.cppstd=20 default && conan profile update settings.compiler.libcxx=libstdc++11 default
+pip install conan<2 && \
+    conan profile new default --detect && \
+    conan profile update settings.compiler.cppstd=20 default && \
+    conan profile update settings.compiler.libcxx=libstdc++11 default
 
 apt-get -y autoremove
