@@ -10,7 +10,8 @@ if (validator_keys)
 
   FetchContent_Declare (
     validator_keys_src
-    GIT_REPOSITORY https://github.com/legleux/validator-keys-tool.git
+    GIT_REPOSITORY /home/emel/dev/Ripple/validator-keys-tool
+    # GIT_REPOSITORY https://github.com/legleux/validator-keys-tool.git
     GIT_TAG        "${current_branch}"
   )
   FetchContent_GetProperties (validator_keys_src)

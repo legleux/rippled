@@ -18,8 +18,9 @@ override_dh_auto_configure:
 	env
 	rm -rf bld
 
-	conan export external/rocksdb
-	conan install . -if bld/rippled  --build missing --settings build_type=Release --options fPIC=False
+	conan export external/snappy snappy/1.1.9@
+
+	conan install . -if bld/rippled  --build missing --settings build_type=Release
 	cmake -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
 		-G Ninja \
 		-DCMAKE_BUILD_TYPE=Release \
@@ -30,7 +31,7 @@ override_dh_auto_configure:
 		-Dvalidator_keys=ON \
 		-B bld/rippled
 
-	conan install . -if bld/rippled-reporting --build missing --settings build_type=Release --options reporting=True --options fPIC=False -s compiler.cppstd=17
+	conan install . -if bld/rippled-reporting --build missing --settings build_type=Release --options reporting=True -s compiler.cppstd=17
 	cmake -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
 		-G Ninja \
 		-DCMAKE_BUILD_TYPE=Release \
