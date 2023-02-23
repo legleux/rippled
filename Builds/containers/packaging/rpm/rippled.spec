@@ -44,7 +44,7 @@ ln -sf /usr/lib64/libstdc++.so.6.0.22 /usr/lib64/libstdc++.so.6
 ln -sf /lib64/libstdc++.so.6.0.22 /usr/lib64/libstdc++.so.6
 
 source /opt/rh/rh-python38/enable
-pip install conan<2
+pip install "conan==1.58"
 conan profile new default --detect
 conan profile update settings.compiler.libcxx=libstdc++11 default
 conan profile update settings.compiler.cppstd=20 default
