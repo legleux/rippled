@@ -1,17 +1,9 @@
 #!/usr/bin/env python
-"""A script to test rippled in an infinite loop of start-sync-stop.
-- Requires Python 3.7+.
-- Can be stopped with SIGINT.
-"""
-
-import sys
-
-assert sys.version_info >= (3, 7)
-
 import argparse
 import asyncio
 import configparser
 import contextlib
+import datetime
 import json
 import logging
 from logging import INFO
@@ -19,13 +11,21 @@ import os
 import platform
 import shutil
 import subprocess
+import sys
 import time
 import urllib.error
 import urllib.request
 from pathlib import Path
 
-from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
+from ps_mem import getMemStats
+from prometheus_client import Gauge, start_http_server
 
+"""A script to test rippled in an infinite loop of start-sync-stop.
+- Requires Python 3.7+.
+- Can be stopped with SIGINT.
+"""
+
+assert sys.version_info >= (3, 7)
 # Enable asynchronous subprocesses on Windows. The default changed in 3.8.
 # https://docs.python.org/3.7/library/asyncio-platforms.html#subprocess-support-on-windows
 if platform.system() == "Windows" and sys.version_info < (3, 8):
@@ -40,19 +40,48 @@ DEFAULT_SYNC_DURATION = 15
 # Number of seconds between polls of state.
 DEFAULT_POLL_INTERVAL = 1
 SYNC_STATES = ("full", "validating", "proposing")
-DEBUG_HIGH = False
-DEBUG = True
 ITERATIONS = 5
 DEFAULT_URL = "127.0.0.1"
 DEFAULT_PORT = "5005"
-DEFAULT_DOWNTIME = [21, 89, 233]
+DEFAULT_DOWNTIME = 3600
+SYNC_TIME_FILE = f'{os.getcwd()}/sync_times.txt'
+DATE_FORMAT = "%m/%d/%Y %H:%M:%S"
 
-registry = CollectorRegistry()
-sync_time = Gauge("rippled_sync_time", "rippled sync time", registry=registry)
-db_size = Gauge("db_size", "rippled db size", registry=registry)
-metrics = {"sync_time": sync_time, "db_size": db_size}
+rippled_flr =     "/home/emel/dev/Ripple/rippled/build-flr/rippled"
+rippled_flr_cfg = "/home/emel/dev/Ripple/rippled/build-flr/rippled-flr.cfg"
+
+# rippled_develop = "/home/emel/nvme/dev/Ripple/rippled/build/FLR/rippled2" # when you can't wait
+rippled_develop = "/home/emel/dev/Ripple/rippled/build/develop-debug/rippled"
+rippled_dev_cfg = "/home/emel/dev/Ripple/rippled/build-flr/rippled-dev.cfg"
+
+rippleds = [(rippled_flr, rippled_flr_cfg), (rippled_develop, rippled_dev_cfg)]
+
+sync_time = Gauge("rippled_sync_time", "rippled sync time")
+db_size = Gauge("db_size", "rippled db size")
+mem_usage = Gauge("mem_usage", "rippled RAM usage")
+server_state = Gauge("server_state", "rippled server_state")
+
+metrics = {
+    "sync_time": sync_time,
+    "db_size": db_size,
+    "mem_usage": mem_usage,
+    "server_state": server_state
+}
+
+server_states = {
+    "empty": 0,
+    "connected": 1,
+    "syncing": 2,
+    "full": 3,
+    "disconnected": 4,
+    "stopped": 5
+}
+
+pid = None
+
 
 def read_config(config_file):
+
     # strict = False: Allow duplicate keys, e.g. [rpc_startup].
     # allow_no_value = True: Allow keys with no values. Generally, these
     # instances use the "key" as the value, and the section name is the key,
@@ -64,17 +93,27 @@ def read_config(config_file):
         allow_no_value=True,
         delimiters=("="),
     )
+    config.optionxform = str
     config.read(config_file)
     return config
+
 
 def to_list(value, separator=","):
     """Parse a list from a delimited string value."""
     return [s.strip() for s in value.split(separator) if s]
 
+
 def find_config_section_file(section, config_file):
     """Try to figure out what log file the user has chosen. Raises all kinds
     of exceptions if there is any possibility of ambiguity."""
+
+    config_file = Path(config_file)
+    if not config_file.is_file():
+        logging.error(f"{config_file} doens't exist!")
+        exit(1)
+
     config = read_config(config_file)
+
     values = list(config[f"{section}"].keys())
     if len(values) < 1:
         raise ValueError(f"no [{section}] in configuration file: {config_file}")
@@ -82,23 +121,27 @@ def find_config_section_file(section, config_file):
         raise ValueError(f"too many [{section}] in configuration file: {config_file}")
     return values[0]
 
-def find_http_port(args):
+
+def find_http_port(args, config_file):
     if args.port:
         return int(args.port)
-    config_file = args.conf
+    # config_file = args.conf
+    logging.info(f"using config file: {config_file}")
     config = read_config(config_file)
     names = list(config["server"].keys())
     for name in names:
         server = config[name]
         if "http" in to_list(server.get("protocol", "")):
             return int(server["port"])
-    raise ValueError(f'no server in [server] for "http" protocol')
+    raise ValueError('no server in [server] for "http" protocol')
+
 
 def find_db_path(args):
-    config_file = args.conf
-    config = read_config(config_file)
+    # config_file = args.conf
+    config = read_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
     db_path = find_config_section_file("database_path", config_file)
     return db_path
+
 
 def get_dir_size(path):
     total = 0
@@ -111,18 +154,27 @@ def get_dir_size(path):
     logging.debug(f"{path} size = {total}")
     return total
 
+
 def delete_db(config_file):
-    config = read_config(config_file)
+    # config = read_config(config_file)
     filename = find_config_section_file("database_path", config_file)
     try:
         shutil.rmtree(filename)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         logging.error(f"No database at {filename}!")  # TODO: check if dir ??
+
+
+def rippled_version(exe=rippled_flr, config_file=rippled_flr_cfg):
+    output = subprocess.check_output([exe, "--conf", config_file, "--version"])
+    version = output.decode().strip().split('version')[1]
+    return version
 
 
 @contextlib.asynccontextmanager
 async def rippled(exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE):
     """A context manager for a rippled process."""
+    logging.debug(f"exe: {exe}")  # debug
+    logging.debug(f"config_file: {config_file}")
     # Start the server.
     process = await asyncio.create_subprocess_exec(
         str(exe),
@@ -131,7 +183,9 @@ async def rippled(exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE):
         stdout=subprocess.DEVNULL,
         stderr=subprocess.DEVNULL,
     )
-    logging.info(f"rippled started with pid {process.pid}")
+    logging.debug(f"rippled PID {process.pid}")
+    global pid
+    pid = process.pid
     try:
         yield process
     finally:
@@ -146,6 +200,7 @@ async def rippled(exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE):
         except asyncio.TimeoutError:
             # Ask the operating system to kill it.
             logging.warning(f"killing rippled ({process.pid})")
+
             try:
                 process.kill()
             except ProcessLookupError:
@@ -154,16 +209,20 @@ async def rippled(exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE):
         code = await process.wait()
         end = time.time()
         logging.info(f"rippled stopped after {end - start:.1f} seconds with code {code}")
+        await push_state(server_states['stopped'])
+        await reset_mem_gauge()
+
 
 async def sync(url=DEFAULT_URL, *, duration=DEFAULT_SYNC_DURATION, interval=DEFAULT_POLL_INTERVAL):
     """Poll rippled on an interval until it has been synced for a duration."""
     start = time.perf_counter()
     last_state = None
+    # await push_metric('sync_time', '0') # initialize sync time
     while (time.perf_counter() - start) < duration:
         await asyncio.sleep(interval)
 
         request = urllib.request.Request(
-            f"http://127.0.0.1:5005",  # BUG: url is port
+            "http://127.0.0.1:5005",  # BUG: url is port
             data=json.dumps({"method": "server_state"}).encode(),
             headers={"Content-Type": "application/json"},
         )
@@ -176,10 +235,12 @@ async def sync(url=DEFAULT_URL, *, duration=DEFAULT_SYNC_DURATION, interval=DEFA
                 continue
         try:
             state = body["result"]["state"]["server_state"]
-            await push_db_size()
+            # await push_db_size()
+            await push_mem(pid)
+            await push_state(server_states[state])
+
             if not last_state:
                 logging.info(f"server_state: {state}")
-                logging.debug("in try:")
                 logging.debug(f"state {state}")
                 logging.debug(f"last_state {last_state}")
                 last_state = state
@@ -204,28 +265,43 @@ async def sync(url=DEFAULT_URL, *, duration=DEFAULT_SYNC_DURATION, interval=DEFA
             # Require a contiguous sync state.
             start = time.perf_counter()
 
+
 async def loop(
-    test, *, exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE, downtime=DEFAULT_DOWNTIME):
+                test, *, exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE, downtime=DEFAULT_DOWNTIME):
     """
     Start-test-stop rippled in an infinite loop.
-
     Moves log to a different file after each iteration.
     """
-    log_file = find_config_section_file("debug_logfile", config_file)
     it = 0
     sync_times = []
-    await push_sync_time("0")
-    logging.info(f"*** {exe} --conf {config_file} ***") # TODO: realpath
-    logging.info(f"*** {log_file}***")
     logging.info(f"*** {downtime}s between stop/start cycle ***")
+    comparisons = " vs ".join(list(map(lambda x: os.path.basename(x[0]), rippleds)))
+    # TODO: maybe make the comparisions on 2 lines with the full path, then version string?
+    logging.info(f"*** Comparing {comparisons} ***")
 
-    downtime.insert(0, 0)
-    while downtime:
-        logging.info(f"*** iteration: {it} ***")
+    number_of_builds = len(rippleds)
+    next_start_time = {f"build_{i}": "" for i in range(number_of_builds)}
+    while True:
+        build_index = it % number_of_builds
+        exe, config_file = rippleds[build_index]
+        build_version = f'build_{build_index}'
+        log_file = find_config_section_file("debug_logfile", config_file)
+        restart_time = next_start_time[build_version]
+        minutes = "%H:%M:%S"
+        if restart_time:
+            wait = 300  # TODO: How to wait nicer
+            while datetime.datetime.now() < restart_time:
+                logging.info(f"We're still before {restart_time.strftime(minutes)}... checking again in {wait}s!")
+                await asyncio.sleep(wait)
+        logging.info(f"*** Iteration: {it} ***")
+        logging.info(f"*** {exe} --conf {config_file} ***")  # TODO: realpath
+        logging.info(f"*** Log file:{log_file} ***")
+        ver = rippled_version(exe, config_file)
+        logging.info(f"*** rippled version: {ver} ***")
         async with rippled(exe, config_file) as process:
             start = time.perf_counter()
             exited = asyncio.create_task(process.wait())
-            tested = asyncio.create_task(test())
+            tested = asyncio.create_task(test(config_file))
             # Try to sync as long as the process is running.
             done, pending = await asyncio.wait(
                 {exited, tested},
@@ -236,36 +312,71 @@ async def loop(
                 logging.warning(f"server halted for unknown reason with code {code}")
             else:
                 assert done == {tested}
-                assert tested.exception() is None
+                assert tested.exception() is None, f"tested.exception: {tested.exception()}"
             end = time.perf_counter()
             sync_time = f"{end - start:.0f}"
-            logging.info(f"synced after {sync_time} seconds")
 
+            now = datetime.datetime.now()
+            wait_time = datetime.timedelta(seconds=downtime)
+            logging.info(f"At {now} {exe} synced after {sync_time} seconds")
+            next_start_time.update({f"{build_version}": now + wait_time})
+            next_start_time_formatted = next_start_time[build_version].strftime(DATE_FORMAT)
+            logging.info(f"Will start {build_version} again after {wait_time} {next_start_time_formatted}")
             await push_sync_time(sync_time)
-            sync_times.append((downtime.pop(0), sync_time))
+            await write_sync_time(build_version, sync_time)
         # shutil.move(log_file, f'debug.{it}.log') # TODO: uncomment
-        if not downtime:  # stop when no downtimes left
-            break
-        sleep_time = downtime[0]
-        logging.info(f"sleeping {sleep_time} seconds")
-        await asyncio.sleep(sleep_time)
-        if not downtime:
-            break
         it += 1
     return sync_times
 
-async def push_db_size():
-    size = get_dir_size(db_path)
-    db_size = metrics['db_size']
-    db_size.set(size)
-    logging.debug(f"pushing db size: {size}") # TODO: set to debug
-    push_to_gateway("localhost:9091", job="db_size", registry=registry)
+# async def push_db_size(): # TODO: make this a param
+#     db_size = get_dir_size(db_path)
+#     await push_metric('db_size', db_size)
+
 
 async def push_sync_time(sync_time):
-    sync_time_gauge = metrics['sync_time']
-    sync_time_gauge.set(sync_time)
-    logging.info(f"pushing sync time: {sync_time}")
-    push_to_gateway("localhost:9091", job="sync_time", registry=registry)
+    await push_metric('sync_time', sync_time)
+
+
+async def reset_mem_gauge():
+    await push_mem()
+
+
+async def push_mem(pid=0):
+    mem_usage = getMemStats(pid)[0] if pid else 0
+    await push_metric('mem_usage', mem_usage)
+
+
+async def push_state(server_state):
+    await push_metric('server_state', server_state)
+
+
+async def push_metric(metric_key, metric):
+    if metric_key != 'server_state':
+        metric_str = metric
+    else:
+        metric_str = f"{metric} [{list(server_states.keys())[list(server_states.values()).index(1)]}]"  # TODO: Ugly
+    logging.debug(f"Setting {metric_key}: {metric_str}")
+    gauge = metrics[metric_key]
+    gauge.set(metric)
+    if metric_key == 'sync_time':
+        logging.info(f"{metric_key}: {metric}")
+    try:
+        #  push_to_gateway("localhost:9091", job=metric_key, registry=registry)
+        pass
+    except urllib.error.URLError as e:
+        logging.error(f"Couldn't push {metric_key} to prometheus.\nError: {e}")
+
+
+async def write_sync_time(build_version, sync_time, sync_times_file=SYNC_TIME_FILE):
+    now = datetime.datetime.now()
+    log_message = f"{now}: {build_version} {sync_time}"
+    try:
+        with open(sync_times_file, 'a') as sync_file:
+            # TODO: what to log the rippled instance as? write a map/legend at top of file?
+            sync_file.write(f"{log_message}\n")
+    except FileNotFoundError:
+        logging.error(f"Couldn't open {sync_times_file}")
+    logging.debug(f"Wrote {log_message} to {sync_times_file}")
 
 logging.basicConfig(
     format="%(asctime)s %(levelname)-8s %(message)s",
@@ -278,7 +389,7 @@ parser.add_argument(
     "rippled",
     type=Path,
     nargs="?",
-    default=DEFAULT_EXE,
+    default=rippled_develop,
     help="Path to rippled.",
 )
 parser.add_argument(
@@ -320,8 +431,8 @@ parser.add_argument(
 parser.add_argument(
     "--downtime",
     type=int,
-    nargs="*",
-    default=300,
+    # nargs="*",
+    default=DEFAULT_DOWNTIME,
     help="Number of seconds to wait before restarting.",
 )
 parser.add_argument(
@@ -336,28 +447,29 @@ parser.add_argument(
 )
 args = parser.parse_args()
 
-port = find_http_port(args)
 
 if args.debug:
     logging.getLogger().setLevel(logging.DEBUG)
 
-db_path = find_db_path(args)
+# db_path = find_db_path(args)
 
-def test():
+
+def test(config_file):
+
+    port = find_http_port(args, config_file)
     return sync(port, duration=args.duration, interval=args.interval)
 
+
 if not args.keep_db:
-    delete_db(args.conf)
+    #  delete_db(args.conf)
+    pass
+
 try:
-    synch_times = asyncio.run(
-        loop(test, exe=args.rippled, config_file=args.conf, downtime=args.downtime),
-        debug=DEBUG_HIGH,
-    )
-    print(synch_times)
-    # open("sync_times.txt", "w").write("downtime - sync time\n")
-    with open("sync_times.txt", 'a') as sync_file:
-        for line in synch_times:
-            sync_file.write(f"{line}\n")
+    print(sys.version_info)
+    start_http_server(8000)
+    asyncio.run(
+        loop(test, exe=args.rippled, config_file=args.conf, downtime=args.downtime))
+
 except KeyboardInterrupt:
     # Squelch the message. This is a normal mode of exit.
     pass

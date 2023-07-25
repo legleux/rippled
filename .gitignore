@@ -52,6 +52,7 @@ db/*.db-*
 
 # Ignore debug logs
 debug_log.txt
+debug.*.log
 
 # Ignore customized configs
 rippled.cfg
