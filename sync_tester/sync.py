@@ -3,7 +3,7 @@ import argparse
 import asyncio
 import configparser
 import contextlib
-import datetime
+from datetime import datetime, timedelta
 import json
 import logging
 from logging import INFO
@@ -36,27 +36,29 @@ DEFAULT_CONFIGURATION_FILE = "rippled.cfg"
 # Number of seconds to wait before forcefully terminating.
 PATIENCE = 120
 # Number of contiguous seconds in a sync state to be considered synced.
-DEFAULT_SYNC_DURATION = 15
+DEFAULT_SYNC_DURATION = 5
 # Number of seconds between polls of state.
 DEFAULT_POLL_INTERVAL = 1
 SYNC_STATES = ("full", "validating", "proposing")
 ITERATIONS = 5
 DEFAULT_URL = "127.0.0.1"
 DEFAULT_PORT = "5005"
-DEFAULT_DOWNTIME = 3600
-SYNC_TIME_FILE = f'{os.getcwd()}/sync_times.txt'
+DEFAULT_DOWNTIME = 60
+ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
+ROOT_DIR = f'{ROOT_DIR}/{datetime.now().strftime("%Y%m%d%H%M%S")}'
+
+SYNC_TIME_FILE = f'{ROOT_DIR}/sync_times.txt'
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S"
+# TODO: How to provide "default" paths for rippleds to compare? Not possible right? Move these rippled configs to config file
+rippled_flr =     "/home/emel/dev/Ripple/rippled/FLR-test-data/flr/bin/rippled"
+rippled_flr_cfg = "/home/emel/dev/Ripple/rippled/FLR-test-data/flr/cfg/rippled-flr.cfg"
 
-rippled_flr =     "/home/emel/dev/Ripple/rippled/build-flr/rippled"
-rippled_flr_cfg = "/home/emel/dev/Ripple/rippled/build-flr/rippled-flr.cfg"
-
-# rippled_develop = "/home/emel/nvme/dev/Ripple/rippled/build/FLR/rippled2" # when you can't wait
-rippled_develop = "/home/emel/dev/Ripple/rippled/build/develop-debug/rippled"
-rippled_dev_cfg = "/home/emel/dev/Ripple/rippled/build-flr/rippled-dev.cfg"
+rippled_develop = "/home/emel/dev/Ripple/rippled/FLR-test-data/dev-debug/bin/rippled"
+rippled_dev_cfg = "/home/emel/dev/Ripple/rippled/FLR-test-data/dev-debug/cfg/rippled-dev-debug.cfg"
 
 rippleds = [(rippled_flr, rippled_flr_cfg), (rippled_develop, rippled_dev_cfg)]
-
-sync_time = Gauge("rippled_sync_time", "rippled sync time")
+exe_map = {rippleds[0][0]: "flr", rippleds[1][0]: "develop"}
+sync_time = Gauge("rippled_sync_time", "rippled sync time")  # TODO: How to map this easily? put in config file mapping?
 db_size = Gauge("db_size", "rippled db size")
 mem_usage = Gauge("mem_usage", "rippled RAM usage")
 server_state = Gauge("server_state", "rippled server_state")
@@ -106,10 +108,10 @@ def to_list(value, separator=","):
 def find_config_section_file(section, config_file):
     """Try to figure out what log file the user has chosen. Raises all kinds
     of exceptions if there is any possibility of ambiguity."""
-
+    logging.info(f"Looking for config file at: {config_file}")  # debug log
     config_file = Path(config_file)
     if not config_file.is_file():
-        logging.error(f"{config_file} doens't exist!")
+        logging.error(f"{config_file} doesn't exist!")
         exit(1)
 
     config = read_config(config_file)
@@ -136,11 +138,11 @@ def find_http_port(args, config_file):
     raise ValueError('no server in [server] for "http" protocol')
 
 
-def find_db_path(args):
-    # config_file = args.conf
-    config = read_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
-    db_path = find_config_section_file("database_path", config_file)
-    return db_path
+# def find_db_path(args):
+#     # config_file = args.conf
+#     config = read_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
+#     db_path = find_config_section_file("database_path", config_file)
+#     return db_path
 
 
 def get_dir_size(path):
@@ -171,7 +173,7 @@ def rippled_version(exe=rippled_flr, config_file=rippled_flr_cfg):
 
 
 @contextlib.asynccontextmanager
-async def rippled(exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE):
+async def rippled(exe=DEFAULT_EXE, config_file=None):
     """A context manager for a rippled process."""
     logging.debug(f"exe: {exe}")  # debug
     logging.debug(f"config_file: {config_file}")
@@ -266,8 +268,7 @@ async def sync(url=DEFAULT_URL, *, duration=DEFAULT_SYNC_DURATION, interval=DEFA
             start = time.perf_counter()
 
 
-async def loop(
-                test, *, exe=DEFAULT_EXE, config_file=DEFAULT_CONFIGURATION_FILE, downtime=DEFAULT_DOWNTIME):
+async def loop(test, *, exe=DEFAULT_EXE, config_file=None, downtime=DEFAULT_DOWNTIME):
     """
     Start-test-stop rippled in an infinite loop.
     Moves log to a different file after each iteration.
@@ -275,7 +276,7 @@ async def loop(
     it = 0
     sync_times = []
     logging.info(f"*** {downtime}s between stop/start cycle ***")
-    comparisons = " vs ".join(list(map(lambda x: os.path.basename(x[0]), rippleds)))
+    comparisons = " vs ".join(list(map(lambda x: exe_map[x[0]], rippleds)))
     # TODO: maybe make the comparisions on 2 lines with the full path, then version string?
     logging.info(f"*** Comparing {comparisons} ***")
 
@@ -290,7 +291,7 @@ async def loop(
         minutes = "%H:%M:%S"
         if restart_time:
             wait = 300  # TODO: How to wait nicer
-            while datetime.datetime.now() < restart_time:
+            while datetime.now() < restart_time:
                 logging.info(f"We're still before {restart_time.strftime(minutes)}... checking again in {wait}s!")
                 await asyncio.sleep(wait)
         logging.info(f"*** Iteration: {it} ***")
@@ -316,15 +317,20 @@ async def loop(
             end = time.perf_counter()
             sync_time = f"{end - start:.0f}"
 
-            now = datetime.datetime.now()
-            wait_time = datetime.timedelta(seconds=downtime)
+            now = datetime.now()
+            wait_time = timedelta(seconds=downtime)
             logging.info(f"At {now} {exe} synced after {sync_time} seconds")
             next_start_time.update({f"{build_version}": now + wait_time})
             next_start_time_formatted = next_start_time[build_version].strftime(DATE_FORMAT)
             logging.info(f"Will start {build_version} again after {wait_time} {next_start_time_formatted}")
             await push_sync_time(sync_time)
-            await write_sync_time(build_version, sync_time)
-        # shutil.move(log_file, f'debug.{it}.log') # TODO: uncomment
+            await write_sync_time(build_version, sync_time, f'{ROOT_DIR}/{os.path.basename(SYNC_TIME_FILE)}')
+            # TODO: Should sync times for each build be separate? I think yes
+        log_file_dir = f'{ROOT_DIR}/{build_version}'
+        log_file_path = f'{log_file_dir}/debug.{it}.log'
+        if not Path(log_file_dir).is_dir():
+            os.makedirs(log_file_dir)
+        shutil.move(log_file, log_file_path)
         it += 1
     return sync_times
 
@@ -367,10 +373,16 @@ async def push_metric(metric_key, metric):
         logging.error(f"Couldn't push {metric_key} to prometheus.\nError: {e}")
 
 
-async def write_sync_time(build_version, sync_time, sync_times_file=SYNC_TIME_FILE):
-    now = datetime.datetime.now()
+async def write_sync_time(build_version, sync_time, sync_times_file):
+    now = datetime.now()
     log_message = f"{now}: {build_version} {sync_time}"
+    sync_times_file_path = Path(sync_times_file)
     try:
+        # TODO: if db doesn't exist, not if the sync file doesn't exist, it's the initial sync
+        # or make the "build_version" the key of the "rippleds" dict and add a "synced" key to the dict that is set
+        # after initial sync
+        if not sync_times_file_path.is_file():
+            log_message = f"Initial sync for {build_version}\n{log_message}"
         with open(sync_times_file, 'a') as sync_file:
             # TODO: what to log the rippled instance as? write a map/legend at top of file?
             sync_file.write(f"{log_message}\n")
@@ -385,6 +397,7 @@ logging.basicConfig(
 )
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
 parser.add_argument(
     "rippled",
     type=Path,
