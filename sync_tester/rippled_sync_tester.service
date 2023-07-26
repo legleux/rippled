@@ -1,11 +1,13 @@
 [Unit]
-Description=Logs rippled sync times to prometheus
+Description=Log rippled sync times
 
 [Service]
 User=emel
 Restart=always
 
-ExecStart=/home/emel/.pyenv/versions/3.11.2/envs/sync/bin/python /home/emel/dev/Ripple/rippled/sync_tester/sync.py
+ExecStart=/home/emel/.pyenv/versions/3.11.2/envs/sync/bin/python /home/emel/dev/Ripple/rippled/sync_tester/sync.py --debug
+
+# ExecStop=/home/emel/.pyenv/versions/3.11.2/envs/sync/bin/python /home/emel/dev/Ripple/rippled/sync_tester/sync.py stop
 
 [Install]
 WantedBy=multi-user.target

@@ -194,8 +194,10 @@ async def rippled(exe=DEFAULT_EXE, config_file=None):
         # Ask it to stop.
         logging.debug(f"asking rippled (pid: {process.pid}) to stop")
         start = time.time()
-        process.terminate()
-
+        try:
+            process.terminate()
+        except ProcessLookupError:
+            logging.error(f"rippled {pid} already exited!")
         # Wait nicely.
         try:
             await asyncio.wait_for(process.wait(), PATIENCE)
@@ -313,7 +315,11 @@ async def loop(test, *, exe=DEFAULT_EXE, config_file=None, downtime=DEFAULT_DOWN
                 logging.warning(f"server halted for unknown reason with code {code}")
             else:
                 assert done == {tested}
-                assert tested.exception() is None, f"tested.exception: {tested.exception()}"
+                try:
+                    assert tested.exception() is None, f"tested.exception: {tested.exception()}"
+                except AssertionError as e:
+                    logging.error(e)
+                    raise
             end = time.perf_counter()
             sync_time = f"{end - start:.0f}"
 
