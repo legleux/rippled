@@ -45,9 +45,9 @@ DEFAULT_URL = "127.0.0.1"
 DEFAULT_PORT = "5005"
 DEFAULT_DOWNTIME = 60
 ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
-ROOT_DIR = f'{ROOT_DIR}/{datetime.now().strftime("%Y%m%d%H%M%S")}'
+LOG_DIR = f'{ROOT_DIR}/logs/{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}'
 
-SYNC_TIME_FILE = f'{ROOT_DIR}/sync_times.txt'
+SYNC_TIME_FILE = 'sync_times.txt'
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S"
 # TODO: How to provide "default" paths for rippleds to compare? Not possible right? Move these rippled configs to config file
 rippled_flr =     "/home/emel/dev/Ripple/rippled/FLR-test-data/flr/bin/rippled"
@@ -324,9 +324,9 @@ async def loop(test, *, exe=DEFAULT_EXE, config_file=None, downtime=DEFAULT_DOWN
             next_start_time_formatted = next_start_time[build_version].strftime(DATE_FORMAT)
             logging.info(f"Will start {build_version} again after {wait_time} {next_start_time_formatted}")
             await push_sync_time(sync_time)
-            await write_sync_time(build_version, sync_time, f'{ROOT_DIR}/{os.path.basename(SYNC_TIME_FILE)}')
+            await write_sync_time(build_version, sync_time, SYNC_TIME_FILE)
             # TODO: Should sync times for each build be separate? I think yes
-        log_file_dir = f'{ROOT_DIR}/{build_version}'
+        log_file_dir = f'{LOG_DIR}/{build_version}'
         log_file_path = f'{log_file_dir}/debug.{it}.log'
         if not Path(log_file_dir).is_dir():
             os.makedirs(log_file_dir)
@@ -375,15 +375,19 @@ async def push_metric(metric_key, metric):
 
 async def write_sync_time(build_version, sync_time, sync_times_file):
     now = datetime.now()
-    log_message = f"{now}: {build_version} {sync_time}"
-    sync_times_file_path = Path(sync_times_file)
+    log_message = f"{now}: {sync_time}"
+    # sync_times_file_path = Path(sync_times_file)
+    sync_time_file_path = f'{LOG_DIR}/{build_version}'
+    Path(sync_time_file_path).mkdir(parents=True, exist_ok=True)
+    sync_time_file = Path(f'{sync_time_file_path}/{sync_times_file}')
     try:
         # TODO: if db doesn't exist, not if the sync file doesn't exist, it's the initial sync
         # or make the "build_version" the key of the "rippleds" dict and add a "synced" key to the dict that is set
         # after initial sync
-        if not sync_times_file_path.is_file():
-            log_message = f"Initial sync for {build_version}\n{log_message}"
-        with open(sync_times_file, 'a') as sync_file:
+        if not sync_time_file.is_file():
+            log_message = f"Initial sync for {build_version}\n{log_message} seconds"
+
+        with open(sync_time_file, 'a') as sync_file:
             # TODO: what to log the rippled instance as? write a map/legend at top of file?
             sync_file.write(f"{log_message}\n")
     except FileNotFoundError:
@@ -478,10 +482,8 @@ if not args.keep_db:
     pass
 
 try:
-    print(sys.version_info)
     start_http_server(8000)
-    asyncio.run(
-        loop(test, exe=args.rippled, config_file=args.conf, downtime=args.downtime))
+    asyncio.run(loop(test, exe=args.rippled, config_file=args.conf, downtime=args.downtime))
 
 except KeyboardInterrupt:
     # Squelch the message. This is a normal mode of exit.
