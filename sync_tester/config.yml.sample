@@ -1,0 +1,17 @@
+# TODO: Let binaries and config be relative to a "root_dir"
+{
+"binaries":
+ [
+  {
+    "label": <label for binary under test>,
+    "binary": <path to binary to test>,
+    "config_file": <path to config file for binary>
+  },
+  {
+    "label": <label for binary under test>,
+    "binary": <path to binary to test>,
+    "config_file": <path to config file for binary>
+  }
+ ],
+ "delay": <time in seconds rippled is stopped between runs>
+}

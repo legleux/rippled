@@ -3,10 +3,8 @@ import argparse
 import asyncio
 import configparser
 import contextlib
-from datetime import datetime, timedelta
 import json
 import logging
-from logging import INFO
 import os
 import platform
 import shutil
@@ -15,6 +13,8 @@ import sys
 import time
 import urllib.error
 import urllib.request
+import yaml
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from ps_mem import getMemStats
@@ -24,13 +24,20 @@ from prometheus_client import Gauge, start_http_server
 - Requires Python 3.7+.
 - Can be stopped with SIGINT.
 """
-
+logging.basicConfig(
+    format="%(asctime)s %(levelname)-8s %(message)s",
+    level=logging.DEBUG,
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 assert sys.version_info >= (3, 7)
 # Enable asynchronous subprocesses on Windows. The default changed in 3.8.
 # https://docs.python.org/3.7/library/asyncio-platforms.html#subprocess-support-on-windows
 if platform.system() == "Windows" and sys.version_info < (3, 8):
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
 
+ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
+
+CONFIG_FILE = Path(ROOT_DIR) / 'config.yml'
 DEFAULT_EXE = "rippled"
 DEFAULT_CONFIGURATION_FILE = "rippled.cfg"
 # Number of seconds to wait before forcefully terminating.
@@ -44,30 +51,16 @@ ITERATIONS = 5
 DEFAULT_URL = "127.0.0.1"
 DEFAULT_PORT = "5005"
 DEFAULT_DOWNTIME = 60
-ROOT_DIR = os.path.dirname(os.path.realpath(__file__))
 LOG_DIR = f'{ROOT_DIR}/logs/{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}'
 
 SYNC_TIME_FILE = 'sync_times.txt'
 DATE_FORMAT = "%m/%d/%Y %H:%M:%S"
-# TODO: How to provide "default" paths for rippleds to compare? Not possible right? Move these rippled configs to config file
-rippled_flr =     "/home/emel/dev/Ripple/rippled/FLR-test-data/flr/bin/rippled"
-rippled_flr_cfg = "/home/emel/dev/Ripple/rippled/FLR-test-data/flr/cfg/rippled-flr.cfg"
-
-rippled_develop = "/home/emel/dev/Ripple/rippled/FLR-test-data/dev-debug/bin/rippled"
-rippled_dev_cfg = "/home/emel/dev/Ripple/rippled/FLR-test-data/dev-debug/cfg/rippled-dev-debug.cfg"
-
-rippleds = [(rippled_flr, rippled_flr_cfg), (rippled_develop, rippled_dev_cfg)]
-exe_map = {rippleds[0][0]: "flr", rippleds[1][0]: "develop"}
-sync_time = Gauge("rippled_sync_time", "rippled sync time")  # TODO: How to map this easily? put in config file mapping?
-db_size = Gauge("db_size", "rippled db size")
-mem_usage = Gauge("mem_usage", "rippled RAM usage")
-server_state = Gauge("server_state", "rippled server_state")
 
 metrics = {
-    "sync_time": sync_time,
-    "db_size": db_size,
-    "mem_usage": mem_usage,
-    "server_state": server_state
+    "sync_time": Gauge("rippled_sync_time", "rippled sync time"),
+    "db_size": Gauge("db_size", "rippled db size"),
+    "mem_usage": Gauge("mem_usage", "rippled RAM usage"),
+    "server_state": Gauge("server_state", "rippled server_state")
 }
 
 server_states = {
@@ -82,7 +75,17 @@ server_states = {
 pid = None
 
 
-def read_config(config_file):
+def read_config():
+    with open(CONFIG_FILE) as config:
+        config = yaml.safe_load(config)
+    return config
+
+
+config = read_config()
+# rippleds = [(rippled_flr, rippled_flr_cfg), (rippled_develop, rippled_dev_cfg)]
+
+
+def read_rippled_config(config_file):
 
     # strict = False: Allow duplicate keys, e.g. [rpc_startup].
     # allow_no_value = True: Allow keys with no values. Generally, these
@@ -114,7 +117,7 @@ def find_config_section_file(section, config_file):
         logging.error(f"{config_file} doesn't exist!")
         exit(1)
 
-    config = read_config(config_file)
+    config = read_rippled_config(config_file)
 
     values = list(config[f"{section}"].keys())
     if len(values) < 1:
@@ -129,7 +132,7 @@ def find_http_port(args, config_file):
         return int(args.port)
     # config_file = args.conf
     logging.info(f"using config file: {config_file}")
-    config = read_config(config_file)
+    config = read_rippled_config(config_file)
     names = list(config["server"].keys())
     for name in names:
         server = config[name]
@@ -140,7 +143,7 @@ def find_http_port(args, config_file):
 
 # def find_db_path(args):
 #     # config_file = args.conf
-#     config = read_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
+#     config = read_rippled_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
 #     db_path = find_config_section_file("database_path", config_file)
 #     return db_path
 
@@ -158,7 +161,7 @@ def get_dir_size(path):
 
 
 def delete_db(config_file):
-    # config = read_config(config_file)
+    # config = read_rippled_config(config_file)
     filename = find_config_section_file("database_path", config_file)
     try:
         shutil.rmtree(filename)
@@ -166,7 +169,7 @@ def delete_db(config_file):
         logging.error(f"No database at {filename}!")  # TODO: check if dir ??
 
 
-def rippled_version(exe=rippled_flr, config_file=rippled_flr_cfg):
+def rippled_version(exe, config_file):
     output = subprocess.check_output([exe, "--conf", config_file, "--version"])
     version = output.decode().strip().split('version')[1]
     return version
@@ -270,26 +273,29 @@ async def sync(url=DEFAULT_URL, *, duration=DEFAULT_SYNC_DURATION, interval=DEFA
             start = time.perf_counter()
 
 
-async def loop(test, *, exe=DEFAULT_EXE, config_file=None, downtime=DEFAULT_DOWNTIME):
+async def loop(test, downtime=DEFAULT_DOWNTIME):
     """
     Start-test-stop rippled in an infinite loop.
     Moves log to a different file after each iteration.
     """
+    config = read_config()
+    rippleds = config['binaries']
+    number_of_builds = len(rippleds)
     it = 0
     sync_times = []
     logging.info(f"*** {downtime}s between stop/start cycle ***")
-    comparisons = " vs ".join(list(map(lambda x: exe_map[x[0]], rippleds)))
-    # TODO: maybe make the comparisions on 2 lines with the full path, then version string?
-    logging.info(f"*** Comparing {comparisons} ***")
-
-    number_of_builds = len(rippleds)
-    next_start_time = {f"build_{i}": "" for i in range(number_of_builds)}
+    rippled_labels = list(map(lambda test_exe: test_exe['label'], config['binaries']))
+    logging.info(f"*** Comparing {' vs '.join(rippled_labels)} ***")
+    logging.debug(f"Config:\n{json.dumps(config, indent=2)}")
+    next_start_time = {label: "" for label in rippled_labels}
     while True:
-        build_index = it % number_of_builds
-        exe, config_file = rippleds[build_index]
-        build_version = f'build_{build_index}'
+        binary_index = it % number_of_builds
+        rippled_test = rippleds[binary_index]
+        label, exe, config_file = rippled_test.values()
+        # build_version = label
+        restart_time = next_start_time[label]
+
         log_file = find_config_section_file("debug_logfile", config_file)
-        restart_time = next_start_time[build_version]
         minutes = "%H:%M:%S"
         if restart_time:
             wait = 300  # TODO: How to wait nicer
@@ -299,8 +305,8 @@ async def loop(test, *, exe=DEFAULT_EXE, config_file=None, downtime=DEFAULT_DOWN
         logging.info(f"*** Iteration: {it} ***")
         logging.info(f"*** {exe} --conf {config_file} ***")  # TODO: realpath
         logging.info(f"*** Log file:{log_file} ***")
-        ver = rippled_version(exe, config_file)
-        logging.info(f"*** rippled version: {ver} ***")
+        # ver = rippled_version(exe, config_file) # TODO: change to label
+        # logging.info(f"*** rippled version: {ver} ***")
         async with rippled(exe, config_file) as process:
             start = time.perf_counter()
             exited = asyncio.create_task(process.wait())
@@ -326,13 +332,13 @@ async def loop(test, *, exe=DEFAULT_EXE, config_file=None, downtime=DEFAULT_DOWN
             now = datetime.now()
             wait_time = timedelta(seconds=downtime)
             logging.info(f"At {now} {exe} synced after {sync_time} seconds")
-            next_start_time.update({f"{build_version}": now + wait_time})
-            next_start_time_formatted = next_start_time[build_version].strftime(DATE_FORMAT)
-            logging.info(f"Will start {build_version} again after {wait_time} {next_start_time_formatted}")
+            next_start_time.update({f"{label}": now + wait_time})
+            next_start_time_formatted = next_start_time[label].strftime(DATE_FORMAT)
+            logging.info(f"Will start {label} again after {wait_time} {next_start_time_formatted}")
             await push_sync_time(sync_time)
-            await write_sync_time(build_version, sync_time, SYNC_TIME_FILE)
+            await write_sync_time(label, sync_time, SYNC_TIME_FILE)
             # TODO: Should sync times for each build be separate? I think yes
-        log_file_dir = f'{LOG_DIR}/{build_version}'
+        log_file_dir = f'{LOG_DIR}/{label}'
         log_file_path = f'{log_file_dir}/debug.{it}.log'
         if not Path(log_file_dir).is_dir():
             os.makedirs(log_file_dir)
@@ -400,11 +406,6 @@ async def write_sync_time(build_version, sync_time, sync_times_file):
         logging.error(f"Couldn't open {sync_times_file}")
     logging.debug(f"Wrote {log_message} to {sync_times_file}")
 
-logging.basicConfig(
-    format="%(asctime)s %(levelname)-8s %(message)s",
-    level=INFO,
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -412,7 +413,7 @@ parser.add_argument(
     "rippled",
     type=Path,
     nargs="?",
-    default=rippled_develop,
+    default=None,
     help="Path to rippled.",
 )
 parser.add_argument(
@@ -478,7 +479,6 @@ if args.debug:
 
 
 def test(config_file):
-
     port = find_http_port(args, config_file)
     return sync(port, duration=args.duration, interval=args.interval)
 
@@ -489,7 +489,7 @@ if not args.keep_db:
 
 try:
     start_http_server(8000)
-    asyncio.run(loop(test, exe=args.rippled, config_file=args.conf, downtime=args.downtime))
+    asyncio.run(loop(test, downtime=args.downtime))
 
 except KeyboardInterrupt:
     # Squelch the message. This is a normal mode of exit.
