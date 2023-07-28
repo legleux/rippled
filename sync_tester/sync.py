@@ -111,7 +111,7 @@ def to_list(value, separator=","):
 def find_config_section_file(section, config_file):
     """Try to figure out what log file the user has chosen. Raises all kinds
     of exceptions if there is any possibility of ambiguity."""
-    logging.info(f"Looking for config file at: {config_file}")  # debug log
+    logging.debug(f"Looking for config file at: {config_file}")
     config_file = Path(config_file)
     if not config_file.is_file():
         logging.error(f"{config_file} doesn't exist!")
@@ -141,11 +141,11 @@ def find_http_port(args, config_file):
     raise ValueError('no server in [server] for "http" protocol')
 
 
-# def find_db_path(args):
-#     # config_file = args.conf
-#     config = read_rippled_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
-#     db_path = find_config_section_file("database_path", config_file)
-#     return db_path
+def find_db_path(args):
+    # config_file = args.conf
+    config = read_rippled_config(config_file)  # TODO: fix this db finding to be more (less?) globally accessible
+    db_path = find_config_section_file("database_path", config_file)
+    return db_path
 
 
 def get_dir_size(path):
@@ -161,12 +161,21 @@ def get_dir_size(path):
 
 
 def delete_db(config_file):
-    # config = read_rippled_config(config_file)
-    filename = find_config_section_file("database_path", config_file)
+    db_path = find_config_section_file("database_path", config_file)
     try:
-        shutil.rmtree(filename)
+        shutil.rmtree(db_path)
     except FileNotFoundError:
-        logging.error(f"No database at {filename}!")  # TODO: check if dir ??
+        logging.error(f"No database at {db_path}!")
+
+
+def delete_rippled_data(config_file):
+    # TODO: generic delete file
+    delete_db(config_file)
+    debug_logfile = find_config_section_file("debug_logfile", config_file)
+    # try:
+    #     os.remove(debug_logfile)
+    # except FileNotFoundError:
+    #     logging.error(f"No log at {debug_logfile}!")
 
 
 def rippled_version(exe, config_file):
@@ -178,9 +187,9 @@ def rippled_version(exe, config_file):
 @contextlib.asynccontextmanager
 async def rippled(exe=DEFAULT_EXE, config_file=None):
     """A context manager for a rippled process."""
-    logging.debug(f"exe: {exe}")  # debug
+    logging.debug(f"rippled: {exe}")
     logging.debug(f"config_file: {config_file}")
-    # Start the server.
+
     process = await asyncio.create_subprocess_exec(
         str(exe),
         "--conf",
@@ -273,7 +282,10 @@ async def sync(url=DEFAULT_URL, *, duration=DEFAULT_SYNC_DURATION, interval=DEFA
             start = time.perf_counter()
 
 
-async def loop(test, downtime=DEFAULT_DOWNTIME):
+async def loop(test,
+               *,
+               exe=DEFAULT_EXE,
+               config_file=DEFAULT_CONFIGURATION_FILE, downtime=DEFAULT_DOWNTIME):
     """
     Start-test-stop rippled in an infinite loop.
     Moves log to a different file after each iteration.
@@ -322,10 +334,13 @@ async def loop(test, downtime=DEFAULT_DOWNTIME):
             else:
                 assert done == {tested}
                 try:
-                    assert tested.exception() is None, f"tested.exception: {tested.exception()}"
+                    assert tested.exception() is None, tested.exception()
                 except AssertionError as e:
                     logging.error(e)
-                    raise
+                    logging.debug("Deleting databases and starting over...")
+                    config_files = [each['config_file'] for each in rippleds]
+                    for config_file in config_files:
+                        delete_rippled_data(config_file)
             end = time.perf_counter()
             sync_time = f"{end - start:.0f}"
 
@@ -338,6 +353,7 @@ async def loop(test, downtime=DEFAULT_DOWNTIME):
             await push_sync_time(sync_time)
             await write_sync_time(label, sync_time, SYNC_TIME_FILE)
             # TODO: Should sync times for each build be separate? I think yes
+        # TODO: rotate_log() If rippled crashes, the last log won't be moved...
         log_file_dir = f'{LOG_DIR}/{label}'
         log_file_path = f'{log_file_dir}/debug.{it}.log'
         if not Path(log_file_dir).is_dir():
@@ -409,68 +425,21 @@ async def write_sync_time(build_version, sync_time, sync_times_file):
 
 parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-parser.add_argument(
-    "rippled",
-    type=Path,
-    nargs="?",
-    default=None,
-    help="Path to rippled.",
-)
-parser.add_argument(
-    "--conf",
-    type=Path,
-    default=DEFAULT_CONFIGURATION_FILE,
-    help="Path to configuration file.",
-)
-parser.add_argument(
-    "--url",
-    type=str,
-    default=DEFAULT_URL,
-    help="rippled url",
-)
-parser.add_argument(
-    "--port",
-    type=str,
-    default=DEFAULT_PORT,
-    help="rippled port",
-)
-parser.add_argument(
-    "--duration",
-    type=int,
-    default=DEFAULT_SYNC_DURATION,
-    help="Number of contiguous seconds required in a synchronized state.",
-)
-parser.add_argument(
-    "--interval",
-    type=int,
-    default=DEFAULT_POLL_INTERVAL,
-    help="Number of seconds to wait between polls of state.",
-)
-parser.add_argument(
-    "--iterations",
-    type=int,
-    default=ITERATIONS,
-    help="Number of iterations of synching to run.",
-)
-parser.add_argument(
-    "--downtime",
-    type=int,
-    # nargs="*",
-    default=DEFAULT_DOWNTIME,
-    help="Number of seconds to wait before restarting.",
-)
-parser.add_argument(
-    "--debug",
-    action="store_true",
-    help="debug",
-)
-parser.add_argument(
-    "--keep-db",
-    action="store_true",
-    help="keep db",
-)
+parser.add_argument("rippled", type=Path, nargs="?", default=None, help="Path to rippled.")
+parser.add_argument("--conf", type=Path, default=DEFAULT_CONFIGURATION_FILE, help="Path to configuration file.")
+parser.add_argument("--url", type=str, default=DEFAULT_URL, help="rippled url")
+parser.add_argument("--port", type=str, default=DEFAULT_PORT, help="rippled port")
+parser.add_argument("--duration", type=int, default=DEFAULT_SYNC_DURATION,
+                    help="Number of contiguous seconds required in a synchronized state.")
+parser.add_argument("--interval", type=int, default=DEFAULT_POLL_INTERVAL,
+                    help="Number of seconds to wait between polls of state.")
+parser.add_argument("--iterations", type=int, default=ITERATIONS, help="Number of iterations of synching to run.")
+parser.add_argument("--downtime", type=int, default=DEFAULT_DOWNTIME,
+                    help="Number of seconds to wait before restarting.")
+parser.add_argument("--debug", action="store_true", help="debug")
+parser.add_argument( "--keep-db", action="store_true", help="keep db")
+parser.add_argument( "--log-metrics", action="store_true", help="Expose metrics for Prometheus")
 args = parser.parse_args()
-
 
 if args.debug:
     logging.getLogger().setLevel(logging.DEBUG)
@@ -488,8 +457,9 @@ if not args.keep_db:
     pass
 
 try:
-    start_http_server(8000)
-    asyncio.run(loop(test, downtime=args.downtime))
+    if args.log_metrics:
+       start_http_server(8000)
+    asyncio.run(loop(test, exe=args.rippled, config_file=args.conf, downtime=args.downtime))
 
 except KeyboardInterrupt:
     # Squelch the message. This is a normal mode of exit.
