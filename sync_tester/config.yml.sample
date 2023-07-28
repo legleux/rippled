@@ -1,17 +1,24 @@
 # TODO: Let binaries and config be relative to a "root_dir"
 {
-"binaries":
- [
-  {
-    "label": <label for binary under test>,
-    "binary": <path to binary to test>,
-    "config_file": <path to config file for binary>
-  },
-  {
-    "label": <label for binary under test>,
-    "binary": <path to binary to test>,
-    "config_file": <path to config file for binary>
-  }
- ],
- "delay": <time in seconds rippled is stopped between runs>
+    # Details for the executables
+    "binaries": [
+        {
+            "label": <label to refer to the rippled 1 version>,
+            "binary": <path to rippled 1>,
+            "config_file": <path to rippled 1 config>
+        },
+        {
+            "label": <label to refer to the rippled 2 version>,
+            "binary": <path to rippled 2>,
+            "config_file": <path to rippled 2 config>
+        }
+    ],
+    # The time rippled will be stopped between runs
+    "delay": < seconds >,
+    # Parameters for the systemd service
+    "service":{
+        "user": <user to run as>,
+        "shutdown_timeout": <time to allow rippled to stop before systemd kills it>,
+        "script_path": <path to sync_test script>
+    }
 }
