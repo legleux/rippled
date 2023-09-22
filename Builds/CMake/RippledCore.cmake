@@ -404,6 +404,7 @@ endif () #tests
    add_executable with no sources
 #]=========================================================]
 add_executable (rippled src/ripple/app/main/Application.h)
+
 if (unity)
   set_target_properties(rippled PROPERTIES UNITY_BUILD ON)
 endif ()
