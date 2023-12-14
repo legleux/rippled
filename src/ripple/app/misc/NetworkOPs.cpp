@@ -74,6 +74,7 @@
 #include <algorithm>
 #include <mutex>
 #include <optional>
+#include <sstream>
 #include <string>
 #include <tuple>
 #include <unordered_map>
@@ -610,7 +611,8 @@ private:
         boost::asio::steady_timer& timer,
         std::chrono::milliseconds const& expiry_time,
         std::function<void()> onExpire,
-        std::function<void()> onError);
+        std::function<void()> onError,
+        std::optional<std::string> label = std::nullopt);
     void
     setHeartbeatTimer();
     void
@@ -937,15 +939,30 @@ NetworkOPsImp::setTimer(
     boost::asio::steady_timer& timer,
     const std::chrono::milliseconds& expiry_time,
     std::function<void()> onExpire,
-    std::function<void()> onError)
+    std::function<void()> onError,
+    std::optional<std::string> label)
 {
+    if (label.has_value())
+    {
+        JLOG(m_journal.debug()) << "setTimer setting " << *label;
+    }
     // Only start the timer if waitHandlerCounter_ is not yet joined.
     if (auto optionalCountedHandler = waitHandlerCounter_.wrap(
-            [this, onExpire, onError](boost::system::error_code const& e) {
+            [this, label, onExpire, onError](boost::system::error_code const& e) {
                 if ((e.value() == boost::system::errc::success) &&
                     (!m_job_queue.isStopped()))
                 {
+                    if (label.has_value())
+                    {
+                        JLOG(m_journal.debug())
+                            << "setTimer onExpire() starting " << *label;
+                    }
                     onExpire();
+                    if (label.has_value())
+                    {
+                        JLOG(m_journal.debug())
+                            << "setTimer onExpire() completed " << *label;
+                    }
                 }
                 // Recover as best we can if an unexpected error occurs.
                 if (e.value() != boost::system::errc::success &&
@@ -955,12 +972,31 @@ NetworkOPsImp::setTimer(
                     JLOG(m_journal.error())
                         << "Timer got error '" << e.message()
                         << "'.  Restarting timer.";
+                    if (label.has_value())
+                    {
+                        JLOG(m_journal.debug())
+                            << "setTimer onError() starting " << *label;
+                    }
                     onError();
+                    if (label.has_value())
+                    {
+                        JLOG(m_journal.debug())
+                            << "setTimer onError() completed " << *label;
+                    }
                 }
             }))
     {
+        if (label.has_value())
+        {
+            JLOG(m_journal.debug())
+                << "setTimer setting expiration and waiting " << *label;
+        }
         timer.expires_from_now(expiry_time);
         timer.async_wait(std::move(*optionalCountedHandler));
+        if (label.has_value())
+        {
+            JLOG(m_journal.debug()) << "setTimer finished waiting " << *label;
+        }
     }
 }
 
@@ -1105,6 +1141,7 @@ NetworkOPsImp::processClusterTimer()
         node.set_name(to_string(item.address));
         node.set_cost(item.balance);
     }
+    JLOG(m_journal.debug()) << "debugrelay send() 37";
     app_.overlay().foreach(send_if(
         std::make_shared<Message>(cluster, protocol::mtCLUSTER),
         peer_in_cluster()));
@@ -1194,6 +1231,7 @@ NetworkOPsImp::processTransaction(
     bool bLocal,
     FailHard failType)
 {
+    JLOG(m_journal.debug()) << "processTransaction " << transaction->getID();
     auto ev = m_job_queue.makeLoadEvent(jtTXN_PROC, "ProcessTXN");
     auto const newFlags = app_.getHashRouter().getFlags(transaction->getID());
 
@@ -1220,7 +1258,7 @@ NetworkOPsImp::processTransaction(
     // Not concerned with local checks at this point.
     if (validity == Validity::SigBad)
     {
-        JLOG(m_journal.info()) << "Transaction has bad signature: " << reason;
+        JLOG(m_journal.info()) << "Transaction has bad signature: " << transaction->getID() << " " << reason;
         transaction->setStatus(INVALID);
         transaction->setResult(temBAD_SIGNATURE);
         app_.getHashRouter().setFlags(transaction->getID(), SF_BAD);
@@ -1250,6 +1288,7 @@ NetworkOPsImp::doTransactionAsync(
     mTransactions.push_back(
         TransactionStatus(transaction, bUnlimited, false, failType));
     transaction->setApplying();
+    JLOG(m_journal.debug()) << "processTransaction batch size " << transaction->getID() << " " << mTransactions.size();
 
     if (mDispatchState == DispatchState::none)
     {
@@ -1327,6 +1366,7 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
     mDispatchState = DispatchState::running;
 
     batchLock.unlock();
+    JLOG(m_journal.debug()) << "apply batch size " << transactions.size();
 
     {
         std::unique_lock masterLock{app_.getMasterMutex(), std::defer_lock};
@@ -1347,6 +1387,7 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
                     if (e.failType == FailHard::yes)
                         flags |= tapFAIL_HARD;
 
+                    JLOG(m_journal.debug()) << "apply in batch " << e.transaction->getID();
                     auto const result = app_.getTxQ().apply(
                         app_, view, e.transaction->getSTransaction(), flags, j);
                     e.result = result.first;
@@ -1398,7 +1439,7 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
             if (e.result == tesSUCCESS)
             {
                 JLOG(m_journal.debug())
-                    << "Transaction is now included in open ledger";
+                    << "Transaction is now included in open ledger " << e.transaction->getID();
                 e.transaction->setStatus(INCLUDED);
 
                 auto const& txCur = e.transaction->getSTransaction();
@@ -1415,14 +1456,14 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
             else if (e.result == tefPAST_SEQ)
             {
                 // duplicate or conflict
-                JLOG(m_journal.info()) << "Transaction is obsolete";
+                JLOG(m_journal.info()) << "Transaction is obsolete " << e.transaction->getID();
                 e.transaction->setStatus(OBSOLETE);
             }
             else if (e.result == terQUEUED)
             {
                 JLOG(m_journal.debug())
                     << "Transaction is likely to claim a"
-                    << " fee, but is queued until fee drops";
+                    << " fee, but is queued until fee drops " << e.transaction->getID();
 
                 e.transaction->setStatus(HELD);
                 // Add to held transactions, because it could get
@@ -1438,7 +1479,7 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
                 {
                     // transaction should be held
                     JLOG(m_journal.debug())
-                        << "Transaction should be held: " << e.result;
+                        << "Transaction should be held: " << e.result << " " << e.transaction->getID();
                     e.transaction->setStatus(HELD);
                     m_ledgerMaster.addHeldTransaction(e.transaction);
                     e.transaction->setKept();
@@ -1447,7 +1488,7 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
             else
             {
                 JLOG(m_journal.debug())
-                    << "Status other than success " << e.result;
+                    << "Status other than success " << e.result << " " << e.transaction->getID();
                 e.transaction->setStatus(INVALID);
             }
 
@@ -1462,6 +1503,15 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
                 e.transaction->setKept();
             }
 
+            std::stringstream ss;
+            ss << "DEBUGRELAY apply tx " << e.transaction->getID()
+                << ". applied,mMode,failtype != yes,local,result == terQUEUED,enforceFailHard: "
+                << e.applied << ',' << strOperatingMode() << ','
+                << (e.failType != FailHard::yes) << ','
+                << e.local << ','
+                << (e.result == terQUEUED) << ','
+                << enforceFailHard;
+
             if ((e.applied ||
                  ((mMode != OperatingMode::FULL) &&
                   (e.failType != FailHard::yes) && e.local) ||
@@ -1470,9 +1520,11 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
             {
                 auto const toSkip =
                     app_.getHashRouter().shouldRelay(e.transaction->getID());
+                ss << ". Possibly relaying. toSkip: " << toSkip.has_value();
 
                 if (toSkip)
                 {
+                    ss << ". Attempting to relay.";
                     protocol::TMTransaction tx;
                     Serializer s;
 
@@ -1487,6 +1539,8 @@ NetworkOPsImp::apply(std::unique_lock<std::mutex>& batchLock)
                     e.transaction->setBroadcast();
                 }
             }
+
+            JLOG(m_journal.debug()) << ss.str();
 
             if (validatedLedgerIndex)
             {
@@ -1799,6 +1853,7 @@ NetworkOPsImp::switchLastClosedLedger(
         newLCL->info().parentHash.begin(), newLCL->info().parentHash.size());
     s.set_ledgerhash(newLCL->info().hash.begin(), newLCL->info().hash.size());
 
+    JLOG(m_journal.debug()) << "debugrelay send() 33";
     app_.overlay().foreach(
         send_always(std::make_shared<Message>(s, protocol::mtSTATUS_CHANGE)));
 }
@@ -1884,6 +1939,7 @@ NetworkOPsImp::mapComplete(std::shared_ptr<SHAMap> const& map, bool fromAcquire)
     protocol::TMHaveTransactionSet msg;
     msg.set_hash(map->getHash().as_uint256().begin(), 256 / 8);
     msg.set_status(protocol::tsHAVE);
+    JLOG(m_journal.debug()) << "debugrelay send() 34";
     app_.overlay().foreach(
         send_always(std::make_shared<Message>(msg, protocol::mtHAVE_SET)));
 

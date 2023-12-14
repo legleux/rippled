@@ -714,6 +714,7 @@ ValidatorList::sendValidatorList(
         {
             if (message.message)
             {
+                JLOG(j.debug()) << "debugrelay send() 4";
                 peer.send(message.message);
                 hashRouter.addSuppressionPeer(message.hash, peer.id());
                 sent = true;

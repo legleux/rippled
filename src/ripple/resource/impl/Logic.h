@@ -498,6 +498,12 @@ public:
             ++m_stats.drop;
             drop = true;
         }
+        else
+        {
+            JLOG(m_journal.debug()) << "Consumer entry " << entry
+                << " not dropped  with balance " << balance <<
+                " below drop threshold " << dropThreshold;
+        }
         return drop;
     }
 

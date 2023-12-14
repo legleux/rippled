@@ -106,6 +106,7 @@ PeerSetImpl::sendRequest(
     auto packet = std::make_shared<Message>(message, type);
     if (peer)
     {
+        JLOG(journal_.debug()) << "debugrelay send() 19";
         peer->send(packet);
         return;
     }
@@ -113,7 +114,10 @@ PeerSetImpl::sendRequest(
     for (auto id : peers_)
     {
         if (auto p = app_.overlay().findPeerByShortID(id))
+        {
+            JLOG(journal_.debug()) << "debugrelay send() 41";
             p->send(packet);
+        }
     }
 }
 

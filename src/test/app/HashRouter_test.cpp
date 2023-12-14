@@ -20,6 +20,7 @@
 #include <ripple/app/misc/HashRouter.h>
 #include <ripple/basics/chrono.h>
 #include <ripple/beast/unit_test.h>
+#include <test/unit_test/SuiteJournal.h>
 
 namespace ripple {
 namespace test {
@@ -31,7 +32,7 @@ class HashRouter_test : public beast::unit_test::suite
     {
         using namespace std::chrono_literals;
         TestStopwatch stopwatch;
-        HashRouter router(stopwatch, 2s);
+        HashRouter router(stopwatch, 2s, test::SuiteJournal("TestHashRouter", *this));
 
         uint256 const key1(1);
         uint256 const key2(2);
@@ -68,7 +69,7 @@ class HashRouter_test : public beast::unit_test::suite
     {
         using namespace std::chrono_literals;
         TestStopwatch stopwatch;
-        HashRouter router(stopwatch, 2s);
+        HashRouter router(stopwatch, 2s, test::SuiteJournal("TestHashRouter", *this));
 
         uint256 const key1(1);
         uint256 const key2(2);
@@ -146,7 +147,7 @@ class HashRouter_test : public beast::unit_test::suite
         // Normal HashRouter
         using namespace std::chrono_literals;
         TestStopwatch stopwatch;
-        HashRouter router(stopwatch, 2s);
+        HashRouter router(stopwatch, 2s, test::SuiteJournal("TestHashRouter", *this));
 
         uint256 const key1(1);
         uint256 const key2(2);
@@ -174,7 +175,7 @@ class HashRouter_test : public beast::unit_test::suite
     {
         using namespace std::chrono_literals;
         TestStopwatch stopwatch;
-        HashRouter router(stopwatch, 2s);
+        HashRouter router(stopwatch, 2s, test::SuiteJournal("TestHashRouter", *this));
 
         uint256 const key1(1);
         BEAST_EXPECT(router.setFlags(key1, 10));
@@ -187,7 +188,7 @@ class HashRouter_test : public beast::unit_test::suite
     {
         using namespace std::chrono_literals;
         TestStopwatch stopwatch;
-        HashRouter router(stopwatch, 1s);
+        HashRouter router(stopwatch, 1s, test::SuiteJournal("TestHashRouter", *this));
 
         uint256 const key1(1);
 
@@ -230,7 +231,7 @@ class HashRouter_test : public beast::unit_test::suite
     {
         using namespace std::chrono_literals;
         TestStopwatch stopwatch;
-        HashRouter router(stopwatch, 5s);
+        HashRouter router(stopwatch, 5s, test::SuiteJournal("TestHashRouter", *this));
         uint256 const key(1);
         HashRouter::PeerShortID peer = 1;
         int flags;

@@ -2205,6 +2205,7 @@ DatabaseShardImp::updatePeers(std::lock_guard<std::mutex> const& lock) const
         app_.getOPs().getOperatingMode() != OperatingMode::DISCONNECTED)
     {
         auto const message{getShardInfo(lock)->makeMessage(app_)};
+        JLOG(j_.debug()) << "debugrelay send() 35";
         app_.overlay().foreach(send_always(std::make_shared<Message>(
             message, protocol::mtPEER_SHARD_INFO_V2)));
     }
