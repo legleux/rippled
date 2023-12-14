@@ -136,6 +136,7 @@ private:
      * @param in Payload header pointer
      * @return Message type
      */
+public:
     int
     getType(std::uint8_t const* in) const;
 };

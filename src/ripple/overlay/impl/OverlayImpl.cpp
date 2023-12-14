@@ -41,6 +41,8 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/utility/in_place_factory.hpp>
 
+#include <sstream>
+
 namespace ripple {
 
 namespace CrawlOptions {
@@ -667,8 +669,10 @@ OverlayImpl::onManifests(
     }
 
     if (!relay.list().empty())
-        for_each([m2 = std::make_shared<Message>(relay, protocol::mtMANIFESTS)](
-                     std::shared_ptr<PeerImp>&& p) { p->send(m2); });
+        for_each([&, m2 = std::make_shared<Message>(relay, protocol::mtMANIFESTS)](
+                     std::shared_ptr<PeerImp>&& p) {
+            JLOG(journal_.debug()) << "debugrelay send() 7";
+            p->send(m2); });
 }
 
 void
@@ -720,6 +724,7 @@ OverlayImpl::crawlShards(bool includePublicKey, std::uint32_t relays)
         }
 
         // Request peer shard info
+        JLOG(journal_.debug()) << "debugrelay send() 36";
         foreach(send_always(std::make_shared<Message>(
             tmGPS, protocol::mtGET_PEER_SHARD_INFO_V2)));
 
@@ -1221,7 +1226,9 @@ void
 OverlayImpl::broadcast(protocol::TMProposeSet& m)
 {
     auto const sm = std::make_shared<Message>(m, protocol::mtPROPOSE_LEDGER);
-    for_each([&](std::shared_ptr<PeerImp>&& p) { p->send(sm); });
+    for_each([&](std::shared_ptr<PeerImp>&& p) {
+        JLOG(journal_.debug()) << "debugrelay send() 5";
+        p->send(sm); });
 }
 
 std::set<Peer::id_t>
@@ -1236,7 +1243,10 @@ OverlayImpl::relay(
             std::make_shared<Message>(m, protocol::mtPROPOSE_LEDGER, validator);
         for_each([&](std::shared_ptr<PeerImp>&& p) {
             if (toSkip->find(p->id()) == toSkip->end())
+            {
+                JLOG(journal_.debug()) << "debugrelay send() 9";
                 p->send(sm);
+            }
         });
         return *toSkip;
     }
@@ -1247,7 +1257,9 @@ void
 OverlayImpl::broadcast(protocol::TMValidation& m)
 {
     auto const sm = std::make_shared<Message>(m, protocol::mtVALIDATION);
-    for_each([sm](std::shared_ptr<PeerImp>&& p) { p->send(sm); });
+    for_each([&, sm](std::shared_ptr<PeerImp>&& p) {
+        JLOG(journal_.debug()) << "debugrelay send() 6";
+        p->send(sm); });
 }
 
 std::set<Peer::id_t>
@@ -1262,7 +1274,10 @@ OverlayImpl::relay(
             std::make_shared<Message>(m, protocol::mtVALIDATION, validator);
         for_each([&](std::shared_ptr<PeerImp>&& p) {
             if (toSkip->find(p->id()) == toSkip->end())
+            {
+                JLOG(journal_.debug()) << "debugrelay send() 11";
                 p->send(sm);
+            }
         });
         return *toSkip;
     }
@@ -1314,13 +1329,20 @@ OverlayImpl::relay(
     auto peers = getActivePeers(toSkip, total, disabled, enabledInSkip);
     auto minRelay = app_.config().TX_REDUCE_RELAY_MIN_PEERS + disabled;
 
+    std::stringstream ss;
+    ss << "DEBUGRELAY relaying " << hash << " num peers " << peers.size() << " ";
     if (!app_.config().TX_REDUCE_RELAY_ENABLE || total <= minRelay)
     {
         for (auto const& p : peers)
+        {
+            ss << "peer: " << p->id() << ",";
+            JLOG(journal_.debug()) << "debugrelay send() 8";
             p->send(sm);
+        }
         if (app_.config().TX_REDUCE_RELAY_ENABLE ||
             app_.config().TX_REDUCE_RELAY_METRICS)
             txMetrics_.addMetrics(total, toSkip.size(), 0);
+        JLOG(journal_.debug()) << ss.str();
         return;
     }
 
@@ -1335,7 +1357,9 @@ OverlayImpl::relay(
     if (enabledTarget > enabledInSkip)
         std::shuffle(peers.begin(), peers.end(), default_prng());
 
-    JLOG(journal_.trace()) << "relaying tx, total peers " << peers.size()
+//    std::stringstream ss;
+    ss << "have reduce relay relaying tx, total peers " << hash
+                           << ',' << peers.size()
                            << " selected " << enabledTarget << " skip "
                            << toSkip.size() << " disabled " << disabled;
 
@@ -1343,21 +1367,29 @@ OverlayImpl::relay(
     std::uint16_t enabledAndRelayed = enabledInSkip;
     for (auto const& p : peers)
     {
+        ss << "peer " << p->id() << " ";
         // always relay to a peer with the disabled feature
         if (!p->txReduceRelayEnabled())
         {
+            ss << "reduceRelay not enabled";
+            JLOG(journal_.debug()) << "debugrelay send() 38";
             p->send(sm);
         }
         else if (enabledAndRelayed < enabledTarget)
         {
+            ss << "reducerelay enabled but less than target";
             enabledAndRelayed++;
+            JLOG(journal_.debug()) << "debugrelay send() 10";
             p->send(sm);
         }
         else
         {
+            ss << "adding to tx queue";
             p->addTxQueue(hash);
         }
+        ss << ". ";
     }
+    JLOG(journal_.debug()) << ss.str();
 }
 
 //------------------------------------------------------------------------------
@@ -1460,6 +1492,7 @@ OverlayImpl::unsquelch(PublicKey const& validator, Peer::id_t id) const
     {
         // optimize - multiple message with different
         // validator might be sent to the same peer
+        JLOG(journal_.debug()) << "debugrelay send() 13";
         peer->send(makeSquelchMessage(validator, false, 0));
     }
 }
@@ -1473,6 +1506,7 @@ OverlayImpl::squelch(
     if (auto peer = findPeerByShortID(id);
         peer && app_.config().VP_REDUCE_RELAY_SQUELCH)
     {
+        JLOG(journal_.debug()) << "debugrelay send() 12";
         peer->send(makeSquelchMessage(validator, true, squelchDuration));
     }
 }

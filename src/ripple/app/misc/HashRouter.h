@@ -25,6 +25,7 @@
 #include <ripple/basics/base_uint.h>
 #include <ripple/basics/chrono.h>
 #include <ripple/beast/container/aged_unordered_map.h>
+#include <ripple/beast/utility/Journal.h>
 
 #include <optional>
 
@@ -143,8 +144,10 @@ public:
         return 300s;
     }
 
-    HashRouter(Stopwatch& clock, std::chrono::seconds entryHoldTimeInSeconds)
+    HashRouter(Stopwatch& clock, std::chrono::seconds entryHoldTimeInSeconds,
+        beast::Journal j)
         : suppressionMap_(clock), holdTime_(entryHoldTimeInSeconds)
+        , j_(j)
     {
     }
 
@@ -221,6 +224,7 @@ private:
         suppressionMap_;
 
     std::chrono::seconds const holdTime_;
+    beast::Journal j_;
 };
 
 }  // namespace ripple

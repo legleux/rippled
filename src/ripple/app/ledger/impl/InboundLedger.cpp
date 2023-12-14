@@ -607,6 +607,7 @@ InboundLedger::trigger(std::shared_ptr<Peer> const& peer, TriggerReason reason)
                         if (auto p = app_.overlay().findPeerByShortID(id))
                         {
                             mByHash = false;
+                            JLOG(journal_.debug()) << "debugrelay send() 1";
                             p->send(packet);
                         }
                     });

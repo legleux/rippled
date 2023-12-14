@@ -241,7 +241,10 @@ void
 PeerImp::send(std::shared_ptr<Message> const& m)
 {
     if (!strand_.running_in_this_thread())
+    {
+        JLOG(journal_.debug()) << "debugrelay send() 28";
         return post(strand_, std::bind(&PeerImp::send, shared_from_this(), m));
+    }
     if (gracefulClose_)
         return;
     if (detaching_)
@@ -274,10 +277,23 @@ PeerImp::send(std::shared_ptr<Message> const& m)
     }
 
     send_queue_.push(m);
+    ++send_queue_size_;
 
     if (sendq_size != 0)
+    {
+        JLOG(journal_.debug()) << "send not sending type: "
+        << protocolMessageName(m->getType(&m->getBuffer(Compressed::Off)[0]))
+        << ". Prior to push, q size was " << sendq_size << ". now it's "
+        << send_queue_.size() << " and tracking counter should be equal: "
+        << send_queue_size_
+        << " peer id " << id();
         return;
+    }
 
+    JLOG(journal_.debug()) << "sending message type " << protocolMessageName(m->getType(&m->getBuffer(Compressed::Off)[0]))
+        << ". just pushed q size " << send_queue_.size()
+        << " and tracking counter should be equal: " << send_queue_size_
+        << " peer id " << id();
     boost::asio::async_write(
         stream_,
         boost::asio::buffer(
@@ -306,6 +322,7 @@ PeerImp::sendTxQueue()
         });
         JLOG(p_journal_.trace()) << "sendTxQueue " << txQueue_.size();
         txQueue_.clear();
+        JLOG(journal_.debug()) << "debugrelay send() 30";
         send(std::make_shared<Message>(ht, protocol::mtHAVE_TRANSACTIONS));
     }
 }
@@ -742,6 +759,7 @@ PeerImp::onTimer(error_code const& ec)
     message.set_type(protocol::TMPing::ptPING);
     message.set_seq(*lastPingSeq_);
 
+    JLOG(journal_.debug()) << "debugrelay send() 26";
     send(std::make_shared<Message>(message, protocol::mtPING));
 
     setTimer();
@@ -878,11 +896,15 @@ PeerImp::doProtocolStart()
     }
 
     if (auto m = overlay_.getManifestsMessage())
+    {
+        JLOG(journal_.debug()) << "debugrelay send() 40";
         send(m);
+    }
 
     // Request shard info from peer
     protocol::TMGetPeerShardInfoV2 tmGPS;
     tmGPS.set_relays(0);
+    JLOG(journal_.debug()) << "debugrelay send() 20";
     send(std::make_shared<Message>(tmGPS, protocol::mtGET_PEER_SHARD_INFO_V2));
 
     setTimer();
@@ -965,7 +987,12 @@ PeerImp::onWriteMessage(error_code ec, std::size_t bytes_transferred)
     metrics_.sent.add_message(bytes_transferred);
 
     assert(!send_queue_.empty());
+    if (!send_queue_.empty())
+        --send_queue_size_;
     send_queue_.pop();
+    JLOG(journal_.debug()) << "onWriteMessage just popped q size " << send_queue_.size()
+        << ". tracking counter should be equal: " << send_queue_size_
+        << " peerid " << id();
     if (!send_queue_.empty())
     {
         // Timeout on writes only
@@ -1013,8 +1040,9 @@ PeerImp::onMessageBegin(
     std::size_t uncompressed_size,
     bool isCompressed)
 {
+    auto const type_name = protocolMessageName(type);
     load_event_ =
-        app_.getJobQueue().makeLoadEvent(jtPEER, protocolMessageName(type));
+        app_.getJobQueue().makeLoadEvent(jtPEER, type_name);
     fee_ = Resource::feeLightPeer;
     auto const category = TrafficCount::categorize(*m, type, true);
     overlay_.reportTraffic(category, true, static_cast<int>(size));
@@ -1035,8 +1063,8 @@ PeerImp::onMessageBegin(
         overlay_.addTxMetrics(
             static_cast<MessageType>(type), static_cast<std::uint64_t>(size));
     }
-    JLOG(journal_.trace()) << "onMessageBegin: " << type << " " << size << " "
-                           << uncompressed_size << " " << isCompressed;
+    JLOG(journal_.debug()) << "onMessageBegin: typename size uncompressed size isCompressed address " << type_name << " " << size << " "
+                           << uncompressed_size << " " << isCompressed << " " << usage_.to_string();
 }
 
 void
@@ -1076,6 +1104,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMPing> const& m)
         // We have received a ping request, reply with a pong
         fee_ = Resource::feeMediumBurdenPeer;
         m->set_type(protocol::TMPing::ptPONG);
+        JLOG(journal_.debug()) << "debugrelay send() 24";
         send(std::make_shared<Message>(*m, protocol::mtPING));
         return;
     }
@@ -1237,6 +1266,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMGetPeerShardInfoV2> const& m)
         auto reply{shardStore->getShardInfo()->makeMessage(app_)};
         if (peerChainSz > 0)
             *(reply.mutable_peerchain()) = m->peerchain();
+        JLOG(journal_.debug()) << "debugrelay send() 23";
         send(std::make_shared<Message>(reply, protocol::mtPEER_SHARD_INFO_V2));
     }
 
@@ -1252,6 +1282,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMGetPeerShardInfoV2> const& m)
 
     // Relay the request to peers, exclude the peer chain
     m->set_relays(m->relays() - 1);
+    JLOG(journal_.debug()) << "debugrelay send() 31";
     overlay_.foreach(send_if_not(
         std::make_shared<Message>(*m, protocol::mtGET_PEER_SHARD_INFO_V2),
         [&](std::shared_ptr<Peer> const& peer) {
@@ -1428,6 +1459,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMPeerShardInfoV2> const& m)
         if (auto peer = overlay_.findPeerByPublicKey(peerPubKey))
         {
             m->mutable_peerchain()->RemoveLast();
+            JLOG(p_journal_.debug()) << "debugrelay send() 16";
             peer->send(
                 std::make_shared<Message>(*m, protocol::mtPEER_SHARD_INFO_V2));
             JLOG(p_journal_.trace())
@@ -1727,7 +1759,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMProofPathRequest> const& m)
     fee_ = Resource::feeMediumBurdenPeer;
     std::weak_ptr<PeerImp> weak = shared_from_this();
     app_.getJobQueue().addJob(
-        jtREPLAY_REQ, "recvProofPathRequest", [weak, m]() {
+        jtREPLAY_REQ, "recvProofPathRequest", [&, weak, m]() {
             if (auto peer = weak.lock())
             {
                 auto reply =
@@ -1741,6 +1773,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMProofPathRequest> const& m)
                 }
                 else
                 {
+                    JLOG(p_journal_.debug()) << "debugrelay send() 18";
                     peer->send(std::make_shared<Message>(
                         reply, protocol::mtPROOF_PATH_RESPONSE));
                 }
@@ -1776,7 +1809,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMReplayDeltaRequest> const& m)
     fee_ = Resource::feeMediumBurdenPeer;
     std::weak_ptr<PeerImp> weak = shared_from_this();
     app_.getJobQueue().addJob(
-        jtREPLAY_REQ, "recvReplayDeltaRequest", [weak, m]() {
+        jtREPLAY_REQ, "recvReplayDeltaRequest", [&, weak, m]() {
             if (auto peer = weak.lock())
             {
                 auto reply =
@@ -1790,6 +1823,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMReplayDeltaRequest> const& m)
                 }
                 else
                 {
+                    JLOG(p_journal_.debug()) << "debugrelay send() 15";
                     peer->send(std::make_shared<Message>(
                         reply, protocol::mtREPLAY_DELTA_RESPONSE));
                 }
@@ -1881,6 +1915,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMLedgerData> const& m)
         if (auto peer = overlay_.findPeerByShortID(m->requestcookie()))
         {
             m->clear_requestcookie();
+            JLOG(p_journal_.debug()) << "debugrelay send() 17";
             peer->send(std::make_shared<Message>(*m, protocol::mtLEDGER_DATA));
         }
         else
@@ -2735,6 +2770,7 @@ PeerImp::onMessage(std::shared_ptr<protocol::TMGetObjectByHash> const& m)
 
         JLOG(p_journal_.trace()) << "GetObj: " << reply.objects_size() << " of "
                                  << packet.objects_size();
+        JLOG(journal_.debug()) << "debugrelay send() 25";
         send(std::make_shared<Message>(reply, protocol::mtGET_OBJECTS));
     }
     else
@@ -2860,7 +2896,10 @@ PeerImp::handleHaveTransactions(
         << "transaction request object is " << tmBH.objects_size();
 
     if (tmBH.objects_size() > 0)
+    {
+        JLOG(journal_.debug()) << "debugrelay send() 22";
         send(std::make_shared<Message>(tmBH, protocol::mtGET_OBJECTS));
+    }
 }
 
 void
@@ -3044,7 +3083,10 @@ PeerImp::doTransactions(
     }
 
     if (reply.transactions_size() > 0)
+    {
+        JLOG(journal_.debug()) << "debugrelay send() 21";
         send(std::make_shared<Message>(reply, protocol::mtTRANSACTIONS));
+    }
 }
 
 void
@@ -3078,7 +3120,7 @@ PeerImp::checkTransaction(
             {
                 if (!validReason.empty())
                 {
-                    JLOG(p_journal_.trace())
+                    JLOG(p_journal_.debug())
                         << "Exception checking transaction: " << validReason;
                 }
 
@@ -3101,7 +3143,7 @@ PeerImp::checkTransaction(
         {
             if (!reason.empty())
             {
-                JLOG(p_journal_.trace())
+                JLOG(p_journal_.debug())
                     << "Exception checking transaction: " << reason;
             }
             app_.getHashRouter().setFlags(stx->getTransactionID(), SF_BAD);
@@ -3297,6 +3339,7 @@ PeerImp::sendLedgerBase(
 
     auto message{
         std::make_shared<Message>(ledgerData, protocol::mtLEDGER_DATA)};
+    JLOG(journal_.debug()) << "debugrelay send() 29";
     send(message);
 }
 
@@ -3342,6 +3385,7 @@ PeerImp::getLedger(std::shared_ptr<protocol::TMGetLedger> const& m)
                             this))
                     {
                         m->set_requestcookie(id());
+                        JLOG(p_journal_.debug()) << "debugrelay send() 14";
                         peer->send(std::make_shared<Message>(
                             *m, protocol::mtGET_LEDGER));
                         JLOG(p_journal_.debug())
@@ -3427,6 +3471,7 @@ PeerImp::getTxSet(std::shared_ptr<protocol::TMGetLedger> const& m) const
             if (auto const peer = getPeerWithTree(overlay_, txSetHash, this))
             {
                 m->set_requestcookie(id());
+                JLOG(p_journal_.debug()) << "debugrelay send() 39";
                 peer->send(
                     std::make_shared<Message>(*m, protocol::mtGET_LEDGER));
                 JLOG(p_journal_.debug()) << "getTxSet: Request relayed";
@@ -3615,6 +3660,7 @@ PeerImp::processLedgerRequest(std::shared_ptr<protocol::TMGetLedger> const& m)
             << ledgerData.nodes_size() << " nodes";
     }
 
+    JLOG(journal_.debug()) << "debugrelay send() 27";
     send(std::make_shared<Message>(ledgerData, protocol::mtLEDGER_DATA));
 }
 

@@ -40,6 +40,7 @@
 #include <boost/circular_buffer.hpp>
 #include <boost/endian/conversion.hpp>
 #include <boost/thread/shared_mutex.hpp>
+#include <atomic>
 #include <cstdint>
 #include <optional>
 #include <queue>
@@ -156,6 +157,7 @@ private:
     http_response_type response_;
     boost::beast::http::fields const& headers_;
     std::queue<std::shared_ptr<Message>> send_queue_;
+    std::atomic<std::uint64_t> send_queue_size_ {0};
     bool gracefulClose_ = false;
     int large_sendq_ = 0;
     std::unique_ptr<LoadEvent> load_event_;
@@ -733,6 +735,7 @@ PeerImp::sendEndpoints(FwdIt first, FwdIt last)
     }
     tm.set_version(2);
 
+    JLOG(journal_.debug()) << "debugrelay send() 42";
     send(std::make_shared<Message>(tm, protocol::mtENDPOINTS));
 }
 
