@@ -749,6 +749,7 @@ RCLConsensus::Adaptor::notify(
     }
     s.set_firstseq(uMin);
     s.set_lastseq(uMax);
+    JLOG(j_.debug()) << "debugrelay send() 32";
     app_.overlay().foreach(
         send_always(std::make_shared<Message>(s, protocol::mtSTATUS_CHANGE)));
     JLOG(j_.trace()) << "send status change to peer";
