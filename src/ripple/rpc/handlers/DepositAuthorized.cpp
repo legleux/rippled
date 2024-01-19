@@ -18,7 +18,7 @@
 //==============================================================================
 
 #include <ripple/ledger/ReadView.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/protocol/ErrorCodes.h>
 #include <ripple/protocol/Indexes.h>
 #include <ripple/protocol/jss.h>

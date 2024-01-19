@@ -31,7 +31,7 @@
 #include <ripple/json/Object.h>
 #include <ripple/json/to_string.h>
 #include <ripple/net/InfoSub.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/protocol/ErrorCodes.h>
 #include <ripple/protocol/jss.h>
 #include <ripple/resource/Fees.h>

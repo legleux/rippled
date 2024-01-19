@@ -18,7 +18,7 @@
 //==============================================================================
 
 #include <ripple/basics/strHex.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/protocol/ErrorCodes.h>
 #include <ripple/protocol/KeyType.h>
 #include <ripple/protocol/PublicKey.h>

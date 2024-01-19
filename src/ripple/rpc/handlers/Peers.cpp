@@ -19,7 +19,7 @@
 
 #include <ripple/app/misc/LoadFeeTrack.h>
 #include <ripple/core/TimeKeeper.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/overlay/Cluster.h>
 #include <ripple/overlay/Overlay.h>
 #include <ripple/protocol/ErrorCodes.h>

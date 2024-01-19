@@ -24,7 +24,7 @@
 #include <ripple/app/misc/Transaction.h>
 #include <ripple/app/rdb/RelationalDatabase.h>
 #include <ripple/basics/ToString.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/protocol/ErrorCodes.h>
 #include <ripple/protocol/NFTSyntheticSerializer.h>
 #include <ripple/protocol/jss.h>

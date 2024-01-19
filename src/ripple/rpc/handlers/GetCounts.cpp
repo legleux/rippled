@@ -26,7 +26,7 @@
 #include <ripple/basics/UptimeClock.h>
 #include <ripple/json/json_value.h>
 #include <ripple/ledger/CachedSLEs.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/nodestore/Database.h>
 #include <ripple/nodestore/DatabaseShard.h>
 #include <ripple/protocol/ErrorCodes.h>

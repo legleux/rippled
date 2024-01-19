@@ -89,6 +89,7 @@ target_sources (xrpl_core PRIVATE
   src/ripple/protocol/impl/PublicKey.cpp
   src/ripple/protocol/impl/Quality.cpp
   src/ripple/protocol/impl/QualityFunction.cpp
+  src/ripple/protocol/impl/RPCErr.cpp
   src/ripple/protocol/impl/Rate2.cpp
   src/ripple/protocol/impl/Rules.cpp
   src/ripple/protocol/impl/SField.cpp
@@ -230,11 +231,6 @@ install (
   FILES
     src/ripple/json/impl/json_assert.h
   DESTINATION include/ripple/json/impl)
-
-install (
-    FILES
-      src/ripple/net/RPCErr.h
-    DESTINATION include/ripple/net)
 install (
   FILES
     src/ripple/protocol/AccountID.h
@@ -263,6 +259,7 @@ install (
     src/ripple/protocol/Quality.h
     src/ripple/protocol/QualityFunction.h
     src/ripple/protocol/Rate.h
+    src/ripple/protocol/RPCErr.h
     src/ripple/protocol/Rules.h
     src/ripple/protocol/SField.h
     src/ripple/protocol/SOTemplate.h
@@ -638,7 +635,6 @@ target_sources (rippled PRIVATE
   src/ripple/net/impl/HTTPStream.cpp
   src/ripple/net/impl/InfoSub.cpp
   src/ripple/net/impl/RPCCall.cpp
-  src/ripple/net/impl/RPCErr.cpp
   src/ripple/net/impl/RPCSub.cpp
   src/ripple/net/impl/RegisterSSLCerts.cpp
   #[===============================[

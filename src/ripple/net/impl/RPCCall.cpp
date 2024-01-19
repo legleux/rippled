@@ -30,7 +30,7 @@
 #include <ripple/json/to_string.h>
 #include <ripple/net/HTTPClient.h>
 #include <ripple/net/RPCCall.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/protocol/ErrorCodes.h>
 #include <ripple/protocol/Feature.h>
 #include <ripple/protocol/SystemParameters.h>

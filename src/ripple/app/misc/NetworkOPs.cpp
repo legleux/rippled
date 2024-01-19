@@ -54,7 +54,7 @@
 #include <ripple/crypto/csprng.h>
 #include <ripple/json/MultivarJson.h>
 #include <ripple/json/to_string.h>
-#include <ripple/net/RPCErr.h>
+#include <ripple/protocol/RPCErr.h>
 #include <ripple/nodestore/DatabaseShard.h>
 #include <ripple/overlay/Cluster.h>
 #include <ripple/overlay/Overlay.h>
