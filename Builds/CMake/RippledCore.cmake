@@ -327,27 +327,32 @@ install (
     src/ripple/resource/impl/ResourceManager.cpp
     src/ripple/resource/impl/Tuning.h
   DESTINATION include/ripple/resource/impl) 
+install (
+  FILES
+    src/ripple/server/Handoff.h
     src/ripple/server/Port.h
     src/ripple/server/Server.h
     src/ripple/server/Session.h
     src/ripple/server/SimpleWriter.h
     src/ripple/server/Writer.h
     src/ripple/server/WSSession.h
-    src/ripple/server/Handoff.h
   DESTINATION include/ripple/server)
 install (
   FILES
-    src/ripple/server/impl/ServerImpl.h
-    src/ripple/server/impl/io_list.h
+    src/ripple/server/impl/BaseHTTPPeer.h
+    src/ripple/server/impl/BasePeer.h
+    src/ripple/server/impl/BaseWSPeer.h
     src/ripple/server/impl/Door.h
+    src/ripple/server/impl/JSONRPCUtil.cpp
+    src/ripple/server/impl/JSONRPCUtil.h
+    src/ripple/server/impl/LowestLayer.h
     src/ripple/server/impl/PlainHTTPPeer.h
     src/ripple/server/impl/PlainWSPeer.h
-    src/ripple/server/impl/BaseHTTPPeer.h
-    src/ripple/server/impl/BaseWSPeer.h
-    src/ripple/server/impl/BasePeer.h
-    src/ripple/server/impl/LowestLayer.h
+    src/ripple/server/impl/Port.cpp
+    src/ripple/server/impl/ServerImpl.h
     src/ripple/server/impl/SSLHTTPPeer.h
     src/ripple/server/impl/SSLWSPeer.h
+    src/ripple/server/impl/io_list.h
   DESTINATION include/ripple/server/impl)
 #[===================================[
    beast/legacy headers installation
