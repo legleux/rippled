@@ -305,12 +305,28 @@ install (
     src/ripple/protocol/impl/secp256k1.h
   DESTINATION include/ripple/protocol/impl)
 install (
-    FILES
-      src/ripple/resource/Fees.h
-      src/ripple/resource/Charge.h
-    DESTINATION include/ripple/resource)
+  FILES
+    src/ripple/resource/Charge.h
+    src/ripple/resource/Consumer.h
+    src/ripple/resource/Disposition.h
+    src/ripple/resource/Fees.h
+    src/ripple/resource/Gossip.h
+    src/ripple/resource/ResourceManager.h
+    src/ripple/resource/Types.h
+   DESTINATION include/ripple/resource)
 install (
   FILES
+    src/ripple/resource/impl/Charge.cpp
+    src/ripple/resource/impl/Consumer.cpp
+    src/ripple/resource/impl/Entry.h
+    src/ripple/resource/impl/Fees.cpp
+    src/ripple/resource/impl/Import.h
+    src/ripple/resource/impl/Key.h
+    src/ripple/resource/impl/Kind.h
+    src/ripple/resource/impl/Logic.h
+    src/ripple/resource/impl/ResourceManager.cpp
+    src/ripple/resource/impl/Tuning.h
+  DESTINATION include/ripple/resource/impl) 
     src/ripple/server/Port.h
     src/ripple/server/Server.h
     src/ripple/server/Session.h
