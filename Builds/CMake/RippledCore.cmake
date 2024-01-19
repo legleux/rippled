@@ -265,13 +265,13 @@ install (
     src/ripple/protocol/SOTemplate.h
     src/ripple/protocol/STAccount.h
     src/ripple/protocol/STAmount.h
-    src/ripple/protocol/STIssue.h
     src/ripple/protocol/STArray.h
     src/ripple/protocol/STBase.h
     src/ripple/protocol/STBitString.h
     src/ripple/protocol/STBlob.h
     src/ripple/protocol/STExchange.h
     src/ripple/protocol/STInteger.h
+    src/ripple/protocol/STIssue.h
     src/ripple/protocol/STLedgerEntry.h
     src/ripple/protocol/STObject.h
     src/ripple/protocol/STParsedJSON.h
