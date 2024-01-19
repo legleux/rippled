@@ -313,7 +313,7 @@ install (
     src/ripple/resource/Gossip.h
     src/ripple/resource/ResourceManager.h
     src/ripple/resource/Types.h
-   DESTINATION include/ripple/resource)
+  DESTINATION include/ripple/resource)
 install (
   FILES
     src/ripple/resource/impl/Charge.cpp
@@ -381,11 +381,11 @@ install (
   DESTINATION include/ripple/beast/hash/impl)
 install (
   FILES
-  src/ripple/beast/net/IPAddress.h
-  src/ripple/beast/net/IPAddressConversion.h
-  src/ripple/beast/net/IPAddressV4.h
-  src/ripple/beast/net/IPAddressV6.h
-  src/ripple/beast/net/IPEndpoint.h
+    src/ripple/beast/net/IPAddress.h
+    src/ripple/beast/net/IPAddressConversion.h
+    src/ripple/beast/net/IPAddressV4.h
+    src/ripple/beast/net/IPAddressV6.h
+    src/ripple/beast/net/IPEndpoint.h
   DESTINATION include/ripple/beast/net)
 install (
   FILES
