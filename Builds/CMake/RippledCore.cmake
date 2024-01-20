@@ -418,9 +418,9 @@ install (
   FILES
     src/ripple/beast/utility/Journal.h
     src/ripple/beast/utility/PropertyStream.h
+    src/ripple/beast/utility/WrappedSink.h
     src/ripple/beast/utility/Zero.h
     src/ripple/beast/utility/rngfill.h
-    src/ripple/beast/utility/WrappedSink.h
   DESTINATION include/ripple/beast/utility)
 # WARNING!! -- horrible levelization ahead
 # (these files should be isolated or moved...but
