@@ -17,8 +17,8 @@
 */
 //==============================================================================
 
-#include <ripple/protocol/RPCErr.h>
 #include <ripple/protocol/ErrorCodes.h>
+#include <ripple/protocol/RPCErr.h>
 
 namespace ripple {
 
