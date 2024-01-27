@@ -37,11 +37,9 @@ if (is_root_project)
         Builds/containers/shared/update-rippled.sh
         Builds/containers/shared/update_sources.sh
         Builds/containers/shared/rippled.service
-        Builds/containers/shared/rippled-reporting.service
         Builds/containers/packaging/rpm/rippled.spec
         Builds/containers/packaging/rpm/build_rpm.sh
         Builds/containers/packaging/rpm/50-rippled.preset
-        Builds/containers/packaging/rpm/50-rippled-reporting.preset
         bin/getRippledInfo
     )
     exclude_from_default (rpm_container)
@@ -81,15 +79,11 @@ if (is_root_project)
       USES_TERMINAL
       COMMAND_EXPAND_LISTS
       SOURCES
-        Builds/containers/packaging/dpkg/debian/rippled-reporting.links
         Builds/containers/packaging/dpkg/debian/copyright
         Builds/containers/packaging/dpkg/debian/rules
-        Builds/containers/packaging/dpkg/debian/rippled-reporting.install
-        Builds/containers/packaging/dpkg/debian/rippled-reporting.postinst
         Builds/containers/packaging/dpkg/debian/rippled.links
         Builds/containers/packaging/dpkg/debian/rippled.prerm
         Builds/containers/packaging/dpkg/debian/rippled.postinst
-        Builds/containers/packaging/dpkg/debian/rippled-dev.install
         Builds/containers/packaging/dpkg/debian/dirs
         Builds/containers/packaging/dpkg/debian/rippled.postrm
         Builds/containers/packaging/dpkg/debian/rippled.conffiles
@@ -101,7 +95,6 @@ if (is_root_project)
         Builds/containers/packaging/dpkg/debian/rippled.preinst
         Builds/containers/packaging/dpkg/debian/docs
         Builds/containers/packaging/dpkg/debian/control
-        Builds/containers/packaging/dpkg/debian/rippled-reporting.dirs
         Builds/containers/packaging/dpkg/build_dpkg.sh
         Builds/containers/ubuntu-builder/Dockerfile
         Builds/containers/ubuntu-builder/ubuntu_setup.sh
@@ -110,7 +103,6 @@ if (is_root_project)
         Builds/containers/shared/update-rippled.sh
         Builds/containers/shared/update_sources.sh
         Builds/containers/shared/rippled.service
-        Builds/containers/shared/rippled-reporting.service
         Builds/containers/shared/rippled-logrotate
         Builds/containers/shared/update-rippled-cron
     )
