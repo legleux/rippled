@@ -1,5 +1,4 @@
 opt/ripple/bin/rippled
-opt/ripple/bin/validator-keys
 opt/ripple/bin/update-rippled.sh
 opt/ripple/bin/getRippledInfo
 opt/ripple/etc/rippled.cfg
