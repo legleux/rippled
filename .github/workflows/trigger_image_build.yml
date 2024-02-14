@@ -1,0 +1,19 @@
+name: Create issue on commit
+
+on: [ push ]
+
+jobs:
+  create_issue:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Create issue using REST API
+        run: |
+          curl -L \
+            -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/legleux/rippled-packager/actions/workflows/runit/dispatches \
+            -d '{"ref":"topic-branch","inputs":{"git":"${{ github.head_ref }}.${{ github.sha }}"}}'
