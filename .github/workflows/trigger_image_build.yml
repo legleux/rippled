@@ -16,4 +16,4 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/legleux/rippled-packager/actions/workflows/runit/dispatches \
-            -d '{"ref":"topic-branch","inputs":{"git":"${{ github.head_ref }}.${{ github.sha }}"}}'
+            -d '{"ref":"topic-branch","inputs":{"some":"${{ github.head_ref }}.${{ github.sha }}", "data": "neat"}}'
