@@ -3,10 +3,10 @@ name: Create issue on commit
 on: [ push ]
 
 jobs:
-  create_issue:
+  trigger_ci:
+    name: Trigger CI
+    permissions: write-all
     runs-on: ubuntu-latest
-    permissions:
-      issues: write
     steps:
       - name: Create issue using REST API
         run: |
