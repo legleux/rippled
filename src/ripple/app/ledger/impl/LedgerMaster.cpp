@@ -2092,12 +2092,16 @@ LedgerMaster::fetchForHistory(
 void
 LedgerMaster::doAdvance(std::unique_lock<std::recursive_mutex>& sl)
 {
+    JLOG(m_journal.debug()) << "doAdvance aka tryAdvance. mAdvanceWork: "
+        << mAdvanceWork;
     do
     {
         mAdvanceWork = false;  // If there's work to do, we'll make progress
         bool progress = false;
 
         auto const pubLedgers = findNewLedgersToPublish(sl);
+        JLOG(m_journal.debug()) << "doAdvance aka tryAdvance number of "
+            << "ledgers to publish " << pubLedgers.size();
         if (pubLedgers.empty())
         {
             if (!standalone_ && !app_.getFeeTrack().isLoadedLocal() &&
