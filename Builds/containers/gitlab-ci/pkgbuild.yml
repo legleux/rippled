@@ -30,6 +30,10 @@ stages:
 
 trigger:
   stage: trigger_packages
+  variables:
+    RIPPLED_BRANCH: $CI_COMMIT_BRANCH
+    RIPPLED_GIT: $CI_COMMIT_SHA
+
   trigger:
     project: mlegleux/rippled-packages-solo
   # - build_packages
