@@ -81,7 +81,7 @@ find_package(lz4 REQUIRED)
 find_package(LibArchive REQUIRED)
 find_package(SOCI REQUIRED)
 find_package(SQLite3 REQUIRED)
-find_package(Snappy REQUIRED)
+# find_package(Snappy REQUIRED)
 
 option(rocksdb "Enable RocksDB" ON)
 if(rocksdb)
