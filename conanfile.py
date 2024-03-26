@@ -31,7 +31,7 @@ class Xrpl(ConanFile):
         'lz4/1.9.3',
         'nudb/2.0.8',
         'openssl/1.1.1u',
-        'protobuf/3.21.9',
+        'protobuf/3.21.12',
         'snappy/1.1.10',
         'soci/4.0.3',
         'sqlite3/3.42.0',
