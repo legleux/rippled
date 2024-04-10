@@ -18,6 +18,8 @@
 //==============================================================================
 
 #include <ripple/app/misc/HashRouter.h>
+#include <ripple/basics/Log.h>
+#include <sstream>
 
 namespace ripple {
 
@@ -122,10 +124,22 @@ HashRouter::shouldRelay(uint256 const& key)
 
     auto& s = emplace(key).first;
 
+    std::stringstream ss;
+    ss << "shouldRelay " << key;
+    std::optional<std::set<PeerShortID>> ret;
     if (!s.shouldRelay(suppressionMap_.clock().now(), holdTime_))
-        return {};
+    {
+        ss << " not recently relayed.";
+    }
+    else
+    {
+        ss << " recently relayed.";
+        ret = s.releasePeerSet();
+    }
 
-    return s.releasePeerSet();
+    ss << " relaying: " << (ret.has_value() ? "true" : "false");
+    JLOG(j_.debug()) << ss.str();
+    return ret;
 }
 
 }  // namespace ripple
