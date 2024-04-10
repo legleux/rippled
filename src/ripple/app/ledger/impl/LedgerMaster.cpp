@@ -1368,23 +1368,24 @@ LedgerMaster::findNewLedgersToPublish(
 
     std::vector<std::shared_ptr<Ledger const>> ret;
 
-    JLOG(m_journal.trace()) << "findNewLedgersToPublish<";
+    JLOG(m_journal.debug()) << "findNewLedgersToPublish empty? " << mValidLedger.empty();
 
     ss << " mValidLedger.empty()? " << mValidLedger.empty();
     // No valid ledger, nothing to do
     if (mValidLedger.empty())
     {
-        JLOG(m_journal.trace()) << "No valid journal, nothing to publish.";
+        JLOG(m_journal.debug()) << "findNewLedgersToPublish No valid journal, nothing to publish.";
         ss << " returning";
         JLOG(m_journal.debug()) << ss.str();
         return {};
     }
 
     ss << " mPubLedger? " << (mPubLedger ? "exists " : "doesn't exist ");
+    JLOG(m_journal.debug()) << "findNewLedgersToPublish mPubLedger? " << (mPubLedger ? "exists " : "doesn't exist ");
     if (!mPubLedger)
     {
         JLOG(m_journal.info())
-            << "First published ledger will be " << mValidLedgerSeq;
+            << "findNewLedgersToPublish First published ledger will be " << mValidLedgerSeq;
         ss << " first published ledger will be mValidLedgerSeq " << mValidLedgerSeq;
         JLOG(m_journal.debug()) << ss.str();
         return {mValidLedger.get()};
@@ -1392,15 +1393,18 @@ LedgerMaster::findNewLedgersToPublish(
 
     ss << " mValidLedgerSeq,mPubLedgerSeq,MAX_LEDGER_GAP: "
         << mValidLedgerSeq << ',' << mPubLedgerSeq << ',' << MAX_LEDGER_GAP;
+    JLOG(m_journal.debug()) << "findNewLedgersToPublish mValidLedgerSeq,mPubLedgerSeq,MAX_LEDGER_GAP: "
+       << mValidLedgerSeq << ',' << mPubLedgerSeq << ',' << MAX_LEDGER_GAP;
     if (mValidLedgerSeq > (mPubLedgerSeq + MAX_LEDGER_GAP))
     {
-        JLOG(m_journal.warn()) << "Gap in validated ledger stream "
+        JLOG(m_journal.warn()) << "findNewLedgersToPublish Gap in validated ledger stream "
                                << mPubLedgerSeq << " - " << mValidLedgerSeq - 1;
 
         auto valLedger = mValidLedger.get();
         ret.push_back(valLedger);
         setPubLedger(valLedger);
         app_.getOrderBookDB().setup(valLedger);
+        JLOG(m_journal.debug()) << "findNewLedgersToPublish returning valid ledger " << valLedger->info().seq;
         ss << " returning valid ledger " << valLedger->info().seq;
         JLOG(m_journal.debug()) << ss.str();
 
@@ -1409,8 +1413,8 @@ LedgerMaster::findNewLedgersToPublish(
 
     if (mValidLedgerSeq <= mPubLedgerSeq)
     {
-        JLOG(m_journal.trace()) << "No valid journal, nothing to publish.";
-        ss << " mValidLedgerSeq <= mPubLedgerSeq, nothing to puslish";
+        JLOG(m_journal.debug()) << "findNewLedgersToPublish No valid journal, nothing to publish.";
+        ss << " mValidLedgerSeq <= mPubLedgerSeq, nothing to publish";
         JLOG(m_journal.debug()) << ss.str();
         return {};
     }
@@ -1429,8 +1433,8 @@ LedgerMaster::findNewLedgersToPublish(
         for (std::uint32_t seq = pubSeq; seq <= valSeq; ++seq)
         {
             ss << " seq " << seq;
-            JLOG(m_journal.trace())
-                << "Trying to fetch/publish valid ledger " << seq;
+            JLOG(m_journal.debug())
+                << "findNewLedgersToPublish Trying to fetch/publish valid ledger " << seq;
 
             std::shared_ptr<Ledger const> ledger;
             // This can throw
@@ -1450,7 +1454,7 @@ LedgerMaster::findNewLedgersToPublish(
             }
             else if (hash->isZero())
             {
-                JLOG(m_journal.fatal()) << "Ledger: " << valSeq
+                JLOG(m_journal.fatal()) << "findNewLedgersToPublish Ledger: " << valSeq
                                         << " does not have hash for " << seq;
                 ss << " hash is zero, no hash available ";
                 assert(false);
@@ -1490,13 +1494,13 @@ LedgerMaster::findNewLedgersToPublish(
         }
         ss << ". ready to publish " << ret.size() << " ledgers. ";
 
-        JLOG(m_journal.trace())
-            << "ready to publish " << ret.size() << " ledgers.";
+        JLOG(m_journal.debug())
+            << "findNewLedgersToPublish ready to publish " << ret.size() << " ledgers.";
     }
     catch (std::exception const& ex)
     {
         JLOG(m_journal.error())
-            << "Exception while trying to find ledgers to publish: "
+            << "findNewLedgersToPublish Exception while trying to find ledgers to publish: "
             << ex.what();
         ss << " exception while trying to find ledgers to publish: " << ex.what() << " ";
     }
@@ -1524,7 +1528,12 @@ LedgerMaster::findNewLedgersToPublish(
             {
                 auto numberLedgers =
                     finishLedger->seq() - startLedger->seq() + 1;
-//                JLOG(m_journal.debug())
+                JLOG(m_journal.debug())
+                << "findNewLedgersToPublish Publish LedgerReplays " << numberLedgers
+                                            << " ledgers, from seq=" << startLedger->info().seq << ", "
+                                            << startLedger->info().hash
+                                            << " to seq=" << finishLedger->info().seq << ", "
+                                            << finishLedger->info().hash;
                 ss
                     << "Publish LedgerReplays " << numberLedgers
                     << " ledgers, from seq=" << startLedger->info().seq << ", "
@@ -1540,6 +1549,7 @@ LedgerMaster::findNewLedgersToPublish(
         }
     }
 
+    JLOG(m_journal.debug()) << "findNewLedgersToPublish finishing";
     ss << ss.str();
     return ret;
 }
