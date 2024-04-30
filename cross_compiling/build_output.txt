@@ -1,0 +1,476 @@
+-- Using Conan toolchain: /home/emel/dev/Ripple/rippled_bare/multi-arch-github-action-build/cross_build/build/generators/conan_toolchain.cmake
+-- Conan toolchain: Setting CMAKE_POSITION_INDEPENDENT_CODE=ON (options.fPIC)
+-- Conan toolchain: C++ Standard 20 with extensions OFF
+-- Conan toolchain: Setting BUILD_SHARED_LIBS = OFF
+-- gch:ppe-build-56-g02ec8b7962bfc1e046b85ab9414cfcf08be072b9
+-- Using 16 cores for ExternalProject builds.
+-- rippled version: 2.2.0-rc1
+-- Conan: Component target declared 'Boost::diagnostic_definitions'
+-- Conan: Component target declared 'Boost::disable_autolinking'
+-- Conan: Component target declared 'Boost::dynamic_linking'
+-- Conan: Component target declared 'Boost::headers'
+-- Conan: Component target declared 'Boost::boost'
+-- Conan: Component target declared 'boost::_libboost'
+-- Conan: Component target declared 'Boost::atomic'
+-- Conan: Component target declared 'Boost::container'
+-- Conan: Component target declared 'Boost::context'
+-- Conan: Component target declared 'Boost::date_time'
+-- Conan: Component target declared 'Boost::exception'
+-- Conan: Component target declared 'Boost::math'
+-- Conan: Component target declared 'Boost::math_c99'
+-- Conan: Component target declared 'Boost::math_c99f'
+-- Conan: Component target declared 'Boost::math_c99l'
+-- Conan: Component target declared 'Boost::math_tr1'
+-- Conan: Component target declared 'Boost::math_tr1f'
+-- Conan: Component target declared 'Boost::math_tr1l'
+-- Conan: Component target declared 'Boost::program_options'
+-- Conan: Component target declared 'Boost::regex'
+-- Conan: Component target declared 'Boost::serialization'
+-- Conan: Component target declared 'Boost::stacktrace'
+-- Conan: Component target declared 'Boost::stacktrace_addr2line'
+-- Conan: Component target declared 'Boost::stacktrace_backtrace'
+-- Conan: Component target declared 'Boost::stacktrace_basic'
+-- Conan: Component target declared 'Boost::stacktrace_noop'
+-- Conan: Component target declared 'Boost::system'
+-- Conan: Component target declared 'Boost::test'
+-- Conan: Component target declared 'Boost::test_exec_monitor'
+-- Conan: Component target declared 'Boost::url'
+-- Conan: Component target declared 'Boost::wserialization'
+-- Conan: Component target declared 'Boost::chrono'
+-- Conan: Component target declared 'Boost::coroutine'
+-- Conan: Component target declared 'Boost::filesystem'
+-- Conan: Component target declared 'Boost::json'
+-- Conan: Component target declared 'Boost::nowide'
+-- Conan: Component target declared 'Boost::prg_exec_monitor'
+-- Conan: Component target declared 'Boost::random'
+-- Conan: Component target declared 'Boost::thread'
+-- Conan: Component target declared 'Boost::timer'
+-- Conan: Component target declared 'Boost::type_erasure'
+-- Conan: Component target declared 'Boost::unit_test_framework'
+-- Conan: Component target declared 'Boost::wave'
+-- Conan: Component target declared 'Boost::contract'
+-- Conan: Component target declared 'Boost::fiber'
+-- Conan: Component target declared 'Boost::fiber_numa'
+-- Conan: Component target declared 'Boost::graph'
+-- Conan: Component target declared 'Boost::iostreams'
+-- Conan: Component target declared 'Boost::locale'
+-- Conan: Component target declared 'Boost::log'
+-- Conan: Component target declared 'Boost::log_setup'
+-- Conan: Target declared 'boost::boost'
+-- Conan: Target declared 'BZip2::BZip2'
+-- Conan: Including build module from '/home/emel/.conan/data/bzip2/1.0.8/_/_/package/dfab04bb35a91ca09f1b08de217e6c4a0432539e/lib/cmake/conan-official-bzip2-variables.cmake'
+-- Conan: Target declared 'ZLIB::ZLIB'
+-- Conan: Target declared 'libbacktrace::libbacktrace'
+-- Conan: Component target declared 'OpenSSL::Crypto'
+-- Conan: Component target declared 'OpenSSL::SSL'
+-- Conan: Target declared 'openssl::openssl'
+-- Conan: Including build module from '/home/emel/.conan/data/openssl/1.1.1u/_/_/package/4ed950caf477887461be2646a5afc169cc592afc/lib/cmake/conan-official-openssl-variables.cmake'
+-- Could NOT find Valgrind (missing: Valgrind_INCLUDE_DIR Valgrind_WORKS) 
+
+
+secp256k1 configure summary
+===========================
+Build artifacts:
+  library type ........................ Static
+Optional modules:
+  ECDH ................................ ON
+  ECDSA pubkey recovery ............... OFF
+  extrakeys ........................... ON
+  schnorrsig .......................... ON
+Parameters:
+  ecmult window size .................. 15
+  ecmult gen precision bits ........... 4
+Optional features:
+  assembly optimization ............... OFF
+  external callbacks .................. OFF
+Optional binaries:
+  benchmark ........................... ON
+  noverify_tests ...................... ON
+  tests ............................... ON
+  exhaustive tests .................... ON
+  ctime_tests ......................... OFF
+  examples ............................ OFF
+
+Cross compiling ....................... TRUE, for Linux, armv8
+Valgrind .............................. OFF
+Preprocessor defined macros ........... GIT_COMMIT_HASH="ppe-build-56-g02ec8b7962bfc1e046b85ab9414cfcf08be072b9" ENABLE_MODULE_ECDH=1 ENABLE_MODULE_SCHNORRSIG=1 ENABLE_MODULE_EXTRAKEYS=1 ECMULT_WINDOW_SIZE=15 ECMULT_GEN_PREC_BITS=4
+C compiler ............................ /usr/bin/aarch64-linux-gnu-gcc
+CFLAGS ................................ 
+Compile options ....................... -pedantic -Wall -Wcast-align -Wcast-align=strict -Wextra -Wnested-externs -Wno-long-long -Wno-overlength-strings -Wno-unused-function -Wshadow -Wstrict-prototypes -Wundef
+Build type:
+ - CMAKE_BUILD_TYPE ................... Release
+ - CFLAGS ............................. -O2
+ - LDFLAGS for executables ............ 
+ - LDFLAGS for shared libraries ....... 
+
+
+-- Conan: Component target declared 'gRPC::address_sorting'
+-- Conan: Component target declared 'gRPC::upb'
+-- Conan: Component target declared 'gRPC::grpc_plugin_support'
+-- Conan: Component target declared 'grpc::grpc_execs'
+-- Conan: Component target declared 'gRPC::gpr'
+-- Conan: Component target declared 'gRPC::grpc'
+-- Conan: Component target declared 'gRPC::grpc++'
+-- Conan: Component target declared 'gRPC::grpc++_alts'
+-- Conan: Component target declared 'gRPC::grpc++_error_details'
+-- Conan: Component target declared 'gRPC::grpc++_reflection'
+-- Conan: Component target declared 'gRPC::grpcpp_channelz'
+-- Conan: Target declared 'grpc::grpc'
+-- Conan: Component target declared 'absl::config'
+-- Conan: Component target declared 'absl::dynamic_annotations'
+-- Conan: Component target declared 'absl::core_headers'
+-- Conan: Component target declared 'absl::pretty_function'
+-- Conan: Component target declared 'absl::fast_type_id'
+-- Conan: Component target declared 'absl::prefetch'
+-- Conan: Component target declared 'absl::algorithm'
+-- Conan: Component target declared 'absl::counting_allocator'
+-- Conan: Component target declared 'absl::hashtable_debug_hooks'
+-- Conan: Component target declared 'absl::node_slot_policy'
+-- Conan: Component target declared 'absl::non_temporal_arm_intrinsics'
+-- Conan: Component target declared 'absl::non_temporal_memcpy'
+-- Conan: Component target declared 'absl::leak_check'
+-- Conan: Component target declared 'absl::flags_commandlineflag_internal'
+-- Conan: Component target declared 'absl::log_internal_config'
+-- Conan: Component target declared 'absl::log_internal_nullguard'
+-- Conan: Component target declared 'absl::log_internal_voidify'
+-- Conan: Component target declared 'absl::type_traits'
+-- Conan: Component target declared 'absl::meta'
+-- Conan: Component target declared 'absl::bits'
+-- Conan: Component target declared 'absl::int128'
+-- Conan: Component target declared 'absl::numeric'
+-- Conan: Component target declared 'absl::numeric_representation'
+-- Conan: Component target declared 'absl::exponential_biased'
+-- Conan: Component target declared 'absl::periodic_sampler'
+-- Conan: Component target declared 'absl::random_seed_gen_exception'
+-- Conan: Component target declared 'absl::random_internal_traits'
+-- Conan: Component target declared 'absl::random_internal_fast_uniform_bits'
+-- Conan: Component target declared 'absl::random_internal_iostream_state_saver'
+-- Conan: Component target declared 'absl::random_internal_wide_multiply'
+-- Conan: Component target declared 'absl::random_internal_fastmath'
+-- Conan: Component target declared 'absl::random_internal_pcg_engine'
+-- Conan: Component target declared 'absl::random_internal_platform'
+-- Conan: Component target declared 'absl::random_internal_randen_slow'
+-- Conan: Component target declared 'absl::random_internal_randen_hwaes_impl'
+-- Conan: Component target declared 'absl::random_internal_uniform_helper'
+-- Conan: Component target declared 'absl::cordz_update_tracker'
+-- Conan: Component target declared 'absl::civil_time'
+-- Conan: Component target declared 'absl::time_zone'
+-- Conan: Component target declared 'absl::compare'
+-- Conan: Component target declared 'absl::atomic_hook'
+-- Conan: Component target declared 'absl::errno_saver'
+-- Conan: Component target declared 'absl::log_severity'
+-- Conan: Component target declared 'absl::raw_logging_internal'
+-- Conan: Component target declared 'absl::base_internal'
+-- Conan: Component target declared 'absl::throw_delegate'
+-- Conan: Component target declared 'absl::scoped_set_env'
+-- Conan: Component target declared 'absl::strerror'
+-- Conan: Component target declared 'absl::algorithm_container'
+-- Conan: Component target declared 'absl::common_policy_traits'
+-- Conan: Component target declared 'absl::hashtable_debug'
+-- Conan: Component target declared 'absl::container_common'
+-- Conan: Component target declared 'absl::debugging_internal'
+-- Conan: Component target declared 'absl::function_ref'
+-- Conan: Component target declared 'absl::memory'
+-- Conan: Component target declared 'absl::random_internal_generate_real'
+-- Conan: Component target declared 'absl::random_internal_randen_hwaes'
+-- Conan: Component target declared 'absl::cordz_functions'
+-- Conan: Component target declared 'absl::bad_any_cast_impl'
+-- Conan: Component target declared 'absl::span'
+-- Conan: Component target declared 'absl::bad_optional_access'
+-- Conan: Component target declared 'absl::bad_variant_access'
+-- Conan: Component target declared 'absl::utility'
+-- Conan: Component target declared 'absl::spinlock_wait'
+-- Conan: Component target declared 'absl::base'
+-- Conan: Component target declared 'absl::endian'
+-- Conan: Component target declared 'absl::cleanup_internal'
+-- Conan: Component target declared 'absl::cleanup'
+-- Conan: Component target declared 'absl::compressed_tuple'
+-- Conan: Component target declared 'absl::fixed_array'
+-- Conan: Component target declared 'absl::inlined_vector_internal'
+-- Conan: Component target declared 'absl::inlined_vector'
+-- Conan: Component target declared 'absl::container_memory'
+-- Conan: Component target declared 'absl::hash_policy_traits'
+-- Conan: Component target declared 'absl::crc_cpu_detect'
+-- Conan: Component target declared 'absl::crc_internal'
+-- Conan: Component target declared 'absl::stacktrace'
+-- Conan: Component target declared 'absl::demangle_internal'
+-- Conan: Component target declared 'absl::debugging'
+-- Conan: Component target declared 'absl::any_invocable'
+-- Conan: Component target declared 'absl::bind_front'
+-- Conan: Component target declared 'absl::city'
+-- Conan: Component target declared 'absl::low_level_hash'
+-- Conan: Component target declared 'absl::log_internal_conditions'
+-- Conan: Component target declared 'absl::random_internal_distribution_caller'
+-- Conan: Component target declared 'absl::random_internal_randen'
+-- Conan: Component target declared 'absl::strings_internal'
+-- Conan: Component target declared 'absl::bad_any_cast'
+-- Conan: Component target declared 'absl::optional'
+-- Conan: Component target declared 'absl::variant'
+-- Conan: Component target declared 'absl::malloc_internal'
+-- Conan: Component target declared 'absl::random_bit_gen_ref'
+-- Conan: Component target declared 'absl::random_internal_mock_helpers'
+-- Conan: Component target declared 'absl::random_internal_randen_engine'
+-- Conan: Component target declared 'absl::strings'
+-- Conan: Component target declared 'absl::str_format_internal'
+-- Conan: Component target declared 'absl::graphcycles_internal'
+-- Conan: Component target declared 'absl::time'
+-- Conan: Component target declared 'absl::any'
+-- Conan: Component target declared 'absl::layout'
+-- Conan: Component target declared 'absl::crc32c'
+-- Conan: Component target declared 'absl::crc_cord_state'
+-- Conan: Component target declared 'absl::symbolize'
+-- Conan: Component target declared 'absl::examine_stack'
+-- Conan: Component target declared 'absl::failure_signal_handler'
+-- Conan: Component target declared 'absl::flags_path_util'
+-- Conan: Component target declared 'absl::flags_commandlineflag'
+-- Conan: Component target declared 'absl::flags_private_handle_accessor'
+-- Conan: Component target declared 'absl::hash'
+-- Conan: Component target declared 'absl::log_internal_globals'
+-- Conan: Component target declared 'absl::log_internal_proto'
+-- Conan: Component target declared 'absl::log_internal_nullstream'
+-- Conan: Component target declared 'absl::log_internal_append_truncated'
+-- Conan: Component target declared 'absl::log_globals'
+-- Conan: Component target declared 'absl::log_initialize'
+-- Conan: Component target declared 'absl::log_entry'
+-- Conan: Component target declared 'absl::log_sink'
+-- Conan: Component target declared 'absl::random_distributions'
+-- Conan: Component target declared 'absl::random_internal_seed_material'
+-- Conan: Component target declared 'absl::random_internal_pool_urbg'
+-- Conan: Component target declared 'absl::random_internal_salted_seed_seq'
+-- Conan: Component target declared 'absl::random_internal_nonsecure_base'
+-- Conan: Component target declared 'absl::str_format'
+-- Conan: Component target declared 'absl::cord_internal'
+-- Conan: Component target declared 'absl::kernel_timeout_internal'
+-- Conan: Component target declared 'absl::synchronization'
+-- Conan: Component target declared 'absl::flags_program_name'
+-- Conan: Component target declared 'absl::flags_config'
+-- Conan: Component target declared 'absl::flags_marshalling'
+-- Conan: Component target declared 'absl::flags_internal'
+-- Conan: Component target declared 'absl::log_internal_format'
+-- Conan: Component target declared 'absl::log_internal_log_sink_set'
+-- Conan: Component target declared 'absl::log_sink_registry'
+-- Conan: Component target declared 'absl::sample_recorder'
+-- Conan: Component target declared 'absl::random_seed_sequences'
+-- Conan: Component target declared 'absl::random_internal_distribution_test_util'
+-- Conan: Component target declared 'absl::cordz_statistics'
+-- Conan: Component target declared 'absl::cordz_handle'
+-- Conan: Component target declared 'absl::cordz_info'
+-- Conan: Component target declared 'absl::cordz_sample_token'
+-- Conan: Component target declared 'absl::cordz_update_scope'
+-- Conan: Component target declared 'absl::cord'
+-- Conan: Component target declared 'absl::btree'
+-- Conan: Component target declared 'absl::hash_function_defaults'
+-- Conan: Component target declared 'absl::hashtablez_sampler'
+-- Conan: Component target declared 'absl::raw_hash_set'
+-- Conan: Component target declared 'absl::log_internal_message'
+-- Conan: Component target declared 'absl::log_internal_strip'
+-- Conan: Component target declared 'absl::log_internal_structured'
+-- Conan: Component target declared 'absl::log_structured'
+-- Conan: Component target declared 'absl::random_random'
+-- Conan: Component target declared 'absl::status'
+-- Conan: Component target declared 'absl::statusor'
+-- Conan: Component target declared 'absl::flat_hash_set'
+-- Conan: Component target declared 'absl::node_hash_set'
+-- Conan: Component target declared 'absl::raw_hash_map'
+-- Conan: Component target declared 'absl::log_internal_check_op'
+-- Conan: Component target declared 'absl::log_internal_log_impl'
+-- Conan: Component target declared 'absl::absl_log'
+-- Conan: Component target declared 'absl::log'
+-- Conan: Component target declared 'absl::log_streamer'
+-- Conan: Component target declared 'absl::flat_hash_map'
+-- Conan: Component target declared 'absl::node_hash_map'
+-- Conan: Component target declared 'absl::flags_reflection'
+-- Conan: Component target declared 'absl::flags'
+-- Conan: Component target declared 'absl::flags_usage_internal'
+-- Conan: Component target declared 'absl::flags_usage'
+-- Conan: Component target declared 'absl::flags_parse'
+-- Conan: Component target declared 'absl::log_internal_check_impl'
+-- Conan: Component target declared 'absl::log_internal_flags'
+-- Conan: Component target declared 'absl::absl_check'
+-- Conan: Component target declared 'absl::check'
+-- Conan: Component target declared 'absl::die_if_null'
+-- Conan: Component target declared 'absl::log_flags'
+-- Conan: Target declared 'abseil::abseil'
+-- Conan: Including build module from '/home/emel/.conan/data/abseil/20230125.3/_/_/package/1e870d4c2151728d2ba234d7a30d5ee5b5a8a8a8/lib/cmake/conan_trick/cxx_std.cmake'
+-- Conan: Component target declared 'c-ares::cares'
+-- Conan: Target declared 're2::re2'
+-- Conan: Component target declared 'protobuf::libprotobuf'
+-- Conan: Component target declared 'protobuf::libprotoc'
+-- Conan: Target declared 'protobuf::protobuf'
+-- Conan: Including build module from '/home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-module.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-options.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_cpp_plugin.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_csharp_plugin.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_node_plugin.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_objective_c_plugin.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_php_plugin.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_python_plugin.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/grpc/1.50.1/_/_/package/127ef91a24f4f353aa57f66be30e86b8452d2b1d/lib/cmake/conan_trick/grpc_ruby_plugin.cmake'
+-- Conan: Target declared 'LZ4::lz4_static'
+-- Conan: Target declared 'LibArchive::LibArchive'
+-- Conan: Component target declared 'SOCI::soci_core_static'
+-- Conan: Component target declared 'SOCI::soci_sqlite3_static'
+-- Conan: Target declared 'soci::soci'
+-- Conan: Component target declared 'SQLite::SQLite3'
+-- Conan: Component target declared 'Snappy::snappy'
+-- Conan: Component target declared 'nudb'
+-- Conan: Target declared 'NuDB'
+-- Conan: Target declared 'date::date'
+-- Conan: Component target declared 'xxHash::xxhash'
+-- Conan: Including build module from '/home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-module.cmake'
+-- Conan: Including build module from '/home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-options.cmake'
+-- Configuring done (0.3s)
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+CMake Error at /home/emel/.conan/data/protobuf/3.21.9/_/_/package/d2639863c49f22a8cc65705f6e02a185e3b2ba76/lib/cmake/protobuf/protobuf-generate.cmake:161 (add_custom_command):
+  Error evaluating generator expression:
+
+    $<TARGET_FILE:gRPC::grpc_cpp_plugin>
+
+  No target "gRPC::grpc_cpp_plugin"
+Call Stack (most recent call first):
+  Builds/CMake/target_protobuf_sources.cmake:42 (protobuf_generate)
+  Builds/CMake/RippledCore.cmake:28 (target_protobuf_sources)
+  CMakeLists.txt:134 (include)
+
+
+-- Generating done (0.2s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_TOOLCHAIN_FILE
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
