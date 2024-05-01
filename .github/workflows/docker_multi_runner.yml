@@ -72,9 +72,9 @@ jobs:
         with:
           images: |
             my_image
-          # tags: |
-          #   type=ref,event=branch
-          #   type=sha
+          tags: |
+            type=ref,event=branch
+            type=sha
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
