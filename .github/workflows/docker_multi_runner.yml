@@ -76,9 +76,8 @@ jobs:
           images: |
             name=legleux/test_image,enable=true
           tags: |
-            type=raw,value=muhstring
             type=raw,value=latest
-            type=raw,value=gcc_12_clang_16
+            type=raw,value=somtag
             type=raw,value=${{ env.GITHUB_SHA }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -102,7 +101,14 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
-          outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=true
+          #outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=true
+
+      - name: Show digest
+        run: |
+          digest="${{ steps.build.outputs.digest }}"
+          echo "What the hell is the digest"
+          echo "${digest}"
+
       - name: Export digest
         run: |
           mkdir -p /tmp/digests
