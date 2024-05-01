@@ -70,11 +70,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: |
-            my_image
-          tags: |
-            type=ref,event=branch
-            type=sha
+          images: ${{ env.REGISTRY_IMAGE }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -93,11 +89,10 @@ jobs:
         id: build
         uses: docker/build-push-action@v5
         with:
-          context: docker/small
+          context: docker/small/Docker
           platforms: ${{ matrix.platform }}
-          # labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ steps.meta.outputs.tags }}
-          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=false,name-canonical=true,push=true,load=true
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
         run: |
