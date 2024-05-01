@@ -70,7 +70,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY_IMAGE }}
+          images: |
+            name=test_image,enable=true
           tags: |
             type=raw,foo
             type=raw,bar
