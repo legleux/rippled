@@ -75,8 +75,6 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
             type=semver,pattern={{version}},value=v2.2.0-rc1
-            type=semver,pattern={{major}}.{{minor}},value=2,2
-            type=semver,pattern={{major}},value=2
             type=sha
 
       - name: Set up QEMU
