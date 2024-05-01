@@ -78,7 +78,7 @@ jobs:
           tags: |
             type=raw,value=multi-arch-github-action-build
             type=raw,value=latest
-            type=raw,value=somtag
+            type=raw,value=${{ github.head_ref || github.ref_name }}
             type=raw,value=${{ env.GITHUB_SHA }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
