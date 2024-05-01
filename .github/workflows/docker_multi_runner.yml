@@ -102,7 +102,7 @@ jobs:
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           # tags: ${{ steps.meta.outputs.tags }}
-          outputs: type=image,name=legleux/test_image:taste,name=legleux/test_image:test,push-by-digest=true,push=true
+          outputs: type=image,name=legleux/test_image,push-by-digest=true,push=true
 
       - name: Show digest
         run: |
@@ -154,6 +154,8 @@ jobs:
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
+          echo "wth is this: DOCKER_METADATA_OUTPUT_JSON: $DOCKER_METADATA_OUTPUT_JSON"
+          echo $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$")
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
 
