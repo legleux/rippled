@@ -54,6 +54,7 @@ jobs:
 
       - name: Get rippled version
         run: |
+          find . -name "find_version.py"
           echo "rippled_version=$(python docker/small/find_version.py src/ripple/protocol/impl/BuildInfo.cpp | tail -n1)" >> $GITHUB_ENV
 
       - name: Prepare
@@ -73,7 +74,7 @@ jobs:
             type=schedule
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
+            type=semver,pattern={{version}},value=v2.2.0-rc1
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=sha
@@ -96,8 +97,8 @@ jobs:
         with:
           context: docker/small
           platforms: ${{ matrix.platform }}
-          # labels: ${{ steps.meta.outputs.labels }}
-          # tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta.outputs.tags }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
