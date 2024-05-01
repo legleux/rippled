@@ -99,7 +99,9 @@ jobs:
           context: docker/small
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ steps.meta.outputs.labels }}
+          tags: |
+            legleux/test_image:cool
+            legleux/test_image:beans
           outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
