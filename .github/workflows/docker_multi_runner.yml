@@ -89,6 +89,7 @@ jobs:
             type=ref,event=pr
             type=sha
             type=raw,value=${{ steps.ripd_version.outputs.rippled_version }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -116,6 +117,7 @@ jobs:
       - name: Show digest
         run: |
           echo "DOCKER_METADATA_OUTPUT_TAGS: $DOCKER_METADATA_OUTPUT_TAGS"
+          echo "supposed output: ${{ steps.meta.outputs.tags }}"
           echo "It's lying: ${{env.DOCKER_METADATA_OUTPUT_TAGS}}""
           digest="${{ steps.build.outputs.digest }}"
           echo "What the hell is the digest"
