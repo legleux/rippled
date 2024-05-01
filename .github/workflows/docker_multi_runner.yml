@@ -51,7 +51,9 @@ jobs:
             echo "GH_TAGS=${GH_TAGS}" >> $GITHUB_OUTPUT
           echo "DH_TAGS: $DH_TAGS"
           echo "GH_TAGS: $GH_TAGS"
-
+          TAGS='["legleux/test_image:muh_tag"]'
+          echo "TAGS=${TAGS}" >> $GITHUB_OUTPUT
+          echo '::set-output name=tags::'$TAGS
       - name: Get rippled version
         run: "find . -name find_version.py"
 
@@ -71,10 +73,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            name=test_image,enable=true
-          tags: |
-            type=raw,foo
-            type=raw,bar
+            name=legleux/test_image,enable=true
+          # tags: |
+          #   type=raw,foo
+          #   type=raw,bar
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -96,8 +98,9 @@ jobs:
           context: docker/small
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: ${{ steps.meta.outputs.tags }}
-          outputs: type=image,name=test_image,push-by-digest=true,name-canonical=true,push=true
+          tags: |
+            ${{ fromJson(steps.tag_name.outputs.tags) }}
+          outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
         run: |
