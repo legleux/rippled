@@ -79,7 +79,7 @@ jobs:
             type=raw,value=multi-arch-github-action-build
             type=raw,value=latest
             type=raw,value=${{ github.head_ref || github.ref_name }}
-            type=raw,value=${{ env.GITHUB_SHA }}
+            type=raw,value=${{ github.sha }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -101,7 +101,7 @@ jobs:
           push: ${{ github.event_name == 'push' }}
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          # tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
           outputs: type=image,name=legleux/test_image,push-by-digest=true,push=true
 
       - name: Show digest
