@@ -142,6 +142,9 @@ jobs:
     needs:
       - build
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Download digests
         uses: actions/download-artifact@v4
         with:
@@ -171,7 +174,7 @@ jobs:
             type=raw,value=${{ github.sha }}
             type=ref,event=branch
             type=ref,event=pr
-            type=sha
+            type=sha,prefix=
             type=raw,value=${{ steps.ripd_version.outputs.rippled_version }}
 
       - name: Login to Docker Hub
