@@ -3,7 +3,8 @@ name: build_docker
 on:
   push:
     branches:
-      - "multi-arch-github-action-build"
+      - "develop"
+      # - "multi-arch-github-action-build"
 
 jobs:
   docker:
