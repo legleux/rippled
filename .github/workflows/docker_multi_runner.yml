@@ -165,6 +165,7 @@ jobs:
         run: |
           echo "DOCKER_METADATA_OUTPUT_TAGS $DOCKER_METADATA_OUTPUT_TAGS"
           echo "wth is this: DOCKER_METADATA_OUTPUT_JSON: $DOCKER_METADATA_OUTPUT_JSON"
+          echo "REGISTRY_IMAGE ${{ env.REGISTRY_IMAGE }} "
           echo $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$")
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ env.REGISTRY_IMAGE }}@sha256:%s ' *)
