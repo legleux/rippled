@@ -53,7 +53,7 @@ jobs:
           echo "GH_TAGS: $GH_TAGS"
           TAGS='["legleux/test_image:muh_tag"]'
           echo "TAGS=${TAGS}" >> $GITHUB_OUTPUT
-          echo '::set-output name=tags::'$TAGS
+          # echo '::set-output name=tags::'$TAGS
       - name: Get rippled version
         run: "find . -name find_version.py"
 
@@ -98,8 +98,7 @@ jobs:
           context: docker/small
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: |
-            ${{ fromJson(steps.tag_name.outputs.tags) }}
+          tags: ${{ fromJson('["legleux/test_image:muh_tag"]') }}
           outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
