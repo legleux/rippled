@@ -1,11 +1,11 @@
 FROM gcc:11 as build
 
-COPY deps.sh deps.sh 
-COPY config.sh config.sh 
+COPY deps.sh deps.sh
+COPY config.sh config.sh
 COPY build.sh build.sh
 
-RUN ./deps.sh 
-RUN ./config.sh 
+RUN ./deps.sh
+RUN ./config.sh
 RUN ./build.sh
 
 FROM debian:bullseye-slim as rippled
