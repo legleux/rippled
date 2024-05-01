@@ -73,8 +73,7 @@ jobs:
           images: |
             name=legleux/test_image
           tags: |
-            please_build
-            type=sha
+            type=sha,prefix=
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
