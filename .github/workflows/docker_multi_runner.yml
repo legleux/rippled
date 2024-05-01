@@ -58,16 +58,21 @@ jobs:
       - name: Get rippled version
         run: "find . -name find_version.py"
 
-      - run: |
+      - name: rippled version
+        id: ripd_version
+        run: |
           echo "rippled_version=$(python docker/small/find_version.py src/ripple/protocol/impl/BuildInfo.cpp | tail -n1)" >> $GITHUB_ENV
           echo $(python docker/small/find_version.py src/ripple/protocol/impl/BuildInfo.cpp)
+          echo "rippled version: $rippled_version"
 
       - name: Prepare
         run: |
           platform=${{ matrix.platform }}
           echo "PLATFORM_PAIR=${platform//\//-}" >> $GITHUB_ENV
 
-
+      - name: Show rippled version
+        run: |
+          echo "I got the version as: ${{ steps.ripd_version.outputs.rippled_version }}"
 
       - name: Docker meta
         id: meta
@@ -80,6 +85,10 @@ jobs:
             type=raw,value=latest
             type=raw,value=${{ github.head_ref || github.ref_name }}
             type=raw,value=${{ github.sha }}
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha
+            type=raw,value=${{ steps.ripd_version.outputs.rippled_version }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
