@@ -75,10 +75,7 @@ jobs:
           tags: |
             please_build
             type=sha
-            # type=sha,format=long
-            # type=sha,prefix=mine
-            # type=sha,prefix={{branch}}-
-            # type=raw,value=latest,enable={{is_default_branch}}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -95,14 +92,11 @@ jobs:
         id: build
         uses: docker/build-push-action@v5
         with:
-          load: true
+          push: true
           context: docker/small
           platforms: ${{ matrix.platform }}
           # labels: ${{ steps.meta.outputs.labels }}
-          # tags: ${{ steps.meta.outputs.tags }}
-          tags: |
-            please_build
-            type=sha
+          tags: ${{ steps.meta.outputs.tags }}
           outputs: type=image,name=${{ env.REGISTRY_IMAGE }},push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
