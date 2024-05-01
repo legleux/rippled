@@ -71,10 +71,7 @@ jobs:
         with:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
-            type=schedule
-            type=ref,event=branch
-            type=ref,event=pr
-            type=match,pattern=(.*),group=1,value=2.2.0-rc1
+            type=ref,event=push
             type=sha
 
       - name: Set up QEMU
