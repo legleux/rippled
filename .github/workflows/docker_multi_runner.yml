@@ -75,9 +75,7 @@ jobs:
         with:
           images: |
             name=legleux/test_image,enable=true
-          tags: |
-            type=raw,foo
-            type=raw,bar
+          tags: type=raw,value=muhstring
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -99,9 +97,7 @@ jobs:
           context: docker/small
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
-          tags: |
-            legleux/test_image:cool
-            legleux/test_image:beans
+          tags: ${{ steps.meta.outputs.tags }}
           outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=true
 
       - name: Export digest
