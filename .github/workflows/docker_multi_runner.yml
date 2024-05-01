@@ -9,7 +9,7 @@ on:
       - "multi-arch-github-action-build"
 
 env:
-  REGISTRY_IMAGE: legleux/test_image
+  REGISTRY_IMAGE: test_image
 
 jobs:
   build:
