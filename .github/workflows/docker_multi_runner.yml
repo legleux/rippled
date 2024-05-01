@@ -72,7 +72,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY_IMAGE }}
           tags: |
-            feature
+            type=raw,foo
+            type=raw,bar
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
