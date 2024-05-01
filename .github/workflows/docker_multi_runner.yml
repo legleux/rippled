@@ -75,8 +75,11 @@ jobs:
         with:
           images: |
             name=legleux/test_image,enable=true
-          tags: type=raw,value=muhstring
-
+          tags: |
+            type=raw,value=muhstring
+            type=raw,value=latest
+            type=raw,value=gcc_12_clang_16
+            type=raw,value=${{ env.GITHUB_SHA }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -95,11 +98,11 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: docker/small
+          push: ${{ github.event_name == 'push' }}
           platforms: ${{ matrix.platform }}
           labels: ${{ steps.meta.outputs.labels }}
           tags: ${{ steps.meta.outputs.tags }}
           outputs: type=image,name=legleux/test_image,push-by-digest=true,name-canonical=true,push=false
-
       - name: Export digest
         run: |
           mkdir -p /tmp/digests
