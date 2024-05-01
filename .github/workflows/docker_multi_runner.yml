@@ -70,11 +70,15 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          # images: |
-          #   name=whut,enable=true
+          images: |
+            name=legleux/test_image
           tags: |
-            type=sha,
-
+            please_build
+            type=sha
+            # type=sha,format=long
+            # type=sha,prefix=mine
+            # type=sha,prefix={{branch}}-
+            # type=raw,value=latest,enable={{is_default_branch}}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
