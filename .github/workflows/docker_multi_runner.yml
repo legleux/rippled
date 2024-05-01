@@ -154,6 +154,7 @@ jobs:
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |
+          echo "DOCKER_METADATA_OUTPUT_TAGS $DOCKER_METADATA_OUTPUT_TAGS"
           echo "wth is this: DOCKER_METADATA_OUTPUT_JSON: $DOCKER_METADATA_OUTPUT_JSON"
           echo $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$")
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
