@@ -6,6 +6,7 @@ on:
       - "develop"
       - "master"
       - "release"
+      - "multi-arch-github-action-build"
 
 env:
   REGISTRY_IMAGE: legleux/test_image
