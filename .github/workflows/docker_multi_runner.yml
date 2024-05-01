@@ -61,7 +61,7 @@ jobs:
       - name: rippled version
         id: ripd_version
         run: |
-          echo "rippled_version=$(python docker/small/find_version.py src/ripple/protocol/impl/BuildInfo.cpp | tail -n1)" >> $GITHUB_ENV
+          echo "rippled_version=$(python docker/small/find_version.py src/ripple/protocol/impl/BuildInfo.cpp | tail -n1)" >> $GITHUB_OUTPUT
           echo $(python docker/small/find_version.py src/ripple/protocol/impl/BuildInfo.cpp)
           echo "rippled version: $rippled_version"
 
