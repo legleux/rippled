@@ -118,7 +118,7 @@ jobs:
         run: |
           echo "DOCKER_METADATA_OUTPUT_TAGS: $DOCKER_METADATA_OUTPUT_TAGS"
           echo "supposed output: ${{ steps.meta.outputs.tags }}"
-          echo "It's lying: ${{env.DOCKER_METADATA_OUTPUT_TAGS}}""
+          echo "It's lying: ${{env.DOCKER_METADATA_OUTPUT_TAGS}}"
           digest="${{ steps.build.outputs.digest }}"
           echo "What the hell is the digest"
           echo "${digest}"
