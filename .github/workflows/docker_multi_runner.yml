@@ -71,9 +71,10 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            name=legleux/test_image
+            my_image
           tags: |
-            type=sha,prefix=
+            type=ref,event=branch
+            type=sha
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -92,7 +93,6 @@ jobs:
         id: build
         uses: docker/build-push-action@v5
         with:
-          push: true
           context: docker/small
           platforms: ${{ matrix.platform }}
           # labels: ${{ steps.meta.outputs.labels }}
