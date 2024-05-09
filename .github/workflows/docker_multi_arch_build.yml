@@ -16,9 +16,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ {platform: "linux/amd64", runner: "X86"}, {platform: "linux/arm64", runner: "ARM64"} ]
-
-    runs-on: [self-hosted, x-heavy, "${{ matrix.platform.runner }}"]
+        platform: [
+          {platform: "linux/amd64", runner: '["x-heavy", "X86"]'},
+          {platform: "linux/arm64", runner: '["ARM64", "ubuntu-latest"]'}
+          ]
+    runs-on: [self-hosted, "${{ fromJSON(matrix.platform.runner) }}"]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
