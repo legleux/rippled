@@ -20,7 +20,7 @@ jobs:
           {platform: "linux/amd64", runner: '["x-heavy"]'},
           {platform: "linux/arm64", runner: '["ARM64"]'}
           ]
-    runs-on: [self-hosted, "${{ fromJSON(matrix.platform.runner) }}"]
+    runs-on: [self-hosted, ${{ fromJSON(matrix.platform.runner) }}]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
