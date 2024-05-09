@@ -17,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [
-          {platform: "linux/amd64", runner: '["x-heavy", "X86"]'},
+          {platform: "linux/amd64", runner: '["x-heavy"]'},
           {platform: "linux/arm64", runner: '["ARM64"]'}
           ]
     runs-on: [self-hosted, "${{ fromJSON(matrix.platform.runner) }}"]
