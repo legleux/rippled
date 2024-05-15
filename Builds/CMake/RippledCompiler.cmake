@@ -121,15 +121,12 @@ else ()
     INTERFACE
       -rdynamic
       $<$<BOOL:${is_linux}>:-Wl,-z,relro,-z,now>
-      # link to static libc/c++ iff:
-      #   * static option set and
-      #   * NOT APPLE (AppleClang does not support static libc/c++) and
-      #   * NOT san (sanitizers typically don't work with static libc/c++)
-      $<$<AND:$<BOOL:${static}>,$<NOT:$<BOOL:${APPLE}>>,$<NOT:$<BOOL:${san}>>>:
-      -static-libstdc++
-      -static-libgcc
-      >)
+  )
 endif ()
+
+if(static AND is_gcc AND NOT san AND NOT is_macos)
+  target_link_options(common INTERFACE -static -static-libstdc++ -static-libgcc)
+endif()
 
 if (use_mold)
   # use mold linker if available
