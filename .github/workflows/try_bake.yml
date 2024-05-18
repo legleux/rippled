@@ -84,7 +84,8 @@ jobs:
             *.tags=
             *.platform=${{ matrix.platform }}
             *.output=type=image,"name=${{ env.REGISTRY_IMAGE }}",push-by-digest=true,name-canonical=true,push=true
-      - name: Export digest
+
+     - name: Export digest
         run: |
           mkdir -p /tmp/digests
           digest="${{ fromJSON(steps.bake.outputs.metadata).image['containerimage.digest'] }}"
@@ -103,6 +104,19 @@ jobs:
     needs:
       - build
     steps:
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          tags: |
+            type=schedule
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
       - name: Download meta bake definition
         uses: actions/download-artifact@v4
         with:
