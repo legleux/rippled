@@ -79,9 +79,6 @@ jobs:
         uses: docker/bake-action@v4
         with:
           source: "${{ github.server_url }}/${{ github.repository }}.git#${{ github.ref }}"
-          files: |
-            ./docker-bake.hcl
-            /tmp/bake-meta.json
           targets: image
           set: |
             *.tags=
