@@ -2,7 +2,7 @@
 
 set -ex
 
-source_dir=${source_dir:-$repo}
+source_dir=${source_dir:-$PWD}
 build_dir=${build_dir:-build}
 
 conan install ${source_dir} \
