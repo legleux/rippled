@@ -1,10 +1,10 @@
 FROM gcc:11 as build
 
+COPY . /rippled
 COPY docker/deps.sh deps.sh
 COPY docker/config.sh config.sh
 COPY docker/build.sh build.sh
 
-RUN ls -lh
 RUN ./deps.sh
 RUN ./config.sh
 RUN ./build.sh

@@ -2,8 +2,8 @@
 
 set -ex
 
-source_dir=${source_dir:-$PWD}
-build_dir=${build_dir:-build}
+source_dir=${source_dir:-$PWD/rippled}
+build_dir=${build_dir:-$PWD/build}
 
 conan install ${source_dir} \
     --output-folder build \
