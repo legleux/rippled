@@ -3,7 +3,7 @@ name: Bake
 on:
   push:
     tags:
-      - '^(\d+\.\d+.\d+)-*(rc|b|hf)*(\d*)$'
+      - '*'
 env:
   REGISTRY_IMAGE: legleux/test_bake
 
