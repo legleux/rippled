@@ -2,6 +2,8 @@ name: Bake
 
 on:
   push:
+    branches:
+      - release-multi-arch
     tags:
       - '*'
 env:
@@ -44,7 +46,7 @@ jobs:
           retention-days: 1
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, x-heavy]
     needs:
       - prepare
     strategy:
