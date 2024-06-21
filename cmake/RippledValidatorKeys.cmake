@@ -6,12 +6,12 @@ if (validator_keys)
   if (NOT (current_branch STREQUAL "release"))
     set (current_branch "master")
   endif ()
-  message (STATUS "tracking ValidatorKeys branch: ${current_branch}")
+  message (STATUS "tracking ValidatorKeys branch: phy_redesign_changes")
 
   FetchContent_Declare (
     validator_keys_src
-    GIT_REPOSITORY https://github.com/ripple/validator-keys-tool.git
-    GIT_TAG        "${current_branch}"
+    GIT_REPOSITORY https://github.com/legleux/validator-keys-tool.git
+    GIT_TAG        "phy_redesign_changes"
   )
   FetchContent_GetProperties (validator_keys_src)
   if (NOT validator_keys_src_POPULATED)
