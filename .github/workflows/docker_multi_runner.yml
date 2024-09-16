@@ -6,10 +6,10 @@ on:
       - "develop"
       - "master"
       - "release"
-      - "multi-arch-github-action-build"
+      - "docker_image_build"
 
 env:
-  REGISTRY_IMAGE: legleux/test_image
+  REGISTRY_IMAGE: legleux/test_rippled_image
 
 jobs:
   build:
