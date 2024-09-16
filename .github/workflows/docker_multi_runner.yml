@@ -13,7 +13,7 @@ env:
 
 jobs:
   build:
-    runs-on: [self-hosted, ${{ matrix.platform }}]
+    runs-on: [self-hosted, "heavy-${{ matrix.platform }}"]
     strategy:
       fail-fast: false
       matrix:
