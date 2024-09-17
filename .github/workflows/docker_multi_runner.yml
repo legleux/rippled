@@ -18,8 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-            - heavy
-            # - heavy-arm64
+            - X86
+            - ARM64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
