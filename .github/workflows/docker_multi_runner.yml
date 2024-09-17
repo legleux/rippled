@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-            # - heavy
+            - heavy
             - heavy-arm64
     steps:
       - name: Checkout
