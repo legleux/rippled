@@ -19,7 +19,7 @@ jobs:
       matrix:
         platform:
             - heavy
-            - heavy-arm64
+            # - heavy-arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v4
