@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           echo $(uname -a)
-          # IMAGE_NAME="rippled"
+          IMAGE_NAME="rippled"
           # LATEST_BRANCH="master"
           # SHA=${GITHUB_SHA::7}
           # BASE_IMAGE_NAME=${IMAGE_NAME}:${SHA}
