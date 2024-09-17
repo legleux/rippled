@@ -28,7 +28,7 @@ jobs:
         id: tag_name
         shell: bash
         run: |
-          echo uname -a
+          echo $(uname -a)
           # IMAGE_NAME="rippled"
           # LATEST_BRANCH="master"
           # SHA=${GITHUB_SHA::7}
