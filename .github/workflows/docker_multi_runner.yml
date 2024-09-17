@@ -18,7 +18,7 @@ jobs:
       fail-fast: false
       matrix:
         platform:
-            - X86
+            - X64
             - ARM64
     steps:
       - name: Checkout
