@@ -9,8 +9,3 @@ jobs:
     steps:
       - shell: bash
         run: echo $(uname -a)
-  build2:
-    runs-on: [self-hosted, heavy]
-    steps:
-      - shell: bash
-        run: echo $(uname -a)
