@@ -5,7 +5,9 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, heavy-arm64]
-    steps:
-      - shell: bash
-        run: echo $(uname -a)
+    runs-on: [self-hosted, "${{ matrix.platform }}"]
+    strategy:
+      matrix:
+        platform:
+            - heavy
+            - heavy-arm64
