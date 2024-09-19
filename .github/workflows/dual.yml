@@ -3,6 +3,7 @@ on:
     branches:
       - "dual_arch"
 
+
 jobs:
   build:
     runs-on: [self-hosted, "${{ matrix.platform }}"]
