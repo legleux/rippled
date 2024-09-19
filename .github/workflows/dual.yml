@@ -11,3 +11,7 @@ jobs:
         platform:
             - heavy
             - heavy-arm64
+    steps:
+      - name: Echo arch
+        run: |
+          echo $(uname -a)
