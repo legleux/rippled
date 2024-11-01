@@ -63,6 +63,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -99,7 +100,6 @@ jobs:
           name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
           path: conan.tar
           if-no-files-found: error
-
 
   test:
     strategy:
@@ -153,7 +153,6 @@ jobs:
       - name: test
         run: |
           ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
-
 
   coverage:
     strategy:
