@@ -79,3 +79,8 @@ install (
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/RippleConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/RippleConfigVersion.cmake
   DESTINATION lib/cmake/ripple)
+
+if(TARGET validator-keys)
+  install(TARGETS validator-keys RUNTIME DESTINATION bin)
+  set_target_properties(validator-keys PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
+endif()
