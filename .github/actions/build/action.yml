@@ -52,3 +52,8 @@ runs:
         cd ${build_dir}
         cpack -G DEB
         cpack -G RPM
+    - name: Save packages
+      uses: actions/upload-artifact@v4
+      with:
+        name: xrpld_pkgs
+        path: rippled/.build/*.{rpm,deb}
