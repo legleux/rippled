@@ -22,8 +22,8 @@ var searchData=
   ['convergedledgerlimit_19',['convergedLedgerLimit',['../namespaceripple_1_1Tuning.html#a4170faee805153770be2a0fe3275812aa991f7034b02d9b550b1c64a597c0faaf',1,'ripple::Tuning']]],
   ['counting_20',['Counting',['../namespaceripple_1_1reduce__relay.html#ac8510a72575fb51be1db4944073f8b22abf87751378a125423d6e60e4ffff6daa',1,'ripple::reduce_relay::Counting()'],['../namespaceripple_1_1reduce__relay.html#a9f15d21d6c73738cdfad6e99d22a001eabf87751378a125423d6e60e4ffff6daa',1,'ripple::reduce_relay::Counting()']]],
   ['cur_21',['cur',['../classripple_1_1test_1_1ElementComboIter.html#a4a14ce172d72da140cb8ae49a8f132dcab5fddf1ef601e74db01c1425561a38cb',1,'ripple::test::ElementComboIter']]],
-  ['current_22',['CURRENT',['../namespaceripple_1_1RPC.html#a4c04e509451d50d9449cff3d477ff4f2a1ccbdd5cbc00ad939048ccd47f9c6d8a',1,'ripple::RPC']]],
-  ['current_23',['current',['../namespaceripple.html#a6434c1a0fd22b77e2e4a228c0eca79eba43b5c9175984c071f30b873fdce0a000',1,'ripple']]],
+  ['current_22',['current',['../namespaceripple.html#a6434c1a0fd22b77e2e4a228c0eca79eba43b5c9175984c071f30b873fdce0a000',1,'ripple']]],
+  ['current_23',['CURRENT',['../namespaceripple_1_1RPC.html#a4c04e509451d50d9449cff3d477ff4f2a1ccbdd5cbc00ad939048ccd47f9c6d8a',1,'ripple::RPC']]],
   ['currentschemaversion_24',['currentSchemaVersion',['../classripple_1_1PeerFinder_1_1StoreSqdb.html#a9765ca29721a0e7d4b6bac7d574467e6a9b7291675bb8c7cc7cca41dcc2c05ab5',1,'ripple::PeerFinder::StoreSqdb']]],
   ['custom_25',['Custom',['../classripple_1_1Transactor.html#a5c6d16e9402d182a835f50b37ce9a938a429832eac6b9ee7b50a1265131cd2845',1,'ripple::Transactor']]],
   ['customcode_26',['customCode',['../namespaceripple_1_1NodeStore.html#af127c2e4fc73b5d35647147ef45b350ca735314ed73dbc8306ffc16151f7a0484',1,'ripple::NodeStore']]]
