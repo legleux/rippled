@@ -59,25 +59,16 @@ runs:
         cpack -G DEB
         cpack -G RPM
 
-    - uses: actions/upload-artifact@v4
+    - name: Save deb
+      uses: actions/upload-artifact@v4
       with:
-        name: path_1
-        path: rippled/rippled/*.{rpm,deb}
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: path_2
-        path: rippled/**/*.{rpm,deb}
-
-    - uses: actions/upload-artifact@v4
-      with:
-        name: path_3
+        name: deb_pkg
         path: |
-          rippled/rippled/.build/*.rpm
-          rippled/rippled/.build/*.deb
+          ./**/*.deb
 
-    - uses: actions/upload-artifact@v4
+    - name: Save rpm
+      uses: actions/upload-artifact@v4
       with:
-        name: wild
+        name: rpm_pkg
         path: |
-          **/*.{rpm,deb}
+          ./**/*.rpm
