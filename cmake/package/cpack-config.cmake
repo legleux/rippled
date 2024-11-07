@@ -43,6 +43,13 @@ endif()
 # -- test_package_build_DESCRIPTION=
 # -- test_package_build_HOMEPAGE_URL= ARe t
 
+## TODO: Test if we want to strip files in packages
+# not sure if this messes with the debug packages
+#set(CPACK_STRIP_FILES TRUE)
+
+set(CPACK_PACKAGE_VERSION "${rippled_version}")
+
+set(CPACK_PACKAGE_NAME "rippled") # What do we want this to be?
 
 # include(${CMAKE_SOURCE_DIR}/cmake/package/deb-cpack-config.cmake)
 include(deb-cpack-config)
