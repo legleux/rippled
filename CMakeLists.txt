@@ -112,8 +112,8 @@ if(coverage)
 endif()
 
 set(PROJECT_EXPORT_SET RippleExports)
-include(RippledCore)
-include(RippledInstall)
-include(RippledValidatorKeys)
 
+include(RippledCore)
+include(RippledValidatorKeys)
+include(RippledInstall)
 include(RippledPackage)
