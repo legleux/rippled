@@ -9,6 +9,7 @@ on:
       - develop
       - release
       - master
+      - cpack
       # Branches that opt-in to running
       - 'ci/**'
 concurrency:
