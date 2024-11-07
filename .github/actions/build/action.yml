@@ -62,24 +62,8 @@ runs:
     - name: Maybe the firt try worked
       uses: actions/upload-artifact@v4
       with:
-        name: packages
+        name: packages-${{ github.head_ref }}.${{ github.sha }}
         include-hidden-files: true
         path: |
           ./**/*.deb
           ./**/*.rpm
-
-    - name: Save deb
-      uses: actions/upload-artifact@v4
-      with:
-        name: deb_pkg
-        include-hidden-files: true
-        path: |
-          ./rippled/rippled/.build/*.deb
-
-    - name: Save rpm
-      uses: actions/upload-artifact@v4
-      with:
-        name: rpm_pkg
-        include-hidden-files: true
-        path: |
-          ./rippled/rippled/.build/*.rpm
