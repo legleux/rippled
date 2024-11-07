@@ -64,11 +64,11 @@ runs:
       with:
         name: deb_pkg
         path: |
-          ./**/*.deb
+          ./rippled/rippled/.build/*.deb
 
     - name: Save rpm
       uses: actions/upload-artifact@v4
       with:
         name: rpm_pkg
         path: |
-          ./**/*.rpm
+          ./rippled/rippled/.build/*.rpm
