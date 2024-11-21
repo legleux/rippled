@@ -24,7 +24,7 @@ install(
 if(NOT WIN32)
   install(
     CODE "file(CREATE_LINK xrpl \
-      \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/ripple SYMBOLIC)"
+      \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/ripple SYMBOLIC)"
   )
 endif()
 
@@ -58,7 +58,7 @@ if (is_root_project AND TARGET rippled)
   if(NOT WIN32)
     install(
       CODE "file(CREATE_LINK rippled${suffix} \
-        \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/xrpld${suffix} SYMBOLIC)"
+        \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/xrpld${suffix} SYMBOLIC)"
     )
   endif()
 endif ()
