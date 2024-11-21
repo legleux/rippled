@@ -52,6 +52,7 @@ set(CPACK_PACKAGE_VERSION "${rippled_version}")
 set(CPACK_PACKAGE_NAME "rippled") # What do we want this to be?
 
 # include(${CMAKE_SOURCE_DIR}/cmake/package/deb-cpack-config.cmake)
+include(shared/package_files)
 include(deb-cpack-config)
 include(rpm-cpack-config)
 # include(mac-cpack-config)
