@@ -33,12 +33,14 @@ runs:
     - name: build
       shell: bash
       run: |
-        cmake \
-          --build ${build_dir} \
-          --config ${{ inputs.configuration }} \
-          --parallel ${NUM_PROCESSORS:-$(nproc)} \
-          --target ${{ inputs.cmake-target }}
+        echo "cool"
+        # cmake \
+        #   --build ${build_dir} \
+        #   --config ${{ inputs.configuration }} \
+        #   --parallel ${NUM_PROCESSORS:-$(nproc)} \
+        #   --target ${{ inputs.cmake-target }}
     - name: build_packages
+      if: ${{ matrix.configuration.platform }}-${{ matrix.configuration.compiler }}-${{ matrix.configuration.configuration }} == 'linux-gcc-Release'
       shell: bash
       run: |
         apt-get update && apt-get install -y \
@@ -58,12 +60,3 @@ runs:
         cd ${build_dir}
         cpack -G DEB
         cpack -G RPM
-
-    - name: Maybe the firt try worked
-      uses: actions/upload-artifact@v4
-      with:
-        name: packages-${{ github.head_ref }}.${{ github.sha }}
-        include-hidden-files: true
-        path: |
-          ./**/*.deb
-          ./**/*.rpm
