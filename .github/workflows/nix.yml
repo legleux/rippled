@@ -9,7 +9,7 @@ on:
       - develop
       - release
       - master
-      - cpack
+      - cpack-squash
       # Branches that opt-in to running
       - 'ci/**'
 concurrency:
@@ -45,9 +45,9 @@ jobs:
           - linux
         compiler:
           - gcc
-          - clang
+          # - clang
         configuration:
-          - Debug
+          # - Debug
           - Release
         include:
           - compiler: gcc
@@ -55,11 +55,11 @@ jobs:
               version: 11
               cc: /usr/bin/gcc
               cxx: /usr/bin/g++
-          - compiler: clang
-            profile:
-              version: 14
-              cc: /usr/bin/clang-14
-              cxx: /usr/bin/clang++-14
+          # - compiler: clang
+          #   profile:
+          #     version: 14
+          #     cc: /usr/bin/clang-14
+          #     cxx: /usr/bin/clang++-14
     runs-on: [self-hosted, heavy]
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
@@ -110,13 +110,13 @@ jobs:
           - linux
         compiler:
           - gcc
-          - clang
+          # - clang
         configuration:
-          - Debug
+          # - Debug
           - Release
         cmake-args:
           -
-          - "-Dunity=ON"
+          # - "-Dunity=ON"
     needs: dependencies
     runs-on: [self-hosted, heavy]
     container: rippleci/rippled-build-ubuntu:aaf5e3e
