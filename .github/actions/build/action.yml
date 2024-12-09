@@ -58,5 +58,5 @@ runs:
           --parallel ${NUM_PROCESSORS:-$(nproc)} \
           --target validator-keys
         cd ${build_dir}
-        cpack -G DEB
-        cpack -G RPM
+        # cpack -G DEB
+        # cpack -G RPM
