@@ -45,7 +45,7 @@ jobs:
           - linux
         compiler:
           - gcc
-          # - clang
+          - clang
         configuration:
           - Debug
           - Release
