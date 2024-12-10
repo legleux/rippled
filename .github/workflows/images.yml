@@ -94,8 +94,15 @@ jobs:
           echo "The repo name is ${repo_name}"
           IMAGE="${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${git_sha}" && echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
           echo "IMAGE is $IMAGE"
-          docker buildx build .  --build-arg PLATFORM="${ARCH}" --tag "${IMAGE}-${ARCH}" --push
+          docker buildx build --output type=oci,dest=./${IMAGE}.tar .
+          # docker buildx build .  --build-arg PLATFORM="${ARCH}" --tag "${IMAGE}-${ARCH}" --push
 
+      - name: Save images
+        uses: actions/upload-artifact@v4
+        with:
+          name: rippled-${{ env.IMAGE_NAME }}
+          path: |
+            ./*.tar
 
   create-multiarch-manifests:
       needs: build_image
@@ -126,5 +133,3 @@ jobs:
             done
             docker buildx imagetools create --tag ${IMAGE_TAG} \
                   ${tags}
-            # docker buildx imagetools create --tag ${IMAGE_TAG} \
-            #       ${IMAGE_TAG}-amd64
