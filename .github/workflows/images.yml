@@ -68,25 +68,27 @@ jobs:
           . /etc/os-release
           cat /etc/os-release
 
-          if [ ${{ matrix.config.os }} = "AMD64"]; then
+          if [ ${{ matrix.config.tag }} = "ARM64"]; then
             sudo dnf -y install dnf-plugins-core
             sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
             sudo dnf -y install docker-buildx-plugin
             #dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             exit $?
+          else
+
+            sudo apt-get update
+            sudo apt-get install --yes ca-certificates curl
+            sudo install -m 0755 -d /etc/apt/keyrings
+            sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+            sudo chmod a+r /etc/apt/keyrings/docker.asc
+            echo \
+              "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+              $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+              sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+            sudo apt-get update
+            sudo apt-get update && sudo apt-get install --yes docker-buildx-plugin
           fi
 
-          sudo apt-get update
-          sudo apt-get install --yes ca-certificates curl
-          sudo install -m 0755 -d /etc/apt/keyrings
-          sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-          sudo chmod a+r /etc/apt/keyrings/docker.asc
-          echo \
-            "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-            $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
-            sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-          sudo apt-get update
-          sudo apt-get update && sudo apt-get install --yes docker-buildx-plugin
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
