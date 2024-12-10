@@ -18,41 +18,19 @@ jobs:
           - os: os_1
             arch: amd64
             tag: X64
-            # tag: ubuntu-latest
           - os: os_2
             arch: arm64
             tag: ARM64
-          #   tag: ubuntu-24.04
     outputs:
       image: ${{ steps.build_image.outputs.image }}
       git_sha: ${{ steps.build_image.outputs.git_sha }}
     runs-on:
       - self-hosted
       - "${{ matrix.config.tag }}"
-    # runs-on: [self-hosted, "${{ matrix.config.tag }}"]
     name: ${{ matrix.config.tag }} Docker image build
     steps:
-      - name: check version
-        run: |
-          echo path: $PATH
-          # bash -c /root/.nvm/nvm.sh
-          echo "Got $?"
-          # echo $PATH
-          echo version: $(node --version)
-          echo which node: $(which node)
-
       - name: checkout
         uses: actions/checkout@v4
-
-      - name: check environment
-        run: |
-          echo "Building for config.tag: [${{ matrix.config.tag }}]" > tag_output.txt
-
-      - name: Save tag_output
-        uses: actions/upload-artifact@v4
-        with:
-          name: rippled-${{ matrix.config.tag }}
-          path: tag_output.txt
 
       - name: Log in to the gchr
         uses: docker/login-action@v3
