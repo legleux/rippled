@@ -45,9 +45,9 @@ jobs:
           - linux
         compiler:
           - gcc
-          # - clang
+          - clang
         configuration:
-          # - Debug
+          - Debug
           - Release
         include:
           - compiler: gcc
@@ -111,13 +111,13 @@ jobs:
           - linux
         compiler:
           - gcc
-          # - clang
+          - clang
         configuration:
           - Debug
-          # - Release
+          - Release
         cmake-args:
           -
-          # - "-Dunity=ON"
+          - "-Dunity=ON"
     needs: dependencies
     runs-on: [self-hosted, heavy]
     container: rippleci/rippled-build-ubuntu:aaf5e3e
