@@ -116,8 +116,14 @@ jobs:
             git_sha=${{ needs.build_image.outputs.git_sha }}
             echo "git_sha: $git_sha"
 
+            cmd="docker buildx imagetools create --tag ${IMAGE_TAG}"
+            tags=""
+            for a in md rm; do
+              docker manifest inspect ${IMAGE_TAG}-a${a}64 > /dev/null ;
+              tag_exists=$?
+              echo "${IMAGE_TAG}-a${a}64 exists --> tags_exists: [${tag_exists}]"
+              tags+=" ${IMAGE_TAG}-a${a}64"
             docker buildx imagetools create --tag ${IMAGE_TAG} \
-                  ${IMAGE_TAG}-amd64 \
-                  ${IMAGE_TAG}-arm64
+                  ${tags}
             # docker buildx imagetools create --tag ${IMAGE_TAG} \
             #       ${IMAGE_TAG}-amd64
