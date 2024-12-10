@@ -19,9 +19,9 @@ jobs:
             arch: amd64
             tag: X64
             # tag: ubuntu-latest
-          # - os: os_2
-          #   arch: arm64
-          #   # tag: ARM64
+          - os: os_2
+            arch: arm64
+            tag: ARM64
           #   tag: ubuntu-24.04
     outputs:
       image: ${{ steps.build_image.outputs.image }}
@@ -107,8 +107,8 @@ jobs:
             git_sha=${{ needs.build_image.outputs.git_sha }}
             echo "git_sha: $git_sha"
 
-            # docker buildx imagetools create --tag ${IMAGE_TAG} \
-            #       ${IMAGE_TAG}-amd64 \
-            #       ${IMAGE_TAG}-arm64
             docker buildx imagetools create --tag ${IMAGE_TAG} \
-                  ${IMAGE_TAG}-amd64
+                  ${IMAGE_TAG}-amd64 \
+                  ${IMAGE_TAG}-arm64
+            # docker buildx imagetools create --tag ${IMAGE_TAG} \
+            #       ${IMAGE_TAG}-amd64
