@@ -14,7 +14,7 @@ on:
       - 'ci/**'
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 # This workflow has two job matrixes.
 # They can be considered phases because the second matrix ("test")
@@ -55,11 +55,11 @@ jobs:
               version: 11
               cc: /usr/bin/gcc
               cxx: /usr/bin/g++
-          # - compiler: clang
-          #   profile:
-          #     version: 14
-          #     cc: /usr/bin/clang-14
-          #     cxx: /usr/bin/clang++-14
+          - compiler: clang
+            profile:
+              version: 14
+              cc: /usr/bin/clang-14
+              cxx: /usr/bin/clang++-14
     runs-on: [self-hosted, heavy]
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
@@ -123,7 +123,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
-    name: ${{ matrix.compiler }}-${{ matrix.configuration }}
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }}-${{ matrix.cmake-args }}
     steps:
       - name: download cache
         uses: actions/download-artifact@v3
@@ -156,7 +156,7 @@ jobs:
 
       - name: Artifact packages
         uses: actions/upload-artifact@v4
-        if: ${{ (format('{0}-{1}-{2}', matrix.configuration, matrix.compiler, matrix.platform) == env.package_deploy_config) && (matrix.cmake-args == '') }}
+        if: ${{ (matrix.configuration == 'Debug') && (matrix.compiler == 'gcc') && (matrix.cmake-args == '') }}
         with:
           name: rippled-${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
           compression-level: 0

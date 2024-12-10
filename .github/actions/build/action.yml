@@ -40,7 +40,6 @@ runs:
         #   --parallel ${NUM_PROCESSORS:-$(nproc)} \
         #   --target ${{ inputs.cmake-target }}
     - name: build_packages
-      if: ${{ matrix.configuration.platform }}-${{ matrix.configuration.compiler }}-${{ matrix.configuration.configuration }} == 'linux-gcc-Release'
       shell: bash
       run: |
         apt-get update && apt-get install -y \

@@ -1,21 +1,20 @@
 name: Build Docker images
 env:
   IMAGE: rippled
-push:
-  branches:
-    - cpack-squash
-
-
+on:
+  push:
+    branches:
+      - cpack-squash
 jobs:
   build_image:
     strategy:
       fail-fast: false
       matrix:
         platform:
-        - x86_64
-        - ARM64
-    runs-on: [self-hosted, ${{ matrix.platform }}]
-    container: rippleci/rippled-build-ubuntu:aaf5e3e
+          - ARM64
+          - X64
+          # - ARM64
+    runs-on: [self-hosted, ARM64]
     name: ${{ matrix.platform }} Docker image build
     steps:
       - name: checkout
@@ -23,8 +22,18 @@ jobs:
 
       - name: check environment
         run: |
-          echo "Building for ${{ matrix.platform }} "
+          echo "Building for ${{ matrix.platform }}" > output.txt
 
-      - name: Build image
-        run: |
-          docker --version
+      - name: Save output
+        uses: actions/upload-artifact@v3
+        with:
+          name: rippled-${{ matrix.platform }}
+          path: output.txt
+
+      # - name: check environment
+      #   run: |
+      #     echo "Building for ${{ matrix.platform }} "
+
+      # - name: Build image
+      #   run: |
+      #     docker --version
