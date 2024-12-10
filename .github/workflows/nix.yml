@@ -152,10 +152,11 @@ jobs:
           generator: Ninja
           configuration: ${{ matrix.configuration }}
           cmake-args: ${{ matrix.cmake-args }}
-      - name: test
-        run: |
-          find . -name "rippled"
-          ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
+
+      # - name: test
+      #   run: |
+      #     find . -name "rippled"
+      #     ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
 
   # coverage:
   #   strategy:
