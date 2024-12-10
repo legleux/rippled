@@ -64,6 +64,7 @@ jobs:
       - name: Build on ${{ matrix.config.os }}
         id: build_image
         run: |
+          apt-get install docker-buildx-plugin
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
@@ -73,7 +74,7 @@ jobs:
           echo "The repo name is ${repo_name}"
           IMAGE="${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${git_sha}" && echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
           echo "IMAGE is $IMAGE"
-          docker build ./src  --build-arg PLATFORM="${ARCH}" --tag "${IMAGE}-${ARCH}" --push
+          docker buildx build ./src  --build-arg PLATFORM="${ARCH}" --tag "${IMAGE}-${ARCH}" --push
 
 
   # create-multiarch-manifests:
