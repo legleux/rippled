@@ -69,9 +69,10 @@ jobs:
           cat /etc/os-release
 
           if [ "${{ matrix.config.tag }}" = "ARM64" ]; then
-            sudo dnf -y install dnf-plugins-core
-            sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
-            sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            docker --version
+            # sudo dnf -y install dnf-plugins-core
+            # sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+            # sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
             # sudo dnf -y install -y docker-buildx-plugin
             exit $?
           else
