@@ -88,12 +88,10 @@ jobs:
           builder="builder"
           if ! docker buildx use ${builder} > /dev/null 2>&1; then
               cmd="docker buildx create --name ${builder} --driver=docker-container"
-          else
-              cmd="docker buildx use ${builder}"
           fi
           $cmd
           docker buildx inspect ${builder}
-
+          docker buildx use ${builder}
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
