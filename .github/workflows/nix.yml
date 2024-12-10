@@ -64,6 +64,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+      package_deploy_config: "Debug-gcc-linux"
     name: ${{ matrix.compiler }}-${{ matrix.configuration }}
     steps:
       - name: checkout
@@ -153,10 +154,19 @@ jobs:
           configuration: ${{ matrix.configuration }}
           cmake-args: ${{ matrix.cmake-args }}
 
-      # - name: test
-      #   run: |
-      #     find . -name "rippled"
-      #     ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
+      - name: Artifact packages
+        uses: actions/upload-artifact@v4
+        if: ${{ (format('{0}-{1}-{2}', matrix.configuration, matrix.compiler, matrix.platform) == env.package_deploy_config) && (matrix.cmake-args == '') }}
+        with:
+          name: rippled-${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
+          compression-level: 0
+          include-hidden-files: true
+          path: .build
+
+      - name: test
+        run: |
+          find . -name "rippled"
+          ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
 
   # coverage:
   #   strategy:
