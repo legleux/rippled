@@ -65,7 +65,7 @@ jobs:
         id: build_image
         run: |
           cat /etc/os-release
-          sudo apt-get update && sudo apt-get install docker-buildx-plugin
+          sudo apt-get update && sudo apt-get install --yes curl
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
