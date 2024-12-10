@@ -161,7 +161,9 @@ jobs:
           name: rippled-${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
           compression-level: 0
           include-hidden-files: true
-          path: .build
+          path: |
+            .build/*.d*eb
+            .build/*.rpm
 
       - name: test
         run: |
