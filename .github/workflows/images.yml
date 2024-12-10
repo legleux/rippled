@@ -142,9 +142,3 @@ jobs:
             done
             docker buildx imagetools create --tag ${IMAGE_TAG} \
                   ${tags}
-
-if false; then
-    echo "it's true"
-else
-    echo "false! still"
-fi
