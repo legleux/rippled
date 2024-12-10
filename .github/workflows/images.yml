@@ -67,10 +67,12 @@ jobs:
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
+          echo "ARCH is $ARCH"
           git_sha=$(git rev-parse --short HEAD) && echo "git_sha=${git_sha}" >> "$GITHUB_OUTPUT"
           repo_name=${{ github.event.repository.name }}
           echo "The repo name is ${repo_name}"
           IMAGE="${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${git_sha}" && echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
+          echo "IMAGE is $IMAGE"
           docker buildx build ./src  --build-arg PLATFORM="${ARCH}" --tag "${IMAGE}-${ARCH}" --push
 
 
