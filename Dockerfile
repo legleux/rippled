@@ -16,5 +16,6 @@ RUN apt-get update && apt-get install -y \
 
 # Dev helpers tree
 RUN apt-get update && apt-get install -y \
-    tree \
-RUN pip install
+    cmake \
+    tree
+RUN pip install cupcake "conan<2"
