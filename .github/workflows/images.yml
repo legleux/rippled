@@ -1,39 +1,83 @@
 name: Build Docker images
-env:
-  IMAGE: rippled
+
 on:
   push:
     branches:
       - cpack-squash
+env:
+  IMAGE_NAME: rippled
+  REGISTRY: ghcr.io
+  REPO: ${{ github.repository }}
+
 jobs:
   build_image:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - ARM64
-          - X64
-          # - ARM64
-    runs-on: [self-hosted, ARM64]
-    name: ${{ matrix.platform }} Docker image build
+        config:
+          - os: os_1
+            arch: amd64
+            tag: X64
+          - os: os_2
+            arch: arm64
+            tag: ARM64
+    outputs:
+      image: ${{ steps.build_image.outputs.image }}
+      git_sha: ${{ steps.build_image.outputs.git_sha }}
+    runs-on: [self-hosted, "${{ matrix.config.tag }}"]
+    name: ${{ matrix.config.tag }} Docker image build
     steps:
       - name: checkout
         uses: actions/checkout@v4
 
       - name: check environment
         run: |
-          echo "Building for ${{ matrix.platform }}" > output.txt
+          echo "Building for ${{ matrix.config.tag }}" > output.txt
 
       - name: Save output
         uses: actions/upload-artifact@v3
         with:
-          name: rippled-${{ matrix.platform }}
+          name: rippled-${{ matrix.config.tag }}
           path: output.txt
 
-      # - name: check environment
-      #   run: |
-      #     echo "Building for ${{ matrix.platform }} "
+      - name: Log in to the gchr
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Build image
-      #   run: |
-      #     docker --version
+      - name: Build on ${{ matrix.config.os }}
+        id: build_image
+        run: |
+          set -x
+          # ${{ github.head_ref }}.${{ github.sha }}
+          ARCH="${{ matrix.config.arch }}"
+          git_sha=$(git rev-parse --short HEAD) && echo "git_sha=${git_sha}" >> "$GITHUB_OUTPUT"
+          repo_name=${{ github.event.repository.name }}
+          echo "The repo name is ${repo_name}"
+          IMAGE="${{ env.REGISTRY }}/${{ env.REPO }}/${{ env.IMAGE_NAME }}:${git_sha}" && echo "image=${IMAGE}" >> "$GITHUB_OUTPUT"
+          docker buildx build ./src  --build-arg PLATFORM="${ARCH}" --tag "${IMAGE}-${ARCH}" --push
+
+
+  create-multiarch-manifests:
+      needs: build_image
+      runs-on: ubuntu-latest
+      steps:
+        - name: Log in to the gchr
+          uses: docker/login-action@v3
+          with:
+            registry: ${{ env.REGISTRY }}
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+        - name: Create multiarch manifests
+          run: |
+            # TODO: check if both images are present. If only one is, just build with that one as we'd rather have
+            # a single arch image rather than no images at all. (maybe specifically the amd64)
+            set -x
+            IMAGE_TAG=${{ needs.build_image.outputs.image }}
+            git_sha=${{ needs.build_image.outputs.git_sha }}
+
+            docker buildx imagetools create --tag ${IMAGE_TAG} \
+                  ${IMAGE_TAG}-amd64 \
+                  ${IMAGE_TAG}-arm64
