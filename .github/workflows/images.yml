@@ -85,6 +85,14 @@ jobs:
             sudo apt-get update && sudo apt-get install --yes docker-buildx-plugin
           fi
 
+          builder="builder"
+          if command docker buildx use ${builder}; then
+              echo "we have builder $builder"
+          else
+              docker buildx create --name ${builder} --driver=docker-container
+          fi
+          docker buildx inspect ${builder}
+
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
