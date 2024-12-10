@@ -64,7 +64,8 @@ jobs:
       - name: Build on ${{ matrix.config.os }}
         id: build_image
         run: |
-          sudo apt-get install docker-buildx-plugin
+          cat /etc/os-release
+          sudo apt-get update && apt-get install docker-buildx-plugin
           set -x
           # ${{ github.head_ref }}.${{ github.sha }}
           ARCH="${{ matrix.config.arch }}"
