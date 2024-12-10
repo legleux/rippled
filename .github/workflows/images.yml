@@ -86,11 +86,12 @@ jobs:
           fi
 
           builder="builder"
-          if command docker buildx use ${builder}; then
-              echo "we have builder $builder"
+          if ! docker buildx use ${builder} > /dev/null 2>&1; then
+              cmd="docker buildx create --name ${builder} --driver=docker-container"
           else
-              docker buildx create --name ${builder} --driver=docker-container
+              cmd="docker buildx use ${builder}"
           fi
+          $cmd
           docker buildx inspect ${builder}
 
           set -x
@@ -141,3 +142,9 @@ jobs:
             done
             docker buildx imagetools create --tag ${IMAGE_TAG} \
                   ${tags}
+
+if false; then
+    echo "it's true"
+else
+    echo "false! still"
+fi
