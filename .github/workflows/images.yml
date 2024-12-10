@@ -123,6 +123,7 @@ jobs:
               tag_exists=$?
               echo "${IMAGE_TAG}-a${a}64 exists --> tags_exists: [${tag_exists}]"
               tags+=" ${IMAGE_TAG}-a${a}64"
+            done
             docker buildx imagetools create --tag ${IMAGE_TAG} \
                   ${tags}
             # docker buildx imagetools create --tag ${IMAGE_TAG} \
