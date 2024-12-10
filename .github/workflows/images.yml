@@ -64,7 +64,16 @@ jobs:
       - name: Build on ${{ matrix.config.os }}
         id: build_image
         run: |
+          . /etc/os-release
           cat /etc/os-release
+          if [ $ID_LIKE = "fedora"]; then
+            sudo dnf -y install dnf-plugins-core
+            sudo dnf-3 config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+            sudo dnf -y install docker-buildx-plugin
+            #dnf install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+            exit $?
+          fi
+
           sudo apt-get update
           sudo apt-get install --yes ca-certificates curl
           sudo install -m 0755 -d /etc/apt/keyrings
