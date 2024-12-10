@@ -122,6 +122,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }}
     steps:
       - name: download cache
         uses: actions/download-artifact@v3
@@ -153,6 +154,7 @@ jobs:
           cmake-args: ${{ matrix.cmake-args }}
       - name: test
         run: |
+          find . -name "rippled"
           ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
 
   # coverage:
