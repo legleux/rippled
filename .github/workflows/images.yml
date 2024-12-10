@@ -107,7 +107,7 @@ jobs:
       - name: Save images
         uses: actions/upload-artifact@v4
         with:
-          name: rippled-${{ env.IMAGE_NAME }}
+          name: ${{ env.IMAGE_NAME }}-${{ github.sha }}-${{ matrix.config.arch }}
           path: |
             ./*.tar
 
