@@ -105,7 +105,10 @@ jobs:
             set -x
             IMAGE_TAG=${{ needs.build_image.outputs.image }}
             git_sha=${{ needs.build_image.outputs.git_sha }}
+            echo "git_sha: $git_sha"
 
+            # docker buildx imagetools create --tag ${IMAGE_TAG} \
+            #       ${IMAGE_TAG}-amd64 \
+            #       ${IMAGE_TAG}-arm64
             docker buildx imagetools create --tag ${IMAGE_TAG} \
-                  ${IMAGE_TAG}-amd64 \
-                  ${IMAGE_TAG}-arm64
+                  ${IMAGE_TAG}-amd64
