@@ -113,8 +113,8 @@ jobs:
           - gcc
           # - clang
         configuration:
-          # - Debug
-          - Release
+          - Debug
+          # - Release
         cmake-args:
           -
           # - "-Dunity=ON"
