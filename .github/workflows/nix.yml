@@ -63,6 +63,8 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+      package_deploy_config: "Debug-gcc-linux"
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }}
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -100,7 +102,6 @@ jobs:
           path: conan.tar
           if-no-files-found: error
 
-
   test:
     strategy:
       fail-fast: false
@@ -121,6 +122,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }}-${{ matrix.cmake-args }}
     steps:
       - name: download cache
         uses: actions/download-artifact@v3
@@ -150,6 +152,18 @@ jobs:
           generator: Ninja
           configuration: ${{ matrix.configuration }}
           cmake-args: ${{ matrix.cmake-args }}
+
+      - name: Artifact packages
+        uses: actions/upload-artifact@v4
+        if: ${{ (matrix.configuration == 'Debug') && (matrix.compiler == 'gcc') && (matrix.cmake-args == '') }}
+        with:
+          name: rippled-${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
+          compression-level: 0
+          include-hidden-files: true
+          path: |
+            .build/*.d*eb
+            .build/*.rpm
+
       - name: test
         run: |
           ${build_dir}/rippled --unittest --unittest-jobs $(nproc)

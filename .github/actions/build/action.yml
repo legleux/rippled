@@ -1,14 +1,19 @@
 name: build
+description: Build xrpld and libraries
 inputs:
   generator:
-    default: null
+    description: CMake generator to pass to the build
+    default: ""
   configuration:
+    description: Release or Debug build
     required: true
   cmake-args:
-    default: null
+    description: Additional arguments to pass to CMake e.g. ??
+    default: ""
   cmake-target:
+    description: The CMake target to build i.e. <do we have any others?>
     default: all
-# An implicit input is the environment variable `build_dir`.
+# An implicit input is the environment variable `build_dir` defined in the workflow.
 runs:
   using: composite
   steps:
@@ -22,13 +27,27 @@ runs:
           -DCMAKE_BUILD_TYPE=${{ inputs.configuration }} \
           -Dtests=TRUE \
           -Dxrpld=TRUE \
+          -Dvalidator_keys=TRUE \
           ${{ inputs.cmake-args }} \
           ..
     - name: build
       shell: bash
       run: |
+        apt-get update && apt-get install -y \
+          ca-certificates \
+          curl \
+          gpg \
+          jq \
+          rpm \
+          python-is-python3 \
+          python3-pip \
+          vim
         cmake \
           --build ${build_dir} \
           --config ${{ inputs.configuration }} \
           --parallel ${NUM_PROCESSORS:-$(nproc)} \
-          --target ${{ inputs.cmake-target }}
+          --target rippled \
+          --target validator-keys
+        cd ${build_dir}
+        cpack -G DEB
+        cpack -G RPM
