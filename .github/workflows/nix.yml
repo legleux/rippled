@@ -154,6 +154,7 @@ jobs:
           cmake-args: ${{ matrix.cmake-args }}
       - name: Generate packages
         id: package_build
+        if: ${{ (matrix.configuration == 'Debug') && (matrix.compiler == 'gcc') && (matrix.cmake-args == '') }}
         run: |
           apt-get update && apt-get install -y \
             ca-certificates \
