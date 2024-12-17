@@ -52,6 +52,10 @@ write_basic_package_version_file (
 if (is_root_project AND TARGET rippled)
   install (TARGETS rippled RUNTIME DESTINATION bin)
   set_target_properties(rippled PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
+  if(package)
+    install(TARGETS validator-keys RUNTIME DESTINATION bin)
+    set_target_properties(validator-keys PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
+  endif()
   # sample configs should not overwrite existing files
   # install if-not-exists workaround as suggested by
   # https://cmake.org/Bug/view.php?id=12646
@@ -79,8 +83,3 @@ install (
     ${CMAKE_CURRENT_SOURCE_DIR}/cmake/RippleConfig.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/RippleConfigVersion.cmake
   DESTINATION lib/cmake/ripple)
-
-if(TARGET validator-keys)
-  install(TARGETS validator-keys RUNTIME DESTINATION bin)
-  set_target_properties(validator-keys PROPERTIES INSTALL_RPATH_USE_LINK_PATH ON)
-endif()
