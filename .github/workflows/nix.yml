@@ -206,13 +206,13 @@ jobs:
           generator: Ninja
           configuration: Debug
           cmake-args: >-
-            -Dpackage=ON
-            -Dvalidator_keys=ON
-          cmake-target: package
+            -Dpackage=TRUE
+            -Dvalidator_keys=TRUE
 
       - name: Create packages
         run: |
           cd ${{ env.build_dir }}
+          cmake --build . --target validator-keys
           cpack -G DEB
           cpack -G RPM
       - name: Artifact packages
