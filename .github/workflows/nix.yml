@@ -95,7 +95,7 @@ jobs:
           CONAN_PASSWORD_RIPPLE: ${{ secrets.CONAN_TOKEN }}
         with:
           configuration: ${{ matrix.configuration }}
-      - name: upload archive
+      - name: upload Conan dependency archive
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
@@ -152,26 +152,8 @@ jobs:
           generator: Ninja
           configuration: ${{ matrix.configuration }}
           cmake-args: ${{ matrix.cmake-args }}
-
-  build_packages:
-    needs: dependencies
-    runs-on: [self-hosted, heavy]
-    container: rippleci/rippled-build-ubuntu:aaf5e3e
-    env:
-      build_dir: .build
-      package_config: linux-gcc-Debug
-      CONAN_LOGIN_USERNAME_RIPPLE: ${{ secrets.CONAN_USERNAME }}
-      CONAN_PASSWORD_RIPPLE: ${{ secrets.CONAN_TOKEN }}
-    steps:
-      - name: download cache
-        uses: actions/download-artifact@v3
-        with:
-          name: ${{ env.package_config }}
-      - name: extract cache
-        run: |
-          mkdir -p ~/.conan
-          tar -xzf conan.tar -C ~/.conan
-      - name: install packaging dependencies
+      - name: Generate packages
+        id: package_build
         run: |
           apt-get update && apt-get install -y \
             ca-certificates \
@@ -184,38 +166,15 @@ jobs:
             python-is-python3 \
             python3-pip \
             vim
-      - name: check environment
-        run: |
-          echo ${PATH} | tr ':' '\n'
-          conan --version
-          cmake --version
-          gcovr --version
-          env | sort
-          ls ~/.conan
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: dependencies
-        uses: ./.github/actions/dependencies
-        env:
-          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/conan-non-prod
-        with:
-          configuration: Debug
-      - name: build
-        uses: ./.github/actions/build
-        with:
-          generator: Ninja
-          configuration: Debug
-          cmake-args: >-
-            -Dpackage=TRUE
-
-      - name: Create packages
-        run: |
           cd ${{ env.build_dir }}
+          cmake .. -Dpackage=ON
           cmake --build . --target validator-keys
           cpack -G DEB
           cpack -G RPM
+          echo "pkgs_built=true" >> $GITHUB_OUTPUT
       - name: Artifact packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
+        if: ${{ steps.package_build.outputs.pkgs_built  == 'true' }}
         with:
           name: rippled_packages
           compression-level: 0
@@ -224,11 +183,9 @@ jobs:
           path: |
             .build/packages/*.d*eb
             .build/packages/*.rpm
-
-      - name: test
-        run: |
-          ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
-
+      # - name: test
+      #   run: |
+      #     ${build_dir}/rippled --unittest --unittest-jobs $(nproc)
 
   # coverage:
   #   strategy:
