@@ -153,6 +153,68 @@ jobs:
           configuration: ${{ matrix.configuration }}
           cmake-args: ${{ matrix.cmake-args }}
 
+  build_packages:
+    needs: dependencies
+    runs-on: [self-hosted, heavy]
+    container: rippleci/rippled-build-ubuntu:update
+    env:
+      build_dir: .build
+      package_config: linux-gcc-Debug
+      CONAN_LOGIN_USERNAME_RIPPLE: ${{ secrets.CONAN_USERNAME }}
+      CONAN_PASSWORD_RIPPLE: ${{ secrets.CONAN_TOKEN }}
+    steps:
+      - name: download cache
+        uses: actions/download-artifact@v3
+        with:
+          name: ${{ env.package_config }}
+      - name: extract cache
+        run: |
+          mkdir -p ~/.conan
+          tar -xzf conan.tar -C ~/.conan
+      - name: install packaging dependencies
+        run: |
+          apt-get update && apt-get install -y \
+            ca-certificates \
+            curl \
+            debhelper \
+            file \
+            gpg \
+            jq \
+            rpm \
+            python-is-python3 \
+            python3-pip \
+            vim
+      - name: check environment
+        run: |
+          echo ${PATH} | tr ':' '\n'
+          conan --version
+          cmake --version
+          gcovr --version
+          env | sort
+          ls ~/.conan
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: dependencies
+        uses: ./.github/actions/dependencies
+        env:
+          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/conan-non-prod
+        with:
+          configuration: Debug
+      - name: build
+        uses: ./.github/actions/build
+        with:
+          generator: Ninja
+          configuration: Debug
+          cmake-args: >-
+            -Dpackage=ON
+            -Dvalidator_keys=ON
+          cmake-target: package
+
+      - name: Create packages
+        run: |
+          cd ${{ env.build_dir }}
+          cpack -G DEB
+          cpack -G RPM
       - name: Artifact packages
         uses: actions/upload-artifact@v4
         if: ${{ (matrix.configuration == 'Debug') && (matrix.compiler == 'gcc') && (matrix.cmake-args == '') }}
@@ -161,8 +223,8 @@ jobs:
           compression-level: 0
           include-hidden-files: true
           path: |
-            .build/*.d*eb
-            .build/*.rpm
+            .build/packages/*.d*eb
+            .build/packages/*.rpm
 
       - name: test
         run: |
