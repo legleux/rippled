@@ -156,7 +156,7 @@ jobs:
   build_packages:
     needs: dependencies
     runs-on: [self-hosted, heavy]
-    container: rippleci/rippled-build-ubuntu:update
+    container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
       package_config: linux-gcc-Debug
@@ -216,11 +216,12 @@ jobs:
           cpack -G DEB
           cpack -G RPM
       - name: Artifact packages
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         if: ${{ (matrix.configuration == 'Debug') && (matrix.compiler == 'gcc') && (matrix.cmake-args == '') }}
         with:
           name: rippled_${{ matrix.platform }}_packages
           compression-level: 0
+          if-no-files-found: error
           include-hidden-files: true
           path: |
             .build/packages/*.d*eb
