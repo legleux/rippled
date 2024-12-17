@@ -1,12 +1,15 @@
 # include(GNUInstallDirs) # REVIEW: Is this needed?
 
-set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/rippled")
-set(CPACK_PACKAGE_VENDOR "Ripple Labs") # Review: What's the company's real name now?
+set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/XRPLF/rippled.git")
+set(CPACK_PACKAGE_VENDOR "Ripple Labs") # REVIEW: What's the company's real name now?
 set(CPACK_PACKAGE_CONTACT "me@myemail.com")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Really Cool Program")
 set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/pkg_description.txt)
 # set(CPACK_RESOURCE_FILE_README README.md)
 # CPACK_RESOURCE_FILE_WELCOME # Who cares?
+
+set(CPACK_PACKAGE_DIRECTORY "packages")
+set(CPACK_PACKAGING_INSTALL_PREFIX "/opt")
 
 ### TODO: Install the license
 ## This probably won't work for the license
@@ -30,7 +33,8 @@ set(CPACK_SOURCE_TXZ OFF)
 set(CPACK_SOURCE_TZ OFF)
 set(CPACK_SOURCE_ZIP OFF)
 
-set(CPACK_STRIP_FILES ON) #TODO: Make sure this works # maybe not a bool? https://cmake.org/cmake/help/latest/module/CPack.html#variable:CPACK_STRIP_FILES
+# set(CPACK_STRIP_FILES ON) #TODO: Make sure this works # maybe not a bool? https://cmake.org/cmake/help/latest/module/CPack.html#variable:CPACK_STRIP_FILES
+set(CPACK_BUILD_SOURCE_DIRS "${CMAKE_SOURCE_DIR}")
 
 # Set package version in case we need to repackage a same binary but with different configs or scripts or something else
 if(NOT DEFINED PKG_REL_VERSION)
@@ -53,10 +57,13 @@ set(CPACK_PACKAGE_NAME "rippled") # What do we want this to be?
 
 # include(${CMAKE_SOURCE_DIR}/cmake/package/deb-cpack-config.cmake)
 include(shared/package_files)
+message(STATUS "Before distro-specific rules CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
 include(deb-cpack-config)
 include(rpm-cpack-config)
 # include(mac-cpack-config)
 
 set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
 
+message(STATUS "Before CPack inclusion CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
 include(CPack)
+message(STATUS "After CPack inclusion CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")

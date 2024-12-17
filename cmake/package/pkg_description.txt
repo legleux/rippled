@@ -1,4 +1,6 @@
-The Really Big Description
+XRPL Network Daemon
 =======================
-# TODO: Fix this
-Lots of long wordds describing how great this project is...
+The core server that runs the the peer-to-peer network which processes transactions and reaches a consensus on
+their outcome.
+
+Read more at https://xrpl.org/docs

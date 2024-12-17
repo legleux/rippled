@@ -6,7 +6,11 @@
 # libs https://packages.debian.org/stable/libs/
 set(CPACK_BINARY_DEB ON)
 set(CPACK_SOURCE_DEB OFF)
+
 set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
+
+# Create a package with debug symbols
+set(CPACK_DEBIAN_DEBUGINFO_PACKAGE ON)
 
 if(NOT DEFINED CPACK_DEBIAN_PACKAGE_RELEASE)
     set(CPACK_DEBIAN_PACKAGE_RELEASE ${PKG_REL_VERSION}) # ? the "N" in <pkg_name>_<ver>-N_amd64.deb
@@ -16,12 +20,6 @@ endif()
 # set(CPACK_DEBIAN_PACKAGE_VERSION 5)
 # set(CPACK_DEBIAN_PACKAGE_EPOCH 6) # ?
 
-message(DEBUG "******************************************************")
-message(DEBUG "*************ooooooooooooooooooooooo******************")
-message(DEBUG "*************Building debian package******************")
-message(DEBUG "*************ooooooooooooooooooooooo******************")
-message(DEBUG "******************************************************")
-# set(CPACK_DEBIAN_FILE_NAME DEB-DEFAULT)
 set(CPACK_DEBIAN_PACKAGE_SECTION "net;libs")
 
 # CPACK_DEBIAN_PACKAGE_PRIORITY # defaults to "optional"
@@ -32,8 +30,8 @@ set(CPACK_DEBIAN_PACKAGE_SECTION "net;libs")
 
 #[[ # TODO: Test if these are needed
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA
-  ${CMAKE_SOURCE_DIR}/CMake/packaging/deb/conffiles
-  ${CMAKE_SOURCE_DIR}/CMake/packaging/deb/postinst
+  ${CMAKE_SOURCE_DIR}/cmake/package/deb/conffiles
+  ${CMAKE_SOURCE_DIR}/cmake/package/deb/postinst
 )
 ]]
 # set(CPACK_PACKAGE_VERSION ${VERSION})
@@ -52,5 +50,5 @@ else()
     set(CPACK_DEBIAN_PACKAGE_VERSION "${CPACK_PACKAGE_VERSION}")
 
 endif()
-set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${CPACK_DEBIAN_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_RELEASE}_${CPACK_SYSTEM_NAME}")
-message("DEB CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
+# set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${CPACK_DEBIAN_PACKAGE_VERSION}-${CPACK_DEBIAN_PACKAGE_RELEASE}_${CPACK_SYSTEM_NAME}")
+# message("DEB CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
