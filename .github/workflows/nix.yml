@@ -207,7 +207,6 @@ jobs:
           configuration: Debug
           cmake-args: >-
             -Dpackage=TRUE
-            -Dvalidator_keys=TRUE
 
       - name: Create packages
         run: |
@@ -216,10 +215,9 @@ jobs:
           cpack -G DEB
           cpack -G RPM
       - name: Artifact packages
-        uses: actions/upload-artifact@v3
-        if: ${{ (matrix.configuration == 'Debug') && (matrix.compiler == 'gcc') && (matrix.cmake-args == '') }}
+        uses: actions/upload-artifact@v4
         with:
-          name: rippled_${{ matrix.platform }}_packages
+          name: rippled_packages
           compression-level: 0
           if-no-files-found: error
           include-hidden-files: true
