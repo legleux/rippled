@@ -2,18 +2,18 @@
 
 set(CMAKE_PROJECT_HOMEPAGE_URL "https://github.com/XRPLF/rippled.git")
 set(CPACK_PACKAGE_VENDOR "Ripple Labs") # REVIEW: What's the company's real name now?
-set(CPACK_PACKAGE_CONTACT "me@myemail.com")
-set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A Really Cool Program")
-set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/pkg_description.txt)
+set(CPACK_PACKAGE_CONTACT "support@ripple.com")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "XRPL daemon")
+# set(CPACK_PACKAGE_DESCRIPTION_FILE ${CMAKE_CURRENT_LIST_DIR}/pkg_description.txt)
 # set(CPACK_RESOURCE_FILE_README README.md)
 # CPACK_RESOURCE_FILE_WELCOME # Who cares?
 
 set(CPACK_PACKAGE_DIRECTORY "packages")
 set(CPACK_PACKAGING_INSTALL_PREFIX "/opt")
-
+# CPACK_PROJECT_CONFIG_FILE # TODO: How to use this
 ### TODO: Install the license
 ## This probably won't work for the license
-#set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
+# set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE.md")
 # /usr/share/licenses on linux
 ## This variable typically points to the share subdirectory of the installation prefix.
 # By default CMAKE_INSTALL_DATADIR is set to ${CMAKE_INSTALL_PREFIX}/share
@@ -56,7 +56,7 @@ set(CPACK_PACKAGE_VERSION "${rippled_version}")
 set(CPACK_PACKAGE_NAME "rippled") # What do we want this to be?
 
 # include(${CMAKE_SOURCE_DIR}/cmake/package/deb-cpack-config.cmake)
-include(shared/package_files)
+include(common/package_files)
 message(STATUS "Before distro-specific rules CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
 include(deb-cpack-config)
 include(rpm-cpack-config)
