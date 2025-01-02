@@ -9,7 +9,8 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "XRPL daemon")
 # CPACK_RESOURCE_FILE_WELCOME # Who cares?
 
 set(CPACK_PACKAGE_DIRECTORY "packages")
-set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/${PROJECT_NAME}")
+# TODO: The only things that need to be in opt are the scripts and binaries
+# set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/${PROJECT_NAME}")
 # CPACK_PROJECT_CONFIG_FILE # TODO: How to use this
 ### TODO: Install the license
 ## This probably won't work for the license
