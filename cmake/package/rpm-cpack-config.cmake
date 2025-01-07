@@ -8,7 +8,7 @@ endif()
 set(CPACK_RPM_PACKAGE_DEBUG OFF)
 
 # Create debug package
-set(CPACK_RPM_DEBUGINFO_PACKAGE ON)
+set(CPACK_RPM_DEBUGINFO_PACKAGE OFF) # TODO: Re-enable when debug package has been tested
 
 # Archives fail with this error without CPACK_RPM_INSTALL_WITH_EXEC
 # <libary>.a does not have execute permissions.  Debuginfo symbols will not be
