@@ -10,18 +10,22 @@ case "$1" in
             --home /nonexistent --no-create-home \
             --disabled-password \
             --group "$GROUP_NAME"
-        chown -R $USER_NAME:$GROUP_NAME /opt/ripple
-        mkdir -p /var/log/rippled
 
+        chown -R $USER_NAME:$GROUP_NAME /opt/ripple
+
+        mkdir -p /var/log/rippled
         chown -R $USER_NAME:$GROUP_NAME /var/log/rippled/
         chmod 755 /var/log/rippled/
 
-        mkdir -p /etc/opt/rippled/
+        mkdir -p /var/lib/rippled
+        chown -R $USER_NAME:$GROUP_NAME /var/lib/rippled/
+        chmod 755 /var/lib/rippled/
 
-        ln -s /opt/rippled/etc/ /etc/opt/xrpld/
-        ln -s /etc/opt/xrpld/ /etc/opt/ripple/
-        ln -s /opt/rippled/bin/xrpld /usr/local/bin/xrpld
-        ln -s /opt/rippled/bin/xrpld /usr/local/bin/rippled
+        mkdir -p /etc/opt/ripple/
+
+        ln -sf /opt/ripple/etc/ /etc/opt/ripple
+        ln -sf /opt/ripple/bin/xrpld /usr/local/bin/rippled
+        ln -sf /opt/ripple/bin/xrpld /usr/local/bin/xrpld
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)

@@ -10,7 +10,7 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "XRPL daemon")
 
 set(CPACK_PACKAGE_DIRECTORY "packages")
 # TODO: The only things that need to be in opt are the scripts and binaries
-# set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/${PROJECT_NAME}")
+set(CPACK_PACKAGING_INSTALL_PREFIX "/opt/ripple")
 # CPACK_PROJECT_CONFIG_FILE # TODO: How to use this
 ### TODO: Install the license
 ## This probably won't work for the license
@@ -27,6 +27,7 @@ elseif(UNIX)
     set(CPACK_GENERATOR "DEB;RPM")
 endif()
 
+set(CPACK_SOURCE_GENERATOR "")
 # Don't care about any of these
 set(CPACK_SOURCE_TBZ2 OFF)
 set(CPACK_SOURCE_TGZ OFF)
@@ -58,13 +59,11 @@ set(CPACK_PACKAGE_NAME "rippled") # What do we want this to be?
 
 # include(${CMAKE_SOURCE_DIR}/cmake/package/deb-cpack-config.cmake)
 include(common/package_files)
-message(STATUS "Before distro-specific rules CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
-include(deb-cpack-config)
-include(rpm-cpack-config)
+include(deb/deb-cpack-config)
+include(rpm/rpm-cpack-config)
 # include(mac-cpack-config)
 
 set(CPACK_RPM_PACKAGE_DESCRIPTION ${CPACK_PACKAGE_DESCRIPTION})
 
-message(STATUS "Before CPack inclusion CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
+set(CPACK_GENERATE_SOURCE_PACKAGE OFF) # TODO: Make sure this doesn't mess up the debug packages
 include(CPack)
-message(STATUS "After CPack inclusion CPACK_PACKAGE_FILE_NAME: ${CPACK_PACKAGE_FILE_NAME}")
