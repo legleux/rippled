@@ -121,6 +121,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }} ${{ matrix.cmake-args }}
     steps:
       - name: download cache
         uses: actions/download-artifact@v3
@@ -170,6 +171,7 @@ jobs:
     container: rippleci/rippled-build-ubuntu:aaf5e3e
     env:
       build_dir: .build
+      codecov_token: ${{ secrets.CODECOV_TOKEN }}
     steps:
       - name: download cache
         uses: actions/download-artifact@v3
@@ -220,6 +222,7 @@ jobs:
           path: coverage.xml
           retention-days: 30
       - name: upload coverage report
+        if: env.codecov_token != null
         uses: wandalen/wretry.action@v1.4.10
         with:
           action: codecov/codecov-action@v4.5.0
@@ -229,7 +232,7 @@ jobs:
             disable_search: true
             verbose: true
             plugin: noop
-            token: ${{ secrets.CODECOV_TOKEN }}
+            token: ${{ env.codecov_token }}
           attempt_limit: 5
           attempt_delay: 210000 # in milliseconds
 
