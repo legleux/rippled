@@ -81,7 +81,7 @@ $(function() {
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classripple_1_1PaymentSandbox-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">ripple::PaymentSandbox Class Reference<span class="mlabels"><span class="mlabel">final</span></span></div></div>
+  <div class="headertitle"><div class="title">ripple::PaymentSandbox Class Reference<span class="mlabels"><span class="mlabel">final</span><span class="mlabel">abstract</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -211,6 +211,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a69dc208d6b5afb41607fde91bcabc018"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5b17c3a02eff5434906311a419734fb"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr</a>&lt; sles_type::iter_base &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1detail_1_1ApplyViewBase.html#ae5b17c3a02eff5434906311a419734fb">slesUpperBound</a> (<a class="el" href="namespaceripple.html#a356c68147333a9a48a344718038576d9">uint256</a> const &amp;key) const override</td></tr>
 <tr class="separator:ae5b17c3a02eff5434906311a419734fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1903bd286e89d517dcec9fcbef5e7e32"><td class="memItemLeft" align="right" valign="top">virtual <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr</a>&lt; sles_type::iter_base &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1ReadView.html#a1903bd286e89d517dcec9fcbef5e7e32">slesUpperBound</a> (<a class="el" href="classripple_1_1ReadView.html#a937328125a7d62270f32b4e1555c5cdd">key_type</a> const &amp;key) const =0</td></tr>
+<tr class="separator:a1903bd286e89d517dcec9fcbef5e7e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a960d0fe7b6a20c4bbc4041830eb77a54"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr</a>&lt; txs_type::iter_base &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1detail_1_1ApplyViewBase.html#a960d0fe7b6a20c4bbc4041830eb77a54">txsBegin</a> () const override</td></tr>
 <tr class="separator:a960d0fe7b6a20c4bbc4041830eb77a54"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a239ae0136ad4bf2b6d71e4bb195941b6"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr</a>&lt; txs_type::iter_base &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1detail_1_1ApplyViewBase.html#a239ae0136ad4bf2b6d71e4bb195941b6">txsEnd</a> () const override</td></tr>
@@ -688,7 +690,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classripple_1_1ReadView.html#a81e1b7628e44e758a0359061c4b17c96">ripple::ReadView</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00172">172</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00175">175</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -740,7 +742,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classripple_1_1ApplyView.html#a2fbccbab01154b3918eba1131eb6a603">ripple::ApplyView</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00235">235</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00238">238</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -786,7 +788,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classripple_1_1ApplyView.html#a876b5aa9b60e7579b187afe05fd3b8d1">ripple::ApplyView</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00245">245</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00248">248</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -826,7 +828,7 @@ Private Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classripple_1_1ReadView.html#a6989ce9f6240d5c600d3a4f526f89d29">ripple::ReadView</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00222">222</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00225">225</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -849,7 +851,7 @@ Private Attributes</h2></td></tr>
 <p>Apply changes to base view. </p>
 <p ><code>to</code> must contain contents identical to the parent view passed upon construction, else undefined behavior will result. </p>
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00254">254</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00257">257</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -869,7 +871,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00261">261</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00264">264</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -889,7 +891,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00269">269</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00272">272</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -908,7 +910,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00391">391</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="PaymentSandbox_8cpp_source.html#l00397">397</a> of file <a class="el" href="PaymentSandbox_8cpp_source.html">PaymentSandbox.cpp</a>.</p>
 
 </div>
 </div>
@@ -1208,7 +1210,7 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <a id="ae5b17c3a02eff5434906311a419734fb" name="ae5b17c3a02eff5434906311a419734fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5b17c3a02eff5434906311a419734fb">&#9670;&#160;</a></span>slesUpperBound()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5b17c3a02eff5434906311a419734fb">&#9670;&#160;</a></span>slesUpperBound() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1226,14 +1228,38 @@ Private Attributes</h2></td></tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">inherited</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implements <a class="el" href="classripple_1_1ReadView.html#a1903bd286e89d517dcec9fcbef5e7e32">ripple::ReadView</a>.</p>
-
 <p class="definition">Definition at line <a class="el" href="ApplyViewBase_8cpp_source.html#l00089">89</a> of file <a class="el" href="ApplyViewBase_8cpp_source.html">ApplyViewBase.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1903bd286e89d517dcec9fcbef5e7e32" name="a1903bd286e89d517dcec9fcbef5e7e32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1903bd286e89d517dcec9fcbef5e7e32">&#9670;&#160;</a></span>slesUpperBound() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr</a>&lt; sles_type::iter_base &gt; ripple::ReadView::slesUpperBound </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classripple_1_1ReadView.html#a937328125a7d62270f32b4e1555c5cdd">key_type</a> const &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -1786,7 +1812,7 @@ on this instance of the RawView.
 <dl class="section return"><dt>Returns</dt><dd>a <code><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a></code> which, if insertion was successful, will contain the page number in which the item was stored.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>this function may create a page (including a root page), if no page with space is available. This function will only fail if the page counter exceeds the protocol-defined maximum number of allowable pages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00272">272</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00273">273</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
 
 </div>
 </div>
@@ -1843,7 +1869,7 @@ on this instance of the RawView.
 <dl class="section return"><dt>Returns</dt><dd>a <code><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a></code> which, if insertion was successful, will contain the page number in which the item was stored.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>this function may create a page (including a root page), if no page with space is available.this function will only fail if the page counter exceeds the protocol-defined maximum number of allowable pages. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00306">306</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00310">310</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
 
 </div>
 </div>
@@ -1887,7 +1913,7 @@ on this instance of the RawView.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00315">315</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00319">319</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
 
 </div>
 </div>
@@ -2000,7 +2026,7 @@ on this instance of the RawView.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00348">348</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ApplyView_8h_source.html#l00352">352</a> of file <a class="el" href="ApplyView_8h_source.html">ApplyView.h</a>.</p>
 
 </div>
 </div>
