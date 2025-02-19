@@ -1,0 +1,15 @@
+name: Check_env
+on:
+  push:
+    branches:
+      - test_runner
+
+jobs:
+  check:
+    runs-on: [self-hosted, heavy]
+    steps:
+      - name: check environment
+        run: |
+          cat /etc/os-release || true
+          docker --version
+          docker compose version
