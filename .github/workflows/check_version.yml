@@ -13,3 +13,9 @@ jobs:
           cat /etc/os-release || true
           docker --version
           docker compose version
+          if command -v docker buildx; then
+            echo "we have a buildx!"
+            echo "version" $(docker buildx version)
+          else
+            echo "No buildx found 😔"
+          fi
