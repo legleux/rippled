@@ -36,31 +36,43 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v4
+
       - name: install Conan
         run: |
-          brew install conan@1
-          echo '/opt/homebrew/opt/conan@1/bin' >> $GITHUB_PATH
+          brew install conan
+          echo '/opt/homebrew/opt/conan/bin' >> $GITHUB_PATH
+
       - name: install Ninja
         if: matrix.generator == 'Ninja'
         run: brew install ninja
+
       - name: install python
-        run: | 
-          if which python > /dev/null 2>&1; then
+        run: |
+
+          if command -v python3 >/dev/null 2>&1; then
               echo "Python executable exists"
+              if ! command -v python >/dev/null 2>&1; then
+                ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
+              fi
           else
+              echo "No Python!!!"
+              exit 1
               brew install python@3.13
               ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
           fi
+
       - name: install cmake
         run: |
-          if which cmake > /dev/null 2>&1; then
-              echo "cmake executable exists"
+          if command -v cmake > /dev/null 2>&1; then
+              echo "CMake executable exists"
           else
               brew install cmake
           fi
+
       - name: install nproc
         run: |
           brew install coreutils
+
       - name: check environment
         run: |
           env | sort
@@ -71,27 +83,38 @@ jobs:
           nproc --version
           echo -n "nproc returns: "
           nproc
+          system_profiler SPHardwareDataType
+          sysctl -n hw.logicalcpu
+          clang --version
+
       - name: configure Conan
         run : |
-          conan profile new default --detect || true
-          conan profile update settings.compiler.cppstd=20 default
+          echo "Should be done elsewhere"
+          if conan profile detect ; then
+            echo "Created default profile!"
+          else
+            echo "Already have profile!"
+            conan profile show -pr:a default
+          fi
+
       - name: build dependencies
         uses: ./.github/actions/dependencies
         env:
           CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/conan-non-prod
-          CONAN_LOGIN_USERNAME_RIPPLE: ${{ secrets.CONAN_USERNAME }}
-          CONAN_PASSWORD_RIPPLE: ${{ secrets.CONAN_TOKEN }}
+          # CONAN_LOGIN_USERNAME_RIPPLE: ${{ secrets.CONAN_USERNAME }}
+          # CONAN_PASSWORD_RIPPLE: ${{ secrets.CONAN_TOKEN }}
         with:
           configuration: ${{ matrix.configuration }}
+
       - name: build
         uses: ./.github/actions/build
         with:
           generator: ${{ matrix.generator }}
           configuration: ${{ matrix.configuration }}
           cmake-args: "-Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
-      # TODO: Temporary disabled tests
-      # - name: test
-      #   run: |
-      #     n=$(nproc)
-      #     echo "Using $n test jobs"
-      #     ${build_dir}/rippled --unittest --unittest-jobs $n
+
+      - name: test
+        run: |
+          n=$(nproc)
+          echo "Using $n test jobs"
+          ${build_dir}/rippled --unittest --unittest-jobs $n
