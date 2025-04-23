@@ -24,18 +24,15 @@ class Xrpl(ConanFile):
     }
 
     requires = [
-        'date/3.0.3',
         'grpc/1.50.1',
         'libarchive/3.7.6',
         'nudb/2.0.8',
         'openssl/1.1.1v',
-        'soci/4.0.3',
-        'xxhash/0.8.2',
         'zlib/1.3.1',
     ]
 
     tool_requires = [
-        'protobuf/3.21.9',
+        'protobuf/3.21.12',
     ]
 
     default_options = {
@@ -89,7 +86,7 @@ class Xrpl(ConanFile):
     def set_version(self):
         path = f'{self.recipe_folder}/src/libxrpl/protocol/BuildInfo.cpp'
         regex = r'versionString\s?=\s?\"(.*)\"'
-        with open(path, 'r') as file:
+        with open(path, encoding='utf-8') as file:
             matches = (re.search(regex, line) for line in file)
             match = next(m for m in matches if m)
             self.version = match.group(1)
@@ -99,10 +96,13 @@ class Xrpl(ConanFile):
             self.options['boost'].visibility = 'global'
 
     def requirements(self):
-        self.requires('boost/1.83.0', force=True)
+        self.requires('boost/1.83.0')
+        self.requires('date/3.0.3', transitive_headers=True)
         self.requires('lz4/1.10.0', force=True)
-        self.requires('protobuf/3.21.9', force=True)
+        self.requires('protobuf/3.21.12')
+        self.requires('soci/4.0.3')
         self.requires('sqlite3/3.47.0', force=True)
+        self.requires('xxhash/0.8.2', transitive_headers=True)
         if self.options.jemalloc:
             self.requires('jemalloc/5.3.0')
         if self.options.rocksdb:
@@ -122,9 +122,11 @@ class Xrpl(ConanFile):
         cmake_layout(self)
         # Fix this setting to follow the default introduced in Conan 1.48
         # to align with our build instructions.
+        # Comment this out to use the default so the build dirs are build_type specific
         self.folders.generators = 'build/generators'
 
     generators = 'CMakeDeps'
+
     def generate(self):
         tc = CMakeToolchain(self)
         tc.variables['tests'] = self.options.tests
@@ -136,6 +138,8 @@ class Xrpl(ConanFile):
         tc.variables['static'] = self.options.static
         tc.variables['unity'] = self.options.unity
         tc.variables['xrpld'] = self.options.xrpld
+        if self.settings.compiler == 'clang' and self.settings.compiler.version == 16:
+            tc.extra_cxxflags = ["-DBOOST_ASIO_DISABLE_CONCEPTS"]
         tc.generate()
 
     def build(self):

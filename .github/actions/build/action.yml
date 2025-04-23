@@ -16,14 +16,14 @@ runs:
       shell: bash
       run: |
         cd ${build_dir}
-        cmake \
+        cmake .. \
           ${{ inputs.generator && format('-G "{0}"', inputs.generator) || '' }} \
           -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
           -DCMAKE_BUILD_TYPE=${{ inputs.configuration }} \
-          -Dtests=TRUE \
-          -Dxrpld=TRUE \
-          ${{ inputs.cmake-args }} \
-          ..
+          ${{ inputs.cmake-args }}
+          # -Dtests=TRUE \ # should be set already by a profile
+          # -Dxrpld=TRUE \
+
     - name: build
       shell: bash
       run: |
