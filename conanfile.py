@@ -24,18 +24,15 @@ class Xrpl(ConanFile):
     }
 
     requires = [
-        'date/3.0.3',
         'grpc/1.50.1',
         'libarchive/3.7.6',
-        'nudb/2.0.8',
         'openssl/1.1.1v',
         'soci/4.0.3',
-        'xxhash/0.8.2',
         'zlib/1.3.1',
     ]
 
     tool_requires = [
-        'protobuf/3.21.9',
+        'protobuf/3.21.12',
     ]
 
     default_options = {
@@ -100,13 +97,16 @@ class Xrpl(ConanFile):
 
     def requirements(self):
         self.requires('boost/1.83.0', force=True)
+        self.requires('date/3.0.3', transitive_headers=True)
         self.requires('lz4/1.10.0', force=True)
-        self.requires('protobuf/3.21.9', force=True)
+        self.requires('nudb/2.0.8', transitive_headers=True)
+        self.requires('protobuf/3.21.12', force=True)
         self.requires('sqlite3/3.47.0', force=True)
+        self.requires('xxhash/0.8.2', transitive_headers=True)
         if self.options.jemalloc:
             self.requires('jemalloc/5.3.0')
         if self.options.rocksdb:
-            self.requires('rocksdb/6.29.5')
+            self.requires('rocksdb/9.7.3')
 
     exports_sources = (
         'CMakeLists.txt',
