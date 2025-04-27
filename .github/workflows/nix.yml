@@ -70,7 +70,7 @@ jobs:
     steps:
       - name: upgrade conan
         run: |
-          pip install --upgrade "conan<2"
+          pip install --upgrade "conan==2.15.1"
       - name: checkout
         uses: actions/checkout@v4
       - name: check environment
@@ -83,14 +83,14 @@ jobs:
           env | sort
       - name: configure Conan
         run: |
-          conan profile new default --detect
-          conan profile update settings.compiler.cppstd=20 default
-          conan profile update settings.compiler=${{ matrix.compiler }} default
-          conan profile update settings.compiler.version=${{ matrix.profile.version }} default
-          conan profile update settings.compiler.libcxx=libstdc++11 default
-          conan profile update env.CC=${{ matrix.profile.cc }} default
-          conan profile update env.CXX=${{ matrix.profile.cxx }} default
-          conan profile update conf.tools.build:compiler_executables='{"c": "${{ matrix.profile.cc }}", "cpp": "${{ matrix.profile.cxx }}"}' default
+          conan profile default detect
+          # conan profile update settings.compiler.cppstd=20 default
+          # conan profile update settings.compiler=${{ matrix.compiler }} default
+          # conan profile update settings.compiler.version=${{ matrix.profile.version }} default
+          # conan profile update settings.compiler.libcxx=libstdc++11 default
+          # conan profile update env.CC=${{ matrix.profile.cc }} default
+          # conan profile update env.CXX=${{ matrix.profile.cxx }} default
+          # conan profile update conf.tools.build:compiler_executables='{"c": "${{ matrix.profile.cc }}", "cpp": "${{ matrix.profile.cxx }}"}' default
       - name: archive profile
         # Create this archive before dependencies are added to the local cache.
         run: tar -czf conan.tar -C ~/.conan .

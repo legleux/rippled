@@ -12,11 +12,11 @@ runs:
     - name: export custom recipes
       shell: bash
       run: |
-        conan config set general.revisions_enabled=1
-        conan export external/snappy snappy/1.1.10@
-        conan export external/rocksdb rocksdb/9.7.3@
-        conan export external/soci soci/4.0.3@
-        conan export external/nudb nudb/2.0.8@
+        # maybe not needed anymore ?
+        conan export --version 1.1.10 external/snappy
+        conan export --version 9.7.3 external/rocksdb
+        conan export --version 4.0.3 external/soci
+        conan export --version 2.0.8 external/nudb
     - name: add Ripple Conan remote
       shell: bash
       run: |
@@ -24,7 +24,7 @@ runs:
         conan remote remove ripple || true
         # Do not quote the URL. An empty string will be accepted (with
         # a non-fatal warning), but a missing argument will not.
-        conan remote add ripple ${{ env.CONAN_URL }} --insert 0
+        conan remote add ripple --index 0 ${{ env.CONAN_URL }}
     - name: try to authenticate to Ripple Conan remote
       id: remote
       shell: bash
@@ -34,8 +34,9 @@ runs:
         # https://docs.conan.io/1/reference/commands/misc/user.html#using-environment-variables
         # https://docs.conan.io/1/reference/env_vars.html#conan-login-username-conan-login-username-remote-name
         # https://docs.conan.io/1/reference/env_vars.html#conan-password-conan-password-remote-name
-        echo outcome=$(conan user --remote ripple --password >&2 \
-          && echo success || echo failure) | tee ${GITHUB_OUTPUT}
+        ## Don't try this now...
+        # echo outcome=$(conan user --remote ripple --password >&2 \
+        #   && echo success || echo failure) | tee ${GITHUB_OUTPUT}
     - name: list missing binaries
       id: binaries
       shell: bash

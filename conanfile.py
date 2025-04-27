@@ -28,7 +28,6 @@ class Xrpl(ConanFile):
         'libarchive/3.7.6',
         'nudb/2.0.8',
         'openssl/1.1.1v',
-        'soci/4.0.3',
         'zlib/1.3.1',
     ]
 
@@ -98,11 +97,24 @@ class Xrpl(ConanFile):
 
 
     def requirements(self):
-        self.requires('boost/1.83.0', force=True)
+        #self.requires('boost/1.83.0', force=True)
+        self.requires('boost/1.83.0')
         self.requires('date/3.0.3', transitive_headers=True)
+        #self.requires('lz4/1.10.0', force=True)
+        ## 1.  use whatever libarchive wants;
+        #self.requires('lz4/1.10.0')
+        #self.requires('lz4/1.10.0')
+        ## 2. Force libarchive to use our version
+        # self.requires('lz4/1.10.0', override=True)
         self.requires('lz4/1.10.0', force=True)
-        self.requires('protobuf/3.21.12', force=True)
-        self.requires('sqlite3/3.47.0', force=True)
+        ## 3. Force us to use whatever libarchive wants
+        # self.requires('lz4/X.Y.Z') ## Whatever version they use
+        #self.requires('protobuf/3.21.12', force=True)
+        self.requires('protobuf/3.21.12')
+        # self.requires('soci/4.0.3', override=True)
+        self.requires('soci/4.0.3')
+        #self.requires('sqlite3/3.47.0', force=True)
+        self.requires('sqlite3/3.47.0')
         self.requires('xxhash/0.8.2', transitive_headers=True)
         if self.options.jemalloc:
             self.requires('jemalloc/5.3.0')
@@ -123,6 +135,7 @@ class Xrpl(ConanFile):
         cmake_layout(self)
         # Fix this setting to follow the default introduced in Conan 1.48
         # to align with our build instructions.
+        ## Comment this out to use the default so the build dirs are build_type specific
         self.folders.generators = 'build/generators'
 
     generators = 'CMakeDeps'
