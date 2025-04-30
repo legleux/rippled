@@ -6,20 +6,20 @@ CONAN_HOME=${CONAN_HOME:-~/.conan2/}
 NPROC=$(nproc)
 conan
 
-echo "core.upload:parallel = $NPROC" >> $CONAN_HOME/global.conf
-echo "core.download:parallel = $NPROC" >> $CONAN_HOME/global.conf
-echo "core.upload:parallel = $NPROC" >> $CONAN_HOME/global.conf
+echo "core.upload:parallel = $NPROC" >> "${CONAN_HOME}/global.conf"
+echo "core.download:parallel = $NPROC" >> "${CONAN_HOME}/global.conf"
+echo "tools.build:jobs = $((${NPROC} - 2))" >> "${CONAN_HOME}/global.conf"
 
 git clone --depth 1 -b conan2 https://github.com/legleux/rippled
 # Upload All Packages to New `dev` Conan Repository
 conan_remote="ripple-dev"
 
 ## Add Ripple's remote to Conan
-conan remote add "${conan_remote}" http://18.143.149.228:8081/artifactory/api/conan/dev
-conan remote remove conancenter
+# conan remote add "${conan_remote}" http://18.143.149.228:8081/artifactory/api/conan/dev
+# conan remote remove conancenter
 ## or
-# conan remote add --index 0 "${conan_remote}" http://18.143.149.228:8081/artifactory/api/conan/dev
-# conan remote disable conancenter
+conan remote add --index 0 "${conan_remote}" http://18.143.149.228:8081/artifactory/api/conan/dev
+conan remote disable conancenter
 
 conan remote list
 
@@ -35,39 +35,64 @@ conan remote list
 
 ## else:
 #docker run --rm -it --name conan2_w_ripple_soci_test ghcr.io/legleux/rippled-build-ubuntu:aaf5e3e_conan2 bash
-mkdir ~/.conan2/profiles
+mkdir -p "${CONAN_HOME}/profiles"
 
 ## if in repo
 #cp rippled/conan_profile/default ~/.conan2/profiles
 ## else
 ## write it to file
-cat << EOF > ~/.conan2/profiles/default
-{% set compiler = os.getenv("COMPILER", "gcc") %}
-{% set compiler_version = os.getenv("COMPILER_VERSION", "11") %}
-{% set build_type = os.getenv("BUILD_TYPE", "release").title() %}
-
+cat << EOF > "${CONAN_HOME}/profiles/default"
 [settings]
-    os = {{ {"Darwin": "Macos"}.get(platform.system(), platform.system()) }}
-    arch={{ platform.machine() }}
-    build_type = {{ build_type }}
+    {% set os_name = {"Darwin": "Macos"}.get(platform.system(), platform.system()) %}
+    os = {{ os_name }}
+
+    {% if platform.system() == "Darwin" and platform.machine() == "arm64" %}
+        {% set arch = "armv8" %}
+        {% set compiler = "clang" %}
+        {% set compiler = "" %}
+        {% set compiler, version, compiler_exe = detect_api.detect_default_compiler() %}
+        compiler = {{ compiler }}
+        compiler.version = {{ version }}
+
+        {% set compiler_version = "15" %}  {# or whatever works #}
+        {% set libcxx = "libc++" %}
+    {% elif os_name == "Linux" %}
+        {% set compiler = os.getenv("COMPILER", "gcc") %}
+        {% set compiler_version = os.getenv("COMPILER_VERSION", "11") %}
+
+        {% set arch = platform.machine() %}
+        {% set libcxx = "libstdc++11" %}
+    {% endif %}
+
+    arch = {{ arch }}
     compiler = {{ compiler }}
     compiler.version = {{ compiler_version }}
+    compiler.libcxx = {{ libcxx }}
+
+    {% set build_type = os.getenv("BUILD_TYPE", "release").title() %}
+    build_type = {{ build_type }}
+
+    # Maybe require cppstd=20 in conanfile ?
     compiler.cppstd=20
-    compiler.libcxx=libstdc++11
-[options]
-    &:tests={{ os.getenv("TESTS", "false").title() }}
-    &:xrpld={{ os.getenv("XRPLD", "false").title() }}
+
+[tool_requires]
+    !cmake/*: cmake/[>=3 <4]
 
 [buildenv]
     {% if compiler == "gcc" %}
         {% set cc = "gcc" %}
         {% set cpp = "g++" %}
-    {% elif compiler == "clang" %}
+    {% elif compiler.endswith("clang") %}
         {% set cc = "clang" %}
         {% set cpp = cc + "++" %}
     {% endif %}
-    {% set cc = cc ~ "-" ~ compiler_version %}
-    {% set cpp = cpp ~ "-" ~ compiler_version %}
+
+    {% if os_name != "Macos" %}
+        # Assuming your clang is versioned
+        {% set cc = cc ~ "-" ~ compiler_version %}
+        {% set cpp = cpp ~ "-" ~ compiler_version %}
+    {% endif %}
+
     CC=/usr/bin/{{ cc }}
     CXX=/usr/bin/{{ cpp }}
 [conf]
@@ -82,7 +107,7 @@ conan profile show
 ## try after cloning, just:
 # XRPLD=true conan build rippled
 ## Build rippled with tests
-conan build rippled -o xrpld=True -o tests=True
+conan build rippled -o xrpld=True -o tests=True --build missing
 # conan build rippled -o tests=True # _Should_ imply -o xrpld=True (unless we have libxrpl specific tests?)
 
 # Run the unit tests
