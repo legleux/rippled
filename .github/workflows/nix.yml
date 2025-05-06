@@ -131,12 +131,14 @@ jobs:
         uses: ./.github/actions/dependencies
         env:
           CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
+          BUILD_TYPE: ${{ matrix.configuration }}
         with:
           configuration: ${{ matrix.configuration }}
           compiler: ${{ matrix.compiler }}
       - name: configure Conan
         run: |
-          mkdir ~/.conan2/profiles && cp conan_profile/default ~/.conan2/profiles/default
+          default_profile=$(find . -name "default" -type f)
+          mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
       - name: build
         env:
           BUILD_TYPE: ${{ matrix.configuration }}

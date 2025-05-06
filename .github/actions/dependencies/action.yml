@@ -45,6 +45,8 @@ runs:
       run: |
         # echo missing=$(conan info . --build missing --settings build_type=${{ inputs.configuration }} --json 2>/dev/null  | grep '^\[') | tee ${GITHUB_OUTPUT}
     - name: install dependencies
+      env:
+        BUILD_TYPE: ${{ inputs.configuration }}
       shell: bash
       run: |
         mkdir ${build_dir}
