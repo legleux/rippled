@@ -134,6 +134,9 @@ jobs:
         with:
           configuration: ${{ matrix.configuration }}
           compiler: ${{ matrix.compiler }}
+      - name: configure Conan
+        run: |
+          mkdir ~/.conan2/profiles && cp conan_profile/default ~/.conan2/profiles/default
       - name: build
         env:
           BUILD_TYPE: ${{ matrix.configuration }}
