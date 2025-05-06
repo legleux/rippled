@@ -11,7 +11,11 @@
     {% elif os_name == "Linux" %}
         {% set arch = platform.machine() %}
         {% set compiler = os.getenv("COMPILER", "gcc") %}
-        {% set compiler_version = os.getenv("COMPILER_VERSION", "11") %}
+        {% if compiler == "gcc" %}
+            {% set compiler_version = os.getenv("GCC_VERSION") %}
+        {% elif compiler == "clang" %}
+            {% set compiler_version = os.getenv("CLANG_VERSION") %}
+        {% endif %}
         {% set libcxx = "libstdc++11" %}
     {% endif %}
 
