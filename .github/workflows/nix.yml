@@ -101,6 +101,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        platform: [linux]
         compiler: [gcc, clang]
         configuration: [Debug, Release]
         cmake_args: ["-Dunity=ON", "-Dunity=OFF"]
@@ -113,7 +114,7 @@ jobs:
       - name: download cache
         uses: actions/download-artifact@v4
         with:
-          name: Linux-${{ matrix.compiler }}-${{ matrix.configuration }}
+          name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
       - name: extract cache
         run: |
           mkdir -p ~/.conan
@@ -137,7 +138,6 @@ jobs:
         env:
           BUILD_TYPE: ${{ matrix.configuration }}
           COMPILER: ${{ matrix.compiler }}
-
         run: |
           echo "COMPILER: ${{ matrix.compiler }}"
           echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
