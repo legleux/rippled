@@ -109,7 +109,7 @@ jobs:
     runs-on: [self-hosted, heavy]
     container: ghcr.io/legleux/rippled-build-ubuntu:conan2
     env:
-      build_dir: .build
+      build_dir: build
     steps:
       - name: download cache
         uses: actions/download-artifact@v4
