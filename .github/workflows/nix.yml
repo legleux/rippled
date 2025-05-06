@@ -1,4 +1,7 @@
 name: nix
+env:
+  GCC_VERSION: 11
+  CLANG_VERSION: 14
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review]
@@ -98,21 +101,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform:
-          - linux
-        compiler:
-          - gcc
-          - clang
-        configuration:
-          - Debug
-          - Release
-        include:
-          - compiler: gcc
-            compiler_version: 11
-          - compiler: clang
-            compiler_version: 14
-        cmake-args:
-          - "-Dunity=ON"
+        compiler: [gcc, clang]
+        configuration: [Debug, Release]
+        cmake_args: ["-Dunity=ON", "-Dunity=OFF"]
     needs: dependencies
     runs-on: [self-hosted, heavy]
     container: ghcr.io/legleux/rippled-build-ubuntu:conan2
@@ -142,17 +133,21 @@ jobs:
         with:
           configuration: ${{ matrix.configuration }}
           compiler: ${{ matrix.compiler }}
-          compiler_version: ${{ matrix.compiler_version }}
       - name: build
         env:
           BUILD_TYPE: ${{ matrix.configuration }}
           COMPILER: ${{ matrix.compiler }}
-          COMPILER_VERSION: ${{ matrix.compiler_version }}
+
         run: |
+          echo "COMPILER: ${{ matrix.compiler }}"
+          echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
+          echo "GCC_VERSION: ${{ env.GCC_VERSION}}"
+          echo "BUILD_TYPE: ${{ matrix.configuration }}"
           mkdir build && cd build &&
           if [ -n ${{ matrix.cmake-args }} ]; then
             echo "Additional cmake-args: ${{ matrix.cmake-args }}"
           fi
+
           conan build .. \
             --options '&:xrpld=True' \
             --options '&:test=True'

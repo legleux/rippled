@@ -49,12 +49,15 @@ runs:
       run: |
         mkdir ${build_dir}
         cd ${build_dir}
-        COMPILER=${{ inputs.compiler }} \
-        COMPILER_VERSION=${{ inputs.compiler_version }} \
-        BUILD_TYPE=${{ inputs.configuration }} \
-        conan install \
+        export COMPILER=${{ inputs.compiler }}
+        export COMPILER_VERSION=${{ inputs.compiler_version }}
+        export BUILD_TYPE=${{ inputs.configuration }}
+        echo "COMPILER: ${{ matrix.compiler }}"
+        echo "CLANG_VERSION: ${{ env.CLANG_VERSION }}"
+        echo "GCC_VERSION: ${{ env.GCC_VERSION }}"
+        echo "BUILD_TYPE: ${{ env.BUILD_TYPE }}"
+        conan install .. \
           --output-folder . \
           --build missing \
           --options '&:tests=True' \
-          --options '&:xrpld=True' \
-          ..
+          --options '&:xrpld=True'
