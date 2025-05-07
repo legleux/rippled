@@ -148,13 +148,13 @@ jobs:
           echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
           echo "GCC_VERSION: ${{ env.GCC_VERSION}}"
           echo "BUILD_TYPE: ${{ matrix.configuration }}"
-          mkdir ~/.conan2/profiles && cp ./conan_profile/default ~/.conan2/profiles/
-          mkdir build && cd build &&
+          # mkdir ~/.conan2/profiles && cp ./conan_profile/default ~/.conan2/profiles/
+          # mkdir build && cd build &&
           if [ -n ${{ matrix.cmake-args }} ]; then
             echo "Additional cmake-args: ${{ matrix.cmake-args }}"
           fi
-
-          conan build .. \
+          # who cares where the build dir is in CI? (CMake probably)
+          conan build rippled \
             --options '&:xrpld=True' \
             --options '&:test=True'
         # uses: ./.github/actions/build
