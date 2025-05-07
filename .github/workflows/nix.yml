@@ -138,7 +138,7 @@ jobs:
       - name: configure Conan
         run: |
           default_profile=$(find . -name "default" -type f)
-          mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
+          #mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
       - name: build
         env:
           BUILD_TYPE: ${{ matrix.configuration }}
