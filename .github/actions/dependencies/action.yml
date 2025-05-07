@@ -51,7 +51,7 @@ runs:
       run: |
         default_profile=$(find . -name "default" -type f)
         mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
-        mkdir ${build_dir} && cd ${build_dir}
+        # mkdir ${build_dir} && cd ${build_dir}
         export COMPILER=${{ inputs.compiler }}
         export COMPILER_VERSION=${{ inputs.compiler_version }}
         export BUILD_TYPE=${{ inputs.configuration }}
@@ -59,8 +59,8 @@ runs:
         echo "CLANG_VERSION: ${{ env.CLANG_VERSION }}"
         echo "GCC_VERSION: ${{ env.GCC_VERSION }}"
         echo "BUILD_TYPE: ${{ env.BUILD_TYPE }}"
-        conan install .. \
-          --output-folder . \
+        conan install rippled \
+          --output-folder "${build_dir}" \
           --build missing \
           --options '&:tests=True' \
           --options '&:xrpld=True'
