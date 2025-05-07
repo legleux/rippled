@@ -76,7 +76,8 @@ jobs:
           env | sort
       - name: configure Conan
         run: |
-          mkdir ~/.conan2/profiles && cp conan_profile/default ~/.conan2/profiles/default
+          echo "only config once"
+          #mkdir ~/.conan2/profiles && cp conan_profile/default ~/.conan2/profiles/default
       - name: archive profile
         # Create this archive before dependencies are added to the local cache.
         run: tar -czf conan.tar -C ~/.conan2 .
