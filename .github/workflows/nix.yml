@@ -145,6 +145,7 @@ jobs:
           BUILD_TYPE: ${{ matrix.configuration }}
           COMPILER: ${{ matrix.compiler }}
         run: |
+          set -x
           echo "COMPILER: ${{ matrix.compiler }}"
           echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
           echo "GCC_VERSION: ${{ env.GCC_VERSION}}"

@@ -49,6 +49,8 @@ runs:
         BUILD_TYPE: ${{ inputs.configuration }}
       shell: bash
       run: |
+        set -x
+        echo $PWD
         default_profile=$(find . -name "default" -type f)
         mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
         # mkdir ${build_dir} && cd ${build_dir}
@@ -59,7 +61,9 @@ runs:
         echo "CLANG_VERSION: ${{ env.CLANG_VERSION }}"
         echo "GCC_VERSION: ${{ env.GCC_VERSION }}"
         echo "BUILD_TYPE: ${{ env.BUILD_TYPE }}"
-        conan install .. \
+        conanfile=$(readlink -f $(find . -name conanfile.py -type f))
+        echo "Conanfile at: ${conanfile}"
+        conan install $(realpath ) \
           --output-folder "${build_dir}" \
           --build missing \
           --options '&:tests=True' \
