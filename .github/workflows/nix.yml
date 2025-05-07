@@ -158,7 +158,7 @@ jobs:
           # who cares where the build dir is in CI? (CMake probably)
           conan build . \
             --options '&:xrpld=True' \
-            --options '&:test=True'
+            --options '&:tests=True'
         # uses: ./.github/actions/build
         # with:
         #   generator: Ninja
