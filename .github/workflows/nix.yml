@@ -156,7 +156,7 @@ jobs:
             echo "Additional cmake-args: ${{ matrix.cmake-args }}"
           fi
           # who cares where the build dir is in CI? (CMake probably)
-          conan build rippled \
+          conan build . \
             --options '&:xrpld=True' \
             --options '&:test=True'
         # uses: ./.github/actions/build
