@@ -59,7 +59,7 @@ runs:
         echo "CLANG_VERSION: ${{ env.CLANG_VERSION }}"
         echo "GCC_VERSION: ${{ env.GCC_VERSION }}"
         echo "BUILD_TYPE: ${{ env.BUILD_TYPE }}"
-        conan install rippled \
+        conan install .. \
           --output-folder "${build_dir}" \
           --build missing \
           --options '&:tests=True' \
