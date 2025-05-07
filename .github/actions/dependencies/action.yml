@@ -63,7 +63,8 @@ runs:
         echo "BUILD_TYPE: ${{ env.BUILD_TYPE }}"
         conanfile=$(readlink -f $(find . -name conanfile.py -type f))
         echo "Conanfile at: ${conanfile}"
-        conan install $(realpath ) \
+
+        conan install . \
           --output-folder "${build_dir}" \
           --build missing \
           --options '&:tests=True' \
