@@ -74,8 +74,28 @@ jobs:
       - name: configure Conan
         shell: bash
         run: |
-          python -c "import subprocess as s;r=s.run(['conan','profile','detect']);print('Created!'if r.returncode==0 else 'Exists!') or (r.returncode and s.run(['conan','profile','show','-pr:a','default']))"
-          python -c "n=__import__('multiprocessing').cpu_count(); open('.conan2/global.conf','a').write(f'tools.build:verbosity=verbose\ncore.download:parallel = {n}\ncore.upload:parallel = {n}\n')"
+          python <<EOF
+import subprocess as s
+r = s.run(['conan', 'profile', 'detect'])
+print('Created!' if r.returncode == 0 else 'Exists!')
+if r.returncode:
+  s.run(['conan', 'profile', 'show', '-pr:a', 'default'])
+EOF
+
+          python <<EOF
+import subprocess
+from multiprocessing import cpu_count
+from pathlib import Path
+
+home = subprocess.check_output(['conan', 'config', 'home'], text=True).strip()
+conf = Path(home) / 'global.conf'
+
+with open(conf, 'a') as f:
+  n = cpu_count()
+  f.write('tools.build:verbosity=verbose\n')
+  f.write(f'core.download:parallel = {n}\n')
+  f.write(f'core.upload:parallel = {n}\n')
+EOF
 
       - name: build dependencies
         uses: ./.github/actions/dependencies
