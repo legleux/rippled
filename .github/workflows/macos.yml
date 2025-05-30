@@ -48,8 +48,10 @@ jobs:
 
       - name: install python
         run: |
+
           if which python3 > /dev/null 2>&1; then
               echo "Python executable exists"
+              alias python=$(which python3)
           else
             echo "No Python!!!"
             exit 1
