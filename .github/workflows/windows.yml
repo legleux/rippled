@@ -46,7 +46,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: 3.9
-      
+
       - name: learn Python cache directory
         id: pip-cache
         shell: bash
@@ -59,10 +59,10 @@ jobs:
         with:
             path: ${{ steps.pip-cache.outputs.dir }}
             key: ${{ runner.os }}-${{ hashFiles('.github/workflows/windows.yml') }}
-      
+
       - name: install Conan
-        run: pip install wheel 'conan<2'
-      
+        run: pip install wheel conan~=2.17
+
       - name: check environment
         run: |
           dir env:
@@ -70,7 +70,7 @@ jobs:
           python --version
           conan --version
           cmake --version
-      
+
       - name: configure Conan
         shell: bash
         run: |
