@@ -49,19 +49,21 @@ jobs:
       - name: install python
         run: |
 
-          if which python3 > /dev/null 2>&1; then
+          if command -v python3 >/dev/null 2>&1; then
               echo "Python executable exists"
-              alias python=$(which python3)
+              if ! command -v python >/dev/null 2>&1; then
+                ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
+              fi
           else
-            echo "No Python!!!"
-            exit 1
-              # brew install python@3.13
-              # ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
+              echo "No Python!!!"
+              exit 1
+              brew install python@3.13
+              ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
           fi
 
       - name: install cmake
         run: |
-          if which cmake > /dev/null 2>&1; then
+          if command -v cmake > /dev/null 2>&1; then
               echo "CMake executable exists"
           else
               brew install cmake
