@@ -48,7 +48,7 @@ jobs:
 
       - name: install python
         run: |
-          if which python > /dev/null 2>&1; then
+          if which python3 > /dev/null 2>&1; then
               echo "Python executable exists"
           else
             echo "No Python!!!"
