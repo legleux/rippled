@@ -75,27 +75,19 @@ jobs:
         shell: bash
         run: |
           python <<EOF
-import subprocess as s
-r = s.run(['conan', 'profile', 'detect'])
-print('Created!' if r.returncode == 0 else 'Exists!')
-if r.returncode:
-  s.run(['conan', 'profile', 'show', '-pr:a', 'default'])
-EOF
+          import subprocess
+          from multiprocessing import cpu_count
+          from pathlib import Path
 
-          python <<EOF
-import subprocess
-from multiprocessing import cpu_count
-from pathlib import Path
+          home = subprocess.check_output(['conan', 'config', 'home'], text=True).strip()
+          conf = Path(home) / 'global.conf'
 
-home = subprocess.check_output(['conan', 'config', 'home'], text=True).strip()
-conf = Path(home) / 'global.conf'
-
-with open(conf, 'a') as f:
-  n = cpu_count()
-  f.write('tools.build:verbosity=verbose\n')
-  f.write(f'core.download:parallel = {n}\n')
-  f.write(f'core.upload:parallel = {n}\n')
-EOF
+          with open(conf, 'a') as f:
+            n = cpu_count()
+            f.write('tools.build:verbosity=verbose\n')
+            f.write(f'core.download:parallel = {n}\n')
+            f.write(f'core.upload:parallel = {n}\n')
+          EOF
 
       - name: build dependencies
         uses: ./.github/actions/dependencies
