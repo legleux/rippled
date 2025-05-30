@@ -1,0 +1,64 @@
+[settings]
+    {% set os_name = {"Darwin": "Macos"}.get(platform.system(), platform.system()) %}
+    os = {{ os_name }}
+
+    {% if platform.system() == "Darwin" and platform.machine() == "arm64" %}
+        {% set arch = "armv8" %}
+        {% set compiler, compiler_version, compiler_exe = detect_api.detect_default_compiler() %}
+        compiler = {{ compiler }}
+        compiler.version = {{ compiler_version }}
+        {% set libcxx = "libc++" %}
+    {% elif os_name == "Linux" %}
+        {% set arch = platform.machine() %}
+        {% set compiler = os.getenv("COMPILER", "gcc") %}
+        {% if compiler == "gcc" %}
+            {% set compiler_version = os.getenv("GCC_VERSION") %}
+        {% elif compiler == "clang" %}
+            {% set compiler_version = os.getenv("CLANG_VERSION") %}
+        {% endif %}
+        {% set libcxx = "libstdc++11" %}
+    {% elif os_name == "Windows" and platform.machine() == "AMD64" %}
+        {% set compiler, compiler_version, compiler_exe = detect_api.detect_default_compiler() %}
+        {% set arch = "x86_64" %}
+    {% endif %}
+
+    arch = {{ arch }}
+    compiler = {{ compiler }}
+    compiler.version = {{ compiler_version }}
+    {% if os_name != "Windows" %}
+        compiler.libcxx = {{ libcxx }}
+    {% else %}
+        compiler.runtime = static
+    {% endif %}
+
+    {% set build_type = os.getenv("BUILD_TYPE", "release").title() %}
+    build_type = {{ build_type }}
+
+    # Maybe require cppstd=20 in conanfile ?
+    compiler.cppstd=20
+
+[tool_requires]
+    !cmake/*: cmake/[>=3 <4]
+
+[buildenv]
+    {% if compiler == "gcc" %}
+        {% set cc = "gcc" %}
+        {% set cpp = "g++" %}
+    {% elif compiler.endswith("clang") %}
+        {% set cc = "clang" %}
+        {% set cpp = cc + "++" %}
+    {% endif %}
+
+    {% if os_name != "Macos" %}
+        # Assuming your clang is versioned
+        {% set cc = cc ~ "-" ~ compiler_version %}
+        {% set cpp = cpp ~ "-" ~ compiler_version %}
+    {% endif %}
+
+{% if os_name != "Windows" %}
+    CC=/usr/bin/{{ cc }}
+    CXX=/usr/bin/{{ cpp }}
+
+    [conf]
+        tools.build:compiler_executables={'c': '{{ cc }}', 'cpp': '{{ cpp }}' }
+{% endif %}
