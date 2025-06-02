@@ -66,7 +66,7 @@ runs:
 
         conan install . \
           --output-folder "${build_dir}" \
-          --build_type "${BUILD_TYPE}" \
+          --settings build_type "${BUILD_TYPE}" \
           --build missing \
           --options "tests=True" \
           --options "xrpld=True"
