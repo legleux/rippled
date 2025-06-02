@@ -154,31 +154,32 @@ jobs:
           default_profile=$(find . -name "default" -type f)
           #mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
       - name: build
-        env:
-          BUILD_TYPE: ${{ matrix.configuration }}
-          COMPILER: ${{ matrix.compiler }}
-        run: |
-          set -x
-          echo "COMPILER: ${{ matrix.compiler }}"
-          echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
-          echo "GCC_VERSION: ${{ env.GCC_VERSION}}"
-          echo "BUILD_TYPE: ${{ matrix.configuration }}"
-          # mkdir ~/.conan2/profiles && cp ./conan_profile/default ~/.conan2/profiles/
-          # mkdir build && cd build &&
-          if [ -n ${{ matrix.cmake_args }} ]; then
-            echo "Additional cmake_args: ${{ matrix.cmake_args }}"
-          fi
-          conan build . \
-            --options '&:xrpld=True' \
-            --options '&:tests=True' \
-            --options '&:unity=${{ matrix.unity }}'
-        # uses: ./.github/actions/build
-        # with:
-        #   generator: Ninja
-        #   configuration: ${{ matrix.configuration }}
-        #   compiler: ${{ matrix.compiler }}
-        #   compiler_version: ${{ matrix.compiler_version }}
-        #   cmake-args: "-Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
+        # env:
+        #   BUILD_TYPE: ${{ matrix.configuration }}
+        #   COMPILER: ${{ matrix.compiler }}
+        # run: |
+          # set -x
+          # echo "COMPILER: ${{ matrix.compiler }}"
+          # echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
+          # echo "GCC_VERSION: ${{ env.GCC_VERSION}}"
+          # echo "BUILD_TYPE: ${{ matrix.configuration }}"
+          # # mkdir ~/.conan2/profiles && cp ./conan_profile/default ~/.conan2/profiles/
+          # # mkdir build && cd build &&
+          # if [ -n ${{ matrix.cmake_args }} ]; then
+          #   echo "Additional cmake_args: ${{ matrix.cmake_args }}"
+          # fi
+          # conan build . \
+          #   --options '&:xrpld=True' \
+          #   --options '&:tests=True' \
+          #   --options '&:unity=${{ matrix.unity }}'
+        uses: ./.github/actions/build
+        with:
+          generator: Ninja
+          configuration: ${{ matrix.configuration }}
+          compiler: ${{ matrix.compiler }}
+          # compiler_version: ${{ matrix.compiler_version }}
+          # cmake-args: "-Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
+
       - name: Run unit tests
         run: |
           rippled=$(find . -name "rippled" -type f)
