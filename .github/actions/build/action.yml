@@ -15,20 +15,27 @@ runs:
     - name: configure
       shell: bash
       run: |
+        if command -v find >/dev/null 2>&1; then
+          find . -type f -name conan_toolchain.cmake || true
+        else
+          echo "find not available, skipping"
+        fi
+        ## conan_toolchain.cmake should be ready by now
         # cd ${build_dir}
-        cmake \
-          ${{ inputs.generator && format('-G "{0}"', inputs.generator) || '' }} \
-          -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
-          -DCMAKE_BUILD_TYPE=${{ inputs.configuration }} \
-          -Dtests=TRUE \
-          -Dxrpld=TRUE \
-          ${{ inputs.cmake-args }} \
-          ..
+        # cmake \
+        #   ${{ inputs.generator && format('-G "{0}"', inputs.generator) || '' }} \
+        #   -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
+        #   -DCMAKE_BUILD_TYPE=${{ inputs.configuration }} \
+        #   -Dtests=TRUE \
+        #   -Dxrpld=TRUE \
+        #   ${{ inputs.cmake-args }} \
+        #   ..
     - name: build
       shell: bash
       run: |
-        cmake \
-          --build ${build_dir} \
-          --config ${{ inputs.configuration }} \
-          --parallel ${NUM_PROCESSORS:-$(nproc)} \
-          --target ${{ inputs.cmake-target }}
+        conan build rippled
+        # cmake \
+        #   --build ${build_dir} \
+        #   --config ${{ inputs.configuration }} \
+        #   --parallel ${NUM_PROCESSORS:-$(nproc)} \
+        #   --target ${{ inputs.cmake-target }}
