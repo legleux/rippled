@@ -15,7 +15,7 @@ runs:
     - name: configure
       shell: bash
       run: |
-        cd ${build_dir}
+        # cd ${build_dir}
         cmake \
           ${{ inputs.generator && format('-G "{0}"', inputs.generator) || '' }} \
           -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
