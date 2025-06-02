@@ -106,7 +106,7 @@ jobs:
           # Hard code for now. Move to the matrix if varied options are needed
           # cmake-args: '-Dassert=TRUE -Dwerr=TRUE -Dreporting=OFF -Dunity=ON'
           cmake-args: '-Dassert=TRUE -Dwerr=TRUE' # set in conanfile if ci/win?
-          # cmake-target: install # why 'install?'
+          cmake-target: install
 
       - name: test
         shell: bash

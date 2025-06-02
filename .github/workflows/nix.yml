@@ -105,7 +105,7 @@ jobs:
           if-no-files-found: error
 
   test:
-    name: ${{ matrix.compiler }}-${{ matrix.config }} Unity=${{ matrix.configuration }}
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }} Unity=${{ matrix.unity }}
     strategy:
       fail-fast: false
       matrix:
