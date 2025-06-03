@@ -106,9 +106,11 @@ jobs:
           EOF
           conan version >> $GITHUB_STEP_SUMMARY
           conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
+          # where to do this?
+          conan remote add ripple --index 0  http://18.143.149.228:8081/artifactory/api/conan/dev
       - name: archive profile
         # Create this archive before dependencies are added to the local cache.
-        run: tar -czf conan.tar -C ~/.conan2 .
+        run: tar -czf conan.tar -C $(conan config home) .
       - name: build dependencies
         uses: ./.github/actions/dependencies
         env:
@@ -278,8 +280,10 @@ jobs:
       build_dir: .build
     steps:
       - name: upgrade conan
+        id: conan_info
         run: |
           pip install conan~=2.17
+          echo "conan_home=$(conan config home)" >> "$GITHUB_OUTPUT"
       - name: download cache
         uses: actions/download-artifact@v4
         with:
@@ -287,17 +291,17 @@ jobs:
       - name: extract cache
         run: |
           conan version
-          tar -xzf conan.tar -C ~/.conan2
+          tar -xzf conan.tar -C ${{ steps.conan_info.outputs.conan_home }}
       - name: install gcovr
         run: pip install gcovr~=8.0
       - name: check environment
         run: |
-          echo ${PATH} | tr ':' '\n'
+          echo "${PATH}" | tr ':' '\n'
           conan --version
           cmake --version
           gcovr --version
           env | sort
-          ls -l $(conan config home)
+          ls -l ${{ steps.conan_info.outputs.conan_home }}
       - name: checkout
         uses: actions/checkout@v4
       - name: dependencies
