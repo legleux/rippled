@@ -321,6 +321,7 @@ jobs:
             -Dassert=TRUE
             -Dwerr=TRUE
             -Dcoverage=ON
+            -Dcoverage_format=xml
             -DCODE_COVERAGE_VERBOSE=ON
             -DCMAKE_CXX_FLAGS="-O0"
             -DCMAKE_C_FLAGS="-O0"
@@ -328,7 +329,7 @@ jobs:
       - name: move coverage report
         shell: bash
         run: |
-          coverage_file=$(find . -name coverage.xml -type f)
+          coverage_file=$(find ../../.. -name coverage.xml -type f)
           echo "Coverage file at ${coverage_file}"
           mv "${coverage_file}" ./
       - name: Code Coverage Summary Report
