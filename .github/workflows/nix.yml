@@ -84,22 +84,25 @@ jobs:
         run: |
           conan_home=$(conan config home)
           python3 <<EOF
+          import shutil
           import subprocess
           from multiprocessing import cpu_count
-          import shutil
           from pathlib import Path
-          conanhome = subprocess.check_output(['conan', 'config', 'home'], text=True).strip()
+
+          conanhome = subprocess.check_output(["conan", "config", "home"], text=True).strip()
           default_profile = Path("./conan_profile/default")
-          conf = Path(f"{conanhome}/global.conf")
-          # Set some sane defaults
-          with open(conf, 'a') as f:
-            n = cpu_count()
-            f.write('tools.build:verbosity = verbose\n')
-            f.write(f'tools.build:jobs = {n}\n')
-            f.write(f'core.download:parallel = {n}\n')
-            f.write(f'core.upload:parallel = {n}\n')
+
+          with (Path(conanhome) / "global.conf").open("a", encoding="utf-8") as f:
+              n = cpu_count()
+              f.write("tools.build:verbosity = verbose\n")
+              f.write(f"tools.build:jobs = {n}\n")
+              f.write(f"core.download:parallel = {n}\n")
+              f.write(f"core.upload:parallel = {n}\n")
+
           # Install the default profile
-          shutil.copy(default_profile, Path(f"{conanhome}/profiles/default"))
+          profile_path = Path(conanhome) / "profiles/default"
+          profile_path.parent.mkdir(parents=True, exist_ok=True)
+          shutil.copy(default_profile, profile_path)
           EOF
           conan version >> $GITHUB_STEP_SUMMARY
           conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
