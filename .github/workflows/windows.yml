@@ -77,20 +77,36 @@ jobs:
         shell: bash
         run: |
           python <<EOF
+          import shutil
           import subprocess
+          import sys
           from multiprocessing import cpu_count
           from pathlib import Path
+          
+          conanhome = Path(subprocess.check_output(["conan", "config", "home"], text=True).strip())
+          conan_profile_path = conanhome / "profiles" / "default"
+          global_conf = conanhome / "global.conf"
+          default_profile = Path.cwd() / "conan_profile" / "default"
+          profile_cmd = ["conan", "profile", "show", "--profile:all", "default"]
+          global_defaults = f"""
+          tools.build:verbosity = verbose
+          tools.build:jobs = {(n:=cpu_count())}
+          core.download:parallel = {n}
+          core.upload:parallel = {n}
+          """
 
-          home = subprocess.check_output(['conan', 'config', 'home'], text=True).strip()
-          conf = Path(home) / 'global.conf'
+          if conan_profile_path.is_file():
+              print(f"conan default profile {conan_profile_path} already exists!")
+          else:
+              conan_profile_path.parent.mkdir(parents=True, exist_ok=True)
+              shutil.copy(default_profile, conan_profile_path)
+              print(f"Copied {default_profile.resolve()} to {conan_profile_path.resolve()}")
 
-          with open(conf, 'a') as f:
-            n = cpu_count()
-            f.write('tools.build:verbosity = verbose\n')
-            f.write('tools.build:jobs = {n}\n')
-            f.write(f'core.download:parallel = {n}\n')
-            f.write(f'core.upload:parallel = {n}\n')
-          EOF
+          subprocess.run(profile_cmd)
+
+          if "tools.build:verbosity" not in global_conf.read_text(encoding="utf-8"):
+              with global_conf.open("a", encoding="utf-8") as f: f.write(global_defaults)
+          
           conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
 
       - name: build dependencies
@@ -110,7 +126,7 @@ jobs:
           # Hard code for now. Move to the matrix if varied options are needed
           # cmake-args: '-Dassert=TRUE -Dwerr=TRUE -Dreporting=OFF -Dunity=ON'
           cmake-args: '-Dxrpld=TRUE -Dassert=TRUE -Dwerr=TRUE' # set in conanfile if ci/win?
-          cmake-target: install
+          cmake-target: rippled
 
       - name: test
         shell: bash

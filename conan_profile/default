@@ -2,11 +2,11 @@
 {% set system = platform.system() %}
 {% set machine = platform.machine() %}
 {% set os_name = {"Darwin": "Macos"}.get(system, system) %}
-    os = {{ os_name }}
-
+os = {{ os_name }}
+{% set compiler, compiler_version, compiler_exe = detect_api.detect_default_compiler() %}
 {% if os_name == "Macos" and machine == "arm64" %}
     {% set arch = "armv8" %}
-    {% set compiler, compiler_version, compiler_exe = detect_api.detect_default_compiler() %}
+    
     {% set libcxx = "libc++" %}
 
 {% elif os_name == "Linux" %}
@@ -21,7 +21,6 @@
 
 {% elif os_name == "Windows" and machine == "AMD64" %}
     {% set arch = "x86_64" %}
-    {% set compiler, compiler_version, compiler_exe = detect_api.detect_default_compiler() %}
 {% endif %}
 
     arch = {{ arch }}
