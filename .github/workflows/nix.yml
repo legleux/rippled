@@ -328,7 +328,9 @@ jobs:
       - name: move coverage report
         shell: bash
         run: |
-          mv "${build_dir}/coverage.xml" ./
+          coverage_file=$(find . -name coverage.xml -type f)
+          echo "Coverage file at ${coverage_file}"
+          mv "${coverage_file}" ./
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
