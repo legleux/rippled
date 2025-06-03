@@ -129,86 +129,86 @@ jobs:
           path: conan.tar
           if-no-files-found: error
 
-  # test:
-  #   name: ${{ matrix.compiler }}-${{ matrix.configuration }} unity=${{ matrix.unity }}
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       platform: [linux]
-  #       compiler: [gcc, clang]
-  #       # compiler: [gcc]
-  #       configuration: [Debug, Release]
-  #       # configuration: [Release]
-  #       cmake_args: [""]
-  #       # cmake_args: ["-Dunity=ON"]
-  #       unity: ["True", "False"]
-  #   needs: dependencies
-  #   runs-on: [self-hosted, heavy]
-  #   container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
-  #   # container: conan2_wnode
-  #   env:
-  #     build_dir: build
-  #   steps:
-  #     - name: download cache
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
-  #     - name: extract cache
-  #       run: |
-  #         mkdir -p ~/.conan2
-  #         tar -xzf conan.tar -C ~/.conan2
-  #     - name: check environment
-  #       run: |
-  #         env | sort
-  #         echo ${PATH} | tr ':' '\n'
-  #         conan --version
-  #         cmake --version
-  #     - name: checkout
-  #       uses: actions/checkout@v4
-  #     - name: dependencies
-  #       uses: ./.github/actions/dependencies
-  #       env:
-  #         CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
-  #         BUILD_TYPE: ${{ matrix.configuration }}
-  #       with:
-  #         configuration: ${{ matrix.configuration }}
-  #         compiler: ${{ matrix.compiler }}
-  #         # cmake-args: ${{ matrix.cmake_args }}
-  #     - name: configure Conan
-  #       run: |
-  #         default_profile=$(find . -name "default" -type f)
-  #         #mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
-  #     - name: build
-  #       # env:
-  #       #   BUILD_TYPE: ${{ matrix.configuration }}
-  #       #   COMPILER: ${{ matrix.compiler }}
-  #       # run: |
-  #         # set -x
-  #         # echo "COMPILER: ${{ matrix.compiler }}"
-  #         # echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
-  #         # echo "GCC_VERSION: ${{ env.GCC_VERSION}}"
-  #         # echo "BUILD_TYPE: ${{ matrix.configuration }}"
-  #         # # mkdir ~/.conan2/profiles && cp ./conan_profile/default ~/.conan2/profiles/
-  #         # # mkdir build && cd build &&
-  #         # if [ -n ${{ matrix.cmake_args }} ]; then
-  #         #   echo "Additional cmake_args: ${{ matrix.cmake_args }}"
-  #         # fi
-  #         # conan build . \
-  #         #   --options '&:xrpld=True' \
-  #         #   --options '&:tests=True' \
-  #         #   --options '&:unity=${{ matrix.unity }}'
-  #       uses: ./.github/actions/build
-  #       with:
-  #         generator: Ninja
-  #         configuration: ${{ matrix.configuration }}
-  #         compiler: ${{ matrix.compiler }}
-  #         # compiler_version: ${{ matrix.compiler_version }}
-  #         cmake-args: "-Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
+  test:
+    name: ${{ matrix.compiler }}-${{ matrix.configuration }} unity=${{ matrix.unity }}
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [linux]
+        compiler: [gcc, clang]
+        # compiler: [gcc]
+        configuration: [Debug, Release]
+        # configuration: [Release]
+        cmake_args: [""]
+        # cmake_args: ["-Dunity=ON"]
+        unity: ["True", "False"]
+    needs: dependencies
+    runs-on: [self-hosted, heavy]
+    container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
+    # container: conan2_wnode
+    env:
+      build_dir: build
+    steps:
+      - name: download cache
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
+      - name: extract cache
+        run: |
+          mkdir -p ~/.conan2
+          tar -xzf conan.tar -C ~/.conan2
+      - name: check environment
+        run: |
+          env | sort
+          echo ${PATH} | tr ':' '\n'
+          conan --version
+          cmake --version
+      - name: checkout
+        uses: actions/checkout@v4
+      - name: dependencies
+        uses: ./.github/actions/dependencies
+        env:
+          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
+          BUILD_TYPE: ${{ matrix.configuration }}
+        with:
+          configuration: ${{ matrix.configuration }}
+          compiler: ${{ matrix.compiler }}
+          # cmake-args: ${{ matrix.cmake_args }}
+      - name: configure Conan
+        run: |
+          default_profile=$(find . -name "default" -type f)
+          #mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
+      - name: build
+        # env:
+        #   BUILD_TYPE: ${{ matrix.configuration }}
+        #   COMPILER: ${{ matrix.compiler }}
+        # run: |
+          # set -x
+          # echo "COMPILER: ${{ matrix.compiler }}"
+          # echo "CLANG_VERSION: ${{ env.CLANG_VERSION}}"
+          # echo "GCC_VERSION: ${{ env.GCC_VERSION}}"
+          # echo "BUILD_TYPE: ${{ matrix.configuration }}"
+          # # mkdir ~/.conan2/profiles && cp ./conan_profile/default ~/.conan2/profiles/
+          # # mkdir build && cd build &&
+          # if [ -n ${{ matrix.cmake_args }} ]; then
+          #   echo "Additional cmake_args: ${{ matrix.cmake_args }}"
+          # fi
+          # conan build . \
+          #   --options '&:xrpld=True' \
+          #   --options '&:tests=True' \
+          #   --options '&:unity=${{ matrix.unity }}'
+        uses: ./.github/actions/build
+        with:
+          generator: Ninja
+          configuration: ${{ matrix.configuration }}
+          compiler: ${{ matrix.compiler }}
+          # compiler_version: ${{ matrix.compiler_version }}
+          cmake-args: "-Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
 
-  #     - name: Run unit tests
-  #       run: |
-  #         rippled=$(find . -name "rippled" -type f)
-  #         ${rippled} --unittest --unittest-jobs $(nproc)
+      - name: Run unit tests
+        run: |
+          rippled=$(find . -name "rippled" -type f)
+          ${rippled} --unittest --unittest-jobs $(nproc)
 
   # reference-fee-test:
   #   strategy:
@@ -363,60 +363,60 @@ jobs:
       #     attempt_limit: 5
       #     attempt_delay: 210000 # in milliseconds
 
-  conan:
-    needs: dependencies
-    runs-on: [self-hosted, heavy]
-    container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
-    env:
-      build_dir: .build
-      configuration: Release
-    steps:
-      - name: upgrade conan
-        id: conan_info
-        run: |
-          echo "conan_home=$(conan config home)" >> "$GITHUB_OUTPUT"
-          pip install conan~=${{ env.CONAN_VERSION }}
-      - name: download cache
-        uses: actions/download-artifact@v4
-        with:
-          name: linux-gcc-${{ env.configuration }}
-      - name: extract cache
-        run: |
-          conan version
-          tar -xzf conan.tar -C ${{ steps.conan_info.outputs.conan_home }}
-      - name: check environment
-        run: |
-          env | sort
-          echo ${PATH} | tr ':' '\n'
-          conan --version
-          cmake --version
-      - name: checkout
-        uses: actions/checkout@v4
-      - name: dependencies
-        uses: ./.github/actions/dependencies
-        env:
-          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
-        with:
-          configuration: ${{ env.configuration }}
-      - name: export
-        run: |
-          version=$(conan inspect --raw version .)
-          reference="xrpl/${version}@local/test"
-          conan remove -f ${reference} || true
-          conan export . local/test
-          echo "reference=${reference}" >> "${GITHUB_ENV}"
-      - name: build
-        run: |
-          cd tests/conan
-          mkdir ${build_dir}
-          cd ${build_dir}
-          conan install .. --output-folder . \
-            --require-override ${reference} --build missing
-          cmake .. \
-            -DCMAKE_TOOLCHAIN_FILE:FILEPATH=./build/${configuration}/generators/conan_toolchain.cmake \
-            -DCMAKE_BUILD_TYPE=${configuration}
-          cmake --build .
-          ./example | grep '^[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+'
+  # conan:
+  #   needs: dependencies
+  #   runs-on: [self-hosted, heavy]
+  #   container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
+  #   env:
+  #     build_dir: .build
+  #     configuration: Release
+  #   steps:
+  #     - name: upgrade conan
+  #       id: conan_info
+  #       run: |
+  #         echo "conan_home=$(conan config home)" >> "$GITHUB_OUTPUT"
+  #         pip install conan~=${{ env.CONAN_VERSION }}
+  #     - name: download cache
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: linux-gcc-${{ env.configuration }}
+  #     - name: extract cache
+  #       run: |
+  #         conan version
+  #         tar -xzf conan.tar -C ${{ steps.conan_info.outputs.conan_home }}
+  #     - name: check environment
+  #       run: |
+  #         env | sort
+  #         echo ${PATH} | tr ':' '\n'
+  #         conan --version
+  #         cmake --version
+  #     - name: checkout
+  #       uses: actions/checkout@v4
+  #     - name: dependencies
+  #       uses: ./.github/actions/dependencies
+  #       env:
+  #         CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
+  #       with:
+  #         configuration: ${{ env.configuration }}
+  #     - name: export
+  #       run: |
+  #         version=$(conan inspect --raw version .)
+  #         reference="xrpl/${version}@local/test"
+  #         conan remove -f ${reference} || true
+  #         conan export . local/test
+  #         echo "reference=${reference}" >> "${GITHUB_ENV}"
+  #     - name: build
+  #       run: |
+  #         cd tests/conan
+  #         mkdir ${build_dir}
+  #         cd ${build_dir}
+  #         conan install .. --output-folder . \
+  #           --require-override ${reference} --build missing
+  #         cmake .. \
+  #           -DCMAKE_TOOLCHAIN_FILE:FILEPATH=./build/${configuration}/generators/conan_toolchain.cmake \
+  #           -DCMAKE_BUILD_TYPE=${configuration}
+  #         cmake --build .
+  #         ./example | grep '^[[:digit:]]\+\.[[:digit:]]\+\.[[:digit:]]\+'
 
   # NOTE we are not using dependencies built above because it lags with
   # compiler versions. Instrumentation requires clang version 16 or
