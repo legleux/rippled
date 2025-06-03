@@ -332,10 +332,16 @@ jobs:
           coverage_file=$(find ../../.. -name coverage.xml -type f)
           echo "Coverage file at ${coverage_file}"
           mv "${coverage_file}" ./
+          echo "${coverage_file}" >> $GITHUB_STEP_SUMMARY
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
           filename: coverage.xml
+          badge: true
+          format: markdown
+          indicators: true
+          output: both
+
       - name: archive coverage report
         uses: actions/upload-artifact@v4
         with:
