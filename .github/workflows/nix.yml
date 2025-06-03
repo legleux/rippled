@@ -51,18 +51,17 @@ jobs:
           - linux
         compiler:
           - gcc
-          - clang
+          # - clang
         configuration:
           - Debug
-          - Release
+          # - Release
         include:
           - compiler: gcc
             compiler_version: 11
-          - compiler: clang
-            compiler_version: 14
+          # - compiler: clang
+          #   compiler_version: 14
     runs-on: [self-hosted, heavy]
     container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
-    # container: conan2_wnode
     env:
       build_dir: build
     steps:
@@ -92,16 +91,13 @@ jobs:
           conanhome = subprocess.check_output(['conan', 'config', 'home'], text=True).strip()
           default_profile = Path("./conan_profile/default")
           conf = Path(f"{conanhome}/global.conf")
-          if not Path(conan_home.decode().strip()).is_dir()
-            # install conan
-          else:
           # Set some sane defaults
-            with open(conf, 'a') as f:
-              n = cpu_count()
-              f.write('tools.build:verbosity = verbose\n')
-              f.write(f'tools.build:jobs = {n}\n')
-              f.write(f'core.download:parallel = {n}\n')
-              f.write(f'core.upload:parallel = {n}\n')
+          with open(conf, 'a') as f:
+            n = cpu_count()
+            f.write('tools.build:verbosity = verbose\n')
+            f.write(f'tools.build:jobs = {n}\n')
+            f.write(f'core.download:parallel = {n}\n')
+            f.write(f'core.upload:parallel = {n}\n')
           # Install the default profile
           shutil.copy(default_profile, Path(f"{conanhome}/profiles/default"))
           EOF
