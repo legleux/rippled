@@ -286,7 +286,7 @@ jobs:
           name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
       - name: extract cache
         run: |
-          mkdir -p ~/.conan2
+          conan version
           tar -xzf conan.tar -C ~/.conan2
       - name: install gcovr
         run: pip install gcovr~=8.0
@@ -297,7 +297,7 @@ jobs:
           cmake --version
           gcovr --version
           env | sort
-          ls ~/.conan
+          ls -l $(conan config home)
       - name: checkout
         uses: actions/checkout@v4
       - name: dependencies
