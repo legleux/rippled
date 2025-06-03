@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   test:
-    name: VS ${{ matrix.version.generator }}-${{ matrix.configuration.type }}
+    name: Visual Studio ${{ matrix.version.generator }}-${{ matrix.configuration.type }}
     strategy:
       fail-fast: false
       matrix:
@@ -37,7 +37,6 @@ jobs:
             tests: false
             runtime: static
 
-
     runs-on: ${{ matrix.version.runs-on }}
     env:
       build_dir: build
@@ -48,7 +47,7 @@ jobs:
       - name: choose Python
         uses: actions/setup-python@v5
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: learn Python cache directory
         id: pip-cache
@@ -92,6 +91,7 @@ jobs:
             f.write(f'core.download:parallel = {n}\n')
             f.write(f'core.upload:parallel = {n}\n')
           EOF
+          conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
 
       - name: build dependencies
         uses: ./.github/actions/dependencies
