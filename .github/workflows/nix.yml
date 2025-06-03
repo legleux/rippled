@@ -107,7 +107,7 @@ jobs:
           conan version >> $GITHUB_STEP_SUMMARY
           conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
           # where to do this?
-          conan remote add ripple --index 0  http://18.143.149.228:8081/artifactory/api/conan/dev
+          conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
       - name: archive profile
         # Create this archive before dependencies are added to the local cache.
         run: tar -czf conan.tar -C $(conan config home) .
@@ -316,6 +316,8 @@ jobs:
           generator: Ninja
           configuration: ${{ matrix.configuration }}
           cmake-args: >-
+            -Dxrpld=TRUE
+            -Dtests=TRUE
             -Dassert=TRUE
             -Dwerr=TRUE
             -Dcoverage=ON
