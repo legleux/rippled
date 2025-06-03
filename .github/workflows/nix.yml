@@ -72,7 +72,7 @@ jobs:
         run: |
           echo ${PATH} | tr ':' '\n'
           lsb_release -a || true
-          pip install upgrade conan~=2.17
+          pip install conan~=2.17
           conan --version
           cmake --version
           env | sort
