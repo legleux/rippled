@@ -469,7 +469,6 @@ jobs:
 
         - name: configure Conan
           run: |
-            conan_home=$(conan config home)
             python3 <<EOF
             import shutil
             import subprocess
