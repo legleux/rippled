@@ -84,7 +84,7 @@ jobs:
       - name: configure Conan
         run: |
           conan_home=$(conan config home)
-          python <<EOF
+          python3 <<EOF
           import subprocess
           from multiprocessing import cpu_count
           import shutil
