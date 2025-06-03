@@ -51,9 +51,33 @@ runs:
       run: |
         set -x
         echo $PWD
-        # conan version
-        # conan_home=$(conan config home)
-        # install -Dm644 ./conan_profile/default "${conan_home}/profiles/default"
+        conan_home=$(conan config home)
+        python3 <<EOF
+        import shutil
+        import subprocess
+        from multiprocessing import cpu_count
+
+        conanhome = subprocess.check_output(["conan", "config", "home"], text=True).strip()
+        default_profile = pathlib.Path("./conan_profile/default")
+        if default_profile.is_file():
+          print(f"conan default profile {default_profile} already exists ")
+          with default_profile.open(encoding="utf-8") as f:
+            default_profile = f.read()
+          print(default_profile)
+          sys.exit(0)
+
+        with (pathlib.Path(conanhome) / "global.conf").open("a", encoding="utf-8") as f:
+            n = cpu_count()
+            f.write("tools.build:verbosity = verbose\n")
+            f.write(f"tools.build:jobs = {n}\n")
+            f.write(f"core.download:parallel = {n}\n")
+            f.write(f"core.upload:parallel = {n}\n")
+
+        # Install the default profile
+        profile_path = pathlib.Path(conanhome) / "profiles/default"
+        profile_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(default_profile, profile_path)
+        EOF
 
         conan install . \
           --output-folder "${build_dir}" \
