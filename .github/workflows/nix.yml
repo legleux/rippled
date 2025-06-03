@@ -45,7 +45,7 @@ concurrency:
 jobs:
   dependencies:
     if: ${{ github.event_name == 'push' || github.event.pull_request.draft != true || contains(github.event.pull_request.labels.*.name, 'DraftRunCI') }}
-    name: Linux ${{ matrix.compiler }}-${{ matrix.compiler_version }} ${{ matrix.configuration }}
+    name: Linux deps ${{ matrix.compiler }}-${{ matrix.compiler_version }} ${{ matrix.configuration }}
     strategy:
       fail-fast: false
       matrix:
@@ -131,7 +131,7 @@ jobs:
           if-no-files-found: error
 
   test:
-    name: ${{ matrix.compiler }}-${{ matrix.configuration }} unity=${{ matrix.unity }}
+    name: Build ${{ matrix.compiler }}-${{ matrix.configuration }} unity=${{ matrix.unity }}
     strategy:
       fail-fast: false
       matrix:
@@ -476,10 +476,11 @@ jobs:
             from multiprocessing import cpu_count
             from pathlib import Path
 
-            conanhome = subprocess.check_output(["conan", "config", "home"], text=True).strip()
+            conanhome = Path(subprocess.check_output(["conan", "config", "home"], text=True).strip())
             default_profile = Path("./conan_profile/default")
+            conan_home = Path(conanhome)
 
-            with (Path(conanhome) / "global.conf").open("a", encoding="utf-8") as f:
+            with Path(conanhome / "global.conf").open("a", encoding="utf-8") as f:
                 n = cpu_count()
                 f.write("tools.build:verbosity = verbose\n")
                 f.write(f"tools.build:jobs = {n}\n")
@@ -487,14 +488,13 @@ jobs:
                 f.write(f"core.upload:parallel = {n}\n")
 
             # Install the default profile
-            profile_path = Path(conanhome) / "profiles/default"
+            profile_path = conanhome / "profiles/default"
             profile_path.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy(default_profile, profile_path)
             EOF
             conan version >> $GITHUB_STEP_SUMMARY
             conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
             conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
-
 
         - name: build dependencies
           run: |
