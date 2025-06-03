@@ -52,15 +52,15 @@ jobs:
           - linux
         compiler:
           - gcc
-          # - clang
+          - clang
         configuration:
           - Debug
-          # - Release
+          - Release
         include:
           - compiler: gcc
             compiler_version: 11
-          # - compiler: clang
-          #   compiler_version: 14
+          - compiler: clang
+            compiler_version: 14
     runs-on: [self-hosted, heavy]
     container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
     env:
