@@ -51,22 +51,11 @@ runs:
       run: |
         set -x
         echo $PWD
-        default_profile=$(find . -name "default" -type f)
-        mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
-        # mkdir ${build_dir} && cd ${build_dir}
-        export COMPILER=${{ inputs.compiler }}
-        export COMPILER_VERSION=${{ inputs.compiler_version }}
-        export BUILD_TYPE=${{ inputs.configuration }}
-        echo "COMPILER: ${{ matrix.compiler }}"
-        echo "CLANG_VERSION: ${{ env.CLANG_VERSION }}"
-        echo "GCC_VERSION: ${{ env.GCC_VERSION }}"
-        echo "BUILD_TYPE: ${{ env.BUILD_TYPE }}"
-        conanfile=$(readlink -f $(find . -name conanfile.py -type f))
-        echo "Conanfile at: ${conanfile}"
+        # conan version
+        # conan_home=$(conan config home)
+        # install -Dm644 ./conan_profile/default "${conan_home}/profiles/default"
 
         conan install . \
           --output-folder "${build_dir}" \
           --settings build_type="${BUILD_TYPE}" \
-          --build missing \
-          --options "tests=True" \
-          --options "xrpld=True"
+          --build missing
