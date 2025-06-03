@@ -45,6 +45,7 @@ concurrency:
 jobs:
   dependencies:
     if: ${{ github.event_name == 'push' || github.event.pull_request.draft != true || contains(github.event.pull_request.labels.*.name, 'DraftRunCI') }}
+    name: Linux ${{ matrix.compiler }}-${{ matrix.compiler }} ${{ matrix.configuration }}
     strategy:
       fail-fast: false
       matrix:
@@ -149,14 +150,19 @@ jobs:
     env:
       build_dir: build
     steps:
+      - name: upgrade conan
+        id: conan_info
+        run: |
+          pip install conan~=2.17
+          echo "conan_home=$(conan config home)" >> "$GITHUB_OUTPUT"
       - name: download cache
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
       - name: extract cache
         run: |
-          mkdir -p ~/.conan2
-          tar -xzf conan.tar -C ~/.conan2
+          conan version >> "$GITHUB_STEP_SUMMARY"
+          tar -xzf conan.tar -C ${{ steps.conan_info.outputs.conan_home }} .
       - name: check environment
         run: |
           env | sort
@@ -203,7 +209,7 @@ jobs:
           configuration: ${{ matrix.configuration }}
           compiler: ${{ matrix.compiler }}
           # compiler_version: ${{ matrix.compiler_version }}
-          cmake-args: "-Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
+          cmake-args: "-Dxrpld=True -Dtests=True -Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
 
       - name: Run unit tests
         run: |
@@ -211,7 +217,7 @@ jobs:
           ${rippled} --unittest --unittest-jobs $(nproc)
 
   # reference-fee-test:
-  #   strategy:
+  #   strategy:conan_info.conan_home
   #     fail-fast: false
   #     matrix:
   #       platform:
@@ -283,7 +289,7 @@ jobs:
       - name: upgrade conan
         id: conan_info
         run: |
-          pip install conan~=2.17
+          pip install conan~=${{ env.CONAN_VERSION }}
           echo "conan_home=$(conan config home)" >> "$GITHUB_OUTPUT"
       - name: download cache
         uses: actions/download-artifact@v4
@@ -291,8 +297,8 @@ jobs:
           name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
       - name: extract cache
         run: |
-          conan version
-          tar -xzf conan.tar -C ${{ steps.conan_info.outputs.conan_home }}
+          conan version >> "$GITHUB_STEP_SUMMARY"
+          tar -xzf conan.tar -C ${{ steps.conan_info.outputs.conan_home }} .
       - name: install gcovr
         run: pip install gcovr~=8.0
       - name: check environment
@@ -487,20 +493,10 @@ jobs:
             EOF
             conan version >> $GITHUB_STEP_SUMMARY
             conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
+
             # where to do this?
             conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
-            # conan profile new --detect default
-            # conan profile update settings.compiler=clang default
-            # conan profile update settings.compiler.version=${CLANG_VERSION} default
-            # conan profile update settings.compiler.libcxx=libstdc++11 default
-            # conan profile update settings.compiler.cppstd=20 default
-            # conan profile update options.rocksdb=False default
-            # conan profile update \
-            #   'conf.tools.build:compiler_executables={"c": "/usr/bin/clang", "cpp": "/usr/bin/clang++"}' default
-            # conan profile update 'env.CXXFLAGS="-DBOOST_ASIO_DISABLE_CONCEPTS"' default
-            # conan profile update 'conf.tools.build:cxxflags+=["-DBOOST_ASIO_DISABLE_CONCEPTS"]' default
-            # conan export external/snappy snappy/1.1.10@
-            # conan export external/soci soci/4.0.3@
+
 
         - name: build dependencies
           run: |
