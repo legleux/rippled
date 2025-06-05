@@ -87,8 +87,9 @@ runs:
       run: |
         conan graph info . --format json  | python -c "import sys, json; print(json.dumps([{'ref': v['ref'], 'package_id': v['package_id']} for v in json.load(sys.stdin)['graph']['nodes'].values() if v.get('binary') == 'Missing'], indent=2))"
 
-    - name: archive profile
+    - name: Archive Conan home dir
       # Create this archive before dependencies are added to the local cache.
+      shell: bash
       run: tar -czf conan.tar -C $(conan config home) .
 
     - name: Upload Conan home
