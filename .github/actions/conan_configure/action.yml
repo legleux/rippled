@@ -10,6 +10,7 @@ runs:
     - name: Configure global settings
       shell: bash
       run: |
+        conanhome=$(conan config home)
         python3 <<EOF
         python -c
         import shutil
