@@ -4,18 +4,20 @@ env:
   CLANG_VERSION: 14
   CONAN_VERSION: 2.17
 on:
-  pull_request:
-    types: [opened, reopened, synchronize, ready_for_review]
-  push:
-    # If the branches list is ever changed, be sure to change it on all
-    # build/test jobs (nix, macos, windows)
-    branches:
-      # Always build the package branches
-      - develop
-      - release
-      - master
-      # Branches that opt-in to running
-      - "ci/**"
+  # pull_request:
+  #   types: [opened, reopened, synchronize, ready_for_review]
+  # push:
+  #   # If the branches list is ever changed, be sure to change it on all
+  #   # build/test jobs (nix, macos, windows)
+  #   branches:
+  #     # Always build the package branches
+  #     - develop
+  #     - release
+  #     - master
+  #     # Branches that opt-in to running
+  #     - "ci/**"
+  workflow_dispatch:
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -82,34 +84,11 @@ jobs:
           # bash /tmp/nodesource_setup.sh
           # apt-get update && apt-get install -y nodejs
 
-      - name: configure Conan
-        run: |
-          conan_home=$(conan config home)
-          python3 <<EOF
-          import shutil
-          import subprocess
-          from multiprocessing import cpu_count
-          from pathlib import Path
+      - name: Configure Conan
+        uses: ./.github/actions/configure_conan
+        env:
+         CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 
-          conanhome = subprocess.check_output(["conan", "config", "home"], text=True).strip()
-          default_profile = Path("./conan_profile/default")
-
-          with (Path(conanhome) / "global.conf").open("a", encoding="utf-8") as f:
-              n = cpu_count()
-              f.write("tools.build:verbosity = verbose\n")
-              f.write(f"tools.build:jobs = {n}\n")
-              f.write(f"core.download:parallel = {n}\n")
-              f.write(f"core.upload:parallel = {n}\n")
-
-          # Install the default profile
-          profile_path = Path(conanhome) / "profiles/default"
-          profile_path.parent.mkdir(parents=True, exist_ok=True)
-          shutil.copy(default_profile, profile_path)
-          EOF
-          conan version >> $GITHUB_STEP_SUMMARY
-          conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
-          # where to do this?
-          conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
       - name: archive profile
         # Create this archive before dependencies are added to the local cache.
         run: tar -czf conan.tar -C $(conan config home) .
@@ -146,7 +125,6 @@ jobs:
     needs: dependencies
     runs-on: [self-hosted, heavy]
     container: ghcr.io/xrplf/rippled-build-ubuntu:aaf5e3e
-    # container: conan2_wnode
     env:
       build_dir: build
     steps:

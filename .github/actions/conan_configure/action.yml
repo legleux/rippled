@@ -1,0 +1,88 @@
+name: dependencies
+inputs:
+  profile:
+    required: false
+  compiler_version:
+    required: true
+  configuration:
+    required: true
+# An implicit input is the environment variable `build_dir`.
+runs:
+  using: composite
+  steps:
+    - name: configure global settings
+      shell: python
+      run: |
+        import shutil
+        import subprocess
+        import sys
+        from multiprocessing import cpu_count
+        from pathlib import Path
+
+        conanhome = Path(subprocess.check_output(["conan", "config", "home"], text=True).strip())
+        conan_profile_path = conanhome / "profiles" / "default"
+        global_conf = conanhome / "global.conf"
+        default_profile = Path.cwd() / "conan_profile" / "default"
+        profile_cmd = ["conan", "profile", "show", "--profile:all", "default"]
+        global_defaults = f"""
+        tools.build:verbosity = verbose
+        tools.build:jobs = {(n:=cpu_count())}
+        core.download:parallel = {n}
+        core.upload:parallel = {n}
+        """
+
+        if conan_profile_path.is_file():
+            print(f"conan default profile {conan_profile_path} already exists!")
+        else:
+            conan_profile_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy(default_profile, conan_profile_path)
+            print(f"Copied {default_profile.resolve()} to {conan_profile_path.resolve()}")
+
+        subprocess.run(profile_cmd)
+
+        if "tools.build:verbosity" not in global_conf.read_text(encoding="utf-8"):
+            with global_conf.open("a", encoding="utf-8") as f: f.write(global_defaults)
+        
+        print(conanhome)
+
+    - name: Export custom recipes
+      shell: bash
+      run: |
+        conan export --version 1.1.10 external/snappy
+        conan export --version 9.7.3 external/rocksdb
+        conan export --version 4.0.3 external/soci
+        conan export --version 2.0.8 external/nudb
+
+    - name: Add Ripple Conan remote
+      shell: bash
+      run: |
+        conan remote list
+        conan remote remove ripple || true
+        # Do not quote the URL. An empty string will be accepted (with
+        # a non-fatal warning), but a missing argument will not.
+        conan remote add ripple --index 0 ${{ env.CONAN_URL }}
+
+    - name: Authenticate to Ripple Conan remote
+      id: remote
+      shell: bash
+      run: |
+        ## Don't try this yet...
+        # `conan user` implicitly uses the environment variables
+        # CONAN_LOGIN_USERNAME_<REMOTE> and CONAN_PASSWORD_<REMOTE>.
+        # https://docs.conan.io/1/reference/commands/misc/user.html#using-environment-variables
+        # https://docs.conan.io/1/reference/env_vars.html#conan-login-username-conan-login-username-remote-name
+        # https://docs.conan.io/1/reference/env_vars.html#conan-password-conan-password-remote-name
+        # echo outcome=$(conan user --remote ripple --password >&2 \
+        #   && echo success || echo failure) | tee ${GITHUB_OUTPUT}
+
+    - name: List missing packages
+      id: remote
+      shell: bash
+      run: | 
+        conan graph info . --format json  | python -c "import sys, json; print(json.dumps([{'ref': v['ref'], 'package_id': v['package_id']} for v in json.load(sys.stdin)['graph']['nodes'].values() if v.get('binary') == 'Missing'], indent=2))"
+
+    # - name: Upload conan home
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: my-log
+    #     path: ./path/to/log.txt

@@ -74,42 +74,10 @@ jobs:
           conan --version
           cmake --version
 
-      - name: configure Conan
-        shell: bash
-        run: |
-          python <<EOF
-          import shutil
-          import subprocess
-          import sys
-          from multiprocessing import cpu_count
-          from pathlib import Path
-
-          conanhome = Path(subprocess.check_output(["conan", "config", "home"], text=True).strip())
-          conan_profile_path = conanhome / "profiles" / "default"
-          global_conf = conanhome / "global.conf"
-          default_profile = Path.cwd() / "conan_profile" / "default"
-          profile_cmd = ["conan", "profile", "show", "--profile:all", "default"]
-          global_defaults = f"""
-          tools.build:verbosity = verbose
-          tools.build:jobs = {(n:=cpu_count())}
-          core.download:parallel = {n}
-          core.upload:parallel = {n}
-          """
-
-          if conan_profile_path.is_file():
-              print(f"conan default profile {conan_profile_path} already exists!")
-          else:
-              conan_profile_path.parent.mkdir(parents=True, exist_ok=True)
-              shutil.copy(default_profile, conan_profile_path)
-              print(f"Copied {default_profile.resolve()} to {conan_profile_path.resolve()}")
-
-          subprocess.run(profile_cmd)
-
-          if "tools.build:verbosity" not in global_conf.read_text(encoding="utf-8"):
-              with global_conf.open("a", encoding="utf-8") as f: f.write(global_defaults)
-          EOF
-
-          conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
+      - name: Configure Conan
+        uses: ./.github/actions/configure_conan
+        env:
+         CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 
       - name: build dependencies
         uses: ./.github/actions/dependencies
