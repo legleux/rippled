@@ -289,10 +289,10 @@ jobs:
           ls -l ${{ steps.conan_info.outputs.conan_home }}
       - name: checkout
         uses: actions/checkout@v4
+      - name: Configure Conan
+        uses: ./.github/actions/conan_configure
       - name: dependencies
         uses: ./.github/actions/dependencies
-        env:
-          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
         with:
           configuration: ${{ matrix.configuration }}
       - name: build
@@ -333,19 +333,19 @@ jobs:
           name: coverage.xml
           path: coverage.xml
           retention-days: 30
-      # - name: upload coverage report
-      #   uses: wandalen/wretry.action@v1.4.10
-      #   with:
-      #     action: codecov/codecov-action@v4.5.0
-      #     with: |
-      #       files: coverage.xml
-      #       fail_ci_if_error: true
-      #       disable_search: true
-      #       verbose: true
-      #       plugin: noop
-      #       token: ${{ secrets.CODECOV_TOKEN }}
-      #     attempt_limit: 5
-      #     attempt_delay: 210000 # in milliseconds
+      - name: upload coverage report
+        uses: wandalen/wretry.action@v1.4.10
+        with:
+          action: codecov/codecov-action@v4.5.0
+          with: |
+            files: coverage.xml
+            fail_ci_if_error: true
+            disable_search: true
+            verbose: true
+            plugin: noop
+            token: ${{ secrets.CODECOV_TOKEN }}
+          attempt_limit: 5
+          attempt_delay: 210000 # in milliseconds
 
   # conan:
   #   needs: dependencies
@@ -445,34 +445,8 @@ jobs:
             echo "COMPILER=$COMPILER" >> $GITHUB_ENV
             echo "CLANG_VERSION=$CLANG_VERSION" >> $GITHUB_ENV
 
-        - name: configure Conan
-          run: |
-            python3 <<EOF
-            import shutil
-            import subprocess
-            from multiprocessing import cpu_count
-            from pathlib import Path
-
-            conanhome = Path(subprocess.check_output(["conan", "config", "home"], text=True).strip())
-            default_profile = Path("./conan_profile/default")
-            conan_home = Path(conanhome)
-
-            with Path(conanhome / "global.conf").open("a", encoding="utf-8") as f:
-                n = cpu_count()
-                f.write("tools.build:verbosity = verbose\n")
-                f.write(f"tools.build:jobs = {n}\n")
-                f.write(f"core.download:parallel = {n}\n")
-                f.write(f"core.upload:parallel = {n}\n")
-
-            # Install the default profile
-            profile_path = conanhome / "profiles/default"
-            profile_path.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy(default_profile, profile_path)
-            EOF
-
-            conan version >> $GITHUB_STEP_SUMMARY
-            conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
-            conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
+        - name: Configure Conan
+          uses: ./.github/actions/conan_configure
 
         - name: build dependencies
           run: |
