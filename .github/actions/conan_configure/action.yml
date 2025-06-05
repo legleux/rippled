@@ -50,7 +50,7 @@ runs:
 
         conan version >> $GITHUB_STEP_SUMMARY
         conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
-        conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
+        # conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
 
     - name: Export custom recipes
       shell: bash
