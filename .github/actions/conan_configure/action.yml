@@ -72,7 +72,6 @@ runs:
         #   && echo success || echo failure) | tee ${GITHUB_OUTPUT}
 
     - name: List missing packages
-      id: remote
       shell: bash
       run: | 
         conan graph info . --format json  | python -c "import sys, json; print(json.dumps([{'ref': v['ref'], 'package_id': v['package_id']} for v in json.load(sys.stdin)['graph']['nodes'].values() if v.get('binary') == 'Missing'], indent=2))"
