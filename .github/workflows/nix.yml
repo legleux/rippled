@@ -4,18 +4,18 @@ env:
   CLANG_VERSION: 14
   CONAN_VERSION: 2.17
 on:
-  # pull_request:
-  #   types: [opened, reopened, synchronize, ready_for_review]
-  # push:
-  #   # If the branches list is ever changed, be sure to change it on all
-  #   # build/test jobs (nix, macos, windows)
-  #   branches:
-  #     # Always build the package branches
-  #     - develop
-  #     - release
-  #     - master
-  #     # Branches that opt-in to running
-  #     - "ci/**"
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+  push:
+    # If the branches list is ever changed, be sure to change it on all
+    # build/test jobs (nix, macos, windows)
+    branches:
+      # Always build the package branches
+      - develop
+      - release
+      - master
+      # Branches that opt-in to running
+      - "ci/**"
   workflow_dispatch:
 
 concurrency:
