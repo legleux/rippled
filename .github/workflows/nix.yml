@@ -403,7 +403,7 @@ jobs:
       fail-fast: false
       matrix:
         platform: [linux]
-        compiler: [clang]
+        compiler: [clang16] # just to differentiate for conanhome
         configuration: [Debug]
     runs-on: [self-hosted, heavy]
     container: debian:bookworm
