@@ -85,7 +85,7 @@ jobs:
           # apt-get update && apt-get install -y nodejs
 
       - name: Configure Conan
-        uses: ./.github/actions/configure_conan
+        uses: ./.github/actions/conan_configure
         env:
          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 

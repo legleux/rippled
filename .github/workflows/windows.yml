@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   test:
-    name: Visual Studio ${{ matrix.version.generator }}-${{ matrix.configuration.type }}
+    name: VS ${{ matrix.version.generator }}-${{ matrix.configuration.type }}
     strategy:
       fail-fast: false
       matrix:
@@ -75,7 +75,7 @@ jobs:
           cmake --version
 
       - name: Configure Conan
-        uses: ./.github/actions/configure_conan
+        uses: ./.github/actions/conan_configure
         env:
          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 
@@ -95,7 +95,7 @@ jobs:
           configuration: ${{ matrix.configuration.type }}
           # Hard code for now. Move to the matrix if varied options are needed
           # cmake-args: '-Dassert=TRUE -Dwerr=TRUE -Dreporting=OFF -Dunity=ON'
-          cmake-args: '-Dxrpld=TRUE -Dtests=True -Dassert=TRUE -Dwerr=TRUE' # set in conanfile if ci/win?
+          cmake-args: '-Dxrpld=TRUE -Dtests=True -Dunity=ON -Dassert=TRUE -Dwerr=TRUE' # set in conanfile if ci/win?
           cmake-target: rippled
 
       - name: test
