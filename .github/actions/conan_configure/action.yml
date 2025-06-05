@@ -90,7 +90,10 @@ runs:
     - name: Archive Conan home dir
       # Create this archive before dependencies are added to the local cache.
       shell: bash
-      run: tar -czf conan.tar -C $(conan config home) .
+      run: |
+        name="${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}"
+        echo "Artifact name: ${name}"
+        tar -czf conan.tar -C $(conan config home) .
 
     - name: Upload Conan home
       uses: actions/upload-artifact@v4
