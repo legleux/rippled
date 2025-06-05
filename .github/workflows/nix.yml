@@ -152,10 +152,6 @@ jobs:
           configuration: ${{ matrix.configuration }}
           compiler: ${{ matrix.compiler }}
           # cmake-args: ${{ matrix.cmake_args }}
-      - name: configure Conan
-        run: |
-          default_profile=$(find . -name "default" -type f)
-          #mkdir ~/.conan2/profiles && cp "${default_profile}" ~/.conan2/profiles/
       - name: build
         # env:
         #   BUILD_TYPE: ${{ matrix.configuration }}
@@ -182,7 +178,6 @@ jobs:
           compiler: ${{ matrix.compiler }}
           # compiler_version: ${{ matrix.compiler_version }}
           cmake-args: "-Dxrpld=True -Dtests=True -Dassert=TRUE -Dwerr=TRUE ${{ matrix.cmake-args }}"
-
       - name: Run unit tests
         run: |
           rippled=$(find . -name "rippled" -type f)
@@ -283,8 +278,7 @@ jobs:
           ls -l ${{ steps.conan_info.outputs.conan_home }}
       - name: checkout
         uses: actions/checkout@v4
-      - name: Configure Conan
-        uses: ./.github/actions/conan_configure
+
         env:
           CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
       - name: dependencies
@@ -450,11 +444,6 @@ jobs:
             echo "BUILD_DIR=${build_dir}" >> $GITHUB_ENV
             echo "COMPILER=$COMPILER" >> $GITHUB_ENV
             echo "CLANG_VERSION=$CLANG_VERSION" >> $GITHUB_ENV
-
-        - name: Configure Conan
-          uses: ./.github/actions/conan_configure
-          env:
-            CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 
         - name: build dependencies
           run: |
