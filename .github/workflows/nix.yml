@@ -278,7 +278,6 @@ jobs:
           ls -l ${{ steps.conan_info.outputs.conan_home }}
       - name: checkout
         uses: actions/checkout@v4
-
         env:
           CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
       - name: dependencies
@@ -316,7 +315,6 @@ jobs:
           format: markdown
           indicators: true
           output: both
-
       - name: archive coverage report
         uses: actions/upload-artifact@v4
         with:
@@ -403,6 +401,10 @@ jobs:
       CLANG_VERSION: 16
     strategy:
       fail-fast: false
+      matrix:
+        platform: [linux]
+        compiler: [clang]
+        configuration: [Debug]
     runs-on: [self-hosted, heavy]
     container: debian:bookworm
     steps:
@@ -425,15 +427,18 @@ jobs:
         - name: checkout
           uses: actions/checkout@v4
 
-        - name: Download cache
-          uses: actions/download-artifact@v4
-          with:
-            name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
+        - name: Configure Conan
+          uses: ./.github/actions/conan_configure
 
-        - name: extract cache
-          run: |
-            conan_home=$(conan config home)
-            tar -xzf conan.tar -C "${conan_home}"
+        # - name: Download cache
+        #   uses: actions/download-artifact@v4
+        #   with:
+        #     name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
+
+        # - name: extract cache
+        #   run: |
+        #     conan_home=$(conan config home)
+        #     tar -xzf conan.tar -C "${conan_home}"
 
         - name: prepare environment
           run: |
