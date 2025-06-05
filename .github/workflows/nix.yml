@@ -87,7 +87,7 @@ jobs:
       - name: Configure Conan
         uses: ./.github/actions/conan_configure
         env:
-         CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
+          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 
       - name: archive profile
         # Create this archive before dependencies are added to the local cache.
@@ -291,6 +291,8 @@ jobs:
         uses: actions/checkout@v4
       - name: Configure Conan
         uses: ./.github/actions/conan_configure
+        env:
+          CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
       - name: dependencies
         uses: ./.github/actions/dependencies
         with:
@@ -447,6 +449,8 @@ jobs:
 
         - name: Configure Conan
           uses: ./.github/actions/conan_configure
+          env:
+            CONAN_URL: http://18.143.149.228:8081/artifactory/api/conan/dev
 
         - name: build dependencies
           run: |

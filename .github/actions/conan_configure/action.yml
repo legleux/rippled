@@ -48,6 +48,10 @@ runs:
         print(conanhome)
         EOF
 
+        conan version >> $GITHUB_STEP_SUMMARY
+        conan profile show --profile:all default >> $GITHUB_STEP_SUMMARY
+        conan remote add ripple --index 0 http://18.143.149.228:8081/artifactory/api/conan/dev
+
     - name: Export custom recipes
       shell: bash
       run: |
@@ -83,8 +87,13 @@ runs:
       run: |
         conan graph info . --format json  | python -c "import sys, json; print(json.dumps([{'ref': v['ref'], 'package_id': v['package_id']} for v in json.load(sys.stdin)['graph']['nodes'].values() if v.get('binary') == 'Missing'], indent=2))"
 
-    # - name: Upload conan home
-    #   uses: actions/upload-artifact@v4
-    #   with:
-    #     name: my-log
-    #     path: ./path/to/log.txt
+    - name: archive profile
+      # Create this archive before dependencies are added to the local cache.
+      run: tar -czf conan.tar -C $(conan config home) .
+
+    - name: Upload Conan home
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
+        path: conan.tar
+        if-no-files-found: error
