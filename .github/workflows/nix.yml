@@ -102,12 +102,6 @@ jobs:
           configuration: ${{ matrix.configuration }}
           compiler: ${{ matrix.compiler }}
           compiler_version: ${{ matrix.compiler_version }}
-      - name: upload archive
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.platform }}-${{ matrix.compiler }}-${{ matrix.configuration }}
-          path: conan.tar
-          if-no-files-found: error
 
   test:
     name: Build ${{ matrix.compiler }}-${{ matrix.configuration }} unity=${{ matrix.unity }}
