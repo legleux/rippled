@@ -53,16 +53,17 @@ jobs:
         run: |
 
           if command -v python3 >/dev/null 2>&1; then
-              echo "Python executable exists"
+              echo "python3 executable exists"
               if ! command -v python >/dev/null 2>&1; then
+                echo "python symlink does not exist"
                 ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
               fi
           else
               echo "No Python!!!"
-              exit 1
               brew install python@3.13
               ln -s /opt/homebrew/bin/python3 /opt/homebrew/bin/python
           fi
+          python --version
 
       - name: install cmake
         run: |

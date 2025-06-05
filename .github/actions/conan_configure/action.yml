@@ -11,8 +11,7 @@ runs:
       shell: bash
       run: |
         conanhome=$(conan config home)
-        python3 <<EOF
-        python -c
+        python <<EOF
         import shutil
         import subprocess
         import sys
