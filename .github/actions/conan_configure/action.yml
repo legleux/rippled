@@ -1,12 +1,8 @@
-name: dependencies
+name: conan_configure
 inputs:
   profile:
     required: false
-  compiler_version:
-    required: true
-  configuration:
-    required: true
-# An implicit input is the environment variable `build_dir`.
+
 runs:
   using: composite
   steps:
