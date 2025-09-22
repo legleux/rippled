@@ -25,7 +25,7 @@
 var menudata={children:[
 {text:"Main Page",url:"index.html"},
 {text:"Related Pages",url:"pages.html"},
-{text:"Modules",url:"modules.html"},
+{text:"Topics",url:"topics.html"},
 {text:"Namespaces",url:"namespaces.html",children:[
 {text:"Namespace List",url:"namespaces.html"},
 {text:"Namespace Members",url:"namespacemembers.html",children:[
@@ -93,6 +93,7 @@ var menudata={children:[
 {text:"h",url:"namespacemembers_vars_h.html#index_h"},
 {text:"i",url:"namespacemembers_vars_i.html#index_i"},
 {text:"j",url:"namespacemembers_vars_j.html#index_j"},
+{text:"k",url:"namespacemembers_vars_k.html#index_k"},
 {text:"l",url:"namespacemembers_vars_l.html#index_l"},
 {text:"m",url:"namespacemembers_vars_m.html#index_m"},
 {text:"n",url:"namespacemembers_vars_n.html#index_n"},
@@ -125,6 +126,7 @@ var menudata={children:[
 {text:"s",url:"namespacemembers_type_s.html#index_s"},
 {text:"t",url:"namespacemembers_type_t.html#index_t"},
 {text:"u",url:"namespacemembers_type_u.html#index_u"},
+{text:"v",url:"namespacemembers_type_v.html#index_v"},
 {text:"w",url:"namespacemembers_type_w.html#index_w"},
 {text:"x",url:"namespacemembers_type_x.html#index_x"}]},
 {text:"Enumerations",url:"namespacemembers_enum.html",children:[
@@ -330,7 +332,7 @@ var menudata={children:[
 {text:"u",url:"functions_eval_u.html#index_u"},
 {text:"v",url:"functions_eval_v.html#index_v"},
 {text:"w",url:"functions_eval_w.html#index_w"}]},
-{text:"Related Functions",url:"functions_rela.html",children:[
+{text:"Related Symbols",url:"functions_rela.html",children:[
 {text:"a",url:"functions_rela.html#index_a"},
 {text:"b",url:"functions_rela_b.html#index_b"},
 {text:"c",url:"functions_rela_c.html#index_c"},
