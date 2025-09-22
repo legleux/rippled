@@ -1,0 +1,45 @@
+repos:
+  # Lintian for Debian packaging
+  - repo: local
+    hooks:
+      - id: lintian
+        name: Run lintian on Debian package files
+        entry: bash -c 'lintian --pedantic || true'
+        language: system
+        pass_filenames: false
+        always_run: true
+
+  # Check for bashisms in scripts
+  # - repo: local
+  #   hooks:
+  #     - id: checkbashisms
+  #       name: Check for bashisms in shell scripts
+  #       entry: bash -c 'find . -type f -name "*.sh" | xargs checkbashisms || true'
+  #       language: system
+  #       pass_filenames: false
+
+  # Validate Conan lockfile consistency
+  - repo: local
+    hooks:
+      - id: conan-lock-validate
+        name: Validate Conan lock consistency
+        entry: bash -c 'conan lock validate || echo "Conan lock validation skipped"'
+        language: system
+        pass_filenames: false
+
+  # Lint CMake files
+  - repo: https://github.com/cheshirekow/cmake-format-precommit
+    rev: v0.6.13
+    hooks:
+      - id: cmake-format
+      - id: cmake-lint
+
+  # Optional: Update debian/changelog with snapshot version
+  - repo: local
+    hooks:
+      - id: update-debian-changelog
+        name: Update Debian changelog (manual trigger)
+        entry: bash scripts/update-changelog.sh
+        language: system
+        stages: [manual]
+        pass_filenames: false

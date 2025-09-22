@@ -1,0 +1,40 @@
+on:
+  workflow_call:
+    inputs:
+      pkg_type:
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: ${{ matrix.arch == 'amd64' && 'AMD' || 'ARM' }}
+    strategy:
+      fail-fast: false
+
+      matrix:
+        arch: ["amd64", "arm64"]
+    # runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
+    runs-on: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9.4' || 'debian-bookworm' }}:gcc-12
+    # container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9.4' || 'debian-bookworm' }}:gcc-12
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Build packages
+        id: build_pkg
+        uses: ./.github/actions/build-pkg
+        with:
+          pkg_type: ${{ inputs.pkg_type }}
+
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ${{ matrix.arch }}-${{ inputs.pkg_type }}
+      #     path: |
+      #       ./*${{ matrix.arch}}64.${{ inputs.pkg_type }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.arch }}-${{ inputs.pkg_type }}
+          path: ${{ github.workspace }}/**/*.${{ inputs.pkg_type }}
+          ## when I know where it goes use this:
+          # path: ${{ github.workspace }}/*.${{ matrix.arch }}.${{ inputs.pkg_type }}
+          if-no-files-found: error

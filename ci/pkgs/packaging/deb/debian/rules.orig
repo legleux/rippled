@@ -1,0 +1,84 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+export DH_OPTIONS = -v
+# debuild sets some warnings that don't work well
+# for our curent build..so try to remove those flags here:
+export CFLAGS:=$(subst -Wformat,,$(CFLAGS))
+export CFLAGS:=$(subst -Werror=format-security,,$(CFLAGS))
+export CXXFLAGS:=$(subst -Wformat,,$(CXXFLAGS))
+export CXXFLAGS:=$(subst -Werror=format-security,,$(CXXFLAGS))
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_OPTIONS = nodwz
+
+export RIPPLE_REMOTE="xrplf"
+export RIPPLE_REMOTE_URL="https://conan.ripplex.io"
+
+export CONAN_HOME    := $(shell conan config home)
+export CONAN_PROFILE := $(shell conan profile path default)
+
+export DEB_CMAKE_GENERATOR = Ninja
+export DEB_CMAKE_BUILD_TYPE = Release
+export DEB_CMAKE_EXTRA_FLAGS = -Dvalidator_keys=ON -Dtests=ON -Dxrpld=ON -DCMAKE_TOOLCHAIN_FILE=build/generators/conan_toolchain.cmake
+
+
+.ONESHELL:
+SHELL := /bin/bash
+NPROC := $(shell expr $(shell nproc) - 2)
+BUILD_DIR := build.rippled
+VKT_PATH := $(BUILD_DIR)/vkt
+
+%:
+	dh $@ --buildsystem=cmake
+
+override_dh_installsystemd:
+	dh_installsystemd --no-start
+
+override_dh_auto_configure:
+
+	dpkg-buildflags --get CFLAGS
+	dpkg-buildflags --get LDFLAGS
+	dpkg-buildflags --status
+
+	conan remote add --index 0 $(RIPPLE_REMOTE) $(RIPPLE_REMOTE_URL) --force
+	sed -i "s/gnu17/20/" $(CONAN_PROFILE)
+
+	git clone https://github.com/ripple/validator-keys-tool.git $(VKT_PATH)
+conan install . --options:a "&:xrpld=True" --options:a "&:tests=True" --build "missing"
+
+	dh_auto_configure --builddirectory=$(BUILD_DIR) -- \
+	cmake .. \
+        -DCMAKE_BUILD_TYPE=Release \
+        -Dvalidator_keys=ON \
+        -Dtests=ON \
+        -Dxrpld=ON \
+        -DCMAKE_VERBOSE_MAKEFILE=ON \
+        -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake
+# 		-DFETCHCONTENT_FULLY_DISCONNECTED=OFF \
+# 		-DFETCHCONTENT_SOURCE_DIR_VALIDATOR_KEYS_SRC=$(VKT_PATH) \
+
+
+# dh_auto_configure --builddirectory=$(BUILD_DIR)
+override_dh_auto_build:
+cmake --build . --target rippled --target validator-keys --parallel 30
+
+
+#manually run:
+FETCHCONTENT_BASE_DIR:PATH=/home/emel/dev/Ripple/rippled/rippled/github_linux_packages/build/dpkg/packages/rippled/build.rippled/_deps
+FETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF
+FETCHCONTENT_QUIET:BOOL=ON
+FETCHCONTENT_SOURCE_DIR_VALIDATOR_KEYS_SRC:PATH=
+FETCHCONTENT_UPDATES_DISCONNECTED:BOOL=OFF
+FETCHCONTENT_UPDATES_DISCONNECTED_VALIDATOR_KEYS_SRC:BOOL=OFF
+
+override_dh_auto_install:
+	cmake --install $(BUILD_DIR) --prefix debian/tmp/opt/ripple
+	install -D $(BUILD_DIR)/validator-keys/validator-keys debian/tmp/opt/ripple/bin/validator-keys
+	install -D bin/getRippledInfo debian/tmp/opt/ripple/bin/getRippledInfo
+	install -D update-rippled.sh debian/tmp/opt/ripple/bin/update-rippled.sh
+	install -D update-rippled-cron debian/tmp/opt/ripple/etc/update-rippled-cron
+	install -D rippled-logrotate debian/tmp/etc/logrotate.d/rippled
+	rm -rf debian/tmp/opt/ripple/lib64/cmake/date
+
+override_dh_dwz:
+	@echo "Skipping DWZ due to huge debug info"

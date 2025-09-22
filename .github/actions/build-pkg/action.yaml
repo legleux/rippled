@@ -1,0 +1,15 @@
+name: Build package
+description: "Build distro-specific Linux binary packages."
+
+inputs:
+  pkg_type:
+    description: "distro to build"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        PKG: ${{ inputs.pkg_type }}
+      run: ./ci/pkgs/build.sh

@@ -1,0 +1,8 @@
+X-Repolib-Name: XRP Ledger Server
+Types: deb
+Enabled: yes
+URIs: $REPO
+Suites: $VERSION_CODENAME
+Components: $BRANCH
+Signed-by: $KEY_PATH
+Architectures: amd64
