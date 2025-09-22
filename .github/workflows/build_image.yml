@@ -1,0 +1,13 @@
+name: Build and push image
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build_image:
+    name: Build images
+    uses: ./.github/workflows/build_image_rwf.yml
+    with:
+      dockerfile: ci/docker/Dockerfile.real
+    secrets: inherit
