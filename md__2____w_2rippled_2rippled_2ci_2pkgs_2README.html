@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>rippled: Unit tests</title>
+<title>rippled: README</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,10 +69,20 @@ $(function() {
 
 </div><!-- top -->
 <div><div class="header">
-  <div class="headertitle"><div class="title">Unit tests</div></div>
+  <div class="headertitle"><div class="title">README</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md221"></a> This directory contains unit tests for the project. The difference from existing <code>src/test</code> folder is that we switch to 3rd party testing framework (doctest). We intend to gradually move existing tests from our own framework to doctest and such tests will be moved to this new folder. </p>
+<div class="textblock"><p>Deploy packages and Docker images for <a href="https://gitlab.ops.ripple.com/xrpledger/rippled_mirror/">GitLab ripple mirror</a></p>
+<h1><a class="anchor" id="autotoc_md57"></a>
+rippled Packaging and Containers</h1>
+<p>This folder contains docker container definitions and configuration files to support building rpm and deb packages of rippled. The container definitions include some additional software/packages that are used for general build/test CI workflows of rippled but are not explicitly needed for the package building workflow.</p>
+<h2><a class="anchor" id="autotoc_md58"></a>
+CMake Targets</h2>
+<p>If you have docker installed on your local system, then the main CMake file will enable several targets related to building packages: <code>rpm_container</code>, <code>rpm</code>, <code>dpkg_container</code>, and <code>dpkg</code>. The package targets depend on the container targets and will trigger a build of those first. The container builds can take several dozen minutes to complete (depending on hardware specs), so quick build cycles are not possible currently. As such, these targets are often best suited to CI/automated build systems.</p>
+<p>The package build can be invoked like any other cmake target from the rippled root folder: </p><div class="fragment"><div class="line">mkdir -p build/pkg &amp;&amp; cd build/pkg</div>
+<div class="line">cmake -Dpackages_only=ON ../..</div>
+<div class="line">cmake --build . --target rpm</div>
+</div><!-- fragment --><p> Upon successful completion, the generated package files will be in the <code>build/pkg/packages</code> directory. For deb packages, simply replace <code>rpm</code> with <code>dpkg</code> in the build command above. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 <!-- start footer part -->
