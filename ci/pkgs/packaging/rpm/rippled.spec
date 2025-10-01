@@ -65,7 +65,7 @@ cmake \
   -DCMAKE_BUILD_TYPE=Release \
   -Dvalidator_keys=ON \
   -Dxrpld=ON \
-  -Dtests=ON \
+  -Dtests=OFF \
   -DCMAKE_INSTALL_PREFIX=%{_prefix} \
   -DCMAKE_VERBOSE_MAKEFILE=ON \
   -DCMAKE_TOOLCHAIN_FILE:FILEPATH=%{srcdir}/conan_deps/build/generators/conan_toolchain.cmake

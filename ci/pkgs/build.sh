@@ -145,8 +145,11 @@ CHANGELOG
     rm -rf ${repo_name}
     # Rename `.ddeb` to `.deb`. # Only on Ubuntu
     # for f in *.ddeb; do mv -- "$f" "${f%.ddeb}.deb"; done
-    popd
+    pushd -0 && dirs -c
+    pkgs=$(find . -name "*.rpm")
+    echo "They're at $pkgs"
     cp ${build_dir}/${repo_name}_${xrpl_version}_amd64.changes .
+    cp ${build_dir}/*.deb .
 
     awk '/Checksums-Sha256:/{hit=1;next}/Files:/{hit=0}hit' ${repo_name}_${xrpl_version}_amd64.changes | sed -E 's!^[[:space:]]+!!' > shasums
     sha() {
@@ -162,6 +165,6 @@ CHANGELOG
     dpkg_full_version=${full_version}
 EOF
 
-pushd -0 && dirs -c
+
 
 fi
