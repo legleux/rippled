@@ -33,8 +33,8 @@ jobs:
       #       ./*${{ matrix.arch}}64.${{ inputs.pkg_type }}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.arch }}-${{ inputs.pkg_type }}
-          path: ${{ github.workspace }}/**/*.${{ inputs.pkg_type }}
+          name: ${{ inputs.pkg_type }}-${{ matrix.arch }}
+          # path: ${{ github.workspace }}/**/*.${{ inputs.pkg_type }}
           ## when I know where it goes use this:
-          # path: ${{ github.workspace }}/*.${{ matrix.arch }}.${{ inputs.pkg_type }}
+          path: ${{ github.workspace }}/*.${{ matrix.arch }}.${{ inputs.pkg_type }}
           if-no-files-found: error
