@@ -12,7 +12,7 @@ jobs:
       fail-fast: false
 
       matrix:
-        arch: ["amd64", "arm64"]
+        arch: ["amd64"]
     runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
     # runs-on: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9.4' || 'debian-bookworm' }}:gcc-12
     container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9.4' || 'debian-bookworm' }}:gcc-12
