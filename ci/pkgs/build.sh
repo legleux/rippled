@@ -45,7 +45,7 @@ if [ "${PKG}" = 'rpm' ]; then
         export RPM_PATCH
     fi
 
-    build_dir=$(realpath $PWD/build/rpm/packages)
+    # build_dir="./build/${PKG}/packages"
     rm -rf ${build_dir}
     mkdir -p ${build_dir}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
     cp "${pkgs_dir}/rippled.patch" ${build_dir}/rpmbuild/SOURCES/
@@ -55,7 +55,7 @@ if [ "${PKG}" = 'rpm' ]; then
         --format tar.gz \
         --output ${build_dir}/rpmbuild/SOURCES/rippled.tar.gz
     ln --symbolic "${repo_dir}" ${build_dir}/rippled
-    cp -r "${pkgs_dir}/packaging/rpm/rippled.spec" ${build_dir}
+    cp -r "${pkg_files}/rippled.spec" ${build_dir}
     pushd "${build_dir}" || exit
     echo "dev_version: $dev_version"
     echo "xrpl_version: $xrpl_version"
@@ -172,4 +172,5 @@ CHANGELOG
 EOF
 fi
 
-cp "./${build_dir}/*.${PKG}" .
+cp "${build_dir}/"*.$PKG .
+cp "${build_dir}/build_vars" .
