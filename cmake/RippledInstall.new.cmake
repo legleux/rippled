@@ -3,6 +3,7 @@
 #]===================================================================]
 
 include(GNUInstallDirs)
+# probably included already
 include(create_symbolic_link)
 include(CMakePackageConfigHelpers)
 
