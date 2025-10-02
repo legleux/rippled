@@ -7,6 +7,7 @@ repo_dir=$PWD
 set -a
 repo_name="rippled"
 pkgs_dir="${repo_dir}/ci/pkgs"
+build_dir="${repo_dir}/build/${PKG}/packages"
 shared_files="${pkgs_dir}/shared"
 pkg_files="${pkgs_dir}/packaging/${PKG}"
 build_info_src="${repo_dir}/src/libxrpl/protocol/BuildInfo.cpp"
