@@ -45,7 +45,7 @@ if [ "${PKG}" = 'rpm' ]; then
         export RPM_PATCH
     fi
 
-    build_dir=build/rpm/packages
+    build_dir=$(realpath $PWD/build/rpm/packages)
     rm -rf ${build_dir}
     mkdir -p ${build_dir}/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS}
     cp "${pkgs_dir}/rippled.patch" ${build_dir}/rpmbuild/SOURCES/
@@ -91,6 +91,8 @@ if [ "${PKG}" = 'rpm' ]; then
     rm -f rippled rippled.tar.gz rippled.spec
 
     pushd -0 && dirs -c
+    pkgs=$(find . -name "*.rpm")
+    echo "They're at $pkgs"
 
 elif [ "${PKG}" = 'deb' ]; then
     dpkg_version=$(echo "${xrpl_version}" | sed 's:-:~:g')
@@ -145,7 +147,11 @@ CHANGELOG
     rm -rf ${repo_name}
     # Rename `.ddeb` to `.deb`. # Only on Ubuntu
     # for f in *.ddeb; do mv -- "$f" "${f%.ddeb}.deb"; done
+    pkgs=$(find . -name "*.rpm")
+    echo "They're at $pkgs"
+    ls -lash
     pushd -0 && dirs -c
+    ls -lash
     pkgs=$(find . -name "*.rpm")
     echo "They're at $pkgs"
     cp ${build_dir}/${repo_name}_${xrpl_version}_amd64.changes .
@@ -164,7 +170,6 @@ CHANGELOG
     dpkg_version=${dpkg_version}
     dpkg_full_version=${full_version}
 EOF
-
-
-
 fi
+
+cp "./${build_dir}/*.${PKG}" .
