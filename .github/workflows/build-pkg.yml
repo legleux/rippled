@@ -1,0 +1,30 @@
+name: Build Linux packages
+on:
+  workflow_dispatch:
+    inputs:
+      pkg_type:
+        description: "Package type to build."
+        type: choice
+        default: deb
+        options:
+            - deb
+            - rpm
+      arch:
+        description: "The target architecture to build for."
+        type: choice
+        default: amd64
+        options:
+            - amd64
+            - arm64
+
+jobs:
+  build_pkg:
+    name: ${{ matrix.pkg_type == 'deb' && 'Debian' || 'RPM' }} package
+    strategy:
+      fail-fast: false
+      matrix:
+        pkg_type: [deb, rpm]
+    uses: ./.github/workflows/reusable-build-pkg.yml
+    with:
+      pkg_type: ${{ inputs.pkg_type }}
+      arch: ${{ inputs.arch }}

@@ -67,3 +67,13 @@ jobs:
       runs_on: ${{ inputs.runs_on }}
       image: ${{ inputs.image }}
       config_name: ${{ inputs.config_name }}
+
+  package:
+    strategy:
+      matrix:
+        pkg_type: [deb, rpm]
+        arch: [amd64]
+    uses: ./.github/workflows/reusable-build-pkg.yml
+    with:
+      runs_on: ${{ inputs.runs_on }}
+      config_name: ${{ inputs.config_name }}

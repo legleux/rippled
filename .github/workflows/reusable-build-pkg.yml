@@ -1,0 +1,57 @@
+on:
+  workflow_call:
+    inputs:
+      pkg_type:
+        description: "Package type to build."
+        type: string
+      runs_on:
+        description: Runner to run the job on as a JSON string
+        required: true
+        type: string
+      image:
+        description: "The image to run in (leave empty to run natively)"
+        required: true
+        type: string
+      build_type:
+        description: 'The build type to use ("Debug", "Release").'
+        required: true
+        type: string
+      cmake_args:
+        description: "Additional arguments to pass to CMake."
+        required: true
+        type: string
+      config_name:
+        description: "The name of the configuration."
+        required: true
+        type: string
+
+jobs:
+  build:
+    name: Package ${{ inputs.config_name }}
+    runs-on: ${{ fromJSON(inputs.runs_on) }}
+    container: ${{ inputs.image != '' && inputs.image || null }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Build packages
+        env:
+          PKG: ${{ inputs.pkg_type }}
+        run: |
+          export CMAKE_ARGS=${{ inputs.cmake_args }}
+          export BUILD_TYPE=${{ inputs.build_type }}
+          ./pkgs/build.sh
+          {
+          echo "<table>"
+          while IFS='=' read -r k v; do
+            printf '<tr><td>%s</td><td align="right"><code>%s</code></td></tr>\n' "$k" "$v"
+          done < build_vars
+          echo "</table>"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name:  ${{ inputs.config_name }}
+          path: '**/*.{deb,rpm}'
+          if-no-files-found: error
