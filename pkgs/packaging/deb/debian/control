@@ -1,0 +1,20 @@
+Source: rippled
+Section: net
+Priority: optional
+Maintainer: Ripple Labs Inc. <support@ripple.com>
+Build-Depends: cmake,
+ debhelper (>= 13),
+ debhelper-compat (= 13)
+#  debhelper (>= 14),
+#  debhelper-compat (= 14),
+#  TODO: Let's go for 14!
+Standards-Version: 4.6.0
+Homepage: https://github.com/XRPLF/rippled.git
+Rules-Requires-Root: no
+
+Package: rippled
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: XRP Ledger server (rippled)
+ rippled is the core server of the XRP Ledger, providing a peer-to-peer
+ network node for validating and processing transactions.

@@ -1,5 +1,5 @@
-# This workflow runs all workflows to check, build and test the project on
-# various Linux flavors, as well as on MacOS and Windows, on every push to a
+# This workflow runs all workflows to check, build, package and test the project on
+# various Linux flavors, as well as on macOS and Windows, on every push to a
 # user branch. However, it will not run if the pull request is a draft unless it
 # has the 'DraftRunCI' label. For commits to PRs that target a release branch,
 # it also uploads the libxrpl recipe to the Conan remote.
@@ -123,7 +123,10 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  upload-recipe:
+
+
+
+  notify-clio:
     needs:
       - should-run
       - build-test

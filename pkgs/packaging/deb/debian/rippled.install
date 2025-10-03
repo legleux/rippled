@@ -1,0 +1,10 @@
+etc/logrotate.d/rippled
+opt/ripple/bin/rippled
+opt/ripple/bin/update-rippled.sh
+opt/ripple/bin/validator-keys
+opt/ripple/bin/xrpld
+opt/ripple/etc/rippled.cfg
+opt/ripple/etc/update-rippled-cron
+opt/ripple/etc/validators.txt
+opt/ripple/include/*
+opt/ripple/lib/*

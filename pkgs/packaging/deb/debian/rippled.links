@@ -1,0 +1,4 @@
+opt/ripple/etc/rippled.cfg etc/opt/ripple/rippled.cfg
+opt/ripple/etc/validators.txt etc/opt/ripple/validators.txt
+opt/ripple/bin/rippled usr/local/bin/rippled
+opt/ripple/bin/rippled opt/ripple/bin/xrpld

@@ -75,7 +75,13 @@
     },
     {
       "distro_name": "debian",
-      "distro_version": "trixie",
+      "distro_version": "bullseye",
+      "compiler_name": "gcc",
+      "compiler_version": "12"
+    },
+    {
+      "distro_name": "rhel",
+      "distro_version": "9.4",
       "compiler_name": "gcc",
       "compiler_version": "14",
       "image_sha": "ab4d1f0"
