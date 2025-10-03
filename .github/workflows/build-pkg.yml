@@ -1,0 +1,22 @@
+name: Build Linux packages
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      pkg_type:
+        description: type to build
+        type: choice
+        options:
+            - deb
+            - rpm
+
+jobs:
+  build_pkg:
+    name: ${{ matrix.pkg_type == 'deb' && 'Debian' || 'RPM' }} package
+    strategy:
+      fail-fast: false
+      matrix:
+        pkg_type: [deb, rpm]
+    uses: ./.github/workflows/reusable-build-pkg.yml
+    with:
+      pkg_type: ${{ matrix.pkg_type }}

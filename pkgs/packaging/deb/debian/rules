@@ -1,0 +1,95 @@
+#!/usr/bin/make -f
+export DH_VERBOSE = 1
+export DH_OPTIONS = -v
+# debuild sets some warnings that don't work well
+# for our curent build..so try to remove those flags here:
+export CFLAGS:=$(subst -Wformat,,$(CFLAGS))
+export CFLAGS:=$(subst -Werror=format-security,,$(CFLAGS))
+export CXXFLAGS:=$(subst -Wformat,,$(CXXFLAGS))
+export CXXFLAGS:=$(subst -Werror=format-security,,$(CXXFLAGS))
+
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_OPTIONS = nodwz
+
+export RIPPLE_REMOTE="xrplf"
+export RIPPLE_REMOTE_URL="https://conan.ripplex.io"
+
+## CMake Configure args
+export DEB_CMAKE_GENERATOR = Ninja
+export DEB_CMAKE_BUILD_TYPE = Release
+# export CMAKE_EXTRA_FLAGS = -Dvalidator_keys=ON -Dtests=ON -Dxrpld=ON -DCMAKE_TOOLCHAIN_FILE=build/generators/conan_toolchain.cmake
+# optional: let debhelper add these automatically to cmake
+export CMAKE_EXTRA_FLAGS = -Dvalidator_keys=ON -Dtests=ON -Dxrpld=ON
+
+## CMake build args
+export DH_AUTO_BUILD_ARGS = --target rippled --target validator-keys
+export NPROC = $(shell expr $(shell nproc --ignore 2)
+NPROC := $(shell nproc --ignore=2)
+export DEB_BUILD_OPTIONS += parallel=$(NPROC)
+
+CONAN_HOME    := $(shell conan config home)
+CONAN_PROFILE := $(shell conan profile path default)
+CONAN_GCONF   := $(CONAN_HOME)/global.conf
+BUILD_DIR     := obj-$(DEB_BUILD_GNU_TYPE)
+
+.ONESHELL:
+SHELL := /bin/bash
+
+%:
+	dh $@ --buildsystem=cmake
+override_dh_installsystemd:
+	dh_installsystemd --no-start
+
+override_dh_auto_configure:
+	# Conan setup
+	conan remote add --index 0 $(RIPPLE_REMOTE) $(RIPPLE_REMOTE_URL) --force
+	conan config install ./conan/profiles/default --target-folder $(CONAN_HOME)/profiles
+	echo "core.download:parallel={{ os.cpu_count() }}" >> $(CONAN_GCONF)
+
+	conan install . \
+		--settings:all build_type=$(DEB_CMAKE_BUILD_TYPE) \
+		--options:host "&:xrpld=True" \
+		--options:host "&:tests=True" \
+		--output-folder=$(BUILD_DIR) \
+		--build=missing
+
+	# Debian assumes an offline build process and sets CMake's FETCHCONTENT_FULLY_DISCONNECTED variable to ON
+	# To use as much as the default settings as possible we'll clone it where CMake's FetchContent expects it.
+	mkdir -p "$(BUILD_DIR)/_deps"
+	git clone https://github.com/ripple/validator-keys-tool.git "$(BUILD_DIR)/_deps/validator_keys_src-src"
+
+	dh_auto_configure --builddirectory=$(BUILD_DIR) -- \
+		-DCMAKE_TOOLCHAIN_FILE:FILEPATH=$(BUILD_DIR)/build/generators/conan_toolchain.cmake \
+		-DCMAKE_BUILD_TYPE:STRING=$(DEB_CMAKE_BUILD_TYPE) \
+		-Dvalidator_keys=ON \
+		-Dtests=ON \
+		-Dxrpld=ON \
+		-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+# 		-Wdev --trace-expand --trace-format=human --log-level=VERBOSE \
+# 		-DFETCHCONTENT_FULLY_DISCONNECTED:BOOL=OFF \
+#TODO: DFETCHCONTENT_FULLY_DISCONNECTED should NOT have to be set!
+
+override_dh_auto_build:
+	dh_auto_build \
+		--builddirectory=$(BUILD_DIR) -- rippled validator-keys
+
+# 	cmake \
+# 		--build $(BUILD_DIR) \
+# 		--target rippled \
+# 		--target validator-keys \
+# 		--parallel $(NPROC)
+
+
+
+
+override_dh_auto_install:
+	cmake --install $(BUILD_DIR) --prefix debian/tmp/opt/ripple
+# 	install -D $(BUILD_DIR)/_deps/validator_keys_src-build/validator-keys/validator-keys debian/tmp/opt/ripple/bin/validator-keys
+	install -D $(BUILD_DIR)/_deps/validator_keys_src-build/validator-keys debian/tmp/opt/ripple/bin/validator-keys
+	install -D update-rippled.sh debian/tmp/opt/ripple/bin/update-rippled.sh
+	install -D update-rippled-cron debian/tmp/opt/ripple/etc/update-rippled-cron
+	install -D rippled-logrotate debian/tmp/etc/logrotate.d/rippled
+	rm -rf debian/tmp/opt/ripple/lib64/cmake/date
+
+override_dh_dwz:
+	@echo "Skipping DWZ due to huge debug info"
