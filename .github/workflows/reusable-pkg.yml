@@ -1,0 +1,41 @@
+name: Package
+
+on:
+  workflow_call:
+    inputs:
+      build_dir:
+        description: "The directory where to build."
+        required: false
+        type: string
+        default: ".build"
+      os:
+        description: 'The operating system to use for the build ("linux", "macos", "windows").'
+        required: false
+        type: string
+        default: linux
+      strategy_matrix_subset:
+        description: 'The strategy matrix to use for generating a subset of configurations.'
+        required: false
+        type: string
+        default: "package"
+
+jobs:
+  generate-matrix:
+    uses: ./.github/workflows/reusable-strategy-matrix.yml
+    with:
+      os: ${{ inputs.os }}
+      strategy_matrix_subset: ${{ inputs.strategy_matrix_subset }}
+
+  package:
+    needs:
+      - generate-matrix
+    uses: ./.github/workflows/reusable-package.yml
+    strategy:
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+    with:
+      build_type: ${{ matrix.build_type }}
+      cmake_args: ${{ matrix.cmake_args }}
+      cmake_target: ${{ matrix.cmake_target }}
+      runs_on: ${{ toJSON(matrix.architecture.runner) }}
+      image: ${{ contains(matrix.architecture.platform, 'linux') && format('ghcr.io/xrplf/ci/{0}-{1}:{2}-{3}-sha-5dd7158', matrix.os.distro_name, matrix.os.distro_version, matrix.os.compiler_name, matrix.os.compiler_version) || '' }}
+      config_name: ${{ matrix.config_name }}

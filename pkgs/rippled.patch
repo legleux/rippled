@@ -1,0 +1,42 @@
+diff --git a/cmake/RippledInstall.cmake b/cmake/RippledInstall.cmake
+index 9ce288d785..f5f859fc7f 100644
+--- a/cmake/RippledInstall.cmake
++++ b/cmake/RippledInstall.cmake
+@@ -32,12 +32,12 @@ install(
+   DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
+ )
+ 
+-install(CODE "
+-  set(CMAKE_MODULE_PATH \"${CMAKE_MODULE_PATH}\")
+-  include(create_symbolic_link)
+-  create_symbolic_link(xrpl \
+-    \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/ripple)
+-")
++# install(CODE "
++#   set(CMAKE_MODULE_PATH \"${CMAKE_MODULE_PATH}\")
++#   include(create_symbolic_link)
++#   create_symbolic_link(xrpl \
++#     \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/ripple)
++# ")
+ 
+ install (EXPORT RippleExports
+   FILE RippleTargets.cmake
+@@ -66,12 +66,12 @@ if (is_root_project AND TARGET rippled)
+     copy_if_not_exists(\"${CMAKE_CURRENT_SOURCE_DIR}/cfg/rippled-example.cfg\" etc rippled.cfg)
+     copy_if_not_exists(\"${CMAKE_CURRENT_SOURCE_DIR}/cfg/validators-example.txt\" etc validators.txt)
+   ")
+-  install(CODE "
+-    set(CMAKE_MODULE_PATH \"${CMAKE_MODULE_PATH}\")
+-    include(create_symbolic_link)
+-    create_symbolic_link(rippled${suffix} \
+-      \${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/xrpld${suffix})
+-  ")
++  # install(CODE "
++  #   set(CMAKE_MODULE_PATH \"${CMAKE_MODULE_PATH}\")
++  #   include(create_symbolic_link)
++  #   create_symbolic_link(rippled${suffix} \
++  #     \$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/xrpld${suffix})
++  # ")
+ endif ()
+ 
+ install (

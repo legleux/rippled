@@ -1,5 +1,5 @@
-# This workflow runs all workflows to check, build and test the project on
-# various Linux flavors, as well as on MacOS and Windows, on every push to a
+# This workflow runs all workflows to check, build, package and test the project on
+# various Linux flavors, as well as on macOS and Windows, on every push to a
 # user branch. However, it will not run if the pull request is a draft unless it
 # has the 'DraftRunCI' label.
 name: PR
@@ -62,6 +62,8 @@ jobs:
             .github/workflows/reusable-build.yml
             .github/workflows/reusable-build-test-config.yml
             .github/workflows/reusable-build-test.yml
+            .github/workflows/reusable-pkg.yml
+            .github/workflows/reusable-package.yml
             .github/workflows/reusable-strategy-matrix.yml
             .github/workflows/reusable-test.yml
             .codecov.yml
@@ -109,6 +111,16 @@ jobs:
       os: ${{ matrix.os }}
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  package:
+    needs: should-run
+    if: ${{ needs.should-run.outputs.go == 'true' }}
+    uses: ./.github/workflows/reusable-pkg.yml
+    strategy:
+      matrix:
+        os: [linux]
+    with:
+      os: ${{ matrix.os }}
 
   notify-clio:
     needs:

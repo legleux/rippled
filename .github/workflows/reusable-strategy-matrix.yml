@@ -13,6 +13,10 @@ on:
         required: false
         type: string
         default: "minimal"
+      strategy_matrix_subset:
+        description: 'The strategy matrix to use for generating a subset of configs).'
+        required: false
+        type: string
     outputs:
       matrix:
         description: "The generated strategy matrix."
@@ -38,4 +42,5 @@ jobs:
         env:
           GENERATE_CONFIG: ${{ inputs.os != '' && format('--config={0}.json', inputs.os) || '' }}
           GENERATE_OPTION: ${{ inputs.strategy_matrix == 'all' && '--all' || '' }}
-        run: ./generate.py ${{ env.GENERATE_OPTION }} ${{ env.GENERATE_CONFIG }} >> "${GITHUB_OUTPUT}"
+          GENERATE_SUBSET: ${{ inputs.strategy_matrix_subset != '' && format('--{0}', inputs.strategy_matrix_subset) || '' }}
+        run: ./generate.py ${{ env.GENERATE_SUBSET }} ${{ env.GENERATE_OPTION }} ${{ env.GENERATE_CONFIG }} >> "${GITHUB_OUTPUT}"
