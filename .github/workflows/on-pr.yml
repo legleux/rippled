@@ -115,15 +115,10 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  package:
+  build-package:
     needs: should-run
     if: ${{ needs.should-run.outputs.go == 'true' }}
-    uses: ./.github/workflows/reusable-pkg.yml
-    strategy:
-      matrix:
-        os: [linux]
-    with:
-      os: ${{ matrix.os }}
+    uses: ./.github/workflows/reusable-build-pkg.yml
 
   notify-clio:
     needs:

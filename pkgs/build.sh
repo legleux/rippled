@@ -7,24 +7,24 @@ set -o xtrace
 
 case "$ID $ID_LIKE" in
   *rhel*|*fedora*)
-    dnf -y module install "nodejs:20/common"
+    # dnf -y module install "nodejs:20/common"
     PKG="rpm"
     ;;
   *debian*|*ubuntu*)
-    curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
-    chmod +x nodesource_setup.sh
-    ./nodesource_setup.sh
-    apt-get install -y nodejs
+    # curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
+    # chmod +x nodesource_setup.sh
+    # ./nodesource_setup.sh
+    # apt-get install -y nodejs
     PKG="deb"
     ;;
 esac
 
-build_dir="/root/build/${PKG}/packages"
-./pkgs/build_rippled.${PKG}.sh
+# build_dir="/root/build/${PKG}/packages"
+# ./pkgs/build_rippled.${PKG}.sh
 
 # echo "my build_vars" > build_vars
 # exit 0
-if [ 1 -eq 0 ]; then
+# if [ 1 -eq 0 ]; then
 repo_dir=$PWD
 set -a
 repo_name="rippled"
@@ -184,23 +184,23 @@ fi
 
 fi
 
-find . -name "*.${PKG}"
-mkdir -p $build_dir
-if [ "${PKG}" = 'rpm' ]; then
-    mv /root/rpmbuild/RPMS/x86_64/* .
-    for f in *x86_64.rpm; do
-      new="${f/x86_64/amd64}"
-      mv "$f" "$build_dir/$new"
-      echo "Renamed $f -> $new"
-    done
-    # mv /root/rpmbuild/RPMS/x86_64/* $build_dir/
-else
-    echo $PWD
-    find / -name "rippled-3.0.0_amd64.deb"
-    mv *.deb $build_dir
-fi
-printf '%s\n' \
-    "rippled_version=3.0.0" \
-    "rippled_git_hash=deadbeef" \
-    > build_vars
+# find . -name "*.${PKG}"
+# mkdir -p $build_dir
+# if [ "${PKG}" = 'rpm' ]; then
+#     mv /root/rpmbuild/RPMS/x86_64/* .
+#     for f in *x86_64.rpm; do
+#       new="${f/x86_64/amd64}"
+#       mv "$f" "$build_dir/$new"
+#       echo "Renamed $f -> $new"
+#     done
+#     # mv /root/rpmbuild/RPMS/x86_64/* $build_dir/
+# else
+#     echo $PWD
+#     find / -name "rippled-3.0.0_amd64.deb"
+#     mv *.deb $build_dir
+# fi
+# printf '%s\n' \
+#     "rippled_version=3.0.0" \
+#     "rippled_git_hash=deadbeef" \
+#     > build_vars
 cp "${build_dir}/"*.$PKG .
