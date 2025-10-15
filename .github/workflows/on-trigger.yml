@@ -75,10 +75,5 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  package:
-    uses: ./.github/workflows/reusable-pkg.yml
-    strategy:
-      matrix:
-        os: [linux]
-    with:
-      os: ${{ matrix.os }}
+  build-package:
+    uses: ./.github/workflows/reusable-build-pkg.yml

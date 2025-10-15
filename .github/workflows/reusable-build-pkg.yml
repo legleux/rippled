@@ -1,0 +1,34 @@
+on:
+  workflow_call:
+    inputs:
+      pkg_type:
+        required: false
+        type: string
+      arch:
+        required: false
+        type: string
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        arch: ["amd64"]
+        pkg_type: ["deb", "rpm"]
+    runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
+    container: ghcr.io/xrplf/ci/${{ matrix.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Build packages
+        run: ./pkgs/build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
+          path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
+          if-no-files-found: error
+
+      - name: Dump info
+        run: cat ${{ github.workspace }}/build_vars >> $GITHUB_STEP_SUMMARY
