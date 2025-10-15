@@ -56,8 +56,7 @@ jobs:
       matrix:
         arch: ["amd64"]
         pkg_type: ["deb", "rpm"]
-    runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
-    container: ghcr.io/xrplf/ci/${{ matrix.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
+    runs-on: ubuntu-latest
     steps:
       - name: Set up Python
         uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
