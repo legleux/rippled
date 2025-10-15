@@ -19,9 +19,12 @@ GPG_KEY_B64 = os.environ["GPG_KEY_B64"]
 GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
 gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
 GPG_KEY = base64.b64decode(GPG_KEY_B64 + "==").decode("utf-8").strip()
-gpg_keyid = os.environ.get("GPG_KEY_ID", "C0010EC205B35A3310DC90DE395F97FFCCAFD9A2") # Techops ripple key
+gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
 
-gnupghome = Path(os.environ.get("GNUPGHOME", Path.cwd() / "gnupghome"))
+
+if not (gnupghome := os.environ.get("GNUPGHOME")):
+    gnupghome = mkdtemp()
+
 tmp_rpm_db = mkdtemp()
 gnupghome.mkdir(parents=True, exist_ok=True, mode=0o0700)
 gpg = gnupg.GPG(gnupghome=gnupghome)
