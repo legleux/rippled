@@ -9,6 +9,7 @@ name: Trigger
 on:
   push:
     branches:
+      - legleux/linux_packages
       - develop
       - release
       - master
