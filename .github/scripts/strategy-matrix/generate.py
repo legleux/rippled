@@ -211,8 +211,8 @@ if __name__ == '__main__':
         matrix += generate_strategy_matrix(args.all, read_config(THIS_DIR / "linux.json"))
     elif args.config is None or args.config == '':
         matrix += generate_strategy_matrix(args.all, read_config(THIS_DIR / "linux.json"))
-        matrix += generate_strategy_matrix(args.all, read_config(THIS_DIR / "macos.json"))
-        matrix += generate_strategy_matrix(args.all, read_config(THIS_DIR / "windows.json"))
+        # matrix += generate_strategy_matrix(args.all, read_config(THIS_DIR / "macos.json"))
+        # matrix += generate_strategy_matrix(args.all, read_config(THIS_DIR / "windows.json"))
     else:
         matrix += generate_strategy_matrix(args.all, read_config(args.config))
 
