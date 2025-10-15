@@ -48,6 +48,7 @@ BUILD_TYPE=${BUILD_TYPE:-Release}
 for t in $CMAKE_TARGET; do
   CMAKE_TARGETS +=" --target $t"
 done
+export CMAKE_TARGETS
 
 set +a
 if [ "${branch}" = 'develop' ]; then
