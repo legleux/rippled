@@ -183,7 +183,7 @@ CHANGELOG
     pushd -0 && dirs -c
 fi
 
-fi
+# fi
 
 # find . -name "*.${PKG}"
 # mkdir -p $build_dir
