@@ -10,6 +10,7 @@ on:
 
 jobs:
   build:
+    name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
     strategy:
       fail-fast: false
       matrix:
@@ -23,12 +24,18 @@ jobs:
 
       - name: Build packages
         run: ./pkgs/build.sh
+      - name: run tests
+        uses: ./.github/workflows/package-test.yml
 
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
           path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
           if-no-files-found: error
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
 
       - name: Dump info
         run: cat ${{ github.workspace }}/build_vars >> $GITHUB_STEP_SUMMARY
