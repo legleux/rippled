@@ -44,13 +44,8 @@ conan_remote_name="${CONAN_REMOTE_NAME:-xrplf}"
 conan_remote_url="${CONAN_REMOTE_URL:-https://conan.ripplex.io}"
 
 BUILD_TYPE=${BUILD_TYPE:-Release}
-
-for t in $CMAKE_TARGET; do
-  CMAKE_TARGETS +=" --target $t"
-done
-export CMAKE_TARGETS
-
 set +a
+
 if [ "${branch}" = 'develop' ]; then
     # TODO: Can remove when CMake sets version
     dev_version="${date}~${short_commit}"

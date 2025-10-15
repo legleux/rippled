@@ -7,7 +7,6 @@
 %global conan_remote_url   %{getenv:conan_remote_url}
 %global shared_files       %{getenv:shared_files}
 %global pkg_files          %{getenv:pkg_files}
-%global cmake_args         %{getenv:CMAKE_ARGS}
 %global build_type         %{getenv:BUILD_TYPE}
 
 %global _prefix           /opt/ripple
@@ -64,7 +63,9 @@ conan install %{srcdir} \
 cmake \
   -S %{srcdir} \
   -B %{blddir} \
-  %{cmake_args} \
+  -Dxrpld=ON \
+  -Dvalidator_keys=ON \
+  -Dtests=ON \
   -DCMAKE_BUILD_TYPE:STRING=%{build_type} \
   -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
   -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
