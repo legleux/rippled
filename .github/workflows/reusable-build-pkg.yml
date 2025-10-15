@@ -31,8 +31,9 @@ jobs:
           path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
           if-no-files-found: error
 
-  unit-test:
+  test:
     name: Test ${{ matrix.pkg_type }}-${{ matrix.arch }}
+    needs: build
     strategy:
       fail-fast: false
       matrix:
@@ -49,6 +50,7 @@ jobs:
 
   sign:
     name: Sign package ${{ matrix.pkg_type }}-${{ matrix.arch }}
+    needs: test
     strategy:
       fail-fast: false
       matrix:
