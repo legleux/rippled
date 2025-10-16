@@ -1,3 +1,10 @@
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.13"
+# dependencies = [
+#     "python-gnupg",
+# ]
+# ///
 import argparse
 import base64
 import os
@@ -20,7 +27,6 @@ GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
 gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
 GPG_KEY = base64.b64decode(GPG_KEY_B64 + "==").decode("utf-8").strip()
 gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
-
 
 if not (gnupghome := os.environ.get("GNUPGHOME")):
     gnupghome = mkdtemp()
