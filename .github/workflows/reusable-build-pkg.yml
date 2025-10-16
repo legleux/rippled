@@ -67,11 +67,14 @@ jobs:
         with:
           name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
 
+      - name: Display structure of downloaded files
+        run: ls -R
+
       - name: Sign
         env:
           GPG_B64: ${{ secrets.GPG_B64 }}
           GPG_PASS_B64: ${{ secrets.GPG_PASS_B64 }}
-        run: find packages -name \*.${{ matrix.pkg_type }} -print0 | xargs -0 -I{} python ./pkgs/sign_packages.py {}
+        run: find . -name \*.${{ matrix.pkg_type }} -print0 | xargs -0 -I{} python ./pkgs/sign_packages.py {}
 
       - uses: actions/upload-artifact@v4
         with:
