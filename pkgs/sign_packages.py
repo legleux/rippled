@@ -25,12 +25,13 @@ except subprocess.CalledProcessError:
 GPG_KEY_B64 = os.environ["GPG_KEY_B64"]
 GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
 gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
-GPG_KEY = base64.b64decode(GPG_KEY_B64 + "==").decode("utf-8").strip()
+# GPG_KEY = base64.b64decode(GPG_KEY_B64 + "==").decode("utf-8").strip() # This can't be right
+GPG_KEY = base64.b64decode(GPG_KEY_B64).decode("utf-8").strip()
 gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
 
 if not (gnupghome := os.environ.get("GNUPGHOME")):
     gnupghome_dir = tempfile.mkdtemp()
-    Path(gnu_dir.name) / "gnuhomedir")
+    gnupghome = Path(gnupghome_dir)
 
 tmp_rpm_db = tempfile.mkdtemp()
 gnupghome.mkdir(parents=True, exist_ok=True, mode=0o0700)
