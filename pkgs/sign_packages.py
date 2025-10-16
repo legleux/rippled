@@ -11,7 +11,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from tempfile import mkdtemp
+import tempfile
 import gnupg
 
 # If run with tty, gpg-agent needs to know about it
@@ -29,9 +29,10 @@ GPG_KEY = base64.b64decode(GPG_KEY_B64 + "==").decode("utf-8").strip()
 gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
 
 if not (gnupghome := os.environ.get("GNUPGHOME")):
-    gnupghome = mkdtemp()
+    gnupghome_dir = tempfile.mkdtemp()
+    Path(gnu_dir.name) / "gnuhomedir")
 
-tmp_rpm_db = mkdtemp()
+tmp_rpm_db = tempfile.mkdtemp()
 gnupghome.mkdir(parents=True, exist_ok=True, mode=0o0700)
 gpg = gnupg.GPG(gnupghome=gnupghome)
 import_result = gpg.import_keys(GPG_KEY)
