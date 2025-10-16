@@ -60,6 +60,9 @@ jobs:
     container: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
     steps:
+      - name: Install gpg
+        run: apt-get update && apt-get install -y gpg
+
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
 
