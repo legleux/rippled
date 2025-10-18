@@ -1,0 +1,40 @@
+name: Build Debian bullseye
+
+on:
+  push:
+
+jobs:
+  build:
+    strategy:
+        matrix:
+            runner: [heavy, heavy-arm64]
+            build_type: [Release, Debug]
+
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+
+      - name: Print build environment
+        uses: ./.github/actions/print-env
+
+      - name: Setup Conan
+        uses: ./.github/actions/setup-conan
+
+      - name: Configure CMake
+        shell: bash
+        env:
+          BUILD_TYPE: ${{ matrix.build_type }}
+        run: |
+          cmake \
+            -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
+            -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }} \
+            ..
+
+      - name: Build the binary
+        shell: bash
+        run: |
+          cmake \
+            --build . \
+            --config ${{ matrix.BUILD_TYPE }} \
+            --parallel $(nproc)
