@@ -5,12 +5,13 @@ on:
 
 jobs:
   build:
-    name: "Debian-11 ${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}-${{ matrix.build_type }}"
+    name: "Debian-11 ${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}-${{ matrix.build_type }}gg ${{ matrix.generator }}"
     strategy:
         fail-fast: false
         matrix:
             runner: [heavy, heavy-arm64]
             build_type: [Release, Debug]
+            generator: ["Ninja", "Unix Makefiles"]
 
     runs-on: ${{ matrix.runner }}
     container: ghcr.io/xrplf/ci/debian-bullseye:gcc-12
@@ -30,8 +31,9 @@ jobs:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: |
           cmake . \
+            -G ${{ matrix.generator }}
             -B build \
-            -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \
+            -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../build/generators/conan_toolchain.cmake \
             -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }} \
 
       - name: Build the binary
