@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: "Deb11 ${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}- ${{ matrix.build_type == 'Release' && 'Rel' || 'Dbg' }} ${{ matrix.generator }}"
+    name: "Deb11 ${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}-${{ matrix.build_type == 'Release' && 'Rel' || 'Dbg' }} ${{ matrix.generator == 'Ninja' && 'Ninja' || 'Make' }}"
     strategy:
         fail-fast: false
         matrix:
@@ -18,12 +18,20 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+        with:
+            path: rippled
 
       - name: Print build environment
         uses: ./.github/actions/print-env
 
       - name: Setup Conan
         uses: ./.github/actions/setup-conan
+
+      - name: Build dependencies
+        uses: ./.github/actions/build-deps
+        with:
+          build_dir: deps
+          build_type: ${{ matrix.build_type }}
 
       - name: Configure CMake
         shell: bash
