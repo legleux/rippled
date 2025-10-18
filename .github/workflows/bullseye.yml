@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: "Debian-11 ${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}-${{ matrix.build_type }}gg ${{ matrix.generator }}"
+    name: "Deb11 ${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}- ${{ matrix.build_type == 'Release' && 'Rel' || 'Dbg' }} ${{ matrix.generator }}"
     strategy:
         fail-fast: false
         matrix:
@@ -29,17 +29,17 @@ jobs:
         shell: bash
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
-        run: |
-          cmake . \
+        run: >
+          cmake .
             -G ${{ matrix.generator }}
-            -B build \
-            -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../build/generators/conan_toolchain.cmake \
-            -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }} \
+            -B build
+            -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../build/generators/conan_toolchain.cmake
+            -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }}
 
       - name: Build the binary
         shell: bash
-        run: |
-          cmake \
-            --build build \
-            --config ${{ matrix.BUILD_TYPE }} \
+        run: >
+          cmake
+            --build build
+            --config ${{ matrix.BUILD_TYPE }}
             --parallel $(nproc)
