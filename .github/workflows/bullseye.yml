@@ -14,7 +14,7 @@ jobs:
             generator: ["Ninja", "Unix Makefiles"]
 
     runs-on: ${{ matrix.runner }}
-    container: ghcr.io/xrplf/ci/debian-bullseye:gcc-12
+    container: ghcr.io/xrplf/ci/ubuntu-jammy:gcc-12
     steps:
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -35,14 +35,16 @@ jobs:
         shell: bash
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
+        working-directory: ${{ github.workspace }}
         run: >
-          cmake .
+          cmake rippled
             -G ${{ matrix.generator }}
             -B build
             -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../build/generators/conan_toolchain.cmake
             -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }}
 
       - name: Build the binary
+        working-directory: ${{ github.workspace }}
         shell: bash
         run: >
           cmake
