@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    name: "Build Debian-12 ${{ matrix.build_type }}-${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}"
+    name: "Debian-11 ${{ matrix.build_type }}-${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}"
     strategy:
         fail-fast: false
         matrix:
@@ -13,6 +13,7 @@ jobs:
             build_type: [Release, Debug]
 
     runs-on: ${{ matrix.runner }}
+    container: ghcr.io/xrplf/ci/debian-bullseye:gcc-12
     steps:
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
