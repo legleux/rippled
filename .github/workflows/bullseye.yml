@@ -32,21 +32,20 @@ jobs:
           build_type: ${{ matrix.build_type }}
 
       - name: Configure CMake
-        working-directory: build
         shell: bash
         env:
           BUILD_TYPE: ${{ matrix.build_type }}
         run: >
-          cmake ..
+          cmake .
             -G ${{ matrix.generator }}
-            -B .
+            -B build
             -DCMAKE_TOOLCHAIN_FILE:FILEPATH=../build/generators/conan_toolchain.cmake
             -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }}
 
       - name: Build the binary
-        working-directory: build
         shell: bash
         run: >
-          cmake --build .
+          cmake
+            --build build
             --config ${{ matrix.BUILD_TYPE }}
             --parallel $(nproc)
