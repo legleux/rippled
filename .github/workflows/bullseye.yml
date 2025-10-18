@@ -5,7 +5,9 @@ on:
 
 jobs:
   build:
+    name: "Build Debian-12 ${{ matrix.build_type }}-${{ matrix.runner == 'heavy' && 'AMD' || 'ARM' }}"
     strategy:
+        fail-fast: false
         matrix:
             runner: [heavy, heavy-arm64]
             build_type: [Release, Debug]
