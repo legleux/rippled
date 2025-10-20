@@ -467,75 +467,77 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>                                <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::is_same_v&lt;TOut, XRPAmount&gt;</a>))</div>
 <div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>                    <span class="keywordflow">return</span> shouldRmSmallIncreasedQOffer&lt;IOUAmount, IOUAmount&gt;();</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>            }</div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>            UNREACHABLE(</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>                <span class="stringliteral">&quot;rippls::TOfferStreamBase::step::rmSmallIncreasedQOffer : XRP &quot;</span></div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>                <span class="stringliteral">&quot;vs XRP offer&quot;</span>);</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        }();</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> </div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        <span class="keywordflow">if</span> (rmSmallIncreasedQOffer)</div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        {</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            <span class="keyword">auto</span> <span class="keyword">const</span> original_funds = <a class="code hl_function" href="namespaceripple.html#a5441d13c9f36c9971aa1e05dc6ff44b8">accountFundsHelper</a>(</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>                cancelView_,</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>                offer_.owner(),</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>                amount.out,</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                offer_.issueOut(),</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>                <a class="code hl_enumvalue" href="namespaceripple.html#a17a9a9b903b66e49f5413d82ce79f085a852cabbbe21a9b4d63aff777eceab2fd">fhZERO_IF_FROZEN</a>,</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>                j_);</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span> </div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>            <span class="keywordflow">if</span> (original_funds == *ownerFunds_)</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>            {</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>                permRmOffer(entry-&gt;key());</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">trace</a>())</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>                    &lt;&lt; <span class="stringliteral">&quot;Removing tiny offer due to reduced quality &quot;</span></div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>                    &lt;&lt; entry-&gt;key();</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>            }</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>            {</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">trace</a>()) &lt;&lt; <span class="stringliteral">&quot;Removing tiny offer that became tiny due &quot;</span></div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>                                    <span class="stringliteral">&quot;to reduced quality &quot;</span></div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>                                 &lt;&lt; entry-&gt;key();</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>            }</div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>            offer_ = <a class="code hl_class" href="classripple_1_1TOffer.html">TOffer&lt;TIn, TOut&gt;</a>{};</div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>            <span class="comment">// See comment at top of loop for how the offer is removed</span></div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>        }</div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span> </div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    }</div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span> </div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>}</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>            <span class="comment">// LCOV_EXCL_START</span></div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>            UNREACHABLE(</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>                <span class="stringliteral">&quot;rippls::TOfferStreamBase::step::rmSmallIncreasedQOffer : XRP &quot;</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>                <span class="stringliteral">&quot;vs XRP offer&quot;</span>);</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>            <span class="comment">// LCOV_EXCL_STOP</span></div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        }();</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        <span class="keywordflow">if</span> (rmSmallIncreasedQOffer)</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        {</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>            <span class="keyword">auto</span> <span class="keyword">const</span> original_funds = <a class="code hl_function" href="namespaceripple.html#a5441d13c9f36c9971aa1e05dc6ff44b8">accountFundsHelper</a>(</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>                cancelView_,</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>                offer_.owner(),</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>                amount.out,</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>                offer_.issueOut(),</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>                <a class="code hl_enumvalue" href="namespaceripple.html#a17a9a9b903b66e49f5413d82ce79f085a852cabbbe21a9b4d63aff777eceab2fd">fhZERO_IF_FROZEN</a>,</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>                j_);</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span> </div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>            <span class="keywordflow">if</span> (original_funds == *ownerFunds_)</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>            {</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>                permRmOffer(entry-&gt;key());</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">trace</a>())</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>                    &lt;&lt; <span class="stringliteral">&quot;Removing tiny offer due to reduced quality &quot;</span></div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>                    &lt;&lt; entry-&gt;key();</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>            }</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>            {</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">trace</a>()) &lt;&lt; <span class="stringliteral">&quot;Removing tiny offer that became tiny due &quot;</span></div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>                                    <span class="stringliteral">&quot;to reduced quality &quot;</span></div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>                                 &lt;&lt; entry-&gt;key();</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>            }</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>            offer_ = <a class="code hl_class" href="classripple_1_1TOffer.html">TOffer&lt;TIn, TOut&gt;</a>{};</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>            <span class="comment">// See comment at top of loop for how the offer is removed</span></div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        }</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>        <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    }</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span> </div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>}</div>
 </div>
 </div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00413" data-start="{" data-end="}">
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno"><a class="line" href="classripple_1_1OfferStream.html#ac1d8ec4a933ecd3986985d3231e278c2">  413</a></span>OfferStream::permRmOffer(<a class="code hl_class" href="classripple_1_1base__uint.html">uint256</a> <span class="keyword">const</span>&amp; offerIndex)</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>{</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    <a class="code hl_function" href="namespaceripple.html#af0fbc47b561662920c4ae9345fe9a027">offerDelete</a>(cancelView_, cancelView_.peek(keylet::offer(offerIndex)), j_);</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>}</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00415" data-start="{" data-end="}">
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno"><a class="line" href="classripple_1_1OfferStream.html#ac1d8ec4a933ecd3986985d3231e278c2">  415</a></span>OfferStream::permRmOffer(<a class="code hl_class" href="classripple_1_1base__uint.html">uint256</a> <span class="keyword">const</span>&amp; offerIndex)</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>{</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>    <a class="code hl_function" href="namespaceripple.html#af0fbc47b561662920c4ae9345fe9a027">offerDelete</a>(cancelView_, cancelView_.peek(keylet::offer(offerIndex)), j_);</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>}</div>
 </div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> TIn, <span class="keyword">class</span> TOut&gt;</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00420" data-start="{" data-end="}">
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno"><a class="line" href="classripple_1_1FlowOfferStream.html#a9940206ba76f1698cbbf2db11afa12d5">  420</a></span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;TIn, TOut&gt;::permRmOffer</a>(<a class="code hl_class" href="classripple_1_1base__uint.html">uint256</a> <span class="keyword">const</span>&amp; offerIndex)</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>{</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>    permToRemove_.insert(offerIndex);</div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>}</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> TIn, <span class="keyword">class</span> TOut&gt;</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00422" data-start="{" data-end="}">
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno"><a class="line" href="classripple_1_1FlowOfferStream.html#a9940206ba76f1698cbbf2db11afa12d5">  422</a></span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;TIn, TOut&gt;::permRmOffer</a>(<a class="code hl_class" href="classripple_1_1base__uint.html">uint256</a> <span class="keyword">const</span>&amp; offerIndex)</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>{</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    permToRemove_.insert(offerIndex);</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>}</div>
 </div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span> </div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;STAmount, STAmount&gt;</a>;</div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;IOUAmount, IOUAmount&gt;</a>;</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;XRPAmount, IOUAmount&gt;</a>;</div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;IOUAmount, XRPAmount&gt;</a>;</div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span> </div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;STAmount, STAmount&gt;</a>;</div>
-<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;IOUAmount, IOUAmount&gt;</a>;</div>
-<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;XRPAmount, IOUAmount&gt;</a>;</div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;IOUAmount, XRPAmount&gt;</a>;</div>
-<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>}  <span class="comment">// namespace ripple</span></div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span> </div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;STAmount, STAmount&gt;</a>;</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;IOUAmount, IOUAmount&gt;</a>;</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;XRPAmount, IOUAmount&gt;</a>;</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1FlowOfferStream.html">FlowOfferStream&lt;IOUAmount, XRPAmount&gt;</a>;</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span> </div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;STAmount, STAmount&gt;</a>;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;IOUAmount, IOUAmount&gt;</a>;</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;XRPAmount, IOUAmount&gt;</a>;</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span><span class="keyword">template</span> <span class="keyword">class </span><a class="code hl_class" href="classripple_1_1TOfferStreamBase.html">TOfferStreamBase&lt;IOUAmount, XRPAmount&gt;</a>;</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>}  <span class="comment">// namespace ripple</span></div>
 </div>
 </div>
 </div>
@@ -574,17 +576,17 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespaceripple_1_1keylet_html_aaa5be5f268b3d5d79e99ce5bcbc4fab2"><div class="ttname"><a href="namespaceripple_1_1keylet.html#aaa5be5f268b3d5d79e99ce5bcbc4fab2">ripple::keylet::page</a></div><div class="ttdeci">Keylet page(uint256 const &amp;root, std::uint64_t index=0) noexcept</div><div class="ttdoc">A page in a directory.</div><div class="ttdef"><b>Definition</b> <a href="Indexes_8cpp_source.html#l00380">Indexes.cpp:380</a></div></div>
 <div class="ttc" id="anamespaceripple_1_1permissioned__dex_html_af80a77f3eafe3cbd4292e7af6e76c5b4"><div class="ttname"><a href="namespaceripple_1_1permissioned__dex.html#af80a77f3eafe3cbd4292e7af6e76c5b4">ripple::permissioned_dex::offerInDomain</a></div><div class="ttdeci">bool offerInDomain(ReadView const &amp;view, uint256 const &amp;offerID, Domain const &amp;domainID, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="PermissionedDEXHelpers_8cpp_source.html#l00058">PermissionedDEXHelpers.cpp:58</a></div></div>
 <div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00025">algorithm.h:25</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a15bb971c7e554fc3df218aba54c33fcc"><div class="ttname"><a href="namespaceripple.html#a15bb971c7e554fc3df218aba54c33fcc">ripple::accountFunds</a></div><div class="ttdeci">STAmount accountFunds(ReadView const &amp;view, AccountID const &amp;id, STAmount const &amp;saDefault, FreezeHandling freezeHandling, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00551">View.cpp:551</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a15bb971c7e554fc3df218aba54c33fcc"><div class="ttname"><a href="namespaceripple.html#a15bb971c7e554fc3df218aba54c33fcc">ripple::accountFunds</a></div><div class="ttdeci">STAmount accountFunds(ReadView const &amp;view, AccountID const &amp;id, STAmount const &amp;saDefault, FreezeHandling freezeHandling, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00554">View.cpp:554</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a17a9a9b903b66e49f5413d82ce79f085"><div class="ttname"><a href="namespaceripple.html#a17a9a9b903b66e49f5413d82ce79f085">ripple::FreezeHandling</a></div><div class="ttdeci">FreezeHandling</div><div class="ttdoc">Controls the treatment of frozen account balances.</div><div class="ttdef"><b>Definition</b> <a href="View_8h_source.html#l00077">View.h:77</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a17a9a9b903b66e49f5413d82ce79f085a852cabbbe21a9b4d63aff777eceab2fd"><div class="ttname"><a href="namespaceripple.html#a17a9a9b903b66e49f5413d82ce79f085a852cabbbe21a9b4d63aff777eceab2fd">ripple::fhZERO_IF_FROZEN</a></div><div class="ttdeci">@ fhZERO_IF_FROZEN</div><div class="ttdef"><b>Definition</b> <a href="View_8h_source.html#l00077">View.h:77</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a20d30277b9c78756b3d14493055a307c"><div class="ttname"><a href="namespaceripple.html#a20d30277b9c78756b3d14493055a307c">ripple::isXRP</a></div><div class="ttdeci">bool isXRP(AccountID const &amp;c)</div><div class="ttdef"><b>Definition</b> <a href="AccountID_8h_source.html#l00090">AccountID.h:90</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a404d9916466863a4ea76e0ec0b79d730"><div class="ttname"><a href="namespaceripple.html#a404d9916466863a4ea76e0ec0b79d730">ripple::isDeepFrozen</a></div><div class="ttdeci">bool isDeepFrozen(ReadView const &amp;view, AccountID const &amp;account, Currency const &amp;currency, AccountID const &amp;issuer)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00347">View.cpp:347</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a404d9916466863a4ea76e0ec0b79d730"><div class="ttname"><a href="namespaceripple.html#a404d9916466863a4ea76e0ec0b79d730">ripple::isDeepFrozen</a></div><div class="ttdeci">bool isDeepFrozen(ReadView const &amp;view, AccountID const &amp;account, Currency const &amp;currency, AccountID const &amp;issuer)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00350">View.cpp:350</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a5441d13c9f36c9971aa1e05dc6ff44b8"><div class="ttname"><a href="namespaceripple.html#a5441d13c9f36c9971aa1e05dc6ff44b8">ripple::accountFundsHelper</a></div><div class="ttdeci">static STAmount accountFundsHelper(ReadView const &amp;view, AccountID const &amp;id, STAmount const &amp;saDefault, Issue const &amp;, FreezeHandling freezeHandling, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="OfferStream_8cpp_source.html#l00100">OfferStream.cpp:100</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a65dcac5799993b276e705961c3eee024"><div class="ttname"><a href="namespaceripple.html#a65dcac5799993b276e705961c3eee024">ripple::toAmount&lt; IOUAmount &gt;</a></div><div class="ttdeci">IOUAmount toAmount&lt; IOUAmount &gt;(STAmount const &amp;amt)</div><div class="ttdef"><b>Definition</b> <a href="AmountConversions_8h_source.html#l00074">AmountConversions.h:75</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aa761b49f905eb9fd8c8ae754a0eb7504"><div class="ttname"><a href="namespaceripple.html#aa761b49f905eb9fd8c8ae754a0eb7504">ripple::erase</a></div><div class="ttdeci">void erase(STObject &amp;st, TypedField&lt; U &gt; const &amp;f)</div><div class="ttdoc">Remove a field in an STObject.</div><div class="ttdef"><b>Definition</b> <a href="STExchange_8h_source.html#l00172">STExchange.h:172</a></div></div>
-<div class="ttc" id="anamespaceripple_html_ab001e43f50e612727b1ce5985a2770d6"><div class="ttname"><a href="namespaceripple.html#ab001e43f50e612727b1ce5985a2770d6">ripple::accountHolds</a></div><div class="ttdeci">STAmount accountHolds(ReadView const &amp;view, AccountID const &amp;account, Currency const &amp;currency, AccountID const &amp;issuer, FreezeHandling zeroIfFrozen, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00384">View.cpp:384</a></div></div>
+<div class="ttc" id="anamespaceripple_html_ab001e43f50e612727b1ce5985a2770d6"><div class="ttname"><a href="namespaceripple.html#ab001e43f50e612727b1ce5985a2770d6">ripple::accountHolds</a></div><div class="ttdeci">STAmount accountHolds(ReadView const &amp;view, AccountID const &amp;account, Currency const &amp;currency, AccountID const &amp;issuer, FreezeHandling zeroIfFrozen, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00387">View.cpp:387</a></div></div>
 <div class="ttc" id="anamespaceripple_html_ae6e8e9019a9847036cd2872feeb31e37"><div class="ttname"><a href="namespaceripple.html#ae6e8e9019a9847036cd2872feeb31e37">ripple::toAmount&lt; XRPAmount &gt;</a></div><div class="ttdeci">XRPAmount toAmount&lt; XRPAmount &gt;(STAmount const &amp;amt)</div><div class="ttdef"><b>Definition</b> <a href="AmountConversions_8h_source.html#l00089">AmountConversions.h:90</a></div></div>
-<div class="ttc" id="anamespaceripple_html_af0fbc47b561662920c4ae9345fe9a027"><div class="ttname"><a href="namespaceripple.html#af0fbc47b561662920c4ae9345fe9a027">ripple::offerDelete</a></div><div class="ttdeci">TER offerDelete(ApplyView &amp;view, std::shared_ptr&lt; SLE &gt; const &amp;sle, beast::Journal j)</div><div class="ttdoc">Delete an offer.</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l01634">View.cpp:1634</a></div></div>
+<div class="ttc" id="anamespaceripple_html_af0fbc47b561662920c4ae9345fe9a027"><div class="ttname"><a href="namespaceripple.html#af0fbc47b561662920c4ae9345fe9a027">ripple::offerDelete</a></div><div class="ttdeci">TER offerDelete(ApplyView &amp;view, std::shared_ptr&lt; SLE &gt; const &amp;sle, beast::Journal j)</div><div class="ttdoc">Delete an offer.</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l01641">View.cpp:1641</a></div></div>
 <div class="ttc" id="ashared_ptr_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a></div></div>
 <div class="ttc" id="atime_point_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/chrono/time_point.html">std::chrono::time_point</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

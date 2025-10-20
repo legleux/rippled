@@ -34,5 +34,6 @@ var searchData=
   ['mptoken_5fissuance_31',['MPTOKEN_ISSUANCE',['../namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba8191dd35a63e5caa20a9bd8331ca6164',1,'ripple']]],
   ['multiple_32',['multiple',['../namespaceripple.html#a6434c1a0fd22b77e2e4a228c0eca79ebace495ab8d79db0d37413d8e95b54e606',1,'ripple']]],
   ['mustauthorizempt_33',['mustAuthorizeMPT',['../namespaceripple.html#a56626079606ddd359a5c40cbe9e9761babad1d97ca6824209c30959fa6dfe8562',1,'ripple']]],
-  ['mustdeleteacct_34',['mustDeleteAcct',['../namespaceripple.html#a56626079606ddd359a5c40cbe9e9761ba2001965e68b26e4afe4738d7754bda84',1,'ripple']]]
+  ['mustdeleteacct_34',['mustDeleteAcct',['../namespaceripple.html#a56626079606ddd359a5c40cbe9e9761ba2001965e68b26e4afe4738d7754bda84',1,'ripple']]],
+  ['mustmodifyvault_35',['mustModifyVault',['../namespaceripple.html#a56626079606ddd359a5c40cbe9e9761baa77fe5abd29f8d38d49908a41553ac17',1,'ripple']]]
 ];

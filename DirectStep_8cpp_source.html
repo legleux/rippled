@@ -1107,92 +1107,94 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>        {</div>
 <div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span>            <span class="keywordflow">if</span> (!ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a20f852451e14c6cc04c3fbb5a49c41f6">prevStep</a>)</div>
 <div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>            {</div>
-<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>                UNREACHABLE(</div>
-<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>                    <span class="stringliteral">&quot;ripple::DirectStepI::check : prev seen book without a &quot;</span></div>
-<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>                    <span class="stringliteral">&quot;prev step&quot;</span>);</div>
-<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#afe21c8454670d46fb93751a5edffed46a12457d1044fb018f478405504184dc79">temBAD_PATH_LOOP</a>;</div>
-<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>            }</div>
-<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span> </div>
-<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>            <span class="comment">// This is OK if the previous step is a book step that outputs this</span></div>
-<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>            <span class="comment">// issue</span></div>
-<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> book = ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a20f852451e14c6cc04c3fbb5a49c41f6">prevStep</a>-&gt;<a class="code hl_function" href="classripple_1_1Step.html#a9d080cfd47f863e9217fb91d25783e23">bookStepBook</a>())</div>
-<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>            {</div>
-<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>                <span class="keywordflow">if</span> (book-&gt;out != srcIssue)</div>
-<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>                    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#afe21c8454670d46fb93751a5edffed46a12457d1044fb018f478405504184dc79">temBAD_PATH_LOOP</a>;</div>
-<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>            }</div>
-<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>        }</div>
-<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span> </div>
-<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>        <span class="keywordflow">if</span> (!ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a1f64547d1189ede6fef202ada9dc0f2b">seenDirectIssues</a>[0].insert(srcIssue).second ||</div>
-<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span>            !ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a1f64547d1189ede6fef202ada9dc0f2b">seenDirectIssues</a>[1].insert(dstIssue).second)</div>
-<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>        {</div>
-<div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>            JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#a556228cb60bcf405c225d3f64b7b01ae">debug</a>())</div>
-<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>                &lt;&lt; <span class="stringliteral">&quot;DirectStepI: loop detected: Index: &quot;</span> &lt;&lt; ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a09258816e4b43be8130db55952317cf0">strandSize</a></div>
-<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>                &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; *<span class="keyword">this</span>;</div>
-<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#afe21c8454670d46fb93751a5edffed46a12457d1044fb018f478405504184dc79">temBAD_PATH_LOOP</a>;</div>
-<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>        }</div>
-<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>    }</div>
-<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span> </div>
-<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>TDerived const*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;check(ctx, sleSrc);</div>
-<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span>}</div>
+<div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span>                <span class="comment">// LCOV_EXCL_START</span></div>
+<div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>                UNREACHABLE(</div>
+<div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>                    <span class="stringliteral">&quot;ripple::DirectStepI::check : prev seen book without a &quot;</span></div>
+<div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>                    <span class="stringliteral">&quot;prev step&quot;</span>);</div>
+<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>                <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#afe21c8454670d46fb93751a5edffed46a12457d1044fb018f478405504184dc79">temBAD_PATH_LOOP</a>;</div>
+<div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>                <span class="comment">// LCOV_EXCL_STOP</span></div>
+<div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>            }</div>
+<div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span> </div>
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>            <span class="comment">// This is OK if the previous step is a book step that outputs this</span></div>
+<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>            <span class="comment">// issue</span></div>
+<div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> book = ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a20f852451e14c6cc04c3fbb5a49c41f6">prevStep</a>-&gt;<a class="code hl_function" href="classripple_1_1Step.html#a9d080cfd47f863e9217fb91d25783e23">bookStepBook</a>())</div>
+<div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span>            {</div>
+<div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>                <span class="keywordflow">if</span> (book-&gt;out != srcIssue)</div>
+<div class="line"><a id="l00947" name="l00947"></a><span class="lineno">  947</span>                    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#afe21c8454670d46fb93751a5edffed46a12457d1044fb018f478405504184dc79">temBAD_PATH_LOOP</a>;</div>
+<div class="line"><a id="l00948" name="l00948"></a><span class="lineno">  948</span>            }</div>
+<div class="line"><a id="l00949" name="l00949"></a><span class="lineno">  949</span>        }</div>
+<div class="line"><a id="l00950" name="l00950"></a><span class="lineno">  950</span> </div>
+<div class="line"><a id="l00951" name="l00951"></a><span class="lineno">  951</span>        <span class="keywordflow">if</span> (!ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a1f64547d1189ede6fef202ada9dc0f2b">seenDirectIssues</a>[0].insert(srcIssue).second ||</div>
+<div class="line"><a id="l00952" name="l00952"></a><span class="lineno">  952</span>            !ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a1f64547d1189ede6fef202ada9dc0f2b">seenDirectIssues</a>[1].insert(dstIssue).second)</div>
+<div class="line"><a id="l00953" name="l00953"></a><span class="lineno">  953</span>        {</div>
+<div class="line"><a id="l00954" name="l00954"></a><span class="lineno">  954</span>            JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#a556228cb60bcf405c225d3f64b7b01ae">debug</a>())</div>
+<div class="line"><a id="l00955" name="l00955"></a><span class="lineno">  955</span>                &lt;&lt; <span class="stringliteral">&quot;DirectStepI: loop detected: Index: &quot;</span> &lt;&lt; ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a09258816e4b43be8130db55952317cf0">strandSize</a></div>
+<div class="line"><a id="l00956" name="l00956"></a><span class="lineno">  956</span>                &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; *<span class="keyword">this</span>;</div>
+<div class="line"><a id="l00957" name="l00957"></a><span class="lineno">  957</span>            <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#afe21c8454670d46fb93751a5edffed46a12457d1044fb018f478405504184dc79">temBAD_PATH_LOOP</a>;</div>
+<div class="line"><a id="l00958" name="l00958"></a><span class="lineno">  958</span>        }</div>
+<div class="line"><a id="l00959" name="l00959"></a><span class="lineno">  959</span>    }</div>
+<div class="line"><a id="l00960" name="l00960"></a><span class="lineno">  960</span> </div>
+<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span>    <span class="keywordflow">return</span> <span class="keyword">static_cast&lt;</span>TDerived const*<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;check(ctx, sleSrc);</div>
+<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span>}</div>
 </div>
 </div>
-<div class="line"><a id="l00961" name="l00961"></a><span class="lineno">  961</span> </div>
-<div class="line"><a id="l00962" name="l00962"></a><span class="lineno">  962</span><span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a id="l00963" name="l00963"></a><span class="lineno">  963</span> </div>
-<div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span><span class="keyword">namespace </span>test {</div>
-<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span><span class="comment">// Needed for testing</span></div>
-<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span><span class="keywordtype">bool</span></div>
-<div class="foldopen" id="foldopen00967" data-start="{" data-end="}">
-<div class="line"><a id="l00967" name="l00967"></a><span class="lineno"><a class="line" href="namespaceripple_1_1test.html#aeb0719dfd10aae20370de6c6fc137a65">  967</a></span><a class="code hl_function" href="namespaceripple_1_1test.html#aeb0719dfd10aae20370de6c6fc137a65">directStepEqual</a>(</div>
-<div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span>    <a class="code hl_class" href="classripple_1_1Step.html">Step</a> <span class="keyword">const</span>&amp; step,</div>
-<div class="line"><a id="l00969" name="l00969"></a><span class="lineno">  969</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; src,</div>
-<div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; dst,</div>
-<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; currency)</div>
-<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>{</div>
-<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> ds = <span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classripple_1_1DirectStepI.html">DirectStepI&lt;DirectIPaymentStep&gt;</a> const*<span class="keyword">&gt;</span>(&amp;step))</div>
-<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>    {</div>
-<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>        <span class="keywordflow">return</span> ds-&gt;src() == src &amp;&amp; ds-&gt;dst() == dst &amp;&amp;</div>
-<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>            ds-&gt;currency() == currency;</div>
-<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>    }</div>
-<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>}</div>
+<div class="line"><a id="l00964" name="l00964"></a><span class="lineno">  964</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00965" name="l00965"></a><span class="lineno">  965</span> </div>
+<div class="line"><a id="l00966" name="l00966"></a><span class="lineno">  966</span><span class="keyword">namespace </span>test {</div>
+<div class="line"><a id="l00967" name="l00967"></a><span class="lineno">  967</span><span class="comment">// Needed for testing</span></div>
+<div class="line"><a id="l00968" name="l00968"></a><span class="lineno">  968</span><span class="keywordtype">bool</span></div>
+<div class="foldopen" id="foldopen00969" data-start="{" data-end="}">
+<div class="line"><a id="l00969" name="l00969"></a><span class="lineno"><a class="line" href="namespaceripple_1_1test.html#aeb0719dfd10aae20370de6c6fc137a65">  969</a></span><a class="code hl_function" href="namespaceripple_1_1test.html#aeb0719dfd10aae20370de6c6fc137a65">directStepEqual</a>(</div>
+<div class="line"><a id="l00970" name="l00970"></a><span class="lineno">  970</span>    <a class="code hl_class" href="classripple_1_1Step.html">Step</a> <span class="keyword">const</span>&amp; step,</div>
+<div class="line"><a id="l00971" name="l00971"></a><span class="lineno">  971</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; src,</div>
+<div class="line"><a id="l00972" name="l00972"></a><span class="lineno">  972</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; dst,</div>
+<div class="line"><a id="l00973" name="l00973"></a><span class="lineno">  973</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; currency)</div>
+<div class="line"><a id="l00974" name="l00974"></a><span class="lineno">  974</span>{</div>
+<div class="line"><a id="l00975" name="l00975"></a><span class="lineno">  975</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> ds = <span class="keyword">dynamic_cast&lt;</span><a class="code hl_class" href="classripple_1_1DirectStepI.html">DirectStepI&lt;DirectIPaymentStep&gt;</a> const*<span class="keyword">&gt;</span>(&amp;step))</div>
+<div class="line"><a id="l00976" name="l00976"></a><span class="lineno">  976</span>    {</div>
+<div class="line"><a id="l00977" name="l00977"></a><span class="lineno">  977</span>        <span class="keywordflow">return</span> ds-&gt;src() == src &amp;&amp; ds-&gt;dst() == dst &amp;&amp;</div>
+<div class="line"><a id="l00978" name="l00978"></a><span class="lineno">  978</span>            ds-&gt;currency() == currency;</div>
+<div class="line"><a id="l00979" name="l00979"></a><span class="lineno">  979</span>    }</div>
+<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span>}</div>
 </div>
-<div class="line"><a id="l00980" name="l00980"></a><span class="lineno">  980</span>}  <span class="comment">// namespace test</span></div>
-<div class="line"><a id="l00981" name="l00981"></a><span class="lineno">  981</span> </div>
-<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00982" name="l00982"></a><span class="lineno">  982</span>}  <span class="comment">// namespace test</span></div>
 <div class="line"><a id="l00983" name="l00983"></a><span class="lineno">  983</span> </div>
-<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair&lt;TER, std::unique_ptr&lt;Step&gt;</a>&gt;</div>
-<div class="foldopen" id="foldopen00985" data-start="{" data-end="}">
-<div class="line"><a id="l00985" name="l00985"></a><span class="lineno"><a class="line" href="namespaceripple.html#ab9034e2ea3c8d81bf0e36f6dc2074108">  985</a></span><a class="code hl_function" href="namespaceripple.html#ab9034e2ea3c8d81bf0e36f6dc2074108">make_DirectStepI</a>(</div>
-<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span>    <a class="code hl_struct" href="structripple_1_1StrandContext.html">StrandContext</a> <span class="keyword">const</span>&amp; ctx,</div>
-<div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; src,</div>
-<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; dst,</div>
-<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; c)</div>
-<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>{</div>
-<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>    <a class="code hl_class" href="classripple_1_1TERSubset.html">TER</a> ter = <a class="code hl_enumvalue" href="namespaceripple.html#a75cb21d7f1df42f2fdc8efddb79b63f4ad035d214edc31c72362d7efbdaba234c">tefINTERNAL</a>;</div>
-<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Step&gt;</a> r;</div>
-<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>    <span class="keywordflow">if</span> (ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a823714e1b46346bde9898caac9c824d2">offerCrossing</a>)</div>
-<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>    {</div>
-<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>        <span class="keyword">auto</span> offerCrossingStep =</div>
-<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>            <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;DirectIOfferCrossingStep&gt;</a>(ctx, src, dst, c);</div>
-<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>        ter = offerCrossingStep-&gt;check(ctx);</div>
-<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>        r = std::move(offerCrossingStep);</div>
-<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>    }</div>
-<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>    <span class="keywordflow">else</span>  <span class="comment">// payment</span></div>
-<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>    {</div>
-<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>        <span class="keyword">auto</span> paymentStep =</div>
-<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>            <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;DirectIPaymentStep&gt;</a>(ctx, src, dst, c);</div>
-<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>        ter = paymentStep-&gt;check(ctx);</div>
-<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>        r = std::move(paymentStep);</div>
-<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>    }</div>
-<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>    <span class="keywordflow">if</span> (ter != <a class="code hl_enumvalue" href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">tesSUCCESS</a>)</div>
-<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>        <span class="keywordflow">return</span> {ter, <span class="keyword">nullptr</span>};</div>
-<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span> </div>
-<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>    <span class="keywordflow">return</span> {<a class="code hl_enumvalue" href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">tesSUCCESS</a>, std::move(r)};</div>
-<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span>}</div>
+<div class="line"><a id="l00984" name="l00984"></a><span class="lineno">  984</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span> </div>
+<div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair&lt;TER, std::unique_ptr&lt;Step&gt;</a>&gt;</div>
+<div class="foldopen" id="foldopen00987" data-start="{" data-end="}">
+<div class="line"><a id="l00987" name="l00987"></a><span class="lineno"><a class="line" href="namespaceripple.html#ab9034e2ea3c8d81bf0e36f6dc2074108">  987</a></span><a class="code hl_function" href="namespaceripple.html#ab9034e2ea3c8d81bf0e36f6dc2074108">make_DirectStepI</a>(</div>
+<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>    <a class="code hl_struct" href="structripple_1_1StrandContext.html">StrandContext</a> <span class="keyword">const</span>&amp; ctx,</div>
+<div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; src,</div>
+<div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; dst,</div>
+<div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>    <a class="code hl_class" href="classripple_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; c)</div>
+<div class="line"><a id="l00992" name="l00992"></a><span class="lineno">  992</span>{</div>
+<div class="line"><a id="l00993" name="l00993"></a><span class="lineno">  993</span>    <a class="code hl_class" href="classripple_1_1TERSubset.html">TER</a> ter = <a class="code hl_enumvalue" href="namespaceripple.html#a75cb21d7f1df42f2fdc8efddb79b63f4ad035d214edc31c72362d7efbdaba234c">tefINTERNAL</a>;</div>
+<div class="line"><a id="l00994" name="l00994"></a><span class="lineno">  994</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Step&gt;</a> r;</div>
+<div class="line"><a id="l00995" name="l00995"></a><span class="lineno">  995</span>    <span class="keywordflow">if</span> (ctx.<a class="code hl_variable" href="structripple_1_1StrandContext.html#a823714e1b46346bde9898caac9c824d2">offerCrossing</a>)</div>
+<div class="line"><a id="l00996" name="l00996"></a><span class="lineno">  996</span>    {</div>
+<div class="line"><a id="l00997" name="l00997"></a><span class="lineno">  997</span>        <span class="keyword">auto</span> offerCrossingStep =</div>
+<div class="line"><a id="l00998" name="l00998"></a><span class="lineno">  998</span>            <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;DirectIOfferCrossingStep&gt;</a>(ctx, src, dst, c);</div>
+<div class="line"><a id="l00999" name="l00999"></a><span class="lineno">  999</span>        ter = offerCrossingStep-&gt;check(ctx);</div>
+<div class="line"><a id="l01000" name="l01000"></a><span class="lineno"> 1000</span>        r = std::move(offerCrossingStep);</div>
+<div class="line"><a id="l01001" name="l01001"></a><span class="lineno"> 1001</span>    }</div>
+<div class="line"><a id="l01002" name="l01002"></a><span class="lineno"> 1002</span>    <span class="keywordflow">else</span>  <span class="comment">// payment</span></div>
+<div class="line"><a id="l01003" name="l01003"></a><span class="lineno"> 1003</span>    {</div>
+<div class="line"><a id="l01004" name="l01004"></a><span class="lineno"> 1004</span>        <span class="keyword">auto</span> paymentStep =</div>
+<div class="line"><a id="l01005" name="l01005"></a><span class="lineno"> 1005</span>            <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;DirectIPaymentStep&gt;</a>(ctx, src, dst, c);</div>
+<div class="line"><a id="l01006" name="l01006"></a><span class="lineno"> 1006</span>        ter = paymentStep-&gt;check(ctx);</div>
+<div class="line"><a id="l01007" name="l01007"></a><span class="lineno"> 1007</span>        r = std::move(paymentStep);</div>
+<div class="line"><a id="l01008" name="l01008"></a><span class="lineno"> 1008</span>    }</div>
+<div class="line"><a id="l01009" name="l01009"></a><span class="lineno"> 1009</span>    <span class="keywordflow">if</span> (ter != <a class="code hl_enumvalue" href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">tesSUCCESS</a>)</div>
+<div class="line"><a id="l01010" name="l01010"></a><span class="lineno"> 1010</span>        <span class="keywordflow">return</span> {ter, <span class="keyword">nullptr</span>};</div>
+<div class="line"><a id="l01011" name="l01011"></a><span class="lineno"> 1011</span> </div>
+<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span>    <span class="keywordflow">return</span> {<a class="code hl_enumvalue" href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">tesSUCCESS</a>, std::move(r)};</div>
+<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>}</div>
 </div>
-<div class="line"><a id="l01012" name="l01012"></a><span class="lineno"> 1012</span> </div>
-<div class="line"><a id="l01013" name="l01013"></a><span class="lineno"> 1013</span>}  <span class="comment">// namespace ripple</span></div>
+<div class="line"><a id="l01014" name="l01014"></a><span class="lineno"> 1014</span> </div>
+<div class="line"><a id="l01015" name="l01015"></a><span class="lineno"> 1015</span>}  <span class="comment">// namespace ripple</span></div>
 </div>
 </div>
 </div>
@@ -1277,7 +1279,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="amake_pair_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/utility/pair/make_pair.html">std::make_pair</a></div><div class="ttdeci">T make_pair(T... args)</div></div>
 <div class="ttc" id="anamespaceripple_1_1keylet_html_a55890af7192834c632299746ba300be8"><div class="ttname"><a href="namespaceripple_1_1keylet.html#a55890af7192834c632299746ba300be8">ripple::keylet::line</a></div><div class="ttdeci">Keylet line(AccountID const &amp;id0, AccountID const &amp;id1, Currency const &amp;currency) noexcept</div><div class="ttdoc">The index of a trust line for a given currency.</div><div class="ttdef"><b>Definition</b> <a href="Indexes_8cpp_source.html#l00244">Indexes.cpp:244</a></div></div>
 <div class="ttc" id="anamespaceripple_1_1keylet_html_aa756e0f59b26042ed00a4d0ba6e96951"><div class="ttname"><a href="namespaceripple_1_1keylet.html#aa756e0f59b26042ed00a4d0ba6e96951">ripple::keylet::account</a></div><div class="ttdeci">Keylet account(AccountID const &amp;id) noexcept</div><div class="ttdoc">AccountID root.</div><div class="ttdef"><b>Definition</b> <a href="Indexes_8cpp_source.html#l00184">Indexes.cpp:184</a></div></div>
-<div class="ttc" id="anamespaceripple_1_1test_html_aeb0719dfd10aae20370de6c6fc137a65"><div class="ttname"><a href="namespaceripple_1_1test.html#aeb0719dfd10aae20370de6c6fc137a65">ripple::test::directStepEqual</a></div><div class="ttdeci">bool directStepEqual(Step const &amp;step, AccountID const &amp;src, AccountID const &amp;dst, Currency const &amp;currency)</div><div class="ttdef"><b>Definition</b> <a href="DirectStep_8cpp_source.html#l00967">DirectStep.cpp:967</a></div></div>
+<div class="ttc" id="anamespaceripple_1_1test_html_aeb0719dfd10aae20370de6c6fc137a65"><div class="ttname"><a href="namespaceripple_1_1test.html#aeb0719dfd10aae20370de6c6fc137a65">ripple::test::directStepEqual</a></div><div class="ttdeci">bool directStepEqual(Step const &amp;step, AccountID const &amp;src, AccountID const &amp;dst, Currency const &amp;currency)</div><div class="ttdef"><b>Definition</b> <a href="DirectStep_8cpp_source.html#l00969">DirectStep.cpp:969</a></div></div>
 <div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00025">algorithm.h:25</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a17a9a9b903b66e49f5413d82ce79f085a91e3c4f8089025c7ecf66dd62b822d90"><div class="ttname"><a href="namespaceripple.html#a17a9a9b903b66e49f5413d82ce79f085a91e3c4f8089025c7ecf66dd62b822d90">ripple::fhIGNORE_FREEZE</a></div><div class="ttdeci">@ fhIGNORE_FREEZE</div><div class="ttdef"><b>Definition</b> <a href="View_8h_source.html#l00077">View.h:77</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a2fca0f72cfacc04d15ad41d84ebf46fd"><div class="ttname"><a href="namespaceripple.html#a2fca0f72cfacc04d15ad41d84ebf46fd">ripple::StrandDirection</a></div><div class="ttdeci">StrandDirection</div><div class="ttdef"><b>Definition</b> <a href="Steps_8h_source.html#l00044">Steps.h:44</a></div></div>
@@ -1303,13 +1305,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespaceripple_html_a8c623abdba7fa97ffd148311056d401ea7e611dd9f79193db43a5e9983752239e"><div class="ttname"><a href="namespaceripple.html#a8c623abdba7fa97ffd148311056d401ea7e611dd9f79193db43a5e9983752239e">ripple::DebtDirection::redeems</a></div><div class="ttdeci">@ redeems</div></div>
 <div class="ttc" id="anamespaceripple_html_a8c623abdba7fa97ffd148311056d401eafe5fe0415fc3e0ff4942d8454f363d2c"><div class="ttname"><a href="namespaceripple.html#a8c623abdba7fa97ffd148311056d401eafe5fe0415fc3e0ff4942d8454f363d2c">ripple::DebtDirection::issues</a></div><div class="ttdeci">@ issues</div></div>
 <div class="ttc" id="anamespaceripple_html_a948ed7ae32de8014f0a5f421f36bedc1"><div class="ttname"><a href="namespaceripple.html#a948ed7ae32de8014f0a5f421f36bedc1">ripple::checkNear</a></div><div class="ttdeci">bool checkNear(IOUAmount const &amp;expected, IOUAmount const &amp;actual)</div><div class="ttdef"><b>Definition</b> <a href="PaySteps_8cpp_source.html#l00034">PaySteps.cpp:34</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a9ad0749604cda5299e9af18bf08cb830"><div class="ttname"><a href="namespaceripple.html#a9ad0749604cda5299e9af18bf08cb830">ripple::transferRate</a></div><div class="ttdeci">Rate transferRate(ReadView const &amp;view, AccountID const &amp;issuer)</div><div class="ttdoc">Returns IOU issuer transfer fee as Rate.</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00759">View.cpp:759</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a9ad0749604cda5299e9af18bf08cb830"><div class="ttname"><a href="namespaceripple.html#a9ad0749604cda5299e9af18bf08cb830">ripple::transferRate</a></div><div class="ttdeci">Rate transferRate(ReadView const &amp;view, AccountID const &amp;issuer)</div><div class="ttdoc">Returns IOU issuer transfer fee as Rate.</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00762">View.cpp:762</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aa298e929e02f59c2b05a30ee8805b38cad7c0f4891446922b7248ed12f2207a57"><div class="ttname"><a href="namespaceripple.html#aa298e929e02f59c2b05a30ee8805b38cad7c0f4891446922b7248ed12f2207a57">ripple::tecPATH_DRY</a></div><div class="ttdeci">@ tecPATH_DRY</div><div class="ttdef"><b>Definition</b> <a href="TER_8h_source.html#l00294">TER.h:294</a></div></div>
-<div class="ttc" id="anamespaceripple_html_aa41db33791d7383170c31ad3910bcb33"><div class="ttname"><a href="namespaceripple.html#aa41db33791d7383170c31ad3910bcb33">ripple::rippleCredit</a></div><div class="ttdeci">TER rippleCredit(ApplyView &amp;view, AccountID const &amp;uSenderID, AccountID const &amp;uReceiverID, STAmount const &amp;saAmount, bool bCheckIssuer, beast::Journal j)</div><div class="ttdoc">Calls static rippleCreditIOU if saAmount represents Issue.</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l02829">View.cpp:2829</a></div></div>
+<div class="ttc" id="anamespaceripple_html_aa41db33791d7383170c31ad3910bcb33"><div class="ttname"><a href="namespaceripple.html#aa41db33791d7383170c31ad3910bcb33">ripple::rippleCredit</a></div><div class="ttdeci">TER rippleCredit(ApplyView &amp;view, AccountID const &amp;uSenderID, AccountID const &amp;uReceiverID, STAmount const &amp;saAmount, bool bCheckIssuer, beast::Journal j)</div><div class="ttdoc">Calls static rippleCreditIOU if saAmount represents Issue.</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l02850">View.cpp:2850</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151"><div class="ttname"><a href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">ripple::tesSUCCESS</a></div><div class="ttdeci">@ tesSUCCESS</div><div class="ttdef"><b>Definition</b> <a href="TER_8h_source.html#l00245">TER.h:244</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aaed451aa78786841714de20f3f345f23"><div class="ttname"><a href="namespaceripple.html#aaed451aa78786841714de20f3f345f23">ripple::mulRatio</a></div><div class="ttdeci">IOUAmount mulRatio(IOUAmount const &amp;amt, std::uint32_t num, std::uint32_t den, bool roundUp)</div><div class="ttdef"><b>Definition</b> <a href="IOUAmount_8cpp_source.html#l00190">IOUAmount.cpp:190</a></div></div>
-<div class="ttc" id="anamespaceripple_html_ab001e43f50e612727b1ce5985a2770d6"><div class="ttname"><a href="namespaceripple.html#ab001e43f50e612727b1ce5985a2770d6">ripple::accountHolds</a></div><div class="ttdeci">STAmount accountHolds(ReadView const &amp;view, AccountID const &amp;account, Currency const &amp;currency, AccountID const &amp;issuer, FreezeHandling zeroIfFrozen, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00384">View.cpp:384</a></div></div>
-<div class="ttc" id="anamespaceripple_html_ab9034e2ea3c8d81bf0e36f6dc2074108"><div class="ttname"><a href="namespaceripple.html#ab9034e2ea3c8d81bf0e36f6dc2074108">ripple::make_DirectStepI</a></div><div class="ttdeci">std::pair&lt; TER, std::unique_ptr&lt; Step &gt; &gt; make_DirectStepI(StrandContext const &amp;ctx, AccountID const &amp;src, AccountID const &amp;dst, Currency const &amp;c)</div><div class="ttdef"><b>Definition</b> <a href="DirectStep_8cpp_source.html#l00985">DirectStep.cpp:985</a></div></div>
+<div class="ttc" id="anamespaceripple_html_ab001e43f50e612727b1ce5985a2770d6"><div class="ttname"><a href="namespaceripple.html#ab001e43f50e612727b1ce5985a2770d6">ripple::accountHolds</a></div><div class="ttdeci">STAmount accountHolds(ReadView const &amp;view, AccountID const &amp;account, Currency const &amp;currency, AccountID const &amp;issuer, FreezeHandling zeroIfFrozen, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="View_8cpp_source.html#l00387">View.cpp:387</a></div></div>
+<div class="ttc" id="anamespaceripple_html_ab9034e2ea3c8d81bf0e36f6dc2074108"><div class="ttname"><a href="namespaceripple.html#ab9034e2ea3c8d81bf0e36f6dc2074108">ripple::make_DirectStepI</a></div><div class="ttdeci">std::pair&lt; TER, std::unique_ptr&lt; Step &gt; &gt; make_DirectStepI(StrandContext const &amp;ctx, AccountID const &amp;src, AccountID const &amp;dst, Currency const &amp;c)</div><div class="ttdef"><b>Definition</b> <a href="DirectStep_8cpp_source.html#l00987">DirectStep.cpp:987</a></div></div>
 <div class="ttc" id="anamespaceripple_html_ac124fe6744b7fe887dec949b56b16d50"><div class="ttname"><a href="namespaceripple.html#ac124fe6744b7fe887dec949b56b16d50">ripple::to_string</a></div><div class="ttdeci">std::string to_string(base_uint&lt; Bits, Tag &gt; const &amp;a)</div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00630">base_uint.h:630</a></div></div>
 <div class="ttc" id="anamespaceripple_html_ac8f0e665814bff445a0a352ae56790c9"><div class="ttname"><a href="namespaceripple.html#ac8f0e665814bff445a0a352ae56790c9">ripple::creditLimit2</a></div><div class="ttdeci">IOUAmount creditLimit2(ReadView const &amp;v, AccountID const &amp;acc, AccountID const &amp;iss, Currency const &amp;cur)</div><div class="ttdef"><b>Definition</b> <a href="Credit_8cpp_source.html#l00055">Credit.cpp:55</a></div></div>
 <div class="ttc" id="anamespaceripple_html_adebe4d783be9c979e67fdbb2bc27162faa7ab9460c6755719dd1a4e74b83f34c4"><div class="ttname"><a href="namespaceripple.html#adebe4d783be9c979e67fdbb2bc27162faa7ab9460c6755719dd1a4e74b83f34c4">ripple::terNO_ACCOUNT</a></div><div class="ttdeci">@ terNO_ACCOUNT</div><div class="ttdef"><b>Definition</b> <a href="TER_8h_source.html#l00217">TER.h:217</a></div></div>

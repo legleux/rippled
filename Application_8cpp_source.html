@@ -2232,243 +2232,251 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l01994" name="l01994"></a><span class="lineno"> 1994</span> </div>
 <div class="line"><a id="l01995" name="l01995"></a><span class="lineno"> 1995</span>                <span class="keywordflow">if</span> (!loadLedger)</div>
 <div class="line"><a id="l01996" name="l01996"></a><span class="lineno"> 1996</span>                {</div>
-<div class="line"><a id="l01997" name="l01997"></a><span class="lineno"> 1997</span>                    JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Replay ledger missing/damaged&quot;</span>;</div>
-<div class="line"><a id="l01998" name="l01998"></a><span class="lineno"> 1998</span>                    UNREACHABLE(</div>
-<div class="line"><a id="l01999" name="l01999"></a><span class="lineno"> 1999</span>                        <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : replay ledger &quot;</span></div>
-<div class="line"><a id="l02000" name="l02000"></a><span class="lineno"> 2000</span>                        <span class="stringliteral">&quot;missing/damaged&quot;</span>);</div>
-<div class="line"><a id="l02001" name="l02001"></a><span class="lineno"> 2001</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02002" name="l02002"></a><span class="lineno"> 2002</span>                }</div>
-<div class="line"><a id="l02003" name="l02003"></a><span class="lineno"> 2003</span>            }</div>
-<div class="line"><a id="l02004" name="l02004"></a><span class="lineno"> 2004</span>        }</div>
-<div class="line"><a id="l02005" name="l02005"></a><span class="lineno"> 2005</span>        <span class="keyword">using namespace </span>std::chrono_literals;</div>
-<div class="line"><a id="l02006" name="l02006"></a><span class="lineno"> 2006</span>        <span class="keyword">using namespace </span>date;</div>
-<div class="line"><a id="l02007" name="l02007"></a><span class="lineno"> 2007</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/time_point.html">NetClock::time_point</a> ledgerWarnTimePoint{</div>
-<div class="line"><a id="l02008" name="l02008"></a><span class="lineno"> 2008</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/system_clock.html">sys_days</a>{January / 1 / 2018} - <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/system_clock.html">sys_days</a>{January / 1 / 2000}};</div>
-<div class="line"><a id="l02009" name="l02009"></a><span class="lineno"> 2009</span>        <span class="keywordflow">if</span> (loadLedger-&gt;info().closeTime &lt; ledgerWarnTimePoint)</div>
-<div class="line"><a id="l02010" name="l02010"></a><span class="lineno"> 2010</span>        {</div>
-<div class="line"><a id="l02011" name="l02011"></a><span class="lineno"> 2011</span>            JLOG(m_journal.fatal())</div>
-<div class="line"><a id="l02012" name="l02012"></a><span class="lineno"> 2012</span>                &lt;&lt; <span class="stringliteral">&quot;\n\n***  WARNING   ***\n&quot;</span></div>
-<div class="line"><a id="l02013" name="l02013"></a><span class="lineno"> 2013</span>                   <span class="stringliteral">&quot;You are replaying a ledger from before &quot;</span></div>
-<div class="line"><a id="l02014" name="l02014"></a><span class="lineno"> 2014</span>                &lt;&lt; to_string(ledgerWarnTimePoint)</div>
-<div class="line"><a id="l02015" name="l02015"></a><span class="lineno"> 2015</span>                &lt;&lt; <span class="stringliteral">&quot; UTC.\n&quot;</span></div>
-<div class="line"><a id="l02016" name="l02016"></a><span class="lineno"> 2016</span>                   <span class="stringliteral">&quot;This replay will not handle your ledger as it was &quot;</span></div>
-<div class="line"><a id="l02017" name="l02017"></a><span class="lineno"> 2017</span>                   <span class="stringliteral">&quot;originally &quot;</span></div>
-<div class="line"><a id="l02018" name="l02018"></a><span class="lineno"> 2018</span>                   <span class="stringliteral">&quot;handled.\nConsider running an earlier version of rippled &quot;</span></div>
-<div class="line"><a id="l02019" name="l02019"></a><span class="lineno"> 2019</span>                   <span class="stringliteral">&quot;to &quot;</span></div>
-<div class="line"><a id="l02020" name="l02020"></a><span class="lineno"> 2020</span>                   <span class="stringliteral">&quot;get the older rules.\n*** CONTINUING ***\n&quot;</span>;</div>
-<div class="line"><a id="l02021" name="l02021"></a><span class="lineno"> 2021</span>        }</div>
-<div class="line"><a id="l02022" name="l02022"></a><span class="lineno"> 2022</span> </div>
-<div class="line"><a id="l02023" name="l02023"></a><span class="lineno"> 2023</span>        JLOG(m_journal.info()) &lt;&lt; <span class="stringliteral">&quot;Loading ledger &quot;</span> &lt;&lt; loadLedger-&gt;info().hash</div>
-<div class="line"><a id="l02024" name="l02024"></a><span class="lineno"> 2024</span>                               &lt;&lt; <span class="stringliteral">&quot; seq:&quot;</span> &lt;&lt; loadLedger-&gt;info().seq;</div>
-<div class="line"><a id="l02025" name="l02025"></a><span class="lineno"> 2025</span> </div>
-<div class="line"><a id="l02026" name="l02026"></a><span class="lineno"> 2026</span>        <span class="keywordflow">if</span> (loadLedger-&gt;info().accountHash.isZero())</div>
-<div class="line"><a id="l02027" name="l02027"></a><span class="lineno"> 2027</span>        {</div>
-<div class="line"><a id="l02028" name="l02028"></a><span class="lineno"> 2028</span>            JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Ledger is empty.&quot;</span>;</div>
-<div class="line"><a id="l02029" name="l02029"></a><span class="lineno"> 2029</span>            UNREACHABLE(</div>
-<div class="line"><a id="l02030" name="l02030"></a><span class="lineno"> 2030</span>                <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : ledger is empty&quot;</span>);</div>
-<div class="line"><a id="l02031" name="l02031"></a><span class="lineno"> 2031</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02032" name="l02032"></a><span class="lineno"> 2032</span>        }</div>
-<div class="line"><a id="l02033" name="l02033"></a><span class="lineno"> 2033</span> </div>
-<div class="line"><a id="l02034" name="l02034"></a><span class="lineno"> 2034</span>        <span class="keywordflow">if</span> (!loadLedger-&gt;walkLedger(journal(<span class="stringliteral">&quot;Ledger&quot;</span>), <span class="keyword">true</span>))</div>
-<div class="line"><a id="l02035" name="l02035"></a><span class="lineno"> 2035</span>        {</div>
-<div class="line"><a id="l02036" name="l02036"></a><span class="lineno"> 2036</span>            JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Ledger is missing nodes.&quot;</span>;</div>
-<div class="line"><a id="l02037" name="l02037"></a><span class="lineno"> 2037</span>            UNREACHABLE(</div>
-<div class="line"><a id="l02038" name="l02038"></a><span class="lineno"> 2038</span>                <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : ledger is missing &quot;</span></div>
-<div class="line"><a id="l02039" name="l02039"></a><span class="lineno"> 2039</span>                <span class="stringliteral">&quot;nodes&quot;</span>);</div>
-<div class="line"><a id="l02040" name="l02040"></a><span class="lineno"> 2040</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02041" name="l02041"></a><span class="lineno"> 2041</span>        }</div>
-<div class="line"><a id="l02042" name="l02042"></a><span class="lineno"> 2042</span> </div>
-<div class="line"><a id="l02043" name="l02043"></a><span class="lineno"> 2043</span>        <span class="keywordflow">if</span> (!loadLedger-&gt;assertSensible(journal(<span class="stringliteral">&quot;Ledger&quot;</span>)))</div>
-<div class="line"><a id="l02044" name="l02044"></a><span class="lineno"> 2044</span>        {</div>
-<div class="line"><a id="l02045" name="l02045"></a><span class="lineno"> 2045</span>            JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Ledger is not sensible.&quot;</span>;</div>
-<div class="line"><a id="l02046" name="l02046"></a><span class="lineno"> 2046</span>            UNREACHABLE(</div>
-<div class="line"><a id="l02047" name="l02047"></a><span class="lineno"> 2047</span>                <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : ledger is not &quot;</span></div>
-<div class="line"><a id="l02048" name="l02048"></a><span class="lineno"> 2048</span>                <span class="stringliteral">&quot;sensible&quot;</span>);</div>
-<div class="line"><a id="l02049" name="l02049"></a><span class="lineno"> 2049</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02050" name="l02050"></a><span class="lineno"> 2050</span>        }</div>
-<div class="line"><a id="l02051" name="l02051"></a><span class="lineno"> 2051</span> </div>
-<div class="line"><a id="l02052" name="l02052"></a><span class="lineno"> 2052</span>        m_ledgerMaster-&gt;setLedgerRangePresent(</div>
-<div class="line"><a id="l02053" name="l02053"></a><span class="lineno"> 2053</span>            loadLedger-&gt;info().seq, loadLedger-&gt;info().seq);</div>
-<div class="line"><a id="l02054" name="l02054"></a><span class="lineno"> 2054</span> </div>
-<div class="line"><a id="l02055" name="l02055"></a><span class="lineno"> 2055</span>        m_ledgerMaster-&gt;switchLCL(loadLedger);</div>
-<div class="line"><a id="l02056" name="l02056"></a><span class="lineno"> 2056</span>        loadLedger-&gt;setValidated();</div>
-<div class="line"><a id="l02057" name="l02057"></a><span class="lineno"> 2057</span>        m_ledgerMaster-&gt;setFullLedger(loadLedger, <span class="keyword">true</span>, <span class="keyword">false</span>);</div>
-<div class="line"><a id="l02058" name="l02058"></a><span class="lineno"> 2058</span>        openLedger_.emplace(</div>
-<div class="line"><a id="l02059" name="l02059"></a><span class="lineno"> 2059</span>            loadLedger, cachedSLEs_, logs_-&gt;journal(<span class="stringliteral">&quot;OpenLedger&quot;</span>));</div>
-<div class="line"><a id="l02060" name="l02060"></a><span class="lineno"> 2060</span> </div>
-<div class="line"><a id="l02061" name="l02061"></a><span class="lineno"> 2061</span>        <span class="keywordflow">if</span> (replay)</div>
-<div class="line"><a id="l02062" name="l02062"></a><span class="lineno"> 2062</span>        {</div>
-<div class="line"><a id="l02063" name="l02063"></a><span class="lineno"> 2063</span>            <span class="comment">// inject transaction(s) from the replayLedger into our open ledger</span></div>
-<div class="line"><a id="l02064" name="l02064"></a><span class="lineno"> 2064</span>            <span class="comment">// and build replay structure</span></div>
-<div class="line"><a id="l02065" name="l02065"></a><span class="lineno"> 2065</span>            <span class="keyword">auto</span> replayData =</div>
-<div class="line"><a id="l02066" name="l02066"></a><span class="lineno"> 2066</span>                <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;LedgerReplay&gt;</a>(loadLedger, replayLedger);</div>
-<div class="line"><a id="l02067" name="l02067"></a><span class="lineno"> 2067</span> </div>
-<div class="line"><a id="l02068" name="l02068"></a><span class="lineno"> 2068</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [_, tx] : replayData-&gt;orderedTxns())</div>
-<div class="line"><a id="l02069" name="l02069"></a><span class="lineno"> 2069</span>            {</div>
-<div class="line"><a id="l02070" name="l02070"></a><span class="lineno"> 2070</span>                (void)_;</div>
-<div class="line"><a id="l02071" name="l02071"></a><span class="lineno"> 2071</span>                <span class="keyword">auto</span> txID = tx-&gt;getTransactionID();</div>
-<div class="line"><a id="l02072" name="l02072"></a><span class="lineno"> 2072</span>                <span class="keywordflow">if</span> (trapTxID == txID)</div>
-<div class="line"><a id="l02073" name="l02073"></a><span class="lineno"> 2073</span>                {</div>
-<div class="line"><a id="l02074" name="l02074"></a><span class="lineno"> 2074</span>                    trapTxID_ = txID;</div>
-<div class="line"><a id="l02075" name="l02075"></a><span class="lineno"> 2075</span>                    JLOG(m_journal.debug()) &lt;&lt; <span class="stringliteral">&quot;Trap transaction set: &quot;</span> &lt;&lt; txID;</div>
-<div class="line"><a id="l02076" name="l02076"></a><span class="lineno"> 2076</span>                }</div>
-<div class="line"><a id="l02077" name="l02077"></a><span class="lineno"> 2077</span> </div>
-<div class="line"><a id="l02078" name="l02078"></a><span class="lineno"> 2078</span>                <span class="keyword">auto</span> s = <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_shared&lt;Serializer&gt;</a>();</div>
-<div class="line"><a id="l02079" name="l02079"></a><span class="lineno"> 2079</span>                tx-&gt;add(*s);</div>
-<div class="line"><a id="l02080" name="l02080"></a><span class="lineno"> 2080</span> </div>
-<div class="line"><a id="l02081" name="l02081"></a><span class="lineno"> 2081</span>                <a class="code hl_function" href="namespaceripple.html#ab5fadc2b2814a10d35c00c0a8241fbe7">forceValidity</a>(getHashRouter(), txID, Validity::SigGoodOnly);</div>
-<div class="line"><a id="l02082" name="l02082"></a><span class="lineno"> 2082</span> </div>
-<div class="line"><a id="l02083" name="l02083"></a><span class="lineno"> 2083</span>                openLedger_-&gt;modify(</div>
-<div class="line"><a id="l02084" name="l02084"></a><span class="lineno"> 2084</span>                    [&amp;txID, &amp;s](<a class="code hl_class" href="classripple_1_1OpenView.html">OpenView</a>&amp; view, <a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a> j) {</div>
-<div class="line"><a id="l02085" name="l02085"></a><span class="lineno"> 2085</span>                        view.<a class="code hl_function" href="classripple_1_1OpenView.html#ab230a32cbeedf37d8b30bbec8a91961d">rawTxInsert</a>(txID, std::move(s), <span class="keyword">nullptr</span>);</div>
-<div class="line"><a id="l02086" name="l02086"></a><span class="lineno"> 2086</span>                        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l02087" name="l02087"></a><span class="lineno"> 2087</span>                    });</div>
-<div class="line"><a id="l02088" name="l02088"></a><span class="lineno"> 2088</span>            }</div>
-<div class="line"><a id="l02089" name="l02089"></a><span class="lineno"> 2089</span> </div>
-<div class="line"><a id="l02090" name="l02090"></a><span class="lineno"> 2090</span>            m_ledgerMaster-&gt;takeReplay(std::move(replayData));</div>
-<div class="line"><a id="l02091" name="l02091"></a><span class="lineno"> 2091</span> </div>
-<div class="line"><a id="l02092" name="l02092"></a><span class="lineno"> 2092</span>            <span class="keywordflow">if</span> (trapTxID &amp;&amp; !trapTxID_)</div>
-<div class="line"><a id="l02093" name="l02093"></a><span class="lineno"> 2093</span>            {</div>
-<div class="line"><a id="l02094" name="l02094"></a><span class="lineno"> 2094</span>                JLOG(m_journal.fatal())</div>
-<div class="line"><a id="l02095" name="l02095"></a><span class="lineno"> 2095</span>                    &lt;&lt; <span class="stringliteral">&quot;Ledger &quot;</span> &lt;&lt; replayLedger-&gt;info().seq</div>
-<div class="line"><a id="l02096" name="l02096"></a><span class="lineno"> 2096</span>                    &lt;&lt; <span class="stringliteral">&quot; does not contain the transaction hash &quot;</span> &lt;&lt; *trapTxID;</div>
-<div class="line"><a id="l02097" name="l02097"></a><span class="lineno"> 2097</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02098" name="l02098"></a><span class="lineno"> 2098</span>            }</div>
-<div class="line"><a id="l02099" name="l02099"></a><span class="lineno"> 2099</span>        }</div>
-<div class="line"><a id="l02100" name="l02100"></a><span class="lineno"> 2100</span>    }</div>
-<div class="line"><a id="l02101" name="l02101"></a><span class="lineno"> 2101</span>    <span class="keywordflow">catch</span> (<a class="code hl_class" href="classripple_1_1SHAMapMissingNode.html">SHAMapMissingNode</a> <span class="keyword">const</span>&amp; mn)</div>
-<div class="line"><a id="l02102" name="l02102"></a><span class="lineno"> 2102</span>    {</div>
-<div class="line"><a id="l02103" name="l02103"></a><span class="lineno"> 2103</span>        JLOG(m_journal.fatal())</div>
-<div class="line"><a id="l02104" name="l02104"></a><span class="lineno"> 2104</span>            &lt;&lt; <span class="stringliteral">&quot;While loading specified ledger: &quot;</span> &lt;&lt; mn.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/error/exception/what.html">what</a>();</div>
-<div class="line"><a id="l02105" name="l02105"></a><span class="lineno"> 2105</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02106" name="l02106"></a><span class="lineno"> 2106</span>    }</div>
-<div class="line"><a id="l02107" name="l02107"></a><span class="lineno"> 2107</span>    <span class="keywordflow">catch</span> (boost::bad_lexical_cast&amp;)</div>
-<div class="line"><a id="l02108" name="l02108"></a><span class="lineno"> 2108</span>    {</div>
-<div class="line"><a id="l02109" name="l02109"></a><span class="lineno"> 2109</span>        JLOG(m_journal.fatal())</div>
-<div class="line"><a id="l02110" name="l02110"></a><span class="lineno"> 2110</span>            &lt;&lt; <span class="stringliteral">&quot;Ledger specified &#39;&quot;</span> &lt;&lt; ledgerID &lt;&lt; <span class="stringliteral">&quot;&#39; is not valid&quot;</span>;</div>
-<div class="line"><a id="l02111" name="l02111"></a><span class="lineno"> 2111</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02112" name="l02112"></a><span class="lineno"> 2112</span>    }</div>
-<div class="line"><a id="l02113" name="l02113"></a><span class="lineno"> 2113</span> </div>
-<div class="line"><a id="l02114" name="l02114"></a><span class="lineno"> 2114</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l02115" name="l02115"></a><span class="lineno"> 2115</span>}</div>
+<div class="line"><a id="l01997" name="l01997"></a><span class="lineno"> 1997</span>                    <span class="comment">// LCOV_EXCL_START</span></div>
+<div class="line"><a id="l01998" name="l01998"></a><span class="lineno"> 1998</span>                    JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Replay ledger missing/damaged&quot;</span>;</div>
+<div class="line"><a id="l01999" name="l01999"></a><span class="lineno"> 1999</span>                    UNREACHABLE(</div>
+<div class="line"><a id="l02000" name="l02000"></a><span class="lineno"> 2000</span>                        <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : replay ledger &quot;</span></div>
+<div class="line"><a id="l02001" name="l02001"></a><span class="lineno"> 2001</span>                        <span class="stringliteral">&quot;missing/damaged&quot;</span>);</div>
+<div class="line"><a id="l02002" name="l02002"></a><span class="lineno"> 2002</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02003" name="l02003"></a><span class="lineno"> 2003</span>                    <span class="comment">// LCOV_EXCL_STOP</span></div>
+<div class="line"><a id="l02004" name="l02004"></a><span class="lineno"> 2004</span>                }</div>
+<div class="line"><a id="l02005" name="l02005"></a><span class="lineno"> 2005</span>            }</div>
+<div class="line"><a id="l02006" name="l02006"></a><span class="lineno"> 2006</span>        }</div>
+<div class="line"><a id="l02007" name="l02007"></a><span class="lineno"> 2007</span>        <span class="keyword">using namespace </span>std::chrono_literals;</div>
+<div class="line"><a id="l02008" name="l02008"></a><span class="lineno"> 2008</span>        <span class="keyword">using namespace </span>date;</div>
+<div class="line"><a id="l02009" name="l02009"></a><span class="lineno"> 2009</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/time_point.html">NetClock::time_point</a> ledgerWarnTimePoint{</div>
+<div class="line"><a id="l02010" name="l02010"></a><span class="lineno"> 2010</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/system_clock.html">sys_days</a>{January / 1 / 2018} - <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/system_clock.html">sys_days</a>{January / 1 / 2000}};</div>
+<div class="line"><a id="l02011" name="l02011"></a><span class="lineno"> 2011</span>        <span class="keywordflow">if</span> (loadLedger-&gt;info().closeTime &lt; ledgerWarnTimePoint)</div>
+<div class="line"><a id="l02012" name="l02012"></a><span class="lineno"> 2012</span>        {</div>
+<div class="line"><a id="l02013" name="l02013"></a><span class="lineno"> 2013</span>            JLOG(m_journal.fatal())</div>
+<div class="line"><a id="l02014" name="l02014"></a><span class="lineno"> 2014</span>                &lt;&lt; <span class="stringliteral">&quot;\n\n***  WARNING   ***\n&quot;</span></div>
+<div class="line"><a id="l02015" name="l02015"></a><span class="lineno"> 2015</span>                   <span class="stringliteral">&quot;You are replaying a ledger from before &quot;</span></div>
+<div class="line"><a id="l02016" name="l02016"></a><span class="lineno"> 2016</span>                &lt;&lt; to_string(ledgerWarnTimePoint)</div>
+<div class="line"><a id="l02017" name="l02017"></a><span class="lineno"> 2017</span>                &lt;&lt; <span class="stringliteral">&quot; UTC.\n&quot;</span></div>
+<div class="line"><a id="l02018" name="l02018"></a><span class="lineno"> 2018</span>                   <span class="stringliteral">&quot;This replay will not handle your ledger as it was &quot;</span></div>
+<div class="line"><a id="l02019" name="l02019"></a><span class="lineno"> 2019</span>                   <span class="stringliteral">&quot;originally &quot;</span></div>
+<div class="line"><a id="l02020" name="l02020"></a><span class="lineno"> 2020</span>                   <span class="stringliteral">&quot;handled.\nConsider running an earlier version of rippled &quot;</span></div>
+<div class="line"><a id="l02021" name="l02021"></a><span class="lineno"> 2021</span>                   <span class="stringliteral">&quot;to &quot;</span></div>
+<div class="line"><a id="l02022" name="l02022"></a><span class="lineno"> 2022</span>                   <span class="stringliteral">&quot;get the older rules.\n*** CONTINUING ***\n&quot;</span>;</div>
+<div class="line"><a id="l02023" name="l02023"></a><span class="lineno"> 2023</span>        }</div>
+<div class="line"><a id="l02024" name="l02024"></a><span class="lineno"> 2024</span> </div>
+<div class="line"><a id="l02025" name="l02025"></a><span class="lineno"> 2025</span>        JLOG(m_journal.info()) &lt;&lt; <span class="stringliteral">&quot;Loading ledger &quot;</span> &lt;&lt; loadLedger-&gt;info().hash</div>
+<div class="line"><a id="l02026" name="l02026"></a><span class="lineno"> 2026</span>                               &lt;&lt; <span class="stringliteral">&quot; seq:&quot;</span> &lt;&lt; loadLedger-&gt;info().seq;</div>
+<div class="line"><a id="l02027" name="l02027"></a><span class="lineno"> 2027</span> </div>
+<div class="line"><a id="l02028" name="l02028"></a><span class="lineno"> 2028</span>        <span class="keywordflow">if</span> (loadLedger-&gt;info().accountHash.isZero())</div>
+<div class="line"><a id="l02029" name="l02029"></a><span class="lineno"> 2029</span>        {</div>
+<div class="line"><a id="l02030" name="l02030"></a><span class="lineno"> 2030</span>            <span class="comment">// LCOV_EXCL_START</span></div>
+<div class="line"><a id="l02031" name="l02031"></a><span class="lineno"> 2031</span>            JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Ledger is empty.&quot;</span>;</div>
+<div class="line"><a id="l02032" name="l02032"></a><span class="lineno"> 2032</span>            UNREACHABLE(</div>
+<div class="line"><a id="l02033" name="l02033"></a><span class="lineno"> 2033</span>                <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : ledger is empty&quot;</span>);</div>
+<div class="line"><a id="l02034" name="l02034"></a><span class="lineno"> 2034</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02035" name="l02035"></a><span class="lineno"> 2035</span>            <span class="comment">// LCOV_EXCL_STOP</span></div>
+<div class="line"><a id="l02036" name="l02036"></a><span class="lineno"> 2036</span>        }</div>
+<div class="line"><a id="l02037" name="l02037"></a><span class="lineno"> 2037</span> </div>
+<div class="line"><a id="l02038" name="l02038"></a><span class="lineno"> 2038</span>        <span class="keywordflow">if</span> (!loadLedger-&gt;walkLedger(journal(<span class="stringliteral">&quot;Ledger&quot;</span>), <span class="keyword">true</span>))</div>
+<div class="line"><a id="l02039" name="l02039"></a><span class="lineno"> 2039</span>        {</div>
+<div class="line"><a id="l02040" name="l02040"></a><span class="lineno"> 2040</span>            <span class="comment">// LCOV_EXCL_START</span></div>
+<div class="line"><a id="l02041" name="l02041"></a><span class="lineno"> 2041</span>            JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Ledger is missing nodes.&quot;</span>;</div>
+<div class="line"><a id="l02042" name="l02042"></a><span class="lineno"> 2042</span>            UNREACHABLE(</div>
+<div class="line"><a id="l02043" name="l02043"></a><span class="lineno"> 2043</span>                <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : ledger is missing &quot;</span></div>
+<div class="line"><a id="l02044" name="l02044"></a><span class="lineno"> 2044</span>                <span class="stringliteral">&quot;nodes&quot;</span>);</div>
+<div class="line"><a id="l02045" name="l02045"></a><span class="lineno"> 2045</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02046" name="l02046"></a><span class="lineno"> 2046</span>            <span class="comment">// LCOV_EXCL_STOP</span></div>
+<div class="line"><a id="l02047" name="l02047"></a><span class="lineno"> 2047</span>        }</div>
+<div class="line"><a id="l02048" name="l02048"></a><span class="lineno"> 2048</span> </div>
+<div class="line"><a id="l02049" name="l02049"></a><span class="lineno"> 2049</span>        <span class="keywordflow">if</span> (!loadLedger-&gt;assertSensible(journal(<span class="stringliteral">&quot;Ledger&quot;</span>)))</div>
+<div class="line"><a id="l02050" name="l02050"></a><span class="lineno"> 2050</span>        {</div>
+<div class="line"><a id="l02051" name="l02051"></a><span class="lineno"> 2051</span>            <span class="comment">// LCOV_EXCL_START</span></div>
+<div class="line"><a id="l02052" name="l02052"></a><span class="lineno"> 2052</span>            JLOG(m_journal.fatal()) &lt;&lt; <span class="stringliteral">&quot;Ledger is not sensible.&quot;</span>;</div>
+<div class="line"><a id="l02053" name="l02053"></a><span class="lineno"> 2053</span>            UNREACHABLE(</div>
+<div class="line"><a id="l02054" name="l02054"></a><span class="lineno"> 2054</span>                <span class="stringliteral">&quot;ripple::ApplicationImp::loadOldLedger : ledger is not &quot;</span></div>
+<div class="line"><a id="l02055" name="l02055"></a><span class="lineno"> 2055</span>                <span class="stringliteral">&quot;sensible&quot;</span>);</div>
+<div class="line"><a id="l02056" name="l02056"></a><span class="lineno"> 2056</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02057" name="l02057"></a><span class="lineno"> 2057</span>            <span class="comment">// LCOV_EXCL_STOP</span></div>
+<div class="line"><a id="l02058" name="l02058"></a><span class="lineno"> 2058</span>        }</div>
+<div class="line"><a id="l02059" name="l02059"></a><span class="lineno"> 2059</span> </div>
+<div class="line"><a id="l02060" name="l02060"></a><span class="lineno"> 2060</span>        m_ledgerMaster-&gt;setLedgerRangePresent(</div>
+<div class="line"><a id="l02061" name="l02061"></a><span class="lineno"> 2061</span>            loadLedger-&gt;info().seq, loadLedger-&gt;info().seq);</div>
+<div class="line"><a id="l02062" name="l02062"></a><span class="lineno"> 2062</span> </div>
+<div class="line"><a id="l02063" name="l02063"></a><span class="lineno"> 2063</span>        m_ledgerMaster-&gt;switchLCL(loadLedger);</div>
+<div class="line"><a id="l02064" name="l02064"></a><span class="lineno"> 2064</span>        loadLedger-&gt;setValidated();</div>
+<div class="line"><a id="l02065" name="l02065"></a><span class="lineno"> 2065</span>        m_ledgerMaster-&gt;setFullLedger(loadLedger, <span class="keyword">true</span>, <span class="keyword">false</span>);</div>
+<div class="line"><a id="l02066" name="l02066"></a><span class="lineno"> 2066</span>        openLedger_.emplace(</div>
+<div class="line"><a id="l02067" name="l02067"></a><span class="lineno"> 2067</span>            loadLedger, cachedSLEs_, logs_-&gt;journal(<span class="stringliteral">&quot;OpenLedger&quot;</span>));</div>
+<div class="line"><a id="l02068" name="l02068"></a><span class="lineno"> 2068</span> </div>
+<div class="line"><a id="l02069" name="l02069"></a><span class="lineno"> 2069</span>        <span class="keywordflow">if</span> (replay)</div>
+<div class="line"><a id="l02070" name="l02070"></a><span class="lineno"> 2070</span>        {</div>
+<div class="line"><a id="l02071" name="l02071"></a><span class="lineno"> 2071</span>            <span class="comment">// inject transaction(s) from the replayLedger into our open ledger</span></div>
+<div class="line"><a id="l02072" name="l02072"></a><span class="lineno"> 2072</span>            <span class="comment">// and build replay structure</span></div>
+<div class="line"><a id="l02073" name="l02073"></a><span class="lineno"> 2073</span>            <span class="keyword">auto</span> replayData =</div>
+<div class="line"><a id="l02074" name="l02074"></a><span class="lineno"> 2074</span>                <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;LedgerReplay&gt;</a>(loadLedger, replayLedger);</div>
+<div class="line"><a id="l02075" name="l02075"></a><span class="lineno"> 2075</span> </div>
+<div class="line"><a id="l02076" name="l02076"></a><span class="lineno"> 2076</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [_, tx] : replayData-&gt;orderedTxns())</div>
+<div class="line"><a id="l02077" name="l02077"></a><span class="lineno"> 2077</span>            {</div>
+<div class="line"><a id="l02078" name="l02078"></a><span class="lineno"> 2078</span>                (void)_;</div>
+<div class="line"><a id="l02079" name="l02079"></a><span class="lineno"> 2079</span>                <span class="keyword">auto</span> txID = tx-&gt;getTransactionID();</div>
+<div class="line"><a id="l02080" name="l02080"></a><span class="lineno"> 2080</span>                <span class="keywordflow">if</span> (trapTxID == txID)</div>
+<div class="line"><a id="l02081" name="l02081"></a><span class="lineno"> 2081</span>                {</div>
+<div class="line"><a id="l02082" name="l02082"></a><span class="lineno"> 2082</span>                    trapTxID_ = txID;</div>
+<div class="line"><a id="l02083" name="l02083"></a><span class="lineno"> 2083</span>                    JLOG(m_journal.debug()) &lt;&lt; <span class="stringliteral">&quot;Trap transaction set: &quot;</span> &lt;&lt; txID;</div>
+<div class="line"><a id="l02084" name="l02084"></a><span class="lineno"> 2084</span>                }</div>
+<div class="line"><a id="l02085" name="l02085"></a><span class="lineno"> 2085</span> </div>
+<div class="line"><a id="l02086" name="l02086"></a><span class="lineno"> 2086</span>                <span class="keyword">auto</span> s = <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_shared&lt;Serializer&gt;</a>();</div>
+<div class="line"><a id="l02087" name="l02087"></a><span class="lineno"> 2087</span>                tx-&gt;add(*s);</div>
+<div class="line"><a id="l02088" name="l02088"></a><span class="lineno"> 2088</span> </div>
+<div class="line"><a id="l02089" name="l02089"></a><span class="lineno"> 2089</span>                <a class="code hl_function" href="namespaceripple.html#ab5fadc2b2814a10d35c00c0a8241fbe7">forceValidity</a>(getHashRouter(), txID, Validity::SigGoodOnly);</div>
+<div class="line"><a id="l02090" name="l02090"></a><span class="lineno"> 2090</span> </div>
+<div class="line"><a id="l02091" name="l02091"></a><span class="lineno"> 2091</span>                openLedger_-&gt;modify(</div>
+<div class="line"><a id="l02092" name="l02092"></a><span class="lineno"> 2092</span>                    [&amp;txID, &amp;s](<a class="code hl_class" href="classripple_1_1OpenView.html">OpenView</a>&amp; view, <a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a> j) {</div>
+<div class="line"><a id="l02093" name="l02093"></a><span class="lineno"> 2093</span>                        view.<a class="code hl_function" href="classripple_1_1OpenView.html#ab230a32cbeedf37d8b30bbec8a91961d">rawTxInsert</a>(txID, std::move(s), <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l02094" name="l02094"></a><span class="lineno"> 2094</span>                        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l02095" name="l02095"></a><span class="lineno"> 2095</span>                    });</div>
+<div class="line"><a id="l02096" name="l02096"></a><span class="lineno"> 2096</span>            }</div>
+<div class="line"><a id="l02097" name="l02097"></a><span class="lineno"> 2097</span> </div>
+<div class="line"><a id="l02098" name="l02098"></a><span class="lineno"> 2098</span>            m_ledgerMaster-&gt;takeReplay(std::move(replayData));</div>
+<div class="line"><a id="l02099" name="l02099"></a><span class="lineno"> 2099</span> </div>
+<div class="line"><a id="l02100" name="l02100"></a><span class="lineno"> 2100</span>            <span class="keywordflow">if</span> (trapTxID &amp;&amp; !trapTxID_)</div>
+<div class="line"><a id="l02101" name="l02101"></a><span class="lineno"> 2101</span>            {</div>
+<div class="line"><a id="l02102" name="l02102"></a><span class="lineno"> 2102</span>                JLOG(m_journal.fatal())</div>
+<div class="line"><a id="l02103" name="l02103"></a><span class="lineno"> 2103</span>                    &lt;&lt; <span class="stringliteral">&quot;Ledger &quot;</span> &lt;&lt; replayLedger-&gt;info().seq</div>
+<div class="line"><a id="l02104" name="l02104"></a><span class="lineno"> 2104</span>                    &lt;&lt; <span class="stringliteral">&quot; does not contain the transaction hash &quot;</span> &lt;&lt; *trapTxID;</div>
+<div class="line"><a id="l02105" name="l02105"></a><span class="lineno"> 2105</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02106" name="l02106"></a><span class="lineno"> 2106</span>            }</div>
+<div class="line"><a id="l02107" name="l02107"></a><span class="lineno"> 2107</span>        }</div>
+<div class="line"><a id="l02108" name="l02108"></a><span class="lineno"> 2108</span>    }</div>
+<div class="line"><a id="l02109" name="l02109"></a><span class="lineno"> 2109</span>    <span class="keywordflow">catch</span> (<a class="code hl_class" href="classripple_1_1SHAMapMissingNode.html">SHAMapMissingNode</a> <span class="keyword">const</span>&amp; mn)</div>
+<div class="line"><a id="l02110" name="l02110"></a><span class="lineno"> 2110</span>    {</div>
+<div class="line"><a id="l02111" name="l02111"></a><span class="lineno"> 2111</span>        JLOG(m_journal.fatal())</div>
+<div class="line"><a id="l02112" name="l02112"></a><span class="lineno"> 2112</span>            &lt;&lt; <span class="stringliteral">&quot;While loading specified ledger: &quot;</span> &lt;&lt; mn.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/error/exception/what.html">what</a>();</div>
+<div class="line"><a id="l02113" name="l02113"></a><span class="lineno"> 2113</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02114" name="l02114"></a><span class="lineno"> 2114</span>    }</div>
+<div class="line"><a id="l02115" name="l02115"></a><span class="lineno"> 2115</span>    <span class="keywordflow">catch</span> (boost::bad_lexical_cast&amp;)</div>
+<div class="line"><a id="l02116" name="l02116"></a><span class="lineno"> 2116</span>    {</div>
+<div class="line"><a id="l02117" name="l02117"></a><span class="lineno"> 2117</span>        JLOG(m_journal.fatal())</div>
+<div class="line"><a id="l02118" name="l02118"></a><span class="lineno"> 2118</span>            &lt;&lt; <span class="stringliteral">&quot;Ledger specified &#39;&quot;</span> &lt;&lt; ledgerID &lt;&lt; <span class="stringliteral">&quot;&#39; is not valid&quot;</span>;</div>
+<div class="line"><a id="l02119" name="l02119"></a><span class="lineno"> 2119</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02120" name="l02120"></a><span class="lineno"> 2120</span>    }</div>
+<div class="line"><a id="l02121" name="l02121"></a><span class="lineno"> 2121</span> </div>
+<div class="line"><a id="l02122" name="l02122"></a><span class="lineno"> 2122</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l02123" name="l02123"></a><span class="lineno"> 2123</span>}</div>
 </div>
-<div class="line"><a id="l02116" name="l02116"></a><span class="lineno"> 2116</span> </div>
-<div class="line"><a id="l02117" name="l02117"></a><span class="lineno"> 2117</span><span class="keywordtype">bool</span></div>
-<div class="foldopen" id="foldopen02118" data-start="{" data-end="}">
-<div class="line"><a id="l02118" name="l02118"></a><span class="lineno"><a class="line" href="classripple_1_1ApplicationImp.html#a695ccd48be7dda56348612a8b2695c54"> 2118</a></span>ApplicationImp::serverOkay(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>&amp; reason)</div>
-<div class="line"><a id="l02119" name="l02119"></a><span class="lineno"> 2119</span>{</div>
-<div class="line"><a id="l02120" name="l02120"></a><span class="lineno"> 2120</span>    <span class="keywordflow">if</span> (!config().ELB_SUPPORT)</div>
-<div class="line"><a id="l02121" name="l02121"></a><span class="lineno"> 2121</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l02122" name="l02122"></a><span class="lineno"> 2122</span> </div>
-<div class="line"><a id="l02123" name="l02123"></a><span class="lineno"> 2123</span>    <span class="keywordflow">if</span> (isStopping())</div>
-<div class="line"><a id="l02124" name="l02124"></a><span class="lineno"> 2124</span>    {</div>
-<div class="line"><a id="l02125" name="l02125"></a><span class="lineno"> 2125</span>        reason = <span class="stringliteral">&quot;Server is shutting down&quot;</span>;</div>
-<div class="line"><a id="l02126" name="l02126"></a><span class="lineno"> 2126</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02127" name="l02127"></a><span class="lineno"> 2127</span>    }</div>
-<div class="line"><a id="l02128" name="l02128"></a><span class="lineno"> 2128</span> </div>
-<div class="line"><a id="l02129" name="l02129"></a><span class="lineno"> 2129</span>    <span class="keywordflow">if</span> (getOPs().isNeedNetworkLedger())</div>
-<div class="line"><a id="l02130" name="l02130"></a><span class="lineno"> 2130</span>    {</div>
-<div class="line"><a id="l02131" name="l02131"></a><span class="lineno"> 2131</span>        reason = <span class="stringliteral">&quot;Not synchronized with network yet&quot;</span>;</div>
-<div class="line"><a id="l02132" name="l02132"></a><span class="lineno"> 2132</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02133" name="l02133"></a><span class="lineno"> 2133</span>    }</div>
-<div class="line"><a id="l02134" name="l02134"></a><span class="lineno"> 2134</span> </div>
-<div class="line"><a id="l02135" name="l02135"></a><span class="lineno"> 2135</span>    <span class="keywordflow">if</span> (getOPs().isAmendmentBlocked())</div>
-<div class="line"><a id="l02136" name="l02136"></a><span class="lineno"> 2136</span>    {</div>
-<div class="line"><a id="l02137" name="l02137"></a><span class="lineno"> 2137</span>        reason = <span class="stringliteral">&quot;Server version too old&quot;</span>;</div>
-<div class="line"><a id="l02138" name="l02138"></a><span class="lineno"> 2138</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02139" name="l02139"></a><span class="lineno"> 2139</span>    }</div>
-<div class="line"><a id="l02140" name="l02140"></a><span class="lineno"> 2140</span> </div>
-<div class="line"><a id="l02141" name="l02141"></a><span class="lineno"> 2141</span>    <span class="keywordflow">if</span> (getOPs().isUNLBlocked())</div>
-<div class="line"><a id="l02142" name="l02142"></a><span class="lineno"> 2142</span>    {</div>
-<div class="line"><a id="l02143" name="l02143"></a><span class="lineno"> 2143</span>        reason = <span class="stringliteral">&quot;No valid validator list available&quot;</span>;</div>
-<div class="line"><a id="l02144" name="l02144"></a><span class="lineno"> 2144</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02145" name="l02145"></a><span class="lineno"> 2145</span>    }</div>
-<div class="line"><a id="l02146" name="l02146"></a><span class="lineno"> 2146</span> </div>
-<div class="line"><a id="l02147" name="l02147"></a><span class="lineno"> 2147</span>    <span class="keywordflow">if</span> (getOPs().getOperatingMode() &lt; OperatingMode::SYNCING)</div>
-<div class="line"><a id="l02148" name="l02148"></a><span class="lineno"> 2148</span>    {</div>
-<div class="line"><a id="l02149" name="l02149"></a><span class="lineno"> 2149</span>        reason = <span class="stringliteral">&quot;Not synchronized with network&quot;</span>;</div>
-<div class="line"><a id="l02150" name="l02150"></a><span class="lineno"> 2150</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02151" name="l02151"></a><span class="lineno"> 2151</span>    }</div>
-<div class="line"><a id="l02152" name="l02152"></a><span class="lineno"> 2152</span> </div>
-<div class="line"><a id="l02153" name="l02153"></a><span class="lineno"> 2153</span>    <span class="keywordflow">if</span> (!getLedgerMaster().isCaughtUp(reason))</div>
-<div class="line"><a id="l02154" name="l02154"></a><span class="lineno"> 2154</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02155" name="l02155"></a><span class="lineno"> 2155</span> </div>
-<div class="line"><a id="l02156" name="l02156"></a><span class="lineno"> 2156</span>    <span class="keywordflow">if</span> (getFeeTrack().isLoadedLocal())</div>
-<div class="line"><a id="l02157" name="l02157"></a><span class="lineno"> 2157</span>    {</div>
-<div class="line"><a id="l02158" name="l02158"></a><span class="lineno"> 2158</span>        reason = <span class="stringliteral">&quot;Too much load&quot;</span>;</div>
-<div class="line"><a id="l02159" name="l02159"></a><span class="lineno"> 2159</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l02160" name="l02160"></a><span class="lineno"> 2160</span>    }</div>
-<div class="line"><a id="l02161" name="l02161"></a><span class="lineno"> 2161</span> </div>
-<div class="line"><a id="l02162" name="l02162"></a><span class="lineno"> 2162</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l02163" name="l02163"></a><span class="lineno"> 2163</span>}</div>
+<div class="line"><a id="l02124" name="l02124"></a><span class="lineno"> 2124</span> </div>
+<div class="line"><a id="l02125" name="l02125"></a><span class="lineno"> 2125</span><span class="keywordtype">bool</span></div>
+<div class="foldopen" id="foldopen02126" data-start="{" data-end="}">
+<div class="line"><a id="l02126" name="l02126"></a><span class="lineno"><a class="line" href="classripple_1_1ApplicationImp.html#a695ccd48be7dda56348612a8b2695c54"> 2126</a></span>ApplicationImp::serverOkay(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>&amp; reason)</div>
+<div class="line"><a id="l02127" name="l02127"></a><span class="lineno"> 2127</span>{</div>
+<div class="line"><a id="l02128" name="l02128"></a><span class="lineno"> 2128</span>    <span class="keywordflow">if</span> (!config().ELB_SUPPORT)</div>
+<div class="line"><a id="l02129" name="l02129"></a><span class="lineno"> 2129</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l02130" name="l02130"></a><span class="lineno"> 2130</span> </div>
+<div class="line"><a id="l02131" name="l02131"></a><span class="lineno"> 2131</span>    <span class="keywordflow">if</span> (isStopping())</div>
+<div class="line"><a id="l02132" name="l02132"></a><span class="lineno"> 2132</span>    {</div>
+<div class="line"><a id="l02133" name="l02133"></a><span class="lineno"> 2133</span>        reason = <span class="stringliteral">&quot;Server is shutting down&quot;</span>;</div>
+<div class="line"><a id="l02134" name="l02134"></a><span class="lineno"> 2134</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02135" name="l02135"></a><span class="lineno"> 2135</span>    }</div>
+<div class="line"><a id="l02136" name="l02136"></a><span class="lineno"> 2136</span> </div>
+<div class="line"><a id="l02137" name="l02137"></a><span class="lineno"> 2137</span>    <span class="keywordflow">if</span> (getOPs().isNeedNetworkLedger())</div>
+<div class="line"><a id="l02138" name="l02138"></a><span class="lineno"> 2138</span>    {</div>
+<div class="line"><a id="l02139" name="l02139"></a><span class="lineno"> 2139</span>        reason = <span class="stringliteral">&quot;Not synchronized with network yet&quot;</span>;</div>
+<div class="line"><a id="l02140" name="l02140"></a><span class="lineno"> 2140</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02141" name="l02141"></a><span class="lineno"> 2141</span>    }</div>
+<div class="line"><a id="l02142" name="l02142"></a><span class="lineno"> 2142</span> </div>
+<div class="line"><a id="l02143" name="l02143"></a><span class="lineno"> 2143</span>    <span class="keywordflow">if</span> (getOPs().isAmendmentBlocked())</div>
+<div class="line"><a id="l02144" name="l02144"></a><span class="lineno"> 2144</span>    {</div>
+<div class="line"><a id="l02145" name="l02145"></a><span class="lineno"> 2145</span>        reason = <span class="stringliteral">&quot;Server version too old&quot;</span>;</div>
+<div class="line"><a id="l02146" name="l02146"></a><span class="lineno"> 2146</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02147" name="l02147"></a><span class="lineno"> 2147</span>    }</div>
+<div class="line"><a id="l02148" name="l02148"></a><span class="lineno"> 2148</span> </div>
+<div class="line"><a id="l02149" name="l02149"></a><span class="lineno"> 2149</span>    <span class="keywordflow">if</span> (getOPs().isUNLBlocked())</div>
+<div class="line"><a id="l02150" name="l02150"></a><span class="lineno"> 2150</span>    {</div>
+<div class="line"><a id="l02151" name="l02151"></a><span class="lineno"> 2151</span>        reason = <span class="stringliteral">&quot;No valid validator list available&quot;</span>;</div>
+<div class="line"><a id="l02152" name="l02152"></a><span class="lineno"> 2152</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02153" name="l02153"></a><span class="lineno"> 2153</span>    }</div>
+<div class="line"><a id="l02154" name="l02154"></a><span class="lineno"> 2154</span> </div>
+<div class="line"><a id="l02155" name="l02155"></a><span class="lineno"> 2155</span>    <span class="keywordflow">if</span> (getOPs().getOperatingMode() &lt; OperatingMode::SYNCING)</div>
+<div class="line"><a id="l02156" name="l02156"></a><span class="lineno"> 2156</span>    {</div>
+<div class="line"><a id="l02157" name="l02157"></a><span class="lineno"> 2157</span>        reason = <span class="stringliteral">&quot;Not synchronized with network&quot;</span>;</div>
+<div class="line"><a id="l02158" name="l02158"></a><span class="lineno"> 2158</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02159" name="l02159"></a><span class="lineno"> 2159</span>    }</div>
+<div class="line"><a id="l02160" name="l02160"></a><span class="lineno"> 2160</span> </div>
+<div class="line"><a id="l02161" name="l02161"></a><span class="lineno"> 2161</span>    <span class="keywordflow">if</span> (!getLedgerMaster().isCaughtUp(reason))</div>
+<div class="line"><a id="l02162" name="l02162"></a><span class="lineno"> 2162</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02163" name="l02163"></a><span class="lineno"> 2163</span> </div>
+<div class="line"><a id="l02164" name="l02164"></a><span class="lineno"> 2164</span>    <span class="keywordflow">if</span> (getFeeTrack().isLoadedLocal())</div>
+<div class="line"><a id="l02165" name="l02165"></a><span class="lineno"> 2165</span>    {</div>
+<div class="line"><a id="l02166" name="l02166"></a><span class="lineno"> 2166</span>        reason = <span class="stringliteral">&quot;Too much load&quot;</span>;</div>
+<div class="line"><a id="l02167" name="l02167"></a><span class="lineno"> 2167</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l02168" name="l02168"></a><span class="lineno"> 2168</span>    }</div>
+<div class="line"><a id="l02169" name="l02169"></a><span class="lineno"> 2169</span> </div>
+<div class="line"><a id="l02170" name="l02170"></a><span class="lineno"> 2170</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l02171" name="l02171"></a><span class="lineno"> 2171</span>}</div>
 </div>
-<div class="line"><a id="l02164" name="l02164"></a><span class="lineno"> 2164</span> </div>
-<div class="line"><a id="l02165" name="l02165"></a><span class="lineno"> 2165</span><a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a></div>
-<div class="foldopen" id="foldopen02166" data-start="{" data-end="}">
-<div class="line"><a id="l02166" name="l02166"></a><span class="lineno"><a class="line" href="classripple_1_1ApplicationImp.html#ac38f5fa6d22f82dc0aa017605f6ae0ad"> 2166</a></span>ApplicationImp::journal(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span>&amp; name)</div>
-<div class="line"><a id="l02167" name="l02167"></a><span class="lineno"> 2167</span>{</div>
-<div class="line"><a id="l02168" name="l02168"></a><span class="lineno"> 2168</span>    <span class="keywordflow">return</span> logs_-&gt;journal(name);</div>
-<div class="line"><a id="l02169" name="l02169"></a><span class="lineno"> 2169</span>}</div>
+<div class="line"><a id="l02172" name="l02172"></a><span class="lineno"> 2172</span> </div>
+<div class="line"><a id="l02173" name="l02173"></a><span class="lineno"> 2173</span><a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a></div>
+<div class="foldopen" id="foldopen02174" data-start="{" data-end="}">
+<div class="line"><a id="l02174" name="l02174"></a><span class="lineno"><a class="line" href="classripple_1_1ApplicationImp.html#ac38f5fa6d22f82dc0aa017605f6ae0ad"> 2174</a></span>ApplicationImp::journal(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span>&amp; name)</div>
+<div class="line"><a id="l02175" name="l02175"></a><span class="lineno"> 2175</span>{</div>
+<div class="line"><a id="l02176" name="l02176"></a><span class="lineno"> 2176</span>    <span class="keywordflow">return</span> logs_-&gt;journal(name);</div>
+<div class="line"><a id="l02177" name="l02177"></a><span class="lineno"> 2177</span>}</div>
 </div>
-<div class="line"><a id="l02170" name="l02170"></a><span class="lineno"> 2170</span> </div>
-<div class="line"><a id="l02171" name="l02171"></a><span class="lineno"> 2171</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen02172" data-start="{" data-end="}">
-<div class="line"><a id="l02172" name="l02172"></a><span class="lineno"><a class="line" href="classripple_1_1ApplicationImp.html#aab0c06671c109dc2b487a1aab6dcb168"> 2172</a></span>ApplicationImp::setMaxDisallowedLedger()</div>
-<div class="line"><a id="l02173" name="l02173"></a><span class="lineno"> 2173</span>{</div>
-<div class="line"><a id="l02174" name="l02174"></a><span class="lineno"> 2174</span>    <span class="keyword">auto</span> seq = getRelationalDatabase().getMaxLedgerSeq();</div>
-<div class="line"><a id="l02175" name="l02175"></a><span class="lineno"> 2175</span>    <span class="keywordflow">if</span> (seq)</div>
-<div class="line"><a id="l02176" name="l02176"></a><span class="lineno"> 2176</span>        maxDisallowedLedger_ = *seq;</div>
-<div class="line"><a id="l02177" name="l02177"></a><span class="lineno"> 2177</span> </div>
-<div class="line"><a id="l02178" name="l02178"></a><span class="lineno"> 2178</span>    JLOG(m_journal.trace())</div>
-<div class="line"><a id="l02179" name="l02179"></a><span class="lineno"> 2179</span>        &lt;&lt; <span class="stringliteral">&quot;Max persisted ledger is &quot;</span> &lt;&lt; maxDisallowedLedger_;</div>
-<div class="line"><a id="l02180" name="l02180"></a><span class="lineno"> 2180</span>}</div>
+<div class="line"><a id="l02178" name="l02178"></a><span class="lineno"> 2178</span> </div>
+<div class="line"><a id="l02179" name="l02179"></a><span class="lineno"> 2179</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen02180" data-start="{" data-end="}">
+<div class="line"><a id="l02180" name="l02180"></a><span class="lineno"><a class="line" href="classripple_1_1ApplicationImp.html#aab0c06671c109dc2b487a1aab6dcb168"> 2180</a></span>ApplicationImp::setMaxDisallowedLedger()</div>
+<div class="line"><a id="l02181" name="l02181"></a><span class="lineno"> 2181</span>{</div>
+<div class="line"><a id="l02182" name="l02182"></a><span class="lineno"> 2182</span>    <span class="keyword">auto</span> seq = getRelationalDatabase().getMaxLedgerSeq();</div>
+<div class="line"><a id="l02183" name="l02183"></a><span class="lineno"> 2183</span>    <span class="keywordflow">if</span> (seq)</div>
+<div class="line"><a id="l02184" name="l02184"></a><span class="lineno"> 2184</span>        maxDisallowedLedger_ = *seq;</div>
+<div class="line"><a id="l02185" name="l02185"></a><span class="lineno"> 2185</span> </div>
+<div class="line"><a id="l02186" name="l02186"></a><span class="lineno"> 2186</span>    JLOG(m_journal.trace())</div>
+<div class="line"><a id="l02187" name="l02187"></a><span class="lineno"> 2187</span>        &lt;&lt; <span class="stringliteral">&quot;Max persisted ledger is &quot;</span> &lt;&lt; maxDisallowedLedger_;</div>
+<div class="line"><a id="l02188" name="l02188"></a><span class="lineno"> 2188</span>}</div>
 </div>
-<div class="line"><a id="l02181" name="l02181"></a><span class="lineno"> 2181</span> </div>
-<div class="line"><a id="l02182" name="l02182"></a><span class="lineno"> 2182</span><span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a id="l02183" name="l02183"></a><span class="lineno"> 2183</span> </div>
-<div class="foldopen" id="foldopen02184" data-start="{" data-end="}">
-<div class="line"><a id="l02184" name="l02184"></a><span class="lineno"><a class="line" href="classripple_1_1Application.html#a8f3b40098b20712612de1b46a65b5156"> 2184</a></span>Application::Application() : <a class="code hl_namespace" href="namespacebeast.html">beast</a>::<a class="code hl_class" href="classbeast_1_1PropertyStream.html">PropertyStream</a>::Source(<span class="stringliteral">&quot;app&quot;</span>)</div>
-<div class="line"><a id="l02185" name="l02185"></a><span class="lineno"> 2185</span>{</div>
-<div class="line"><a id="l02186" name="l02186"></a><span class="lineno"> 2186</span>}</div>
-</div>
-<div class="line"><a id="l02187" name="l02187"></a><span class="lineno"> 2187</span> </div>
-<div class="line"><a id="l02188" name="l02188"></a><span class="lineno"> 2188</span><span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a id="l02189" name="l02189"></a><span class="lineno"> 2189</span> </div>
-<div class="line"><a id="l02190" name="l02190"></a><span class="lineno"> 2190</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Application&gt;</a></div>
-<div class="foldopen" id="foldopen02191" data-start="{" data-end="}">
-<div class="line"><a id="l02191" name="l02191"></a><span class="lineno"><a class="line" href="namespaceripple.html#a37eda33d77f068d8788e5a5a81a7cc77"> 2191</a></span><a class="code hl_function" href="namespaceripple.html#a37eda33d77f068d8788e5a5a81a7cc77">make_Application</a>(</div>
-<div class="line"><a id="l02192" name="l02192"></a><span class="lineno"> 2192</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Config&gt;</a> config,</div>
-<div class="line"><a id="l02193" name="l02193"></a><span class="lineno"> 2193</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Logs&gt;</a> logs,</div>
-<div class="line"><a id="l02194" name="l02194"></a><span class="lineno"> 2194</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;TimeKeeper&gt;</a> timeKeeper)</div>
-<div class="line"><a id="l02195" name="l02195"></a><span class="lineno"> 2195</span>{</div>
-<div class="line"><a id="l02196" name="l02196"></a><span class="lineno"> 2196</span>    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;ApplicationImp&gt;</a>(</div>
-<div class="line"><a id="l02197" name="l02197"></a><span class="lineno"> 2197</span>        std::move(config), std::move(logs), std::move(timeKeeper));</div>
-<div class="line"><a id="l02198" name="l02198"></a><span class="lineno"> 2198</span>}</div>
+<div class="line"><a id="l02190" name="l02190"></a><span class="lineno"> 2190</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l02191" name="l02191"></a><span class="lineno"> 2191</span> </div>
+<div class="foldopen" id="foldopen02192" data-start="{" data-end="}">
+<div class="line"><a id="l02192" name="l02192"></a><span class="lineno"><a class="line" href="classripple_1_1Application.html#a8f3b40098b20712612de1b46a65b5156"> 2192</a></span>Application::Application() : <a class="code hl_namespace" href="namespacebeast.html">beast</a>::<a class="code hl_class" href="classbeast_1_1PropertyStream.html">PropertyStream</a>::Source(<span class="stringliteral">&quot;app&quot;</span>)</div>
+<div class="line"><a id="l02193" name="l02193"></a><span class="lineno"> 2193</span>{</div>
+<div class="line"><a id="l02194" name="l02194"></a><span class="lineno"> 2194</span>}</div>
 </div>
-<div class="line"><a id="l02199" name="l02199"></a><span class="lineno"> 2199</span> </div>
-<div class="line"><a id="l02200" name="l02200"></a><span class="lineno"> 2200</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen02201" data-start="{" data-end="}">
-<div class="line"><a id="l02201" name="l02201"></a><span class="lineno"><a class="line" href="namespaceripple.html#ad20809ebbf2db8a9e3304c31237acabb"> 2201</a></span><a class="code hl_function" href="namespaceripple.html#ad20809ebbf2db8a9e3304c31237acabb">fixConfigPorts</a>(<a class="code hl_class" href="classripple_1_1Config.html">Config</a>&amp; config, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/unordered_map.html">Endpoints</a> <span class="keyword">const</span>&amp; endpoints)</div>
-<div class="line"><a id="l02202" name="l02202"></a><span class="lineno"> 2202</span>{</div>
-<div class="line"><a id="l02203" name="l02203"></a><span class="lineno"> 2203</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [name, ep] : endpoints)</div>
-<div class="line"><a id="l02204" name="l02204"></a><span class="lineno"> 2204</span>    {</div>
-<div class="line"><a id="l02205" name="l02205"></a><span class="lineno"> 2205</span>        <span class="keywordflow">if</span> (!config.<a class="code hl_function" href="classripple_1_1BasicConfig.html#a09b31b8ed3c769b4c23b040c3d4798ed">exists</a>(name))</div>
-<div class="line"><a id="l02206" name="l02206"></a><span class="lineno"> 2206</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l02195" name="l02195"></a><span class="lineno"> 2195</span> </div>
+<div class="line"><a id="l02196" name="l02196"></a><span class="lineno"> 2196</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l02197" name="l02197"></a><span class="lineno"> 2197</span> </div>
+<div class="line"><a id="l02198" name="l02198"></a><span class="lineno"> 2198</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Application&gt;</a></div>
+<div class="foldopen" id="foldopen02199" data-start="{" data-end="}">
+<div class="line"><a id="l02199" name="l02199"></a><span class="lineno"><a class="line" href="namespaceripple.html#a37eda33d77f068d8788e5a5a81a7cc77"> 2199</a></span><a class="code hl_function" href="namespaceripple.html#a37eda33d77f068d8788e5a5a81a7cc77">make_Application</a>(</div>
+<div class="line"><a id="l02200" name="l02200"></a><span class="lineno"> 2200</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Config&gt;</a> config,</div>
+<div class="line"><a id="l02201" name="l02201"></a><span class="lineno"> 2201</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;Logs&gt;</a> logs,</div>
+<div class="line"><a id="l02202" name="l02202"></a><span class="lineno"> 2202</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/memory/unique_ptr.html">std::unique_ptr&lt;TimeKeeper&gt;</a> timeKeeper)</div>
+<div class="line"><a id="l02203" name="l02203"></a><span class="lineno"> 2203</span>{</div>
+<div class="line"><a id="l02204" name="l02204"></a><span class="lineno"> 2204</span>    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::make_unique&lt;ApplicationImp&gt;</a>(</div>
+<div class="line"><a id="l02205" name="l02205"></a><span class="lineno"> 2205</span>        std::move(config), std::move(logs), std::move(timeKeeper));</div>
+<div class="line"><a id="l02206" name="l02206"></a><span class="lineno"> 2206</span>}</div>
+</div>
 <div class="line"><a id="l02207" name="l02207"></a><span class="lineno"> 2207</span> </div>
-<div class="line"><a id="l02208" name="l02208"></a><span class="lineno"> 2208</span>        <span class="keyword">auto</span>&amp; section = config[name];</div>
-<div class="line"><a id="l02209" name="l02209"></a><span class="lineno"> 2209</span>        <span class="keyword">auto</span> <span class="keyword">const</span> optPort = section.get(<span class="stringliteral">&quot;port&quot;</span>);</div>
-<div class="line"><a id="l02210" name="l02210"></a><span class="lineno"> 2210</span>        <span class="keywordflow">if</span> (optPort)</div>
-<div class="line"><a id="l02211" name="l02211"></a><span class="lineno"> 2211</span>        {</div>
-<div class="line"><a id="l02212" name="l02212"></a><span class="lineno"> 2212</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> <span class="keyword">const</span> port =</div>
-<div class="line"><a id="l02213" name="l02213"></a><span class="lineno"> 2213</span>                beast::lexicalCast&lt;std::uint16_t&gt;(*optPort);</div>
-<div class="line"><a id="l02214" name="l02214"></a><span class="lineno"> 2214</span>            <span class="keywordflow">if</span> (!port)</div>
-<div class="line"><a id="l02215" name="l02215"></a><span class="lineno"> 2215</span>                section.set(<span class="stringliteral">&quot;port&quot;</span>, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/string/basic_string/to_string.html">std::to_string</a>(ep.port()));</div>
-<div class="line"><a id="l02216" name="l02216"></a><span class="lineno"> 2216</span>        }</div>
-<div class="line"><a id="l02217" name="l02217"></a><span class="lineno"> 2217</span>    }</div>
-<div class="line"><a id="l02218" name="l02218"></a><span class="lineno"> 2218</span>}</div>
+<div class="line"><a id="l02208" name="l02208"></a><span class="lineno"> 2208</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen02209" data-start="{" data-end="}">
+<div class="line"><a id="l02209" name="l02209"></a><span class="lineno"><a class="line" href="namespaceripple.html#ad20809ebbf2db8a9e3304c31237acabb"> 2209</a></span><a class="code hl_function" href="namespaceripple.html#ad20809ebbf2db8a9e3304c31237acabb">fixConfigPorts</a>(<a class="code hl_class" href="classripple_1_1Config.html">Config</a>&amp; config, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/unordered_map.html">Endpoints</a> <span class="keyword">const</span>&amp; endpoints)</div>
+<div class="line"><a id="l02210" name="l02210"></a><span class="lineno"> 2210</span>{</div>
+<div class="line"><a id="l02211" name="l02211"></a><span class="lineno"> 2211</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> <span class="keyword">const</span>&amp; [name, ep] : endpoints)</div>
+<div class="line"><a id="l02212" name="l02212"></a><span class="lineno"> 2212</span>    {</div>
+<div class="line"><a id="l02213" name="l02213"></a><span class="lineno"> 2213</span>        <span class="keywordflow">if</span> (!config.<a class="code hl_function" href="classripple_1_1BasicConfig.html#a09b31b8ed3c769b4c23b040c3d4798ed">exists</a>(name))</div>
+<div class="line"><a id="l02214" name="l02214"></a><span class="lineno"> 2214</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l02215" name="l02215"></a><span class="lineno"> 2215</span> </div>
+<div class="line"><a id="l02216" name="l02216"></a><span class="lineno"> 2216</span>        <span class="keyword">auto</span>&amp; section = config[name];</div>
+<div class="line"><a id="l02217" name="l02217"></a><span class="lineno"> 2217</span>        <span class="keyword">auto</span> <span class="keyword">const</span> optPort = section.get(<span class="stringliteral">&quot;port&quot;</span>);</div>
+<div class="line"><a id="l02218" name="l02218"></a><span class="lineno"> 2218</span>        <span class="keywordflow">if</span> (optPort)</div>
+<div class="line"><a id="l02219" name="l02219"></a><span class="lineno"> 2219</span>        {</div>
+<div class="line"><a id="l02220" name="l02220"></a><span class="lineno"> 2220</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> <span class="keyword">const</span> port =</div>
+<div class="line"><a id="l02221" name="l02221"></a><span class="lineno"> 2221</span>                beast::lexicalCast&lt;std::uint16_t&gt;(*optPort);</div>
+<div class="line"><a id="l02222" name="l02222"></a><span class="lineno"> 2222</span>            <span class="keywordflow">if</span> (!port)</div>
+<div class="line"><a id="l02223" name="l02223"></a><span class="lineno"> 2223</span>                section.set(<span class="stringliteral">&quot;port&quot;</span>, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/string/basic_string/to_string.html">std::to_string</a>(ep.port()));</div>
+<div class="line"><a id="l02224" name="l02224"></a><span class="lineno"> 2224</span>        }</div>
+<div class="line"><a id="l02225" name="l02225"></a><span class="lineno"> 2225</span>    }</div>
+<div class="line"><a id="l02226" name="l02226"></a><span class="lineno"> 2226</span>}</div>
 </div>
-<div class="line"><a id="l02219" name="l02219"></a><span class="lineno"> 2219</span> </div>
-<div class="line"><a id="l02220" name="l02220"></a><span class="lineno"> 2220</span>}  <span class="comment">// namespace ripple</span></div>
+<div class="line"><a id="l02227" name="l02227"></a><span class="lineno"> 2227</span> </div>
+<div class="line"><a id="l02228" name="l02228"></a><span class="lineno"> 2228</span>}  <span class="comment">// namespace ripple</span></div>
 <div class="ttc" id="aatomic_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/atomic/atomic.html">std::atomic</a></div></div>
 <div class="ttc" id="abasic_ifstream_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/io/basic_ifstream.html">std::ifstream</a></div></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
@@ -2479,9 +2487,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassJson_1_1Reader_html"><div class="ttname"><a href="classJson_1_1Reader.html">Json::Reader</a></div><div class="ttdoc">Unserialize a JSON document into a Value.</div><div class="ttdef"><b>Definition</b> <a href="json__reader_8h_source.html#l00038">json_reader.h:39</a></div></div>
 <div class="ttc" id="aclassJson_1_1Reader_html_a8ee4d40504e4f8b069745d762ab4d78c"><div class="ttname"><a href="classJson_1_1Reader.html#a8ee4d40504e4f8b069745d762ab4d78c">Json::Reader::parse</a></div><div class="ttdeci">bool parse(std::string const &amp;document, Value &amp;root)</div><div class="ttdoc">Read a Value from a JSON document.</div><div class="ttdef"><b>Definition</b> <a href="json__reader_8cpp_source.html#l00078">json_reader.cpp:78</a></div></div>
 <div class="ttc" id="aclassJson_1_1Value_html"><div class="ttname"><a href="classJson_1_1Value.html">Json::Value</a></div><div class="ttdoc">Represents a JSON value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8h_source.html#l00148">json_value.h:149</a></div></div>
-<div class="ttc" id="aclassJson_1_1Value_html_a478d6ca4b353199e3b9f91b9cfebc7ba"><div class="ttname"><a href="classJson_1_1Value.html#a478d6ca4b353199e3b9f91b9cfebc7ba">Json::Value::isObjectOrNull</a></div><div class="ttdeci">bool isObjectOrNull() const</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l01068">json_value.cpp:1068</a></div></div>
-<div class="ttc" id="aclassJson_1_1Value_html_a9c9ee172f3387d37d5382d991c591219"><div class="ttname"><a href="classJson_1_1Value.html#a9c9ee172f3387d37d5382d991c591219">Json::Value::removeMember</a></div><div class="ttdeci">Value removeMember(char const *key)</div><div class="ttdoc">Remove and return the named member.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00938">json_value.cpp:938</a></div></div>
-<div class="ttc" id="aclassJson_1_1Value_html_ab0d86bf425efefd03513e8dbfaca317b"><div class="ttname"><a href="classJson_1_1Value.html#ab0d86bf425efefd03513e8dbfaca317b">Json::Value::asString</a></div><div class="ttdeci">std::string asString() const</div><div class="ttdoc">Returns the unquoted string value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00483">json_value.cpp:483</a></div></div>
+<div class="ttc" id="aclassJson_1_1Value_html_a478d6ca4b353199e3b9f91b9cfebc7ba"><div class="ttname"><a href="classJson_1_1Value.html#a478d6ca4b353199e3b9f91b9cfebc7ba">Json::Value::isObjectOrNull</a></div><div class="ttdeci">bool isObjectOrNull() const</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l01092">json_value.cpp:1092</a></div></div>
+<div class="ttc" id="aclassJson_1_1Value_html_a9c9ee172f3387d37d5382d991c591219"><div class="ttname"><a href="classJson_1_1Value.html#a9c9ee172f3387d37d5382d991c591219">Json::Value::removeMember</a></div><div class="ttdeci">Value removeMember(char const *key)</div><div class="ttdoc">Remove and return the named member.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00962">json_value.cpp:962</a></div></div>
+<div class="ttc" id="aclassJson_1_1Value_html_ab0d86bf425efefd03513e8dbfaca317b"><div class="ttname"><a href="classJson_1_1Value.html#ab0d86bf425efefd03513e8dbfaca317b">Json::Value::asString</a></div><div class="ttdeci">std::string asString() const</div><div class="ttdoc">Returns the unquoted string value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00493">json_value.cpp:493</a></div></div>
 <div class="ttc" id="aclassbeast_1_1Journal_html"><div class="ttname"><a href="classbeast_1_1Journal.html">beast::Journal</a></div><div class="ttdoc">A generic endpoint for log messages.</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00059">Journal.h:60</a></div></div>
 <div class="ttc" id="aclassbeast_1_1Journal_html_a3dfb8e2e3eecccdb5cf78ff21bca069c"><div class="ttname"><a href="classbeast_1_1Journal.html#a3dfb8e2e3eecccdb5cf78ff21bca069c">beast::Journal::fatal</a></div><div class="ttdeci">Stream fatal() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00352">Journal.h:352</a></div></div>
 <div class="ttc" id="aclassbeast_1_1Journal_html_ad8fefe3e8ad583e1ed1bf02094ac3d8f"><div class="ttname"><a href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">beast::Journal::warn</a></div><div class="ttdeci">Stream warn() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00340">Journal.h:340</a></div></div>
@@ -2565,7 +2573,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_a64565a8558f0fdd1bb2f164ca2b77142"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a64565a8558f0fdd1bb2f164ca2b77142">ripple::ApplicationImp::overlay_</a></div><div class="ttdeci">std::unique_ptr&lt; Overlay &gt; overlay_</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00220">Application.cpp:220</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_a6772048a5a095373990d83fe9905c123"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a6772048a5a095373990d83fe9905c123">ripple::ApplicationImp::hashRouter_</a></div><div class="ttdeci">std::unique_ptr&lt; HashRouter &gt; hashRouter_</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00210">Application.cpp:210</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_a67b040fd1389cd650deaab1ebf832263"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a67b040fd1389cd650deaab1ebf832263">ripple::ApplicationImp::getRelationalDatabase</a></div><div class="ttdeci">RelationalDatabase &amp; getRelationalDatabase() override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00813">Application.cpp:813</a></div></div>
-<div class="ttc" id="aclassripple_1_1ApplicationImp_html_a695ccd48be7dda56348612a8b2695c54"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a695ccd48be7dda56348612a8b2695c54">ripple::ApplicationImp::serverOkay</a></div><div class="ttdeci">bool serverOkay(std::string &amp;reason) override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02118">Application.cpp:2118</a></div></div>
+<div class="ttc" id="aclassripple_1_1ApplicationImp_html_a695ccd48be7dda56348612a8b2695c54"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a695ccd48be7dda56348612a8b2695c54">ripple::ApplicationImp::serverOkay</a></div><div class="ttdeci">bool serverOkay(std::string &amp;reason) override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02126">Application.cpp:2126</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_a69c493de60934e5b6f762e803c0f5ade"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a69c493de60934e5b6f762e803c0f5ade">ripple::ApplicationImp::openLedger</a></div><div class="ttdeci">OpenLedger &amp; openLedger() override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00784">Application.cpp:784</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_a6c73944d28b7a2d166c6f7358a8705cb"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a6c73944d28b7a2d166c6f7358a8705cb">ripple::ApplicationImp::stoppingMutex_</a></div><div class="ttdeci">std::mutex stoppingMutex_</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00228">Application.cpp:228</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_a6d50f010dc7f84816eb572aefc75f20f"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#a6d50f010dc7f84816eb572aefc75f20f">ripple::ApplicationImp::timeKeeper</a></div><div class="ttdeci">TimeKeeper &amp; timeKeeper() override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00550">Application.cpp:550</a></div></div>
@@ -2607,7 +2615,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_abf2517a26a02f5ee2f84cae8fc55aec4"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#abf2517a26a02f5ee2f84cae8fc55aec4">ripple::ApplicationImp::trapTxID_</a></div><div class="ttdeci">std::optional&lt; uint256 &gt; trapTxID_</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00221">Application.cpp:221</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_ac0e58260040553b9ed57a5294d995e48"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#ac0e58260040553b9ed57a5294d995e48">ripple::ApplicationImp::ApplicationImp</a></div><div class="ttdeci">ApplicationImp(std::unique_ptr&lt; Config &gt; config, std::unique_ptr&lt; Logs &gt; logs, std::unique_ptr&lt; TimeKeeper &gt; timeKeeper)</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00265">Application.cpp:265</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_ac224c175b8c450b8a29c574b97ffe8f5"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#ac224c175b8c450b8a29c574b97ffe8f5">ripple::ApplicationImp::mWalletDB</a></div><div class="ttdeci">std::unique_ptr&lt; DatabaseCon &gt; mWalletDB</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00219">Application.cpp:219</a></div></div>
-<div class="ttc" id="aclassripple_1_1ApplicationImp_html_ac38f5fa6d22f82dc0aa017605f6ae0ad"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#ac38f5fa6d22f82dc0aa017605f6ae0ad">ripple::ApplicationImp::journal</a></div><div class="ttdeci">beast::Journal journal(std::string const &amp;name) override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02166">Application.cpp:2166</a></div></div>
+<div class="ttc" id="aclassripple_1_1ApplicationImp_html_ac38f5fa6d22f82dc0aa017605f6ae0ad"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#ac38f5fa6d22f82dc0aa017605f6ae0ad">ripple::ApplicationImp::journal</a></div><div class="ttdeci">beast::Journal journal(std::string const &amp;name) override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02174">Application.cpp:2174</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_ac4157dc4454397cd9d5f1cfa6bd4a008"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#ac4157dc4454397cd9d5f1cfa6bd4a008">ripple::ApplicationImp::getPathRequests</a></div><div class="ttdeci">PathRequests &amp; getPathRequests() override</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00700">Application.cpp:700</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_ac92a3cdf6b13e574ae844cbc652afe6a"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#ac92a3cdf6b13e574ae844cbc652afe6a">ripple::ApplicationImp::nodeIdentity_</a></div><div class="ttdeci">std::optional&lt; std::pair&lt; PublicKey, SecretKey &gt; &gt; nodeIdentity_</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00184">Application.cpp:184</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplicationImp_html_aca650f7a59d496416ce251d394225a8e"><div class="ttname"><a href="classripple_1_1ApplicationImp.html#aca650f7a59d496416ce251d394225a8e">ripple::ApplicationImp::sweepTimer_</a></div><div class="ttdeci">boost::asio::steady_timer sweepTimer_</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l00215">Application.cpp:215</a></div></div>
@@ -2725,8 +2733,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespacebeast_html_aeb241ed2f4422ea57283956ca58c5d42"><div class="ttname"><a href="namespacebeast.html#aeb241ed2f4422ea57283956ca58c5d42">beast::lexicalCastChecked</a></div><div class="ttdeci">bool lexicalCastChecked(Out &amp;out, In in)</div><div class="ttdoc">Intelligently convert from one type to another.</div><div class="ttdef"><b>Definition</b> <a href="LexicalCast_8h_source.html#l00200">LexicalCast.h:200</a></div></div>
 <div class="ttc" id="anamespaceripple_1_1Resource_html_a0995bd4a406952709a273d6625f62b9e"><div class="ttname"><a href="namespaceripple_1_1Resource.html#a0995bd4a406952709a273d6625f62b9e">ripple::Resource::make_Manager</a></div><div class="ttdeci">std::unique_ptr&lt; Manager &gt; make_Manager(beast::insight::Collector::ptr const &amp;collector, beast::Journal journal)</div><div class="ttdef"><b>Definition</b> <a href="ResourceManager_8cpp_source.html#l00185">ResourceManager.cpp:185</a></div></div>
 <div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00025">algorithm.h:25</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a04cf5c0dd5329bc0e0203fb86cf91ed3"><div class="ttname"><a href="namespaceripple.html#a04cf5c0dd5329bc0e0203fb86cf91ed3">ripple::getLatestLedger</a></div><div class="ttdeci">std::tuple&lt; std::shared_ptr&lt; Ledger &gt;, std::uint32_t, uint256 &gt; getLatestLedger(Application &amp;app)</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l01104">Ledger.cpp:1104</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a0670fcda0c06219fdaa3ffd67338e8cb"><div class="ttname"><a href="namespaceripple.html#a0670fcda0c06219fdaa3ffd67338e8cb">ripple::make_NetworkOPs</a></div><div class="ttdeci">std::unique_ptr&lt; NetworkOPs &gt; make_NetworkOPs(Application &amp;app, NetworkOPs::clock_type &amp;clock, bool standalone, std::size_t minPeerCount, bool startvalid, JobQueue &amp;job_queue, LedgerMaster &amp;ledgerMaster, ValidatorKeys const &amp;validatorKeys, boost::asio::io_context &amp;io_svc, beast::Journal journal, beast::insight::Collector::ptr const &amp;collector)</div><div class="ttdef"><b>Definition</b> <a href="NetworkOPs_8cpp_source.html#l04858">NetworkOPs.cpp:4858</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a04cf5c0dd5329bc0e0203fb86cf91ed3"><div class="ttname"><a href="namespaceripple.html#a04cf5c0dd5329bc0e0203fb86cf91ed3">ripple::getLatestLedger</a></div><div class="ttdeci">std::tuple&lt; std::shared_ptr&lt; Ledger &gt;, std::uint32_t, uint256 &gt; getLatestLedger(Application &amp;app)</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l01108">Ledger.cpp:1108</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a0670fcda0c06219fdaa3ffd67338e8cb"><div class="ttname"><a href="namespaceripple.html#a0670fcda0c06219fdaa3ffd67338e8cb">ripple::make_NetworkOPs</a></div><div class="ttdeci">std::unique_ptr&lt; NetworkOPs &gt; make_NetworkOPs(Application &amp;app, NetworkOPs::clock_type &amp;clock, bool standalone, std::size_t minPeerCount, bool startvalid, JobQueue &amp;job_queue, LedgerMaster &amp;ledgerMaster, ValidatorKeys const &amp;validatorKeys, boost::asio::io_context &amp;io_svc, beast::Journal journal, beast::insight::Collector::ptr const &amp;collector)</div><div class="ttdef"><b>Definition</b> <a href="NetworkOPs_8cpp_source.html#l04883">NetworkOPs.cpp:4883</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a13d7c6c34d30731bbc221f629e03f8db"><div class="ttname"><a href="namespaceripple.html#a13d7c6c34d30731bbc221f629e03f8db">ripple::megabytes</a></div><div class="ttdeci">constexpr auto megabytes(T value) noexcept</div><div class="ttdef"><b>Definition</b> <a href="ByteUtilities_8h_source.html#l00034">ByteUtilities.h:34</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a1747b036b81bd3769995670092912976"><div class="ttname"><a href="namespaceripple.html#a1747b036b81bd3769995670092912976">ripple::rand_int</a></div><div class="ttdeci">std::enable_if_t&lt; std::is_integral&lt; Integral &gt;::value, Integral &gt; rand_int()</div><div class="ttdef"><b>Definition</b> <a href="include_2xrpl_2basics_2random_8h_source.html#l00159">include/xrpl/basics/random.h:159</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a1b38e742ac7fe4c3a80a397e06b83dcba6a7bd94713cd68a0ce1f9beca215d812"><div class="ttname"><a href="namespaceripple.html#a1b38e742ac7fe4c3a80a397e06b83dcba6a7bd94713cd68a0ce1f9beca215d812">ripple::SizedItem::sweepInterval</a></div><div class="ttdeci">@ sweepInterval</div></div>
@@ -2735,9 +2743,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespaceripple_html_a1d3bf5cf699aaa0e0bf24af623b4bc48"><div class="ttname"><a href="namespaceripple.html#a1d3bf5cf699aaa0e0bf24af623b4bc48">ripple::setup_DatabaseCon</a></div><div class="ttdeci">DatabaseCon::Setup setup_DatabaseCon(Config const &amp;c, std::optional&lt; beast::Journal &gt; j=std::nullopt)</div><div class="ttdef"><b>Definition</b> <a href="DatabaseCon_8cpp_source.html#l00107">DatabaseCon.cpp:107</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a1fa80b10dd77df53d51444d2258940e5"><div class="ttname"><a href="namespaceripple.html#a1fa80b10dd77df53d51444d2258940e5">ripple::make_LedgerCleaner</a></div><div class="ttdeci">std::unique_ptr&lt; LedgerCleaner &gt; make_LedgerCleaner(Application &amp;app, beast::Journal journal)</div><div class="ttdef"><b>Definition</b> <a href="LedgerCleaner_8cpp_source.html#l00460">LedgerCleaner.cpp:460</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a206538f11503ef2bdb2f772b8ebeaaf4"><div class="ttname"><a href="namespaceripple.html#a206538f11503ef2bdb2f772b8ebeaaf4">ripple::setup_TxQ</a></div><div class="ttdeci">TxQ::Setup setup_TxQ(Config const &amp;config)</div><div class="ttdoc">Build a TxQ::Setup object from application configuration.</div><div class="ttdef"><b>Definition</b> <a href="TxQ_8cpp_source.html#l01915">TxQ.cpp:1915</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a22adb38923282bf7dbb38655afdb381d"><div class="ttname"><a href="namespaceripple.html#a22adb38923282bf7dbb38655afdb381d">ripple::loadByIndex</a></div><div class="ttdeci">std::shared_ptr&lt; Ledger &gt; loadByIndex(std::uint32_t ledgerIndex, Application &amp;app, bool acquire)</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l01114">Ledger.cpp:1114</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a22adb38923282bf7dbb38655afdb381d"><div class="ttname"><a href="namespaceripple.html#a22adb38923282bf7dbb38655afdb381d">ripple::loadByIndex</a></div><div class="ttdeci">std::shared_ptr&lt; Ledger &gt; loadByIndex(std::uint32_t ledgerIndex, Application &amp;app, bool acquire)</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l01118">Ledger.cpp:1118</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a31165ab51fca9cd51f47bbf2896751cc"><div class="ttname"><a href="namespaceripple.html#a31165ab51fca9cd51f47bbf2896751cc">ripple::make_LoadManager</a></div><div class="ttdeci">std::unique_ptr&lt; LoadManager &gt; make_LoadManager(Application &amp;app, beast::Journal journal)</div><div class="ttdef"><b>Definition</b> <a href="LoadManager_8cpp_source.html#l00199">LoadManager.cpp:199</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a37eda33d77f068d8788e5a5a81a7cc77"><div class="ttname"><a href="namespaceripple.html#a37eda33d77f068d8788e5a5a81a7cc77">ripple::make_Application</a></div><div class="ttdeci">std::unique_ptr&lt; Application &gt; make_Application(std::unique_ptr&lt; Config &gt; config, std::unique_ptr&lt; Logs &gt; logs, std::unique_ptr&lt; TimeKeeper &gt; timeKeeper)</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02191">Application.cpp:2191</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a37eda33d77f068d8788e5a5a81a7cc77"><div class="ttname"><a href="namespaceripple.html#a37eda33d77f068d8788e5a5a81a7cc77">ripple::make_Application</a></div><div class="ttdeci">std::unique_ptr&lt; Application &gt; make_Application(std::unique_ptr&lt; Config &gt; config, std::unique_ptr&lt; Logs &gt; logs, std::unique_ptr&lt; TimeKeeper &gt; timeKeeper)</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02199">Application.cpp:2199</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a4b64fe6c72a48b5f30ea74a07fa95716"><div class="ttname"><a href="namespaceripple.html#a4b64fe6c72a48b5f30ea74a07fa95716">ripple::initAccountIdCache</a></div><div class="ttdeci">void initAccountIdCache(std::size_t count)</div><div class="ttdoc">Initialize the global cache used to map AccountID to base58 conversions.</div><div class="ttdef"><b>Definition</b> <a href="AccountID_8cpp_source.html#l00107">AccountID.cpp:107</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a560fb4011d74edecc539046eaeadd359"><div class="ttname"><a href="namespaceripple.html#a560fb4011d74edecc539046eaeadd359">ripple::Endpoints</a></div><div class="ttdeci">std::unordered_map&lt; std::string, boost::asio::ip::tcp::endpoint &gt; Endpoints</div><div class="ttdef"><b>Definition</b> <a href="ServerImpl_8h_source.html#l00040">ServerImpl.h:41</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a57d7e7b27df7e719fdf5569f96be60a3a65cfe147458030070724c8b3795e508f"><div class="ttname"><a href="namespaceripple.html#a57d7e7b27df7e719fdf5569f96be60a3a65cfe147458030070724c8b3795e508f">ripple::hotACCOUNT_NODE</a></div><div class="ttdeci">@ hotACCOUNT_NODE</div><div class="ttdef"><b>Definition</b> <a href="NodeObject_8h_source.html#l00035">NodeObject.h:35</a></div></div>
@@ -2745,21 +2753,21 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespaceripple_html_a5a08ef41766731386ceb3ec0866c47d8"><div class="ttname"><a href="namespaceripple.html#a5a08ef41766731386ceb3ec0866c47d8">ripple::make_DummyPeerSet</a></div><div class="ttdeci">std::unique_ptr&lt; PeerSet &gt; make_DummyPeerSet(Application &amp;app)</div><div class="ttdoc">Make a dummy PeerSet that does not do anything.</div><div class="ttdef"><b>Definition</b> <a href="PeerSet_8cpp_source.html#l00187">PeerSet.cpp:187</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a64faabbdff83da8b7fd7aaafbb937867"><div class="ttname"><a href="namespaceripple.html#a64faabbdff83da8b7fd7aaafbb937867">ripple::crypto_prng</a></div><div class="ttdeci">csprng_engine &amp; crypto_prng()</div><div class="ttdoc">The default cryptographically secure PRNG.</div><div class="ttdef"><b>Definition</b> <a href="libxrpl_2crypto_2csprng_8cpp_source.html#l00103">libxrpl/crypto/csprng.cpp:103</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a6d96d342f61e5dd48b86a8a37cdce642"><div class="ttname"><a href="namespaceripple.html#a6d96d342f61e5dd48b86a8a37cdce642">ripple::make_PeerSetBuilder</a></div><div class="ttdeci">std::unique_ptr&lt; PeerSetBuilder &gt; make_PeerSetBuilder(Application &amp;app)</div><div class="ttdef"><b>Definition</b> <a href="PeerSet_8cpp_source.html#l00144">PeerSet.cpp:144</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a729619e7a3a0d92226e7d52347ff2a5e"><div class="ttname"><a href="namespaceripple.html#a729619e7a3a0d92226e7d52347ff2a5e">ripple::loadByHash</a></div><div class="ttdeci">std::shared_ptr&lt; Ledger &gt; loadByHash(uint256 const &amp;ledgerHash, Application &amp;app, bool acquire)</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l01127">Ledger.cpp:1127</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a729619e7a3a0d92226e7d52347ff2a5e"><div class="ttname"><a href="namespaceripple.html#a729619e7a3a0d92226e7d52347ff2a5e">ripple::loadByHash</a></div><div class="ttdeci">std::shared_ptr&lt; Ledger &gt; loadByHash(uint256 const &amp;ledgerHash, Application &amp;app, bool acquire)</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l01131">Ledger.cpp:1131</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a76c03032f9f754bf4659c3e18ede1510"><div class="ttname"><a href="namespaceripple.html#a76c03032f9f754bf4659c3e18ede1510">ripple::addJson</a></div><div class="ttdeci">void addJson(Json::Value &amp;json, LedgerFill const &amp;fill)</div><div class="ttdoc">Given a Ledger and options, fill a Json::Object or Json::Value with a description of the ledger.</div><div class="ttdef"><b>Definition</b> <a href="LedgerToJson_8cpp_source.html#l00347">LedgerToJson.cpp:347</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a811e089c74ac1669dd5b55e3cf692909"><div class="ttname"><a href="namespaceripple.html#a811e089c74ac1669dd5b55e3cf692909">ripple::make_CollectorManager</a></div><div class="ttdeci">std::unique_ptr&lt; CollectorManager &gt; make_CollectorManager(Section const &amp;params, beast::Journal journal)</div><div class="ttdef"><b>Definition</b> <a href="CollectorManager_8cpp_source.html#l00073">CollectorManager.cpp:73</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a87ab8e956bac8394e11be28fb4e04406"><div class="ttname"><a href="namespaceripple.html#a87ab8e956bac8394e11be28fb4e04406">ripple::make_InboundTransactions</a></div><div class="ttdeci">std::unique_ptr&lt; InboundTransactions &gt; make_InboundTransactions(Application &amp;app, beast::insight::Collector::ptr const &amp;collector, std::function&lt; void(std::shared_ptr&lt; SHAMap &gt; const &amp;, bool)&gt; gotSet)</div><div class="ttdef"><b>Definition</b> <a href="InboundTransactions_8cpp_source.html#l00271">InboundTransactions.cpp:271</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a8b5946ffccf0e2dd8c6c5a40f5e6c979"><div class="ttname"><a href="namespaceripple.html#a8b5946ffccf0e2dd8c6c5a40f5e6c979">ripple::make_InboundLedgers</a></div><div class="ttdeci">std::unique_ptr&lt; InboundLedgers &gt; make_InboundLedgers(Application &amp;app, InboundLedgers::clock_type &amp;clock, beast::insight::Collector::ptr const &amp;collector)</div><div class="ttdef"><b>Definition</b> <a href="InboundLedgers_8cpp_source.html#l00471">InboundLedgers.cpp:471</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a9717a8236d67d262b4e5273712ac545c"><div class="ttname"><a href="namespaceripple.html#a9717a8236d67d262b4e5273712ac545c">ripple::setup_ServerHandler</a></div><div class="ttdeci">ServerHandler::Setup setup_ServerHandler(Config const &amp;config, std::ostream &amp;&amp;log)</div><div class="ttdef"><b>Definition</b> <a href="ServerHandler_8cpp_source.html#l01255">ServerHandler.cpp:1255</a></div></div>
+<div class="ttc" id="anamespaceripple_html_a9717a8236d67d262b4e5273712ac545c"><div class="ttname"><a href="namespaceripple.html#a9717a8236d67d262b4e5273712ac545c">ripple::setup_ServerHandler</a></div><div class="ttdeci">ServerHandler::Setup setup_ServerHandler(Config const &amp;config, std::ostream &amp;&amp;log)</div><div class="ttdef"><b>Definition</b> <a href="ServerHandler_8cpp_source.html#l01259">ServerHandler.cpp:1259</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a9f144181c0c4a92fb35865688c3f49be"><div class="ttname"><a href="namespaceripple.html#a9f144181c0c4a92fb35865688c3f49be">ripple::setup_HashRouter</a></div><div class="ttdeci">HashRouter::Setup setup_HashRouter(Config const &amp;config)</div><div class="ttdef"><b>Definition</b> <a href="HashRouter_8cpp_source.html#l00137">HashRouter.cpp:137</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aa210c189615c410fe9661f5cfbb04977"><div class="ttname"><a href="namespaceripple.html#aa210c189615c410fe9661f5cfbb04977">ripple::stopwatch</a></div><div class="ttdeci">Stopwatch &amp; stopwatch()</div><div class="ttdoc">Returns an instance of a wall clock.</div><div class="ttdef"><b>Definition</b> <a href="chrono_8h_source.html#l00119">chrono.h:119</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aa3339c924836be74a553eb0fd5966a3c"><div class="ttname"><a href="namespaceripple.html#aa3339c924836be74a553eb0fd5966a3c">ripple::getRegisteredFeature</a></div><div class="ttdeci">std::optional&lt; uint256 &gt; getRegisteredFeature(std::string const &amp;name)</div><div class="ttdef"><b>Definition</b> <a href="Feature_8cpp_source.html#l00382">Feature.cpp:382</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aaa97227ce6e58f948934638ef4ebfc2f"><div class="ttname"><a href="namespaceripple.html#aaa97227ce6e58f948934638ef4ebfc2f">ripple::makeWalletDB</a></div><div class="ttdeci">std::unique_ptr&lt; DatabaseCon &gt; makeWalletDB(DatabaseCon::Setup const &amp;setup, beast::Journal j)</div><div class="ttdoc">makeWalletDB Opens the wallet database and returns it.</div><div class="ttdef"><b>Definition</b> <a href="Wallet_8cpp_source.html#l00027">Wallet.cpp:27</a></div></div>
 <div class="ttc" id="anamespaceripple_html_ab5fadc2b2814a10d35c00c0a8241fbe7"><div class="ttname"><a href="namespaceripple.html#ab5fadc2b2814a10d35c00c0a8241fbe7">ripple::forceValidity</a></div><div class="ttdeci">void forceValidity(HashRouter &amp;router, uint256 const &amp;txid, Validity validity)</div><div class="ttdoc">Sets the validity of a given transaction in the cache.</div><div class="ttdef"><b>Definition</b> <a href="apply_8cpp_source.html#l00118">apply.cpp:118</a></div></div>
-<div class="ttc" id="anamespaceripple_html_ab958778f2743bee5df3a1567f607c862"><div class="ttname"><a href="namespaceripple.html#ab958778f2743bee5df3a1567f607c862">ripple::make_ServerHandler</a></div><div class="ttdeci">std::unique_ptr&lt; ServerHandler &gt; make_ServerHandler(Application &amp;app, boost::asio::io_context &amp;io_context, JobQueue &amp;jobQueue, NetworkOPs &amp;networkOPs, Resource::Manager &amp;resourceManager, CollectorManager &amp;cm)</div><div class="ttdef"><b>Definition</b> <a href="ServerHandler_8cpp_source.html#l01267">ServerHandler.cpp:1267</a></div></div>
+<div class="ttc" id="anamespaceripple_html_ab958778f2743bee5df3a1567f607c862"><div class="ttname"><a href="namespaceripple.html#ab958778f2743bee5df3a1567f607c862">ripple::make_ServerHandler</a></div><div class="ttdeci">std::unique_ptr&lt; ServerHandler &gt; make_ServerHandler(Application &amp;app, boost::asio::io_context &amp;io_context, JobQueue &amp;jobQueue, NetworkOPs &amp;networkOPs, Resource::Manager &amp;resourceManager, CollectorManager &amp;cm)</div><div class="ttdef"><b>Definition</b> <a href="ServerHandler_8cpp_source.html#l01271">ServerHandler.cpp:1271</a></div></div>
 <div class="ttc" id="anamespaceripple_html_ac2c0e7e7b0be5e10cb5803c0a6b5b700"><div class="ttname"><a href="namespaceripple.html#ac2c0e7e7b0be5e10cb5803c0a6b5b700">ripple::create_genesis</a></div><div class="ttdeci">create_genesis_t const create_genesis</div><div class="ttdef"><b>Definition</b> <a href="Ledger_8cpp_source.html#l00051">Ledger.cpp:51</a></div></div>
 <div class="ttc" id="anamespaceripple_html_acdd9d0afaa4d6eee0c0f243f15c6298f"><div class="ttname"><a href="namespaceripple.html#acdd9d0afaa4d6eee0c0f243f15c6298f">ripple::make_Overlay</a></div><div class="ttdeci">std::unique_ptr&lt; Overlay &gt; make_Overlay(Application &amp;app, Overlay::Setup const &amp;setup, ServerHandler &amp;serverHandler, Resource::Manager &amp;resourceManager, Resolver &amp;resolver, boost::asio::io_context &amp;io_context, BasicConfig const &amp;config, beast::insight::Collector::ptr const &amp;collector)</div><div class="ttdoc">Creates the implementation of Overlay.</div><div class="ttdef"><b>Definition</b> <a href="OverlayImpl_8cpp_source.html#l01595">OverlayImpl.cpp:1595</a></div></div>
-<div class="ttc" id="anamespaceripple_html_ad20809ebbf2db8a9e3304c31237acabb"><div class="ttname"><a href="namespaceripple.html#ad20809ebbf2db8a9e3304c31237acabb">ripple::fixConfigPorts</a></div><div class="ttdeci">static void fixConfigPorts(Config &amp;config, Endpoints const &amp;endpoints)</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02201">Application.cpp:2201</a></div></div>
+<div class="ttc" id="anamespaceripple_html_ad20809ebbf2db8a9e3304c31237acabb"><div class="ttname"><a href="namespaceripple.html#ad20809ebbf2db8a9e3304c31237acabb">ripple::fixConfigPorts</a></div><div class="ttdeci">static void fixConfigPorts(Config &amp;config, Endpoints const &amp;endpoints)</div><div class="ttdef"><b>Definition</b> <a href="Application_8cpp_source.html#l02209">Application.cpp:2209</a></div></div>
 <div class="ttc" id="anamespaceripple_html_ad41956ef004d64710296fd76a5dc9e06"><div class="ttname"><a href="namespaceripple.html#ad41956ef004d64710296fd76a5dc9e06">ripple::make_AmendmentTable</a></div><div class="ttdeci">std::unique_ptr&lt; AmendmentTable &gt; make_AmendmentTable(Application &amp;app, std::chrono::seconds majorityTime, std::vector&lt; AmendmentTable::FeatureInfo &gt; const &amp;supported, Section const &amp;enabled, Section const &amp;vetoed, beast::Journal journal)</div><div class="ttdef"><b>Definition</b> <a href="AmendmentTable_8cpp_source.html#l01072">AmendmentTable.cpp:1072</a></div></div>
 <div class="ttc" id="anamespaceripple_html_adc117aa1e40c420ae8c34dea1f2f1bf1"><div class="ttname"><a href="namespaceripple.html#adc117aa1e40c420ae8c34dea1f2f1bf1">ripple::setup_Overlay</a></div><div class="ttdeci">Overlay::Setup setup_Overlay(BasicConfig const &amp;config)</div><div class="ttdef"><b>Definition</b> <a href="OverlayImpl_8cpp_source.html#l01490">OverlayImpl.cpp:1490</a></div></div>
 <div class="ttc" id="anamespaceripple_html_aefd2f77338ce3c9a2fffc4f0b289b483"><div class="ttname"><a href="namespaceripple.html#aefd2f77338ce3c9a2fffc4f0b289b483">ripple::LogicError</a></div><div class="ttdeci">void LogicError(std::string const &amp;how) noexcept</div><div class="ttdoc">Called when faulty logic causes a broken invariant.</div><div class="ttdef"><b>Definition</b> <a href="libxrpl_2basics_2contract_8cpp_source.html#l00037">libxrpl/basics/contract.cpp:37</a></div></div>
@@ -2779,7 +2787,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="astrlen_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/byte/strlen.html">std::strlen</a></div><div class="ttdeci">T strlen(T... args)</div></div>
 <div class="ttc" id="astructripple_1_1ConfigSection_html_a683114c5bbff808d0b15bd6a4283dff4"><div class="ttname"><a href="structripple_1_1ConfigSection.html#a683114c5bbff808d0b15bd6a4283dff4">ripple::ConfigSection::importNodeDatabase</a></div><div class="ttdeci">static std::string importNodeDatabase()</div><div class="ttdef"><b>Definition</b> <a href="ConfigSections_8h_source.html#l00038">ConfigSections.h:38</a></div></div>
 <div class="ttc" id="astructripple_1_1RPC_1_1JsonContext_html"><div class="ttname"><a href="structripple_1_1RPC_1_1JsonContext.html">ripple::RPC::JsonContext</a></div><div class="ttdef"><b>Definition</b> <a href="Context_8h_source.html#l00052">Context.h:53</a></div></div>
-<div class="ttc" id="astructripple_1_1ServerHandler_1_1Setup_html_acf2e4a0b32981ef7eb945aad361bafd2"><div class="ttname"><a href="structripple_1_1ServerHandler_1_1Setup.html#acf2e4a0b32981ef7eb945aad361bafd2">ripple::ServerHandler::Setup::makeContexts</a></div><div class="ttdeci">void makeContexts()</div><div class="ttdef"><b>Definition</b> <a href="ServerHandler_8cpp_source.html#l01078">ServerHandler.cpp:1078</a></div></div>
+<div class="ttc" id="astructripple_1_1ServerHandler_1_1Setup_html_acf2e4a0b32981ef7eb945aad361bafd2"><div class="ttname"><a href="structripple_1_1ServerHandler_1_1Setup.html#acf2e4a0b32981ef7eb945aad361bafd2">ripple::ServerHandler::Setup::makeContexts</a></div><div class="ttdeci">void makeContexts()</div><div class="ttdef"><b>Definition</b> <a href="ServerHandler_8cpp_source.html#l01082">ServerHandler.cpp:1082</a></div></div>
 <div class="ttc" id="asystem_clock_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/chrono/system_clock.html">std::chrono::sys_days</a></div></div>
 <div class="ttc" id="atime_point_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/chrono/time_point.html">std::chrono::time_point</a></div></div>
 <div class="ttc" id="ato_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string/to_string.html">std::to_string</a></div><div class="ttdeci">T to_string(T... args)</div></div>

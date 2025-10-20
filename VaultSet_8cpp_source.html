@@ -273,13 +273,16 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <a class="code hl_function" href="classripple_1_1Transactor.html#a9acc4edc9b8f2a11a27fbcf5e93e2fe2">view</a>().<a class="code hl_function" href="classripple_1_1ApplyView.html#a542437b9b59a623e755979acdc075af5">update</a>(sleIssuance);</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    }</div>
 <div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <a class="code hl_function" href="classripple_1_1Transactor.html#a9acc4edc9b8f2a11a27fbcf5e93e2fe2">view</a>().<a class="code hl_function" href="classripple_1_1ApplyView.html#a542437b9b59a623e755979acdc075af5">update</a>(vault);</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">tesSUCCESS</a>;</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>}</div>
-</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="comment">// Note, we must update Vault object even if only DomainID is being updated</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="comment">// in Issuance object. Otherwise it&#39;s really difficult for Vault invariants</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="comment">// to verify the operation.</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <a class="code hl_function" href="classripple_1_1Transactor.html#a9acc4edc9b8f2a11a27fbcf5e93e2fe2">view</a>().<a class="code hl_function" href="classripple_1_1ApplyView.html#a542437b9b59a623e755979acdc075af5">update</a>(vault);</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>}  <span class="comment">// namespace ripple</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespaceripple.html#aabc7f150d5082c73116a1cd5962b434da28c7d8b3ed759d363503a05fcd59f151">tesSUCCESS</a>;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>}</div>
+</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>}  <span class="comment">// namespace ripple</span></div>
 <div class="ttc" id="aclassbeast_1_1Journal_html_a49b0713e65bb8e2c51b76fbf16252afe"><div class="ttname"><a href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">beast::Journal::error</a></div><div class="ttdeci">Stream error() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00346">Journal.h:346</a></div></div>
 <div class="ttc" id="aclassbeast_1_1Journal_html_a556228cb60bcf405c225d3f64b7b01ae"><div class="ttname"><a href="classbeast_1_1Journal.html#a556228cb60bcf405c225d3f64b7b01ae">beast::Journal::debug</a></div><div class="ttdeci">Stream debug() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00328">Journal.h:328</a></div></div>
 <div class="ttc" id="aclassripple_1_1ApplyContext_html_a8c8757b3b1f88baef47b31ed4e9682d0"><div class="ttname"><a href="classripple_1_1ApplyContext.html#a8c8757b3b1f88baef47b31ed4e9682d0">ripple::ApplyContext::tx</a></div><div class="ttdeci">STTx const  &amp; tx</div><div class="ttdef"><b>Definition</b> <a href="ApplyContext_8h_source.html#l00072">ApplyContext.h:72</a></div></div>
