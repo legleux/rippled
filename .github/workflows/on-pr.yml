@@ -118,7 +118,7 @@ jobs:
   #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build-package:
-    name: Build ${{ matrix.pkg_type }}-${{ matrix.arch }} packages
+    name: Build ${{ matrix.pkg_type }} ${{ matrix.arch }} packages
     needs: should-run
     if: ${{ needs.should-run.outputs.go == 'true' }}
     uses: ./.github/workflows/reusable-build-pkg.yml

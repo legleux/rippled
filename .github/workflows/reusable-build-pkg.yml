@@ -19,7 +19,7 @@ defaults:
     shell: bash
 jobs:
   build:
-    name: Build ${{ inputs.pkg_type }}-${{ inputs.arch }} package
+    name: Build ${{ inputs.pkg_type }} ${{ inputs.arch }} package
     runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
     container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
     steps:
@@ -44,7 +44,7 @@ jobs:
           if-no-files-found: error
 
   test:
-    name: Test ${{ inputs.pkg_type }}-${{ inputs.arch }} package
+    name: Test ${{ inputs.pkg_type }} ${{ inputs.arch }} package
     needs: build
     runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
     container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
@@ -56,7 +56,7 @@ jobs:
         run: echo "Running tests..."
 
   sign:
-    name: Sign ${{ inputs.pkg_type }}-${{ inputs.arch }} package
+    name: Sign ${{ inputs.pkg_type }} ${{ inputs.arch }} package
     needs: build
     runs-on: ubuntu-latest
     container: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
