@@ -70,27 +70,16 @@ jobs:
     container: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
     steps:
-      - name: Install gpg
-        run: |
-          python -c'import sys;print(sys.version)' || true
-          apt-get update && apt-get install -y gpg
+      - name: Install gpg & rpm
+        run: apt-get update && apt-get install -y gpg rpm
 
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
-
-      - name: Set up Python
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
-        with:
-          python-version: 3.13
 
       - uses: actions/download-artifact@v4
         with:
           name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
 
-      - name: Display structure of downloaded files
-        run: |
-          python -c'import sys;print(sys.version)' || true
-          ls -R
       ## Also possibility
       # - name: Write passphrase file securely
       #   run: |
@@ -103,7 +92,6 @@ jobs:
           GPG_KEY_B64: ${{ secrets.GPG_KEY_B64 }}
           GPG_KEY_PASS_B64: ${{ secrets.GPG_KEY_PASS_B64 }}
         run: |
-          python -c'import sys;print(sys.version)' || true
           for i in $(find . -maxdepth 1 -type f -name "rippled-[0-9]*.rpm"); do
             ./pkgs/sign_packages.py $i
           done
