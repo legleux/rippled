@@ -35,6 +35,18 @@ def make_cfg(passphrase: str, armored_private_key: str) -> SignCfg:
     fp = imp.fingerprints[0]
     return SignCfg(gnupghome=ghome, fingerprint=fp, passphrase=passphrase)
 
+def import_pubkey_into_rpmdb(gnupghome: Path, fingerprint: str, rpmdb: Path):
+    env = {**os.environ, "GNUPGHOME": str(gnupghome)}
+    cp = subprocess.run(
+        ["gpg", "--batch", "--yes", "--armor", "--export", fingerprint],
+        env=env, text=True, capture_output=True, check=True,
+    )
+    pub = rpmdb / "pubkey.asc"
+    pub.write_text(cp.stdout)
+
+    rpmdb.mkdir(parents=True, exist_ok=True)
+    subprocess.run(["rpm", "--dbpath", str(rpmdb), "--import", str(pub)], check=True)
+
 
 def sign_rpm(pkg: Path, cfg: SignCfg) -> subprocess.CompletedProcess:
     fd, pfile = tempfile.mkstemp(text=True)
@@ -92,7 +104,7 @@ def sign_package(pkg: Path, cfg: SignCfg) -> subprocess.CompletedProcess:
 def verify_signature(pkg: Path, *, gnupghome: Path, expected_fp: str):
     suf = pkg.suffix.lower()
     if suf == ".rpm":
-        return verify_rpm_signature(pkg)
+        return verify_rpm_signature(pkg, gnupghome=gnupghome, expected_fp=expected_fp)
     elif suf == ".deb":
         return verify_deb_signature(pkg, gnupghome=gnupghome, expected_fp=expected_fp)
     else:
@@ -119,17 +131,34 @@ def verify_deb_signature(pkg: Path, gnupghome: Path, expected_fp: str) -> None:
     print(f"✅ Signature verified for {pkg.name} ({m.group(1)})")
 
 
-def verify_rpm_signature(pkg):
-    cmd = ["rpm", "-Kv", pkg]
-    result = subprocess.run(cmd, check=False, capture_output=True, text=True)
-    # print(f"verify result: {result.stdout}")
-    if result.returncode != 0:
-        sys.exit(result.returncode)
-    else:
+def sign_and_verify(pkg: Path, cfg: SignCfg):
+    sign_package(pkg, cfg)
+
+def verify_rpm_signature(pkg: Path, *, gnupghome: Path, expected_fp: str):
+    env = {**os.environ, "GNUPGHOME": str(gnupghome)}
+    export_cmd = ["gpg", "--batch", "--yes", "--armor", "--export", expected_fp]
+    cp = subprocess.run(export_cmd, env=env, text=True, capture_output=True, check=True)
+    rpmdb = Path(tempfile.mkdtemp())
+    try:
+        pub = rpmdb / "pubkey.asc"
+        pub.write_text(cp.stdout)
+        # rpm needs the rpmdb for verification
+        subprocess.run(["rpm", "--dbpath", str(rpmdb), "--import", str(pub)], check=True)
+        verify_cmd = ["rpm", "--dbpath", str(rpmdb), "-Kv", str(pkg)]
+        result = subprocess.run(verify_cmd, text=True, capture_output=True)
+        if result.returncode != 0:
+            print(result.stdout or result.stderr)
+            sys.exit(result.returncode)
         print("********* rpm signature verification *********")
         print(result.stdout)
         print(f"✅ Signature verified for {pkg.name}")
-
+        return True
+    finally:
+        try:
+            for p in rpmdb.iterdir(): p.unlink()
+            rpmdb.rmdir()
+        except Exception:
+            pass
 
 def set_tty():
     try:
@@ -164,10 +193,14 @@ def main():
             print(f"signing {pkg}")
             print(f"at {pkg.resolve()}")
             res = sign_package(pkg, cfg)
+            print("At least got through signing...")
             if res.returncode:
                 print(res.stderr.strip() or res.stdout.strip())
                 raise sys.exit(res.returncode)
+            print("verifying...")
+            # verify_signature(pkg, gnupghome=cfg.gnupghome, expected_fp=cfg.fingerprint)
             verify_signature(pkg, gnupghome=cfg.gnupghome, expected_fp=cfg.fingerprint)
+
         finally:
             shutil.rmtree(cfg.gnupghome, ignore_errors=True)
         sys.exit(0)
