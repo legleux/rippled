@@ -85,20 +85,21 @@ def sign_package(package):
 
 
 def sign_rpm(package):
+    import sys
+    print(sys.version)
     print(f"package: {package}")
     print(f"package.is_file(): {package.is_file()}")
     for i in package.parent.iterdir():
         if i.name.endswith("rpm"):
             print(i)
-    print(f"before append rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
+    print(f"before append rpm_sign_cmd[-1]: {rpm_sign_cmd[-1]}")
     rpm_sign_cmd.append(package)
-    print(f"after append rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
+    print(f"after append rpm_sign_cmd[-1]: {rpm_sign_cmd[-1]}")
     result = subprocess.run(rpm_sign_cmd, check=False, capture_output=True, text=True, input="y")
     if result.returncode != 0:
         print(result.stderr)
         sys.exit(1)
     return result
-
 
 def verify_package_signature(pkg):
     if pkg.name.endswith("rpm"):
@@ -120,6 +121,7 @@ def verify_deb_package_signature(package):
     except Exception:
         print(f"❌ Signature verification failed for {package}")
         sys.exit(1)
+
 
 def verify_rpm_package_signature(pkg):
     cmd = ["rpm","--dbpath", tmp_rpm_db, "-Kv", pkg]

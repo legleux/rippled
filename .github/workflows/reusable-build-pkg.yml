@@ -28,6 +28,7 @@ jobs:
 
       - name: Build packages
         run: |
+          python -c'import sys;print(sys.version)' || true
           cp pkgs/rippled-3.0.0-1.x86_64.rpm rippled-3.0.0-1.amd64.rpm
           echo $PWD
           ls -l
@@ -70,7 +71,9 @@ jobs:
 
     steps:
       - name: Install gpg
-        run: apt-get update && apt-get install -y gpg
+        run: |
+          python -c'import sys;print(sys.version)' || true
+          apt-get update && apt-get install -y gpg
 
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -85,7 +88,9 @@ jobs:
           name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
 
       - name: Display structure of downloaded files
-        run: ls -R
+        run: |
+          python -c'import sys;print(sys.version)' || true
+          ls -R
       ## Also possibility
       # - name: Write passphrase file securely
       #   run: |
@@ -98,6 +103,7 @@ jobs:
           GPG_KEY_B64: ${{ secrets.GPG_KEY_B64 }}
           GPG_KEY_PASS_B64: ${{ secrets.GPG_KEY_PASS_B64 }}
         run: |
+          python -c'import sys;print(sys.version)' || true
           for i in $(find . -maxdepth 1 -type f -name "rippled-[0-9]*.rpm"); do
             ./pkgs/sign_packages.py $i
           done
