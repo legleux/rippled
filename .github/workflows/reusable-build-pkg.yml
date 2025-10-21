@@ -28,17 +28,14 @@ jobs:
 
       - name: Build packages
         run: |
-          python -c'import sys;print(sys.version)' || true
-          cp pkgs/rippled-3.0.0-1.x86_64.rpm rippled-3.0.0-1.amd64.rpm
-          echo $PWD
-          ls -l
+          ./pkgs/build.sh
+          # cp pkgs/rippled-3.0.0-1.x86_64.rpm rippled-3.0.0-1.amd64.rpm
           find . -name "*.rpm"
           printf '%s\n' \
               "rpm_md5sum=$(rpm -q --queryformat '%{SIGMD5}\n' -p ./rippled-[0-9]*.rpm 2>/dev/null)" \
               "rpm_sha256=$(sha256sum ./rippled-[0-9]*.rpm | awk '{ print $1 }')" \
               > build_vars
-              cat build_vars >> $GITHUB_STEP_SUMMARY
-          #./pkgs/build.sh
+          cat build_vars >> $GITHUB_STEP_SUMMARY
 
       - uses: actions/upload-artifact@v4
         with:
@@ -46,22 +43,22 @@ jobs:
           path: "*${{ inputs.arch }}.${{ inputs.pkg_type }}"
           if-no-files-found: error
 
-  # test:
-  #   name: Test ${{ inputs.pkg_type }}-${{ inputs.arch }} package
-  #   needs: build
-  #   strategy:
-  #     fail-fast: false
-  #     inputs:
-  #       arch: ["amd64"]
-  #       pkg_type: ["deb", "rpm"]
-  #   runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
-  #   container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
-  #   steps:
-  #     - uses: actions/download-artifact@v4
-  #       with:
-  #         name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
-  #     - name: Running tests
-  #       run: echo "Running tests..."
+  test:
+    name: Test ${{ inputs.pkg_type }}-${{ inputs.arch }} package
+    needs: build
+    strategy:
+      fail-fast: false
+      inputs:
+        arch: ["amd64"]
+        pkg_type: ["deb", "rpm"]
+    runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
+    container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
+      - name: Running tests
+        run: echo "Running tests..."
 
   sign:
     name: Sign ${{ inputs.pkg_type }}-${{ inputs.arch }} package
