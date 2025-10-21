@@ -86,9 +86,12 @@ def sign_package(package):
 
 def sign_rpm(package):
     print(f"package: {package}")
-    print(f"package: {package.is_file()}")
-    rpm_sign_cmd.append(package)
+    print(f"package.is_file(): {package.is_file()}")
+    for i in package.parent.iterdir():
+        if i.name.endswith("rpm"):
+            print(i)
     print(f"rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
+    rpm_sign_cmd.append(package)
     result = subprocess.run(rpm_sign_cmd, check=False, capture_output=True, text=True, input="y")
     if result.returncode != 0:
         print(result.stderr)
