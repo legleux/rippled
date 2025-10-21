@@ -7,146 +7,156 @@
 # ///
 import argparse
 import base64
+import gnupg
 import os
+import os
+import re
+import shutil
 import subprocess
 import sys
-from pathlib import Path
 import tempfile
-import gnupg
+from dataclasses import dataclass
+from pathlib import Path
 
-# If run with tty, gpg-agent needs to know about it
-try:
-    tty = subprocess.check_output(["tty"], text=True, stderr=subprocess.DEVNULL).strip()
-    os.environ["GPG_TTY"] = tty
-    print(f"GPG_TTY set to {tty}")
-except subprocess.CalledProcessError:
-    print("No TTY detected; skipping GPG_TTY.")
+@dataclass(slots=True)
+class SignCfg:
+    gnupghome: Path
+    fingerprint: str
+    passphrase: str
 
-GPG_KEY_B64 = os.environ["GPG_KEY_B64"]
-GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
-gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
-# GPG_KEY = base64.b64decode(GPG_KEY_B64 + "==").decode("utf-8").strip() # This can't be right
-GPG_KEY = base64.b64decode(GPG_KEY_B64).decode("utf-8").strip()
-gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
-
-if not (gnupghome := os.environ.get("GNUPGHOME")):
-    gnupghome_dir = tempfile.mkdtemp()
-    gnupghome = Path(gnupghome_dir)
-
-tmp_rpm_db = tempfile.mkdtemp()
-gnupghome.mkdir(parents=True, exist_ok=True, mode=0o0700)
-gpg = gnupg.GPG(gnupghome=gnupghome)
-import_result = gpg.import_keys(GPG_KEY)
-
-print("GPG import summary:")
-print(import_result.summary())
-if gpg_keyid not in import_result.fingerprints:
-    print(f"Failed to import secret key for {gpg_keyid}")
-    sys.exit(1)
-
-rpm_sign_cmd = [
-    "rpm",
-    "--define", "%__gpg /usr/bin/gpg",
-    "--define", "_signature gpg",
-    "--define", f"_gpg_name {gpg_keyid}",
-    "--define", "__gpg_check_password_cmd /bin/true",
-    "--define", "__gpg_sign_cmd %{__gpg} --batch --no-tty --no-armor --digest-algo 'sha512' --passphrase " +
-    gpg_passphrase +
-    " --no-secmem-warning " +
-    "-u '%{_gpg_name}' " +
-    "--pinentry-mode loopback " +
-    "--sign --detach-sign --output %{__signature_filename} %{__plaintext_filename}",
-    "--addsign",
-]
+def make_cfg(passphrase: str, armored_private_key: str) -> SignCfg:
+    ghome = Path(tempfile.mkdtemp())
+    ghome.chmod(0o700)
+    gpg = gnupg.GPG(gnupghome=str(ghome))
+    imp = gpg.import_keys(armored_private_key)
+    fp = imp.fingerprints[0]
+    return SignCfg(gnupghome=ghome, fingerprint=fp, passphrase=passphrase)
 
 
-def import_gpg_key_to_rpm(gpg_keyid=gpg_keyid):
-    gpg_export_cmd = ["gpg", "--export", "--armor", gpg_keyid]
-    key_id = subprocess.run(gpg_export_cmd, check=False, capture_output=True, text=True)
-    pubkey = Path("ripple.gpg.asc")
-    pubkey.write_text(key_id.stdout)
-    rpm_import_cmd = ["rpm", "--dbpath", tmp_rpm_db, "--import", pubkey]
-    rpm_import_result = subprocess.run(rpm_import_cmd, check=False)
-
-
-def sign_package(package):
-    try:
-        if package.name.endswith(".rpm"):
-            return sign_rpm(package)
-        if package.name.endswith(".deb"):
-            return sign_deb(package)
-        else:
-            print(f"couldn't determine file type of {package}")
-    except Exception as e:
-        print(f"Something went wrong! {e}")
-        sys.exit(1)
-
-
-def sign_rpm(package):
-    rpm_sign_cmd.append(package)
-    result = subprocess.run(rpm_sign_cmd, check=False, capture_output=True, text=True, input="y")
-    if result.returncode != 0:
-        print(result.stderr)
-        sys.exit(1)
-    return result
-
-def verify_package_signature(pkg):
-    if pkg.name.endswith("rpm"):
-        import_gpg_key_to_rpm()
-        verify = verify_rpm_package_signature
-    elif pkg.name.endswith("deb"):
-        verify = verify_deb_package_signature
-    return verify(pkg)
-
-
-def verify_deb_package_signature(package):
-    signature = Path(f"{package.name}.asc")
-    try:
-        with signature.open(mode="rb") as fp:
-            verified = gpg.verify_file(fp, package)
-        print(verified.stderr)
-        if verified.status == 0 and verified.fingerprint == gpg_keyid:
-            print(f"✅ {verified.status} for {verified.username} - {verified.pubkey_fingerprint}")
-    except Exception:
-        print(f"❌ Signature verification failed for {package}")
-        sys.exit(1)
-
-
-def verify_rpm_package_signature(pkg):
-    cmd = ["rpm","--dbpath", tmp_rpm_db, "-Kv", pkg]
-    result = subprocess.run(cmd, check=False, capture_output=True, text=True)
-    if result.returncode != 0:
-        sys.exit(1)
-    else:
-        print(result.stdout)
-        return True
-
-
-def sign_deb(package):
-    package_name = package.name
-    signature = Path(f"{package_name}.asc")
-    print(f"package_name: {package_name}")
-    print(f"signature_file: {signature}")
-    cmd = [
-        "gpg",
-        "--batch",
-        "--yes",
-        "--armor",
-        "--passphrase", gpg_passphrase,
-        "--pinentry-mode", "loopback",
-        "--output", signature,
-        "--detach-sign",
-        package,
+def sign_rpm(pkg: Path, cfg: SignCfg) -> subprocess.CompletedProcess:
+    fd, pfile = tempfile.mkstemp(text=True)
+    os.write(fd, cfg.passphrase.rstrip("\r\n").encode()); os.close(fd); os.chmod(pfile, 0o600)
+    rpm_sign_cmd = [
+        "rpm",
+        "--define", "%__gpg /usr/bin/gpg",
+        "--define", "_signature gpg",
+        "--define", f"_gpg_name {cfg.fingerprint}",
+        "--define", f"_gpg_path {cfg.gnupghome}",
+        "--define", f"_gpg_passfile {pfile}",
+        "--define", "__gpg_check_password_cmd /bin/true",
+        "--define",
+            "__gpg_sign_cmd %{__gpg} --batch --no-tty --no-armor "
+            "--digest-algo sha512 --pinentry-mode loopback "
+            "--passphrase-file %{_gpg_passfile} "
+            "-u '%{_gpg_name}' --sign --detach-sign "
+            "--output %{__signature_filename} %{__plaintext_filename}",
+        "--addsign", str(pkg),
     ]
 
-    result = subprocess.run(cmd, check=False)
-    return result
+    return subprocess.run(
+        rpm_sign_cmd,
+        text=True,
+        check=False,
+        capture_output=True,
+    )
 
 
-if __name__ == "__main__":
+def sign_deb(pkg: Path, cfg: SignCfg) -> subprocess.CompletedProcess:
+    sig = pkg.with_suffix(pkg.suffix + ".asc")
+    env = {**os.environ, "GNUPGHOME": str(cfg.gnupghome)}
+    return subprocess.run(
+        [
+            "gpg",
+            "--batch", "--yes", "--armor",
+            "--pinentry-mode", "loopback",
+            "--local-user", cfg.fingerprint,
+            "--passphrase", cfg.passphrase,
+            "--output", str(sig),
+            "--detach-sign", str(pkg),
+        ],
+        env=env, check=False, capture_output=True, text=True,
+    )
+
+
+def sign_package(pkg: Path, cfg: SignCfg) -> subprocess.CompletedProcess:
+    if pkg.suffix == ".rpm":
+        return sign_rpm(pkg, cfg)
+    if pkg.suffix == ".deb":
+        return sign_deb(pkg, cfg)
+    raise ValueError(f"unsupported package type: {pkg}")
+
+
+def verify_signature(pkg: Path, *, gnupghome: Path, expected_fp: str):
+    suf = pkg.suffix.lower()
+    if suf == ".rpm":
+        return verify_rpm_signature(pkg)
+    elif suf == ".deb":
+        return verify_deb_signature(pkg, gnupghome=gnupghome, expected_fp=expected_fp)
+    else:
+        raise ValueError(f"unsupported package type: {pkg}")
+
+
+def verify_deb_signature(pkg: Path, gnupghome: Path, expected_fp: str) -> None:
+    pkg = Path(pkg)
+    sig = pkg.with_suffix(pkg.suffix + ".asc")
+    env = {**os.environ, "GNUPGHOME": str(gnupghome)}
+    VALIDSIG_RE = re.compile(r"\[GNUPG:\]\s+VALIDSIG\s+([0-9A-Fa-f]{40})")
+    verify_cmd = ["gpg", "--batch", "--status-fd", "1", "--verify", str(sig), str(pkg)]
+    result = subprocess.run(verify_cmd, env=env, text=True, capture_output=True)
+
+    if result.returncode != 0:
+        print(result.stderr or result.stdout)
+        sys.exit(result.returncode)
+
+    m = VALIDSIG_RE.search(result.stdout)
+    if not m or m.group(1).upper() != expected_fp.upper():
+        print(f"Signature invalid or wrong signer. Expected {expected_fp}")
+        sys.exit(result.returncode)
+    print("********* deb signature verification *********")
+    print(f"✅ Signature verified for {pkg.name} ({m.group(1)})")
+
+
+def verify_rpm_signature(pkg):
+    cmd = ["rpm", "-Kv", pkg]
+    result = subprocess.run(cmd, check=False, capture_output=True, text=True)
+    # print(f"verify result: {result.stdout}")
+    if result.returncode != 0:
+        sys.exit(result.returncode)
+    else:
+        print("********* rpm signature verification *********")
+        print(result.stdout)
+        print(f"✅ Signature verified for {pkg.name}")
+
+
+def set_tty():
+    try:
+        tty = subprocess.check_output(["tty"], text=True, stderr=subprocess.DEVNULL).strip()
+        os.environ["GPG_TTY"] = tty
+        # print(f"GPG_TTY set to {tty}")
+    except subprocess.CalledProcessError:
+        print("No TTY detected. Skipping setting GPG_TTY.")
+
+def main():
+    GPG_KEY_B64 = os.environ["GPG_KEY_B64"]
+    GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
+    gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
+    GPG_KEY = base64.b64decode(GPG_KEY_B64).decode("utf-8").strip()
+    #gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
+
     parser = argparse.ArgumentParser()
     parser.add_argument("package")
     args = parser.parse_args()
-    package = Path(args.package)
-    sign_package(package)
-    verify_package_signature(package)
+    set_tty()
+    cfg = make_cfg(passphrase=gpg_passphrase, armored_private_key=GPG_KEY)
+    try:
+        pkg = Path(args.package)
+        res = sign_package(pkg, cfg)
+        if res.returncode:
+            print(res.stderr.strip() or res.stdout.strip())
+            raise SystemExit(res.returncode)
+        verify_signature(pkg, gnupghome=cfg.gnupghome, expected_fp=cfg.fingerprint)
+    finally:
+        shutil.rmtree(cfg.gnupghome, ignore_errors=True)
+
+if __name__ == "__main__":
+    main()
