@@ -84,8 +84,8 @@ jobs:
     secrets: inherit
     strategy:
       matrix:
-        pkg_type: [rpm]
-        # pkg_type: [deb, rpm]
+        # pkg_type: [rpm]
+        pkg_type: [deb, rpm]
         arch: [amd64]
         # arch: [amd64, arm64]
     with:
