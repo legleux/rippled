@@ -88,11 +88,12 @@ jobs:
         env:
           GPG_KEY_B64: ${{ secrets.GPG_KEY_B64 }}
           GPG_KEY_PASS_B64: ${{ secrets.GPG_KEY_PASS_B64 }}
+          PYTHONUNBUFFERED: 1
         run: \
-          find . -name \*.${{ matrix.pkg_type }} -print0 | xargs -0 -I{} ./pkgs/sign_packages.py {}
+          find . -name "*.${{ matrix.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
+          name: signed-${{ matrix.pkg_type }}-${{ matrix.arch }}
           path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
           if-no-files-found: error

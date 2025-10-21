@@ -70,6 +70,7 @@ def import_gpg_key_to_rpm(gpg_keyid=gpg_keyid):
 
 
 def sign_package(package):
+    print(f"Trying to sign: {package.resolve()}")
     try:
         if package.name.endswith(".rpm"):
             return sign_rpm(package)
