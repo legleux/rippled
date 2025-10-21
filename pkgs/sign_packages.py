@@ -90,8 +90,9 @@ def sign_rpm(package):
     for i in package.parent.iterdir():
         if i.name.endswith("rpm"):
             print(i)
-    print(f"rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
+    print(f"before append rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
     rpm_sign_cmd.append(package)
+    print(f"after append rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
     result = subprocess.run(rpm_sign_cmd, check=False, capture_output=True, text=True, input="y")
     if result.returncode != 0:
         print(result.stderr)
