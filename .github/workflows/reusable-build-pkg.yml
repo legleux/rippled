@@ -14,6 +14,9 @@ on:
     #   GPG_KEY_PASS_B64:
     #     description: "The gpg key passphrase."
     #     required: true
+defaults:
+  run:
+    shell: bash
 jobs:
   build:
     name: Build ${{ inputs.pkg_type }}-${{ inputs.arch }} package
