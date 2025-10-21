@@ -25,7 +25,7 @@ jobs:
 
       - name: Build packages
         run: |
-          cp pkgs/rippled-3.0.0-1.x86_64.rpm .
+          cp pkgs/rippled-3.0.0-1.x86_64.rpm rippled-3.0.0-1.amd64.rpm
           echo $PWD
           ls -l
           find . -name "*.rpm"
