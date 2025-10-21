@@ -7,13 +7,13 @@ on:
       arch:
         required: false
         type: string
-    secrets:
-      GPG_KEY_B64:
-        description: "The gpg key to sign packages."
-        required: true
-      GPG_KEY_PASS_B64:
-        description: "The gpg key passphrase."
-        required: true
+    # secrets:
+    #   GPG_KEY_B64:
+    #     description: "The gpg key to sign packages."
+    #     required: true
+    #   GPG_KEY_PASS_B64:
+    #     description: "The gpg key passphrase."
+    #     required: true
 jobs:
   build:
     name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
@@ -26,6 +26,9 @@ jobs:
       - name: Build packages
         run: |
           cp pkgs/rippled-3.0.0-1.x86_64.rpm .
+          echo $PWD
+          ls -l
+          find . -name "*.rpm"
           printf '%s\n' \
               "rpm_md5sum=$(rpm -q --queryformat '%{SIGMD5}\n' -p ./rippled-[0-9]*.rpm 2>/dev/null)" \
               "rpm_sha256=$(sha256sum ./rippled-[0-9]*.rpm | awk '{ print $1 }')" \

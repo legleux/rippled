@@ -79,6 +79,7 @@ jobs:
   #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build-package:
+    name: Build ${{ matrix.pkg_type }}-${{ matrix.arch }} packages
     uses: ./.github/workflows/reusable-build-pkg.yml
     secrets: inherit
     strategy:
