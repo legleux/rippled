@@ -16,7 +16,7 @@ on:
     #     required: true
 jobs:
   build:
-    name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
+    name: Build ${{ inputs.pkg_type }}-${{ inputs.arch }} package
     runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
     container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
     steps:
@@ -43,7 +43,7 @@ jobs:
           if-no-files-found: error
 
   # test:
-  #   name: Test ${{ inputs.pkg_type }}-${{ inputs.arch }}
+  #   name: Test ${{ inputs.pkg_type }}-${{ inputs.arch }} package
   #   needs: build
   #   strategy:
   #     fail-fast: false
@@ -60,7 +60,7 @@ jobs:
   #       run: echo "Running tests..."
 
   sign:
-    name: Sign package ${{ inputs.pkg_type }}-${{ inputs.arch }}
+    name: Sign ${{ inputs.pkg_type }}-${{ inputs.arch }} package
     needs: build
     runs-on: ubuntu-latest
     container: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
@@ -92,9 +92,10 @@ jobs:
       - name: Sign
         env:
           PYTHONUNBUFFERED: 1
+          GPG_KEY_B64: ${{ secrets.GPG_KEY_B64 }}
+          GPG_KEY_PASS_B64: ${{ secrets.GPG_KEY_PASS_B64 }}
         run: |
-          echo "first find"
-          find . rippled-[0-9]*.rpm
+          find . -type f -name rippled-[0-9]*.rpm
           echo "sign step"
           find . -name "*.${{ inputs.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
 
