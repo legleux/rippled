@@ -95,9 +95,12 @@ jobs:
           GPG_KEY_B64: ${{ secrets.GPG_KEY_B64 }}
           GPG_KEY_PASS_B64: ${{ secrets.GPG_KEY_PASS_B64 }}
         run: |
-          find . -type f -name rippled-[0-9]*.rpm
-          echo "sign step"
-          find . -name "*.${{ inputs.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
+          for i in $(find . -maxdepth 1 -type f -name "rippled-[0-9]*.rpm"); do
+            ./pkgs/sign_packages.py $i
+          done
+          # find . -name "*.${{ inputs.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
+          #find . -maxdepth 1 -name "*.rpm" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
+          #find . -maxdepth 1 -name "*.rpm" -print0 | xargs -0 -I{} echo "found-{}"
 
       - uses: actions/upload-artifact@v4
         with:

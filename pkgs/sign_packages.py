@@ -85,8 +85,10 @@ def sign_package(package):
 
 
 def sign_rpm(package):
-    print(f"package: ${package}")
+    print(f"package: {package}")
+    print(f"package: {package.is_file()}")
     rpm_sign_cmd.append(package)
+    print(f"rpm_sign_cmd[-1]: ${rpm_sign_cmd[-1]}")
     result = subprocess.run(rpm_sign_cmd, check=False, capture_output=True, text=True, input="y")
     if result.returncode != 0:
         print(result.stderr)
@@ -150,6 +152,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("package")
     args = parser.parse_args()
-    package = Path(args.package).resolve()
+    package = Path(args.package)
     sign_package(package)
     verify_package_signature(package)
