@@ -16,14 +16,9 @@ on:
         required: true
 jobs:
   build:
-    name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: ["amd64"]
-        pkg_type: ["deb", "rpm"]
-    runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
-    container: ghcr.io/xrplf/ci/${{ matrix.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
+    name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
+    runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
+    container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
     steps:
       - name: Checkout repository
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
@@ -40,36 +35,30 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
-          path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
+          name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
+          path: "*${{ inputs.arch }}.${{ inputs.pkg_type }}"
           if-no-files-found: error
 
   # test:
-  #   name: Test ${{ matrix.pkg_type }}-${{ matrix.arch }}
+  #   name: Test ${{ inputs.pkg_type }}-${{ inputs.arch }}
   #   needs: build
   #   strategy:
   #     fail-fast: false
-  #     matrix:
+  #     inputs:
   #       arch: ["amd64"]
   #       pkg_type: ["deb", "rpm"]
-  #   runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
-  #   container: ghcr.io/xrplf/ci/${{ matrix.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
+  #   runs-on: heavy${{ inputs.arch == 'arm64' && '-arm64' || '' }}
+  #   container: ghcr.io/xrplf/ci/${{ inputs.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
   #   steps:
   #     - uses: actions/download-artifact@v4
   #       with:
-  #         name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
+  #         name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
   #     - name: Running tests
   #       run: echo "Running tests..."
 
   sign:
-    name: Sign package ${{ matrix.pkg_type }}-${{ matrix.arch }}
+    name: Sign package ${{ inputs.pkg_type }}-${{ inputs.arch }}
     needs: build
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: ["amd64"]
-        pkg_type: ["rpm"]
-        # pkg_type: ["deb", "rpm"]
     runs-on: ubuntu-latest
     container: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
@@ -87,7 +76,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
+          name: ${{ inputs.pkg_type }}-${{ inputs.arch }}
 
       - name: Display structure of downloaded files
         run: ls -R
@@ -104,10 +93,10 @@ jobs:
           echo "first find"
           find . rippled-[0-9]*.rpm
           echo "sign step"
-          find . -name "*.${{ matrix.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
+          find . -name "*.${{ inputs.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: signed-rippled-${{ matrix.pkg_type }}-${{ matrix.arch }}
-          path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
+          name: signed-rippled-${{ inputs.pkg_type }}-${{ inputs.arch }}
+          path: "*${{ inputs.arch }}.${{ inputs.pkg_type }}"
           if-no-files-found: error
