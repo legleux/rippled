@@ -33,7 +33,7 @@ jobs:
               "rpm_md5sum=$(rpm -q --queryformat '%{SIGMD5}\n' -p ./rippled-[0-9]*.rpm 2>/dev/null)" \
               "rpm_sha256=$(sha256sum ./rippled-[0-9]*.rpm | awk '{ print $1 }')" \
               > build_vars
-              echo build_vars >> $GITHUB_STEP_SUMMARY
+              cat build_vars >> $GITHUB_STEP_SUMMARY
           #./pkgs/build.sh
 
       - uses: actions/upload-artifact@v4

@@ -70,9 +70,10 @@ def import_gpg_key_to_rpm(gpg_keyid=gpg_keyid):
 
 
 def sign_package(package):
-    print(f"Trying to sign: {package.resolve()}")
+    print(f"Trying to sign: {package}")
     try:
         if package.name.endswith(".rpm"):
+            print(f"Found rpm to sign: {package}")
             return sign_rpm(package)
         if package.name.endswith(".deb"):
             return sign_deb(package)
@@ -84,6 +85,7 @@ def sign_package(package):
 
 
 def sign_rpm(package):
+    print(f"package: ${package}")
     rpm_sign_cmd.append(package)
     result = subprocess.run(rpm_sign_cmd, check=False, capture_output=True, text=True, input="y")
     if result.returncode != 0:
@@ -148,6 +150,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("package")
     args = parser.parse_args()
-    package = Path(args.package)
+    package = Path(args.package).resolve()
     sign_package(package)
     verify_package_signature(package)
