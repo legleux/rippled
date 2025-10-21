@@ -80,3 +80,4 @@ jobs:
 
   build-package:
     uses: ./.github/workflows/reusable-build-pkg.yml
+    secrets: inherit

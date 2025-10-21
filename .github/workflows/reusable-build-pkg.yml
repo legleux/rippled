@@ -7,7 +7,13 @@ on:
       arch:
         required: false
         type: string
-
+    secrets:
+      GPG_KEY_B64:
+        description: "The gpg key to sign packages."
+        required: true
+      GPG_KEY_PASS_B64:
+        description: "The gpg key passphrase."
+        required: true
 jobs:
   build:
     name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
@@ -23,7 +29,14 @@ jobs:
         uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
 
       - name: Build packages
-        run: ./pkgs/build.sh
+        run: |
+          cp pkgs/rippled-3.0.0-1.x86_64.rpm .
+          printf '%s\n' \
+              "rpm_md5sum=$(rpm -q --queryformat '%{SIGMD5}\n' -p ./rippled-[0-9]*.rpm 2>/dev/null)" \
+              "rpm_sha256=$(sha256sum ./rippled-[0-9]*.rpm | awk '{ print $1 }')" \
+              > build_vars
+              echo build_vars >> $GITHUB_STEP_SUMMARY
+          #./pkgs/build.sh
 
       - uses: actions/upload-artifact@v4
         with:
@@ -31,31 +44,32 @@ jobs:
           path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
           if-no-files-found: error
 
-  test:
-    name: Test ${{ matrix.pkg_type }}-${{ matrix.arch }}
+  # test:
+  #   name: Test ${{ matrix.pkg_type }}-${{ matrix.arch }}
+  #   needs: build
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       arch: ["amd64"]
+  #       pkg_type: ["deb", "rpm"]
+  #   runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
+  #   container: ghcr.io/xrplf/ci/${{ matrix.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
+  #   steps:
+  #     - uses: actions/download-artifact@v4
+  #       with:
+  #         name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
+  #     - name: Running tests
+  #       run: echo "Running tests..."
+
+  sign:
+    name: Sign package ${{ matrix.pkg_type }}-${{ matrix.arch }}
     needs: build
     strategy:
       fail-fast: false
       matrix:
         arch: ["amd64"]
-        pkg_type: ["deb", "rpm"]
-    runs-on: heavy${{ matrix.arch == 'arm64' && '-arm64' || '' }}
-    container: ghcr.io/xrplf/ci/${{ matrix.pkg_type == 'rpm' && 'rhel-9' || 'debian-bookworm' }}:gcc-12
-    steps:
-      - uses: actions/download-artifact@v4
-        with:
-          name: ${{ matrix.pkg_type }}-${{ matrix.arch }}
-      - name: Running tests
-        run: echo "Running tests..."
-
-  sign:
-    name: Sign package ${{ matrix.pkg_type }}-${{ matrix.arch }}
-    needs: test
-    strategy:
-      fail-fast: false
-      matrix:
-        arch: ["amd64"]
-        pkg_type: ["deb", "rpm"]
+        pkg_type: ["rpm"]
+        # pkg_type: ["deb", "rpm"]
     runs-on: ubuntu-latest
     container: ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 
@@ -83,17 +97,17 @@ jobs:
       #     install -m 600 /dev/null "$RUNNER_TEMP/gpg-pass"
       #     # newline OK; gpg reads to EOF
       #     printf '%s\n' "${{ secrets.GPG_PASSPHRASE }}" > "$RUNNER_TEMP/gpg-pass"
-
       - name: Sign
         env:
-          GPG_KEY_B64: ${{ secrets.GPG_KEY_B64 }}
-          GPG_KEY_PASS_B64: ${{ secrets.GPG_KEY_PASS_B64 }}
           PYTHONUNBUFFERED: 1
         run: |
+          echo "first find"
+          find . rippled-[0-9]*.rpm
+          echo "sign step"
           find . -name "*.${{ matrix.pkg_type }}" -print0 | xargs -0 -I{} ./pkgs/sign_packages.py "{}"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: signed-${{ matrix.pkg_type }}-${{ matrix.arch }}
+          name: signed-rippled-${{ matrix.pkg_type }}-${{ matrix.arch }}
           path: "*${{ matrix.arch }}.${{ matrix.pkg_type }}"
           if-no-files-found: error

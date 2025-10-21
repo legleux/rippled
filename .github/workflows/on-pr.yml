@@ -121,6 +121,7 @@ jobs:
     needs: should-run
     if: ${{ needs.should-run.outputs.go == 'true' }}
     uses: ./.github/workflows/reusable-build-pkg.yml
+    secrets: inherit
 
   notify-clio:
     needs:
