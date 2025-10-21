@@ -18,6 +18,9 @@ import tempfile
 from dataclasses import dataclass
 from pathlib import Path
 
+import os, shutil, traceback, sys
+
+
 @dataclass(slots=True)
 class SignCfg:
     gnupghome: Path
@@ -135,28 +138,44 @@ def set_tty():
         # print(f"GPG_TTY set to {tty}")
     except subprocess.CalledProcessError:
         print("No TTY detected. Skipping setting GPG_TTY.")
+def dbg():
+    print("PATH=", os.environ.get("PATH"))
+    print("which gpg:", shutil.which("gpg"))
+    print("which rpm:", shutil.which("rpm"))
+    print("cwd:", os.getcwd())
 
 def main():
-    GPG_KEY_B64 = os.environ["GPG_KEY_B64"]
-    GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
-    gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
-    GPG_KEY = base64.b64decode(GPG_KEY_B64).decode("utf-8").strip()
-    #gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("package")
-    args = parser.parse_args()
-    set_tty()
-    cfg = make_cfg(passphrase=gpg_passphrase, armored_private_key=GPG_KEY)
     try:
-        pkg = Path(args.package)
-        res = sign_package(pkg, cfg)
-        if res.returncode:
-            print(res.stderr.strip() or res.stdout.strip())
-            raise SystemExit(res.returncode)
-        verify_signature(pkg, gnupghome=cfg.gnupghome, expected_fp=cfg.fingerprint)
-    finally:
-        shutil.rmtree(cfg.gnupghome, ignore_errors=True)
+        GPG_KEY_B64 = os.environ["GPG_KEY_B64"]
+        GPG_KEY_PASS_B64 = os.environ["GPG_KEY_PASS_B64"]
+        gpg_passphrase = base64.b64decode(GPG_KEY_PASS_B64).decode("utf-8").strip()
+        GPG_KEY = base64.b64decode(GPG_KEY_B64).decode("utf-8").strip()
+        #gpg_keyid = os.environ.get("GPG_KEY_ID", "252DBA8082051403AA23844DD41F3105FFB94BCF") # Techops ripple key
+
+        dbg()
+
+        parser = argparse.ArgumentParser()
+        parser.add_argument("package")
+        args = parser.parse_args()
+        set_tty()
+        cfg = make_cfg(passphrase=gpg_passphrase, armored_private_key=GPG_KEY)
+        try:
+            pkg = Path(args.package)
+            print(f"signing {pkg}")
+            print(f"at {pkg.resolve()}")
+            res = sign_package(pkg, cfg)
+            if res.returncode:
+                print(res.stderr.strip() or res.stdout.strip())
+                raise sys.exit(res.returncode)
+            verify_signature(pkg, gnupghome=cfg.gnupghome, expected_fp=cfg.fingerprint)
+        finally:
+            shutil.rmtree(cfg.gnupghome, ignore_errors=True)
+        sys.exit(0)
+    except SystemExit:
+        raise
+    except Exception:
+        traceback.print_exc()
+        sys.exit(99)
 
 if __name__ == "__main__":
     main()
