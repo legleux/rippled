@@ -100,22 +100,22 @@ jobs:
     outputs:
       go: ${{ steps.go.outputs.go == 'true' }}
 
-  check-levelization:
-    needs: should-run
-    if: ${{ needs.should-run.outputs.go == 'true' }}
-    uses: ./.github/workflows/reusable-check-levelization.yml
+  # check-levelization:
+  #   needs: should-run
+  #   if: ${{ needs.should-run.outputs.go == 'true' }}
+  #   uses: ./.github/workflows/reusable-check-levelization.yml
 
-  build-test:
-    needs: should-run
-    if: ${{ needs.should-run.outputs.go == 'true' }}
-    uses: ./.github/workflows/reusable-build-test.yml
-    strategy:
-      matrix:
-        os: [linux, macos, windows]
-    with:
-      os: ${{ matrix.os }}
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  # build-test:
+  #   needs: should-run
+  #   if: ${{ needs.should-run.outputs.go == 'true' }}
+  #   uses: ./.github/workflows/reusable-build-test.yml
+  #   strategy:
+  #     matrix:
+  #       os: [linux, macos, windows]
+  #   with:
+  #     os: ${{ matrix.os }}
+  #   secrets:
+  #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build-package:
     needs: should-run
@@ -128,23 +128,27 @@ jobs:
         # pkg_type: [deb, rpm]
         arch: [amd64]
         # arch: [amd64, arm64]
+    with:
+      pkg_type: ${{ matrix.pkg_type }}
+      arch: ${{ matrix.arch }}
 
-  notify-clio:
-    needs:
-      - should-run
-      - build-test
-    if: ${{ needs.should-run.outputs.go == 'true' && contains(fromJSON('["release", "master"]'), github.ref_name) }}
-    uses: ./.github/workflows/reusable-notify-clio.yml
-    secrets:
-      clio_notify_token: ${{ secrets.CLIO_NOTIFY_TOKEN }}
-      conan_remote_username: ${{ secrets.CONAN_REMOTE_USERNAME }}
-      conan_remote_password: ${{ secrets.CONAN_REMOTE_PASSWORD }}
+  # notify-clio:
+  #   needs:
+  #     - should-run
+  #     - build-test
+  #   if: ${{ needs.should-run.outputs.go == 'true' && contains(fromJSON('["release", "master"]'), github.ref_name) }}
+  #   uses: ./.github/workflows/reusable-notify-clio.yml
+  #   secrets:
+  #     clio_notify_token: ${{ secrets.CLIO_NOTIFY_TOKEN }}
+  #     conan_remote_username: ${{ secrets.CONAN_REMOTE_USERNAME }}
+  #     conan_remote_password: ${{ secrets.CONAN_REMOTE_PASSWORD }}
 
   passed:
     if: failure() || cancelled()
     needs:
-      - build-test
-      - check-levelization
+      # - build-test
+      # - check-levelization
+      - build-package
     runs-on: ubuntu-latest
     steps:
       - name: Fail

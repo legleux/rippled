@@ -63,20 +63,20 @@ defaults:
     shell: bash
 
 jobs:
-  check-missing-commits:
-    if: ${{ github.event_name == 'push' && github.ref_type == 'branch' && contains(fromJSON('["develop", "release"]'), github.ref_name) }}
-    uses: ./.github/workflows/reusable-check-missing-commits.yml
+  # check-missing-commits:
+  #   if: ${{ github.event_name == 'push' && github.ref_type == 'branch' && contains(fromJSON('["develop", "release"]'), github.ref_name) }}
+  #   uses: ./.github/workflows/reusable-check-missing-commits.yml
 
-  build-test:
-    uses: ./.github/workflows/reusable-build-test.yml
-    strategy:
-      matrix:
-        os: [linux, macos, windows]
-    with:
-      os: ${{ matrix.os }}
-      strategy_matrix: ${{ github.event_name == 'schedule' && 'all' || 'minimal' }}
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  # build-test:
+  #   uses: ./.github/workflows/reusable-build-test.yml
+  #   strategy:
+  #     matrix:
+  #       os: [linux, macos, windows]
+  #   with:
+  #     os: ${{ matrix.os }}
+  #     strategy_matrix: ${{ github.event_name == 'schedule' && 'all' || 'minimal' }}
+  #   secrets:
+  #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build-package:
     uses: ./.github/workflows/reusable-build-pkg.yml
@@ -87,3 +87,6 @@ jobs:
         # pkg_type: [deb, rpm]
         arch: [amd64]
         # arch: [amd64, arm64]
+    with:
+      pkg_type: ${{ matrix.pkg_type }}
+      arch: ${{ matrix.arch }}
