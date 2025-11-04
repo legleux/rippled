@@ -144,6 +144,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a13cce6549b2f525223a86a053d257e50" id="r_a13cce6549b2f525223a86a053d257e50"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1NodeStore_1_1NullBackend.html#a13cce6549b2f525223a86a053d257e50">fdRequired</a> () const override</td></tr>
 <tr class="memdesc:a13cce6549b2f525223a86a053d257e50"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of file descriptors the backend expects to need.  <br /></td></tr>
 <tr class="separator:a13cce6549b2f525223a86a053d257e50"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6471a9de444ac0df7c1dd102efa95854" id="r_a6471a9de444ac0df7c1dd102efa95854"><td class="memItemLeft" align="right" valign="top">virtual <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1NodeStore_1_1Backend.html#a6471a9de444ac0df7c1dd102efa95854">getBlockSize</a> () const</td></tr>
+<tr class="memdesc:a6471a9de444ac0df7c1dd102efa95854"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the block size for backends that support it.  <br /></td></tr>
+<tr class="separator:a6471a9de444ac0df7c1dd102efa95854"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae4e7c931c5382d31d877c6f7162dd21e" id="r_ae4e7c931c5382d31d877c6f7162dd21e"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classripple_1_1NodeStore_1_1Backend.html#ae4e7c931c5382d31d877c6f7162dd21e">open</a> (bool createIfMissing, uint64_t appType, uint64_t uid, uint64_t salt)</td></tr>
 <tr class="memdesc:ae4e7c931c5382d31d877c6f7162dd21e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open the backend.  <br /></td></tr>
 <tr class="separator:ae4e7c931c5382d31d877c6f7162dd21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -650,6 +653,37 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a6471a9de444ac0df7c1dd102efa95854" name="a6471a9de444ac0df7c1dd102efa95854"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6471a9de444ac0df7c1dd102efa95854">&#9670;&#160;</a></span>getBlockSize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> &gt; ripple::NodeStore::Backend::getBlockSize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the block size for backends that support it. </p>
+
+<p>Reimplemented in <a class="el" href="classripple_1_1NodeStore_1_1NuDBBackend.html#a7ecb3aaf359d9d5159ed350873f4de9e">ripple::NodeStore::NuDBBackend</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="Backend_8h_source.html#l00059">59</a> of file <a class="el" href="Backend_8h_source.html">Backend.h</a>.</p>
+
+</div>
+</div>
 <a id="ae4e7c931c5382d31d877c6f7162dd21e" name="ae4e7c931c5382d31d877c6f7162dd21e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae4e7c931c5382d31d877c6f7162dd21e">&#9670;&#160;</a></span>open() <span class="overload">[2/2]</span></h2>
 
@@ -715,7 +749,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classripple_1_1NodeStore_1_1NuDBBackend.html#a9e494839a2dcf789bb6cdc300ad65931">ripple::NodeStore::NuDBBackend</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Backend_8h_source.html#l00076">76</a> of file <a class="el" href="Backend_8h_source.html">Backend.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Backend_8h_source.html#l00084">84</a> of file <a class="el" href="Backend_8h_source.html">Backend.h</a>.</p>
 
 </div>
 </div>
@@ -747,7 +781,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classripple_1_1NodeStore_1_1NuDBBackend.html#ab012b4ff123427bc35a5d4ac4c6269c0">ripple::NodeStore::NuDBBackend</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="Backend_8h_source.html#l00147">147</a> of file <a class="el" href="Backend_8h_source.html">Backend.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Backend_8h_source.html#l00155">155</a> of file <a class="el" href="Backend_8h_source.html">Backend.h</a>.</p>
 
 </div>
 </div>
