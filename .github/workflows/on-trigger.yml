@@ -78,3 +78,14 @@ jobs:
       strategy_matrix: ${{ github.event_name == 'schedule' && 'all' || 'minimal' }}
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  build-image:
+    name: Build and push images to GHCR
+    uses: ./.github/workflows/reusable-build-image.yml
+    permissions:
+      packages: write
+    with:
+      image_name: ghcr.io/${{ github.repository }}
+      publishing_repo: legleux/rippled
+      push_images: true
+    secrets: inherit

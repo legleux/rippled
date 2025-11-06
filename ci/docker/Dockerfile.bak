@@ -1,0 +1,55 @@
+ARG DISTRO=ubuntu
+ARG VERSION=jammy
+ARG COMPILER=gcc
+ARG COMPILER_VERSION=12
+ARG BUILD_TYPE=Release
+
+FROM ghcr.io/xrplf/ci/${DISTRO}-${VERSION}:${COMPILER}-${COMPILER_VERSION} AS base
+ENV CONAN_HOME=/root/.conan2
+SHELL ["/bin/bash", "-c"]
+WORKDIR /root
+
+FROM base AS build
+ARG BUILD_TYPE
+ARG CONAN_REMOTE="xrplf https://conan.ripplex.io"
+
+COPY . repo
+
+RUN <<EOF
+    set -ex
+    build_dir=${build_dir:-build}
+    num_proc=$(nproc --ignore 2)
+    cat repo/conan/global.conf >> $(conan config home)/global.conf
+    conan remote add --index 0 ${CONAN_REMOTE}
+    conan config install repo/conan/profiles/default --target-folder $(conan config home)/profiles/
+    conan build repo \
+        --settings:all build_type="$BUILD_TYPE" \
+        --options:all "&:xrpld=True" \
+        --output-folder "${build_dir}"
+    cmake --install build/build/$BUILD_TYPE/ --prefix /opt/ripple --strip
+EOF
+
+FROM ${DISTRO}:${VERSION} AS rippled
+ARG TARGETARCH
+SHELL ["/bin/bash", "-c"]
+
+RUN <<EOF
+    pkgs+=(ca-certificates) # Warning in logs about SSL if not installed
+    pkgs+=(curl)            # For healthcheck simplification
+    pkgs+=(jq)              # For healthcheck simplification
+    pkgs+=(vim-tiny)             # For... vim-ing
+    if [ "$TARGETARCH" = "arm64" ]; then
+        pkgs+=(libatomic1)
+    fi
+    apt-get update && apt-get install -y "${pkgs[@]}"
+    rm -rf /var/lib/apt/lists/* && apt-get clean
+EOF
+
+COPY --from=build /opt/ripple/bin/ /opt/ripple/bin/
+COPY --from=build /opt/ripple/etc/ /opt/ripple/etc/
+
+RUN ln -s /opt/ripple/bin/rippled /usr/local/bin/rippled
+RUN ln -s /opt/ripple/bin/validator-keys /usr/local/bin/validator-keys
+RUN mkdir -p /etc/opt && ln -s /opt/ripple/etc/ /etc/opt/ripple
+
+ENTRYPOINT ["/opt/ripple/bin/rippled"]

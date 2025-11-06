@@ -118,6 +118,19 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+  build-image:
+    name: Build and push images to GHCR
+    needs: should-run
+    if: ${{ needs.should-run.outputs.go == 'true' }}
+    uses: ./.github/workflows/reusable-build-image.yml
+    permissions:
+      packages: write
+    with:
+      image_name: ghcr.io/${{ github.repository }}
+      publishing_repo: legleux/rippled
+      push_images: false
+    secrets: inherit
+
   notify-clio:
     needs:
       - should-run

@@ -1,0 +1,191 @@
+name: Build and push images
+
+defaults:
+  run:
+    shell: bash
+
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: The full base name of the image e.g. ghcr.io/XRPLF/rippled
+        type: string
+        required: true
+      publishing_repo:
+        description: The repository that is allowed to publish.
+        type: string
+        required: true
+      dockerfile:
+        description: Alternative Dockerfile to use.
+        type: string
+        default: ci/docker/Dockerfile
+        required: false
+      latest_branch:
+        description: The branch that receives the "latest" tag.
+        type: string
+        default: master
+        required: false
+      push_images:
+        description: Whether to push images to registry.
+        type: boolean
+        default: true
+        required: false
+
+jobs:
+  build:
+    name: ${{ matrix.arch }} image build
+    if: github.repository == inputs.publishing_repo
+    strategy:
+      matrix:
+        arch: [amd64, arm64]
+    runs-on: ${{ matrix.arch == 'arm64' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ inputs.image_name }}
+          labels: |
+            org.opencontainers.image.authors=For inquiries, please use https://github.com/${{ github.repository }}/issues
+            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}
+            org.opencontainers.image.ref.name=${{ github.ref_name }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}.git
+            org.opencontainers.image.title=${{ github.event.repository.name }}
+            org.opencontainers.image.vendor=XRPLF
+
+      - name: Build and push the image
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          file: ${{ inputs.dockerfile }}
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.arch }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ inputs.image_name }},push-by-digest=true,name-canonical=true,push=${{ inputs.push_images }}
+          platforms: linux/${{ matrix.arch }}
+          provenance: mode=max
+          sbom: true
+
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          digest='${{ steps.build.outputs.digest }}'
+          if [[ -z "$digest" ]]; then
+            echo "ERROR: Build produced empty digest"
+            exit 1
+          fi
+          echo "$digest" > "/tmp/digests/${{ matrix.arch }}.txt"
+          echo "Exported digest for ${{ matrix.arch }}: $digest"
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: digest-${{ matrix.arch }}
+          path: /tmp/digests/${{ matrix.arch }}.txt
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    name: Create multi-arch manifest
+    if: github.repository == inputs.publishing_repo && inputs.push_images
+    runs-on: ubuntu-24.04
+    needs: build
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/digests
+          pattern: digest-*
+          merge-multiple: true
+
+      - name: Prepare image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ inputs.image_name }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref_type == 'branch' && github.ref_name == inputs.latest_branch }}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha,prefix=,format=long
+            type=sha,prefix=,format=short
+
+      - name: Create manifest list and push
+        working-directory: /tmp/digests
+        run: |
+          set -euo pipefail
+
+          # Verify we have digest files
+          if ! ls *.txt >/dev/null 2>&1; then
+            echo "ERROR: No digest files found"
+            exit 1
+          fi
+
+          # Read tags from metadata into array
+          mapfile -t TAGS < <(echo '${{ steps.meta.outputs.tags }}' | tr ',' '\n')
+
+          # Build tag arguments
+          TAG_ARGS=()
+          for tag in "${TAGS[@]}"; do
+            [[ -n "$tag" ]] && TAG_ARGS+=(-t "$tag")
+          done
+
+          if [[ ${#TAG_ARGS[@]} -eq 0 ]]; then
+            echo "ERROR: No tags generated"
+            exit 1
+          fi
+
+          # Extract base image name from first tag
+          BASE_IMAGE="${TAGS[0]%:*}"
+          echo "Base image: $BASE_IMAGE"
+
+          # Build source image references from digests
+          SRC_REFS=()
+          for digest_file in *.txt; do
+            digest=$(cat "$digest_file")
+            if [[ -z "$digest" ]]; then
+              echo "ERROR: Empty digest in $digest_file"
+              exit 1
+            fi
+            SRC_REFS+=("${BASE_IMAGE}@${digest}")
+            echo "Adding source: ${BASE_IMAGE}@${digest}"
+          done
+
+          if [[ ${#SRC_REFS[@]} -eq 0 ]]; then
+            echo "ERROR: No source images found"
+            exit 1
+          fi
+
+          # Create and push multi-arch manifest
+          echo "Creating manifest with ${#SRC_REFS[@]} architectures and ${#TAG_ARGS[@]} tags"
+          docker buildx imagetools create "${TAG_ARGS[@]}" "${SRC_REFS[@]}"
+
+          echo "Successfully pushed multi-arch image"
