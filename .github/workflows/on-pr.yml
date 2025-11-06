@@ -118,6 +118,11 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+  build_image:
+    name: Build images
+    uses: ./.github/workflows/reusable-build-image.yml
+    secrets: inherit
+
   notify-clio:
     needs:
       - should-run

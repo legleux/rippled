@@ -78,3 +78,8 @@ jobs:
       strategy_matrix: ${{ github.event_name == 'schedule' && 'all' || 'minimal' }}
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  build_image:
+    name: Build images
+    uses: ./.github/workflows/reusable-build-image.yml
+    secrets: inherit

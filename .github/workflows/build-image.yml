@@ -1,0 +1,11 @@
+name: Build and push image
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build_image:
+    name: Build images
+    uses: ./.github/workflows/reusable-build-image.yml
+    secrets: inherit

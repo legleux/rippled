@@ -1,0 +1,219 @@
+name: Build and push images
+defaults:
+  run:
+    shell: bash
+on:
+  workflow_call:
+    inputs:
+      image_name:
+        description: The base image name.
+        type: string
+        default: ghcr.io/${{ github.repository }}
+        required: false
+      dockerfile:
+        description: Alernative Dockerfile to use.
+        type: string
+        default: ci/docker/Dockerfile
+        required: false
+      latest_branch:
+        description: The branch that receives the "latest" tag.
+        type: string
+        default: master
+        required: false
+
+jobs:
+  build:
+    name: ${{ matrix.arch }} image build
+    strategy:
+      matrix:
+        arch: [amd, arm]
+    outputs:
+      # image_name: ${{ steps.image_data.outputs.image_name }}
+      digest_name: ${{ steps.image_data.outputs.digest_name }}
+    runs-on: ${{ matrix.arch == 'arm' && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare labels and annotations
+        id: image_data
+        run: |
+          digest_name="digest-${{ matrix.arch }}"
+          echo "digest_name=${digest_name}" >> $GITHUB_OUTPUT
+
+      - name: Prepare image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest
+        with:
+          images: ${{ inputs.image_name }}
+          labels: |
+            org.opencontainers.image.authors=For inquiries, please use https://${{ github.repository }}/issues
+            org.opencontainers.image.documentation=https://github.com/${{ github.repository }}
+            org.opencontainers.image.ref.name=${{ github.ref_name }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}.git
+            org.opencontainers.image.title=${{ inputs.image_name }}
+            org.opencontainers.image.vendor=XRPLF
+      - name: Build and push the image
+        id: build
+        uses: docker/build-push-action@v6
+        with:
+          file: ${{ inputs.dockerfile }}
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.arch }}
+          cache-to:   type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.arch }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: >
+            type=image,
+            name=${{ inputs.image_name }},
+            push-by-digest=true,
+            name-canonical=true,
+            push=true
+          platforms: linux/${{ matrix.arch }}64
+          provenance: mode=max
+          sbom: true
+          push: false
+
+      - name: Export digest
+        run: |
+          mkdir -p /tmp/digests
+          # [[ -n "${{ steps.build.outputs.digest }}" ]] || { echo "no digest"; exit 1; }
+          # DIGEST="${{ steps.build.outputs.digest }}"
+          # touch "/tmp/digests/${DIGEST#sha256:}"
+
+          set -eo pipefail
+          set -x
+          d='${{ steps.build.outputs.digest }}'   # e.g. sha256:abcd...
+          [[ -n "$d" ]] || { echo "empty digest"; exit 1; }
+          printf '%s\n' "$d" > "/tmp/digests/digest-${{ matrix.arch }}"
+          ls -lah /tmp/digests
+
+      - name: Upload digest
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.image_data.outputs.digest_name }}
+          path: /tmp/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    name: Push to registries
+    env:
+      DIGEST_NAME: ${{ needs.build.outputs.digest_name }}
+    runs-on: ubuntu-24.04
+    needs: build
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download digests
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/digests
+          pattern: digest-*
+          merge-multiple: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Prepare image metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        env:
+          DOCKER_METADATA_ANNOTATIONS_LEVELS: index,manifest-descriptor
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref_type == 'branch' && github.ref_name == inputs.latest_branch }}
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha,prefix=,format=long
+            type=sha,prefix=,format=short
+
+
+          # labels: |
+          #   org.opencontainers.image.source=https://github.com/${{ github.repository }}.git
+          #   org.opencontainers.image.ref.name=${{ github.ref_name }}
+          #   org.opencontainers.image.title=${{ inputs.image_name }}
+          #   org.opencontainers.image.vendor=XRPLF
+
+      - name: Create manifest list and push
+        working-directory: /tmp/digests
+        run: |
+          set -Eeo pipefail
+          set -x
+
+          # Define our targets
+          mapfile -t TAGS < <(jq -r '.tags[]' <<<"$DOCKER_METADATA_OUTPUT_JSON")
+          TARGS=()
+          for t in "${TAGS[@]}"; do TARGS+=(-t "$t"); done
+
+          # Annotations (index + manifest-descriptor)
+          ANN=()
+          mapfile -t ANN_LINES < <(jq -r '.annotations[]?' <<<"$DOCKER_METADATA_OUTPUT_JSON")
+          for a in "${ANN_LINES[@]}"; do ANN+=(--annotation "$a"); done
+
+          # Sources
+          GHCR_BASE=""
+          for t in "${TAGS[@]}"; do
+            [[ $t == ghcr.io/* ]] || continue
+            GHCR_BASE="${t%:*}"
+            break
+          done
+          [[ -n "$GHCR_BASE" ]] || { echo "No ghcr tag found in metadata"; exit 1; }
+
+          SRC_REFS=()
+          for f in /tmp/digests/digest-*; do
+            [[ -s "$f" ]] || continue
+            d=$(<"$f")
+            SRC_REFS+=("${GHCR_BASE}@${d}")
+          done
+          [[ ${#SRC_REFS[@]} -gt 0 ]] || { echo "No source digests"; exit 1; }
+
+          echo "META has $((${#_ann_lines[@]})) annotation lines"
+          printf 'ANN arg: %q\n' "${ANN[@]}"
+          printf 'SRC: %q\n' "${SRC_REFS[@]}"
+          printf 'TAGS: %q\n' "${TARGS[@]}"
+          echo "SRC_REFS:"; printf '  %q\n' "${SRC_REFS[@]}"
+          [[ ${#SRC_REFS[@]} -gt 0 ]] || { echo "No sources found"; exit 1; }
+
+          docker buildx imagetools create \
+            "${TARGS[@]}" \
+            "${ANN[@]}" \
+            "${SRC_REFS[@]}"
+
+      - name: Add job summary
+        run: |
+          for i in "${TARGS[@]}";
+          do
+            echo $i
+          done
+          {
+            echo "### 🚀 Published to GHCR"
+            echo ""
+            echo "- Version: ${{ github.ref_name }}"
+            echo "- Version: ${{ github.sha }}"
+            echo "https://github.com/${{ github.repository }}/pkgs/container/${{github.event.repository.name }}%2Frippled"
+            } >> "$GITHUB_STEP_SUMMARY"
