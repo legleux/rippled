@@ -5,11 +5,6 @@ defaults:
 on:
   workflow_call:
     inputs:
-      image_name:
-        description: The base image name.
-        type: string
-        default: ghcr.io/${{ github.repository }}
-        required: false
       dockerfile:
         description: Alernative Dockerfile to use.
         type: string
@@ -58,13 +53,13 @@ jobs:
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest
         with:
-          images: ${{ inputs.image_name }}
+          images: ghcr.io/${{ github.repository }}
           labels: |
             org.opencontainers.image.authors=For inquiries, please use https://${{ github.repository }}/issues
             org.opencontainers.image.documentation=https://github.com/${{ github.repository }}
             org.opencontainers.image.ref.name=${{ github.ref_name }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}.git
-            org.opencontainers.image.title=${{ inputs.image_name }}
+            org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.vendor=XRPLF
       - name: Build and push the image
         id: build
@@ -137,7 +132,7 @@ jobs:
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: index,manifest-descriptor
         with:
-          images: ${{ inputs.image_name }}
+          images: ghcr.io/${{ github.repository }} # Hardcode the correct name
           tags: |
             type=raw,value=latest,enable=${{ github.ref_type == 'branch' && github.ref_name == inputs.latest_branch }}
             type=ref,event=branch
@@ -178,6 +173,7 @@ jobs:
                       "${TARGS[@]}" \
                       "${ANN[@]}" \
                       "${SRC_REFS[@]}"
+
       - name: Add job summary
         run: |
           for i in "${TARGS[@]}";
