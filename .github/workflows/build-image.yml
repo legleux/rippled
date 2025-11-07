@@ -12,4 +12,4 @@ jobs:
       packages: write
     with:
       image_name: ghcr.io/${{ github.repository }}
-      publishing_repo: legelux/rippled
+      publishing_repo: legleux/rippled

@@ -197,5 +197,5 @@ jobs:
             echo ""
             echo "- Version: ${{ github.ref_name }}"
             echo "- Version: ${{ github.sha }}"
-            echo "https://github.com/${{ github.repository }}/pkgs/container/${{github.event.repository.name }}%2Frippled"
+            echo "https://github.com/${{ github.repository }}/pkgs/container/${{github.event.repository.name }}"
             } >> "$GITHUB_STEP_SUMMARY"
