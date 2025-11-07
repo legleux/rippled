@@ -8,4 +8,8 @@ jobs:
   build_image:
     name: Build images
     uses: ./.github/workflows/reusable-build-image.yml
-    secrets: inherit
+    permissions:
+      packages: write
+    with:
+      image_name: ghcr.io/${{ github.repository }}
+      publishing_repo: legelux/rippled
