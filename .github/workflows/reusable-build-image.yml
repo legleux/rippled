@@ -1,15 +1,20 @@
 name: Build and push images
+
 defaults:
   run:
     shell: bash
+
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}
+
 on:
   workflow_call:
     inputs:
       publishing_repo:
-              description: The repository that is allowed to publish.
-              type: string
-              default: 'legleux/rippled'
-              required: false
+        description: The repository that is allowed to publish.
+        type: string
+        default: 'legleux/rippled'
+        required: false
       dockerfile:
         description: Alernative Dockerfile to use.
         type: string
@@ -20,7 +25,6 @@ on:
         type: string
         default: master
         required: false
-
 
 jobs:
   build:
@@ -35,8 +39,7 @@ jobs:
     permissions:
       packages: write
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -60,7 +63,7 @@ jobs:
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: manifest
         with:
-          images: ghcr.io/${{ github.repository }}
+          images: ${{ env.IMAGE_NAME }}
           labels: |
             org.opencontainers.image.authors=For inquiries, please use https://${{ github.repository }}/issues
             org.opencontainers.image.documentation=https://github.com/${{ github.repository }}
@@ -68,6 +71,7 @@ jobs:
             org.opencontainers.image.source=https://github.com/${{ github.repository }}.git
             org.opencontainers.image.title=${{ github.event.repository.name }}
             org.opencontainers.image.vendor=XRPLF
+
       - name: Build and push the image
         id: build
         uses: docker/build-push-action@v6
@@ -76,9 +80,10 @@ jobs:
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.arch }}
           cache-to:   type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.arch }}
           labels: ${{ steps.meta.outputs.labels }}
+          tags: ""
           outputs: >
             type=image,
-            name=${{ inputs.image_name }},
+            name=${{ steps.meta.outputs.images }},
             push-by-digest=true,
             name-canonical=true,
             push=true
@@ -140,7 +145,7 @@ jobs:
         env:
           DOCKER_METADATA_ANNOTATIONS_LEVELS: index,manifest-descriptor
         with:
-          images: ghcr.io/${{ github.repository }} # Hardcode the correct name
+          images: ${{ env.IMAGE_NAME }}
           tags: |
             type=raw,value=latest,enable=${{ github.ref_type == 'branch' && github.ref_name == inputs.latest_branch }}
             type=ref,event=branch
