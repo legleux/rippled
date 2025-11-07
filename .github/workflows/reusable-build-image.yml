@@ -5,6 +5,11 @@ defaults:
 on:
   workflow_call:
     inputs:
+      publishing_repo:
+              description: The repository that is allowed to publish.
+              type: string
+              default: 'legleux/rippled'
+              required: false
       dockerfile:
         description: Alernative Dockerfile to use.
         type: string
@@ -16,9 +21,11 @@ on:
         default: master
         required: false
 
+
 jobs:
   build:
     name: ${{ matrix.arch }} image build
+    if: github.repository == inputs.publishing_repo
     strategy:
       matrix:
         arch: [amd, arm]
@@ -99,6 +106,7 @@ jobs:
 
   merge:
     name: Push to GHCR
+    if: github.repository == inputs.publishing_repo
     env:
       DIGEST_NAME: ${{ needs.build.outputs.digest_name }}
     runs-on: ubuntu-24.04
@@ -112,7 +120,7 @@ jobs:
       - name: Login GHCR
         uses: docker/login-action@v3
         with:
-          registry: ghcr.io
+          # registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
