@@ -65,7 +65,7 @@ jobs:
         with:
           images: ${{ inputs.image_name }}
           labels: |
-            org.opencontainers.image.authors=For inquiries, please use https://${{ github.repository }}/issues
+            org.opencontainers.image.authors=For inquiries, please use https://github.com/${{ github.repository }}/issues
             org.opencontainers.image.documentation=https://github.com/${{ github.repository }}
             org.opencontainers.image.ref.name=${{ github.ref_name }}
             org.opencontainers.image.source=https://github.com/${{ github.repository }}.git
@@ -82,7 +82,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           outputs: >
             type=image,
-            name=${{ steps.meta.outputs.images }},
+            name=${{ inputs.image_name }},
             push-by-digest=true,
             name-canonical=true,
             push=true
