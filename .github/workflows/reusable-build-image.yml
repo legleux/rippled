@@ -152,9 +152,6 @@ jobs:
             type=sha,prefix=,format=long
             type=sha,prefix=,format=short
 
-
-
-
       - name: Create manifest list and push
         working-directory: /tmp/digests
         run: |

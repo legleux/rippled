@@ -16,7 +16,6 @@ ARG CONAN_REMOTE="xrplf https://conan.ripplex.io"
 ARG TESTS
 ARG data
 
-# COPY . repo
 RUN mkdir -p /opt/ripple/{bin,etc}
 RUN echo "config=${data}" >> /opt/ripple/etc/rippled.cfg
 COPY <<"EOF" /opt/ripple/bin/rippled
