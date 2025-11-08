@@ -26,6 +26,7 @@ on:
         default: master
         required: false
 
+
 jobs:
   build:
     name: ${{ matrix.arch }} image build
