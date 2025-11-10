@@ -300,7 +300,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
 <div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>}  <span class="comment">// anonymous namespace</span></div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><a class="code hl_function" href="namespaceripple.html#ad5ca3d6d601f8b35c89cba75fc2af433">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient case insensitive Content-Length&quot;</span>)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><a class="code hl_function" href="namespaceripple.html#abb20cf6dfff7a393bfa2c710a5eab9c1">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient case insensitive Content-Length&quot;</span>)</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>{</div>
 <div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    <span class="comment">// Test different cases of Content-Length header</span></div>
 <div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::string&gt;</a> header_cases = {</div>
@@ -339,7 +339,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    }</div>
 <div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>}</div>
 <div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span><a class="code hl_function" href="namespaceripple.html#ad5ca3d6d601f8b35c89cba75fc2af433">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient basic HTTP request&quot;</span>)</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span><a class="code hl_function" href="namespaceripple.html#abb20cf6dfff7a393bfa2c710a5eab9c1">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient basic HTTP request&quot;</span>)</div>
 <div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>{</div>
 <div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    TestHTTPServer server;</div>
 <div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> test_body = <span class="stringliteral">&quot;Test response body&quot;</span>;</div>
@@ -360,7 +360,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <a class="code hl_enumvalue" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba8c46d8d9d3402788403e2f6911153089">CHECK</a>(result_data == test_body);</div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>}</div>
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span><a class="code hl_function" href="namespaceripple.html#ad5ca3d6d601f8b35c89cba75fc2af433">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient empty response&quot;</span>)</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span><a class="code hl_function" href="namespaceripple.html#abb20cf6dfff7a393bfa2c710a5eab9c1">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient empty response&quot;</span>)</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>{</div>
 <div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    TestHTTPServer server;</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    server.setResponseBody(<span class="stringliteral">&quot;&quot;</span>);  <span class="comment">// Empty body</span></div>
@@ -380,7 +380,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>    <a class="code hl_enumvalue" href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba8c46d8d9d3402788403e2f6911153089">CHECK</a>(result_data.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/string/basic_string/empty.html">empty</a>());</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>}</div>
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><a class="code hl_function" href="namespaceripple.html#ad5ca3d6d601f8b35c89cba75fc2af433">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient different status codes&quot;</span>)</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><a class="code hl_function" href="namespaceripple.html#abb20cf6dfff7a393bfa2c710a5eab9c1">TEST_CASE</a>(<span class="stringliteral">&quot;HTTPClient different status codes&quot;</span>)</div>
 <div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>{</div>
 <div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;unsigned int&gt;</a> status_codes = {200, 404, 500};</div>
 <div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
@@ -422,7 +422,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespaceripple_1_1test_1_1jtx_1_1credentials_html_a3c554c809a810395ee98a696ca447fb5"><div class="ttname"><a href="namespaceripple_1_1test_1_1jtx_1_1credentials.html#a3c554c809a810395ee98a696ca447fb5">ripple::test::jtx::credentials::accept</a></div><div class="ttdeci">Json::Value accept(jtx::Account const &amp;subject, jtx::Account const &amp;issuer, std::string_view credType)</div><div class="ttdef"><b>Definition</b> <a href="creds_8cpp_source.html#l00029">creds.cpp:29</a></div></div>
 <div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00006">algorithm.h:6</a></div></div>
 <div class="ttc" id="anamespaceripple_html_a22768e0a41b646442c98d38f2f2a307ba8c46d8d9d3402788403e2f6911153089"><div class="ttname"><a href="namespaceripple.html#a22768e0a41b646442c98d38f2f2a307ba8c46d8d9d3402788403e2f6911153089">ripple::LedgerNameSpace::CHECK</a></div><div class="ttdeci">@ CHECK</div></div>
-<div class="ttc" id="anamespaceripple_html_ad5ca3d6d601f8b35c89cba75fc2af433"><div class="ttname"><a href="namespaceripple.html#ad5ca3d6d601f8b35c89cba75fc2af433">ripple::TEST_CASE</a></div><div class="ttdeci">TEST_CASE(&quot;construct and compare Json::StaticString&quot;)</div><div class="ttdef"><b>Definition</b> <a href="Value_8cpp_source.html#l00018">Value.cpp:18</a></div></div>
+<div class="ttc" id="anamespaceripple_html_abb20cf6dfff7a393bfa2c710a5eab9c1"><div class="ttname"><a href="namespaceripple.html#abb20cf6dfff7a393bfa2c710a5eab9c1">ripple::TEST_CASE</a></div><div class="ttdeci">TEST_CASE(&quot;limits&quot;)</div><div class="ttdef"><b>Definition</b> <a href="Value_8cpp_source.html#l00019">Value.cpp:19</a></div></div>
 <div class="ttc" id="anow_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/chrono/steady_clock/now.html">std::chrono::steady_clock::now</a></div><div class="ttdeci">T now(T... args)</div></div>
 <div class="ttc" id="asize_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string/size.html">std::string::size</a></div><div class="ttdeci">T size(T... args)</div></div>
 <div class="ttc" id="athread_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/thread.html">thread</a></div></div>
