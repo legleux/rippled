@@ -153,102 +153,63 @@ jobs:
             type=sha,prefix=,format=long
             type=sha,prefix=,format=short
 
-
-
       - name: Create manifest list and push
         working-directory: /tmp/digests
+        # This env var is required for the script to find the JSON output
+        env:
+          DOCKER_METADATA_OUTPUT_JSON: ${{ steps.meta.outputs.json }}
         run: |
+          # Exit on error, handle errors in functions, and error on unset variables
           set -Eeo pipefail
 
-          # --- 1. Get Tags ---
+          ## 1. Prepare Tag Arguments
+          # Read all tags from the metadata JSON into a bash array (TAGS)
           mapfile -t TAGS < <(jq -r '.tags[]' <<<"$DOCKER_METADATA_OUTPUT_JSON")
+          # Convert them into a list of '-t' arguments (TARGS) for the docker command
           TARGS=()
           for t in "${TAGS[@]}"; do TARGS+=(-t "$t"); done
 
-          # --- 2. Get Annotations ---
-          ANN=()
+          ## 2. Prepare Annotation Arguments
+          # Read all annotations from the metadata JSON
           mapfile -t ANN_LINES < <(jq -r '.annotations[]?' <<<"$DOCKER_METADATA_OUTPUT_JSON")
+          # Convert them into a list of '--annotation' arguments (ANN)
+          ANN=()
           for a in "${ANN_LINES[@]}"; do ANN+=(--annotation "$a"); done
 
-          # --- 3. Get Sources (The Clean Part) ---
+          ## 3. Prepare Source Arguments
+          #
+          # This is the most critical part. We can't trust the '.images[0]'
+          # key from the metadata (as it was returning 'null').
+          # Instead, we "discover" the correct base image name by looking
+          # at the *first tag* that was generated. This correctly finds
+          # the repo-scoped name (e.g., ghcr.io/owner/repo/image).
+          GHCR_BASE=""
+          for t in "${TAGS[@]}"; do
+            # Find the first tag that is on ghcr.io
+            [[ $t == ghcr.io/* ]] || continue
+            # Strip the tag (e.g., :latest) to get the base name
+            GHCR_BASE="${t%:*}"
+            break
+          done
 
-          # Get the base image name directly from the 'images' key
-          # This now works because your input is the correct repo-scoped name
-          GHCR_BASE=$(jq -r '.images[0]' <<<"$DOCKER_METADATA_OUTPUT_JSON")
+          # Fail if we couldn't find a base name
+          [[ -n "$GHCR_BASE" ]] || { echo "ERROR: No ghcr.io tag found in metadata."; exit 1; }
 
-          if [[ -z "$GHCR_BASE" ]]; then
-            echo "Failed to get GHCR_BASE from metadata JSON"
-            exit 1
-          fi
-
-          # Read all digests from the files
+          # Now, find all the digest files uploaded by the build jobs
           SRC_REFS=()
           for f in /tmp/digests/digest-*; do
-            [[ -s "$f" ]] || continue
-            d=$(<"$f")
+            [[ -s "$f" ]] || continue # Skip if file is empty
+            d=$(<"$f") # Read the digest (sha256:...) from the file
+            # Combine the base name and digest into the final format
             SRC_REFS+=("${GHCR_BASE}@${d}")
           done
 
-          if [[ ${#SRC_REFS[@]} -eq 0 ]]; then
-            echo "No source digests found in /tmp/digests"
-            exit 1
-          fi
+          # Fail if we didn't find any digests
+          [[ ${#SRC_REFS[@]} -gt 0 ]] || { echo "ERROR: No source digests found in /tmp/digests."; exit 1; }
 
-          # --- 4. Run the command ---
-          echo "Pushing manifest with the following tags:"
-          printf '  %s\n' "${TAGS[@]}"
-
-          echo "Using the following source digests:"
-          printf '  %s\n' "${SRC_REFS[@]}"
-
+          ## 4. Create and Push the Manifest
+          # This is the final command that stitches everything together
           docker buildx imagetools create \
             "${TARGS[@]}" \
             "${ANN[@]}" \
             "${SRC_REFS[@]}"
-
-
-      # ### This definitely works...
-      # - name: Create manifest list and push
-      #   working-directory: /tmp/digests
-      #   run: |
-      #     set -Eeo pipefail
-      #     set -x
-
-      #     # Define our targets
-      #     mapfile -t TAGS < <(jq -r '.tags[]' <<<"$DOCKER_METADATA_OUTPUT_JSON")
-      #     TARGS=()
-      #     for t in "${TAGS[@]}"; do TARGS+=(-t "$t"); done
-
-      #     # Annotations (index + manifest-descriptor)
-      #     ANN=()
-      #     mapfile -t ANN_LINES < <(jq -r '.annotations[]?' <<<"$DOCKER_METADATA_OUTPUT_JSON")
-      #     for a in "${ANN_LINES[@]}"; do ANN+=(--annotation "$a"); done
-
-      #     # Sources
-      #     GHCR_BASE=""
-      #     for t in "${TAGS[@]}"; do
-      #       [[ $t == ghcr.io/* ]] || continue
-      #       GHCR_BASE="${t%:*}"
-      #       break
-      #     done
-      #     [[ -n "$GHCR_BASE" ]] || { echo "No ghcr tag found in metadata"; exit 1; }
-
-      #     SRC_REFS=()
-      #     for f in /tmp/digests/digest-*; do
-      #       [[ -s "$f" ]] || continue
-      #       d=$(<"$f")
-      #       SRC_REFS+=("${GHCR_BASE}@${d}")
-      #     done
-      #     [[ ${#SRC_REFS[@]} -gt 0 ]] || { echo "No source digests"; exit 1; }
-
-      #     echo "META has $((${#_ann_lines[@]})) annotation lines"
-      #     printf 'ANN arg: %q\n' "${ANN[@]}"
-      #     printf 'SRC: %q\n' "${SRC_REFS[@]}"
-      #     printf 'TAGS: %q\n' "${TARGS[@]}"
-      #     echo "SRC_REFS:"; printf '  %q\n' "${SRC_REFS[@]}"
-      #     [[ ${#SRC_REFS[@]} -gt 0 ]] || { echo "No sources found"; exit 1; }
-
-      #     docker buildx imagetools create \
-      #       "${TARGS[@]}" \
-      #       "${ANN[@]}" \
-      #       "${SRC_REFS[@]}"
