@@ -25,6 +25,11 @@ on:
         type: string
         default: master
         required: false
+      push_images:
+        description: Whether to push images to registry.
+        type: boolean
+        default: true
+        required: false
 
 jobs:
   build:
@@ -70,7 +75,7 @@ jobs:
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.arch }}
           cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.arch }}
           labels: ${{ steps.meta.outputs.labels }}
-          outputs: type=image,name=${{ inputs.image_name }},push-by-digest=true,name-canonical=true,push=true
+          outputs: type=image,name=${{ inputs.image_name }},push-by-digest=true,name-canonical=true,push=${{ inputs.push_images }}
           platforms: linux/${{ matrix.arch }}
           provenance: mode=max
           sbom: true
@@ -96,7 +101,7 @@ jobs:
 
   merge:
     name: Create multi-arch manifest
-    if: github.repository == inputs.publishing_repo
+    if: github.repository == inputs.publishing_repo && inputs.push_images
     runs-on: ubuntu-24.04
     needs: build
     permissions:
