@@ -460,7 +460,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>        {</div>
 <div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>            minDuration = <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/min.html">std::min</a>(minDuration, link.data.delay);</div>
 <div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span> </div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>            <span class="comment">// Send a messsage to neighbors to find the ledger</span></div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>            <span class="comment">// Send a message to neighbors to find the ledger</span></div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>            <a class="code hl_variable" href="structripple_1_1test_1_1csf_1_1Peer.html#a359fccddba11f7f638069f24b60fe312">net</a>.send(</div>
 <div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>                <span class="keyword">this</span>, link.target, [to = link.target, from = <span class="keyword">this</span>, ledgerID]() {</div>
 <div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>                    if (auto it = to-&gt;ledgers.find(ledgerID);</div>
