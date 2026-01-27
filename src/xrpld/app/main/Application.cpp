@@ -1636,7 +1636,7 @@ void
 ApplicationImp::startGenesisLedger()
 {
     std::vector<uint256> const initialAmendments = (config_->START_UP == StartUpType::Fresh)
-        ? m_amendmentTable->getDesired()
+        ? m_amendmentTable->getAllSupported()
         : std::vector<uint256>{};
 
     std::shared_ptr<Ledger> const genesis = std::make_shared<Ledger>(
@@ -1996,7 +1996,12 @@ ApplicationImp::loadOldLedger(
         m_ledgerMaster->switchLCL(loadLedger);
         loadLedger->setValidated();
         m_ledgerMaster->setFullLedger(loadLedger, true, false);
-        openLedger_.emplace(loadLedger, cachedSLEs_, logs_->journal("OpenLedger"));
+        openLedger_.emplace(
+            loadLedger, cachedSLEs_, logs_->journal("OpenLedger"));
+
+        // Sync AmendmentTable with the loaded ledger's amendments immediately,
+        // bypassing the flag ledger boundary check.
+        m_amendmentTable->syncWithLedger(loadLedger);
 
         if (replay)
         {

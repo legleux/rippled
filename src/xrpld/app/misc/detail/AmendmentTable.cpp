@@ -461,6 +461,9 @@ public:
     std::vector<uint256>
     getDesired() const override;
 
+    std::vector<uint256>
+    getAllSupported() const override;
+
     std::map<uint256, std::uint32_t>
     doVoting(
         Rules const& rules,
@@ -764,6 +767,28 @@ AmendmentTableImpl::getDesired() const
 {
     // Get the list of amendments we support and do not veto
     return doValidation({});
+}
+
+std::vector<uint256>
+AmendmentTableImpl::getAllSupported() const
+{
+    // Get all supported amendments regardless of vote behavior.
+    // Used for enabling all supported amendments at genesis.
+    std::vector<uint256> amendments;
+    {
+        std::lock_guard lock(mutex_);
+        amendments.reserve(amendmentMap_.size());
+        for (auto const& e : amendmentMap_)
+        {
+            if (e.second.supported && !e.second.enabled)
+            {
+                amendments.push_back(e.first);
+            }
+        }
+    }
+    if (!amendments.empty())
+        std::sort(amendments.begin(), amendments.end());
+    return amendments;
 }
 
 std::map<uint256, std::uint32_t>

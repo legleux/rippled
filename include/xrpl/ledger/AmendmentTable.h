@@ -81,6 +81,19 @@ public:
                 getMajorityAmendments(*lastValidatedLedger));
     }
 
+    /** Force sync AmendmentTable with a ledger's amendments.
+        Bypasses the flag ledger boundary check (needValidatedLedger).
+        Used when loading a ledger from file to immediately recognize amendments.
+    */
+    void
+    syncWithLedger(std::shared_ptr<ReadView const> const& ledger)
+    {
+        doValidatedLedger(
+            ledger->seq(),
+            getEnabledAmendments(*ledger),
+            getMajorityAmendments(*ledger));
+    }
+
     /** Called to determine whether the amendment logic needs to process
         a new validated ledger. (If it could have changed things.)
     */
@@ -118,6 +131,12 @@ public:
     // enabled at the same time, we should ensure one is vetoed.
     virtual std::vector<uint256>
     getDesired() const = 0;
+
+    /** Get all supported amendments (regardless of vote behavior).
+        Used for enabling all supported amendments at genesis.
+    */
+    virtual std::vector<uint256>
+    getAllSupported() const = 0;
 
     // The function below adapts the API callers expect to the
     // internal amendment table API. This allows the amendment

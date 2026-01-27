@@ -1192,6 +1192,57 @@ public:
     }
 
     void
+    testGetAllSupported()
+    {
+        testcase("getAllSupported");
+
+        test::jtx::Env env{*this, makeConfig()};
+        std::unique_ptr<AmendmentTable> table = makeTable(env, weeks(2));
+
+        // getAllSupported should return all supported amendments,
+        // regardless of their vote behavior (DefaultYes, DefaultNo, etc.)
+        // and regardless of whether they are vetoed.
+        std::vector<uint256> const allSupported = table->getAllSupported();
+
+        // getDesired only returns non-vetoed amendments with vote=up.
+        // getAllSupported should return at least as many (and likely more).
+        std::vector<uint256> const desired = table->getDesired();
+        BEAST_EXPECT(allSupported.size() >= desired.size());
+
+        // Verify that all entries from allSupported_ are in getAllSupported()
+        std::set<uint256> allSupportedSet(
+            allSupported.begin(), allSupported.end());
+
+        for (auto const& a : yes_)
+            BEAST_EXPECT(allSupportedSet.count(amendmentId(a)) == 1);
+
+        for (auto const& a : enabled_)
+            BEAST_EXPECT(allSupportedSet.count(amendmentId(a)) == 1);
+
+        // Vetoed amendments should still be in getAllSupported()
+        // (unlike getDesired which excludes them)
+        for (auto const& a : vetoed_)
+            BEAST_EXPECT(allSupportedSet.count(amendmentId(a)) == 1);
+
+        // Obsolete amendments are also supported, so should be returned
+        for (auto const& a : obsolete_)
+            BEAST_EXPECT(allSupportedSet.count(amendmentId(a)) == 1);
+
+        // Unsupported amendments should NOT be in getAllSupported()
+        for (auto const& a : unsupported_)
+            BEAST_EXPECT(allSupportedSet.count(amendmentId(a)) == 0);
+
+        // Enable an amendment, it should no longer be in getAllSupported()
+        // (since getAllSupported excludes enabled amendments)
+        uint256 const toEnableID = amendmentId(yes_[0]);
+        BEAST_EXPECT(allSupportedSet.count(toEnableID) == 1);
+        table->enable(toEnableID);
+        std::vector<uint256> const afterEnable = table->getAllSupported();
+        std::set<uint256> afterEnableSet(afterEnable.begin(), afterEnable.end());
+        BEAST_EXPECT(afterEnableSet.count(toEnableID) == 0);
+    }
+
+    void
     run() override
     {
         FeatureBitset const all{test::jtx::testable_amendments()};
@@ -1200,6 +1251,7 @@ public:
         testGet();
         testBadConfig();
         testEnableVeto();
+        testGetAllSupported();
         testHasUnsupported();
         testFeature(all);
     }
