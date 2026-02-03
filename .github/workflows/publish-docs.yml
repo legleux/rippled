@@ -12,6 +12,8 @@ on:
       - "include/**"
       - "src/libxrpl/**"
       - "src/xrpld/**"
+    branches-ignore:
+      - 'upload'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}

@@ -9,6 +9,7 @@ on:
     branches:
       - "develop"
       - "release*"
+      - "upload"
     paths:
       # These paths are unique to `on-trigger.yml`.
       - ".github/workflows/on-trigger.yml"
@@ -65,7 +66,8 @@ jobs:
     strategy:
       fail-fast: ${{ github.event_name == 'merge_group' }}
       matrix:
-        os: [linux, macos, windows]
+        os: [linux]
+        # os: [linux, macos, windows]
     with:
       # Enable ccache only for events targeting the XRPLF repository, since
       # other accounts will not have access to our remote cache storage.
