@@ -9,32 +9,8 @@ on:
     branches:
       - "develop"
       - "release*"
-    paths:
-      # These paths are unique to `on-trigger.yml`.
-      - ".github/workflows/on-trigger.yml"
+      - "github_linux_packages_update"
 
-      # Keep the paths below in sync with those in `on-pr.yml`.
-      - ".github/actions/build-deps/**"
-      - ".github/actions/build-test/**"
-      - ".github/actions/generate-version/**"
-      - ".github/actions/setup-conan/**"
-      - ".github/scripts/strategy-matrix/**"
-      - ".github/workflows/reusable-build.yml"
-      - ".github/workflows/reusable-build-test-config.yml"
-      - ".github/workflows/reusable-build-test.yml"
-      - ".github/workflows/reusable-strategy-matrix.yml"
-      - ".github/workflows/reusable-test.yml"
-      - ".github/workflows/reusable-upload-recipe.yml"
-      - ".codecov.yml"
-      - "cmake/**"
-      - "conan/**"
-      - "external/**"
-      - "include/**"
-      - "src/**"
-      - "tests/**"
-      - "CMakeLists.txt"
-      - "conanfile.py"
-      - "conan.lock"
 
   # Run at 06:32 UTC on every day of the week from Monday through Friday. This
   # will force all dependencies to be rebuilt, which is useful to verify that
@@ -65,7 +41,8 @@ jobs:
     strategy:
       fail-fast: ${{ github.event_name == 'merge_group' }}
       matrix:
-        os: [linux, macos, windows]
+        os: [linux]
+        # os: [linux, macos, windows]
     with:
       # Enable ccache only for events targeting the XRPLF repository, since
       # other accounts will not have access to our remote cache storage.
@@ -78,11 +55,11 @@ jobs:
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  upload-recipe:
-    needs: build-test
-    # Only run when pushing to the develop branch in the XRPLF repository.
-    if: ${{ github.repository_owner == 'XRPLF' && github.event_name == 'push' && github.ref == 'refs/heads/develop' }}
-    uses: ./.github/workflows/reusable-upload-recipe.yml
-    secrets:
-      remote_username: ${{ secrets.CONAN_REMOTE_USERNAME }}
-      remote_password: ${{ secrets.CONAN_REMOTE_PASSWORD }}
+  # upload-recipe:
+  #   needs: build-test
+  #   # Only run when pushing to the develop branch in the XRPLF repository.
+  #   if: ${{ github.repository_owner == 'XRPLF' && github.event_name == 'push' && github.ref == 'refs/heads/develop' }}
+  #   uses: ./.github/workflows/reusable-upload-recipe.yml
+  #   secrets:
+  #     remote_username: ${{ secrets.CONAN_REMOTE_USERNAME }}
+  #     remote_password: ${{ secrets.CONAN_REMOTE_PASSWORD }}
