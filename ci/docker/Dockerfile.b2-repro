@@ -1,0 +1,20 @@
+FROM ghcr.io/xrplf/ci/ubuntu-jammy:gcc-12
+
+# Show what the image provides
+RUN echo "=== GLIBCXX versions in image ===" && \
+    strings /lib/*/libstdc++.so.6 | grep GLIBCXX | sort -V | tail -5
+
+# Download the b2 package that conan would pick for this image
+RUN conan remote add --force --index 0 xrplf https://conan.ripplex.io && \
+    conan install --requires="b2/5.3.3" --build=never
+
+# Find and check the b2 binary
+RUN B2=$(find /root/.conan2 -name b2 -type f -executable | head -1) && \
+    echo "=== b2 binary: $B2 ===" && \
+    file "$B2" && \
+    echo "=== GLIBCXX versions b2 needs ===" && \
+    strings "$B2" | grep GLIBCXX | sort -V && \
+    echo "=== ldd ===" && \
+    ldd "$B2" && \
+    echo "=== Trying to run b2 ===" && \
+    "$B2" --version || echo "FAILED: b2 cannot run"
