@@ -29,11 +29,10 @@ RUN <<EOF
         pkgs+=(libatomic1)
         conan_build="*"
     else
-        conan_build="missing"
+        conan_build="*"
     fi
     conan install repo \
         --build="${conan_build}" \
-        --build:build="${conan_build}" \
         --settings:all build_type="$BUILD_TYPE" \
         --options:host "&:xrpld=True" \
         --options:host "&:tests=False" \

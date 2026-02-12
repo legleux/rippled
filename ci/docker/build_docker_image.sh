@@ -231,27 +231,27 @@ fi
 #     --tag "${image}:${commit_id}-${arch}" \
 #     --builder macbuilder \
 #     --platform linux/arm64 --push ${context}
-docker buildx build \
-    --file=${dockerfile} \
-    --progress=auto \
-    --platform linux/arm64 \
-    --tag "${main_tag}" \
-    --load \
-    ${context}
+# docker buildx build \
+#     --file=${dockerfile} \
+#     --progress=auto \
+#     --platform linux/arm64 \
+#     --tag "${main_tag}" \
+#     --load \
+#     ${context}
 
 
-if confirm "Push ${main_tag} to Dockerhub?"; then
-    docker push "${main_tag}"
-else
-    echo "Skipping ${main_tag} push"
-fi
+# if confirm "Push ${main_tag} to Dockerhub?"; then
+#     docker push "${main_tag}"
+# else
+#     echo "Skipping ${main_tag} push"
+# fi
 # docker buildx build \
 #     --file=${dockerfile} \
 #     --builder "${docker_builder}" \
 #     --tag "${push_tag}" \
 #     --platform "${platform}" --push ${context}
-exit 0
-cmd=(docker build ${args[@]})
+# exit 0
+cmd=(docker buildx  build --push ${args[@]})
 
 if [ $dry_run = true ]; then
     echo "${cmd[@]}"
