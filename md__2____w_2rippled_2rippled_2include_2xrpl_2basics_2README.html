@@ -72,9 +72,9 @@ $(function() {
   <div class="headertitle"><div class="title">Basics</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md167"></a> Utility functions and classes.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md211"></a> Utility functions and classes.</p>
 <p>ripple/basic should contain no dependencies on other modules.</p>
-<h1><a class="anchor" id="autotoc_md168"></a>
+<h1><a class="anchor" id="autotoc_md212"></a>
 Choosing a rippled container.</h1>
 <ul>
 <li><code><a class="elRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector</a></code><ul>
@@ -95,12 +95,12 @@ Choosing a rippled container.</h1>
 <li>For sorted containers.</li>
 </ul>
 </li>
-<li><code><a class="el" href="namespaceripple.html#a7750eec5e079354285f1d60cfd0247ca">ripple::hash_set</a></code><ul>
+<li><code><a class="el" href="namespacexrpl.html#a87a23c862c13243390934ba76afe2eb5">xrpl::hash_set</a></code><ul>
 <li>Where inserts and contains need to be O(1).</li>
 <li>For "small" sets, <code><a class="elRef" href="http://en.cppreference.com/w/cpp/container/set.html">std::set</a></code> might be faster and smaller.</li>
 </ul>
 </li>
-<li><code><a class="el" href="namespaceripple.html#a3fd083ce42b38018aa59306a4660a52e">ripple::hardened_hash_set</a></code><ul>
+<li><code><a class="el" href="namespacexrpl.html#aba6a96bf1ad5f0ba67b200d9e5a1dff3">xrpl::hardened_hash_set</a></code><ul>
 <li>For data sets where the key could be manipulated by an attacker in an attempt to mount an algorithmic complexity attack: see <a href="http://en.wikipedia.org/wiki/Algorithmic_complexity_attack">http://en.wikipedia.org/wiki/Algorithmic_complexity_attack</a></li>
 </ul>
 </li>
@@ -108,8 +108,8 @@ Choosing a rippled container.</h1>
 <p>The following container is deprecated</p>
 <ul>
 <li><code><a class="elRef" href="http://en.cppreference.com/w/cpp/container/unordered_set.html">std::unordered_set</a></code></li>
-<li>Use <code><a class="el" href="namespaceripple.html#a7750eec5e079354285f1d60cfd0247ca">ripple::hash_set</a></code> instead, which uses a better hashing algorithm.</li>
-<li>Or use <code><a class="el" href="namespaceripple.html#a3fd083ce42b38018aa59306a4660a52e">ripple::hardened_hash_set</a></code> to prevent algorithmic complexity attacks. </li>
+<li>Use <code><a class="el" href="namespacexrpl.html#a87a23c862c13243390934ba76afe2eb5">xrpl::hash_set</a></code> instead, which uses a better hashing algorithm.</li>
+<li>Or use <code><a class="el" href="namespacexrpl.html#aba6a96bf1ad5f0ba67b200d9e5a1dff3">xrpl::hardened_hash_set</a></code> to prevent algorithmic complexity attacks. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

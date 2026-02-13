@@ -1,0 +1,9 @@
+<map id="xrpl::NodeStore::Database" name="xrpl::NodeStore::Database">
+<area shape="rect" id="Node000001" title="Persistency layer for NodeObject." alt="" coords="113,5,307,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStore_1_1DatabaseNodeImp.html" title=" " alt="" coords="5,79,199,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,41,130,81,126,76,181,37"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1NodeStore_1_1DatabaseRotating.html" title=" " alt="" coords="223,79,416,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="239,36,295,76,291,81,235,41"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1NodeStore_1_1DatabaseRotatingImp.html" title=" " alt="" coords="223,167,416,207"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="322,133,322,166,317,166,317,133"/>
+</map>

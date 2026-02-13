@@ -1,0 +1,21 @@
+<map id="xrpl::NegativeUNLVote" name="xrpl::NegativeUNLVote">
+<area shape="rect" id="Node000001" title="Manager to create NegativeUNL votes." alt="" coords="1079,104,1248,129"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1base__uint.html" title="Integers of any length that is a multiple of 32&#45;bits." alt="" coords="503,69,665,109"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="679,91,1078,110,1078,115,679,96"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="765,5,927,60"/>
+<area shape="poly" id="edge9_Node000009_Node000002" title=" " alt="" coords="678,66,765,47,766,52,679,71"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="261,125,349,151"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="362,132,478,117,521,106,522,111,479,122,363,137"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,58,389,98"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="403,79,502,83,502,88,403,84"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,36,108,61"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="122,54,222,65,221,71,122,59"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="121,38,132,37,309,28,485,25,765,28,765,33,485,31,309,34,132,42,122,43"/>
+<area shape="rect" id="Node000006" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="791,148,901,173"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="914,149,1054,130,1078,127,1079,132,1055,135,915,154"/>
+<area shape="rect" id="Node000007" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="511,148,657,173"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="671,158,790,158,790,163,671,163"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/mutex.html" title=" " alt="" coords="800,197,892,223"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="905,199,977,184,1054,163,1099,146,1137,127,1139,132,1101,151,1056,169,978,190,906,204"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="941,50,1055,78,1128,101,1126,107,1054,83,940,55"/>
+</map>

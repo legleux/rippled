@@ -1,0 +1,17 @@
+<map id="xrpl::TxQ::FeeAndSeq" name="xrpl::TxQ::FeeAndSeq">
+<area shape="rect" id="Node000001" title=" " alt="" coords="591,158,752,183"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1XRPAmount.html" title=" " alt="" coords="327,127,457,153"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="471,146,591,159,590,164,471,151"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="35,5,201,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="211,47,232,55,309,91,370,125,368,129,307,96,230,60,209,52"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,70,231,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="194,96,303,119,331,125,330,130,302,124,192,101"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="13,120,223,160"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="236,137,326,137,326,143,236,143"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="11,184,225,224"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="217,178,336,150,337,155,218,183"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="71,249,165,274"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="178,249,230,234,267,214,301,190,325,172,364,150,367,155,328,177,304,194,269,219,232,238,180,254"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="341,187,443,213"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="457,201,511,201,566,196,632,181,633,186,567,201,511,206,457,206"/>
+</map>

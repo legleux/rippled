@@ -1,0 +1,5 @@
+<map id="xrpl::test::Server_test::TestSink" name="xrpl::test::Server_test::TestSink">
+<area shape="rect" id="Node000001" title=" " alt="" coords="13,79,144,119"/>
+<area shape="rect" id="Node000002" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="5,5,152,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,44,81,79,76,79,76,44"/>
+</map>

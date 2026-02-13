@@ -1,0 +1,15 @@
+<map id="xrpl::Resource::Entry" name="xrpl::Resource::Entry">
+<area shape="rect" id="Node000001" title=" " alt="" coords="784,101,941,126"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="479,5,617,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="631,42,761,76,827,98,826,103,759,81,630,47"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="477,69,619,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="633,93,784,105,784,110,633,98"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1Resource_1_1Key.html" title=" " alt="" coords="475,134,621,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="635,136,760,123,784,120,784,125,760,128,636,141"/>
+<area shape="rect" id="Node000005" href="$classbeast_1_1IP_1_1Endpoint.html" title="A version&#45;independent IP address and port combination." alt="" coords="207,134,349,159"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="363,144,475,144,475,149,363,149"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,134,108,159"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="122,144,206,144,206,149,122,149"/>
+<area shape="rect" id="Node000007" href="$classxrpl_1_1DecayingSample.html" title=" " alt="" coords="453,184,643,253"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="655,187,759,153,832,124,834,129,761,159,657,192"/>
+</map>

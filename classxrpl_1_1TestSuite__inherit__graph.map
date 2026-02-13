@@ -1,0 +1,15 @@
+<map id="xrpl::TestSuite" name="xrpl::TestSuite">
+<area shape="rect" id="Node000001" title=" " alt="" coords="216,104,331,129"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Config__test.html" title=" " alt="" coords="422,5,550,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="298,92,334,65,378,40,421,25,422,30,380,44,337,69,301,96"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1RPC_1_1WalletPropose__test.html" title=" " alt="" coords="379,55,593,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="339,98,378,89,427,78,428,83,379,94,340,103"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1SociDB__test.html" title=" " alt="" coords="419,104,553,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="344,114,419,114,419,119,344,119"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1test_1_1TestOutputSuite.html" title=" " alt="" coords="391,153,581,179"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="340,130,379,139,428,151,427,156,378,145,339,135"/>
+<area shape="rect" id="Node000007" href="$classxrpl_1_1tests_1_1cluster__test.html" title=" " alt="" coords="401,203,571,228"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="301,137,337,164,380,189,411,200,410,205,378,194,334,169,298,141"/>
+<area shape="rect" id="Node000002" href="$classbeast_1_1unit__test_1_1suite.html" title="A testsuite class." alt="" coords="5,104,168,129"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,114,216,114,216,119,182,119"/>
+</map>

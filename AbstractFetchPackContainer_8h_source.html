@@ -81,35 +81,32 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">AbstractFetchPackContainer.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XRPL_APP_LEDGER_ABSTRACTFETCHPACKCONTAINER_H_INCLUDED</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XRPL_APP_LEDGER_ABSTRACTFETCHPACKCONTAINER_H_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;xrpl/basics/Blob.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;xrpl/basics/base_uint.h&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/optional.html">optional</a>&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceripple.html">ripple</a> {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classripple_1_1AbstractFetchPackContainer.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="classripple_1_1AbstractFetchPackContainer.html">AbstractFetchPackContainer</a></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classripple_1_1AbstractFetchPackContainer.html#a2bef43de3153bf61d0308cb077285313">   17</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="classripple_1_1AbstractFetchPackContainer.html#a2bef43de3153bf61d0308cb077285313">~AbstractFetchPackContainer</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">virtual</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;Blob&gt;</a></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="classripple_1_1AbstractFetchPackContainer.html#a38ff557891e927e4bf046acdb8af37bd">   26</a></span>    <a class="code hl_function" href="classripple_1_1AbstractFetchPackContainer.html#a38ff557891e927e4bf046acdb8af37bd">getFetchPack</a>(<a class="code hl_class" href="classripple_1_1base__uint.html">uint256</a> <span class="keyword">const</span>&amp; nodeHash) = 0;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>};</div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;xrpl/basics/Blob.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;xrpl/basics/base_uint.h&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/optional.html">optional</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacexrpl.html">xrpl</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classxrpl_1_1AbstractFetchPackContainer.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="classxrpl_1_1AbstractFetchPackContainer.html">AbstractFetchPackContainer</a></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classxrpl_1_1AbstractFetchPackContainer.html#a567dab55e8d29bad374f48946e57f51f">   16</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="classxrpl_1_1AbstractFetchPackContainer.html#a567dab55e8d29bad374f48946e57f51f">~AbstractFetchPackContainer</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keyword">virtual</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;Blob&gt;</a></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="classxrpl_1_1AbstractFetchPackContainer.html#ac0a3ba5eb3bfc03259b5697b53af3521">   25</a></span>    <a class="code hl_function" href="classxrpl_1_1AbstractFetchPackContainer.html#ac0a3ba5eb3bfc03259b5697b53af3521">getFetchPack</a>(<a class="code hl_class" href="classxrpl_1_1base__uint.html">uint256</a> <span class="keyword">const</span>&amp; nodeHash) = 0;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>};</div>
 </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}  <span class="comment">// namespace ripple</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassripple_1_1AbstractFetchPackContainer_html"><div class="ttname"><a href="classripple_1_1AbstractFetchPackContainer.html">ripple::AbstractFetchPackContainer</a></div><div class="ttdoc">An interface facilitating retrieval of fetch packs without an application or ledgermaster object.</div><div class="ttdef"><b>Definition</b> <a href="AbstractFetchPackContainer_8h_source.html#l00014">AbstractFetchPackContainer.h:15</a></div></div>
-<div class="ttc" id="aclassripple_1_1AbstractFetchPackContainer_html_a2bef43de3153bf61d0308cb077285313"><div class="ttname"><a href="classripple_1_1AbstractFetchPackContainer.html#a2bef43de3153bf61d0308cb077285313">ripple::AbstractFetchPackContainer::~AbstractFetchPackContainer</a></div><div class="ttdeci">virtual ~AbstractFetchPackContainer()=default</div></div>
-<div class="ttc" id="aclassripple_1_1AbstractFetchPackContainer_html_a38ff557891e927e4bf046acdb8af37bd"><div class="ttname"><a href="classripple_1_1AbstractFetchPackContainer.html#a38ff557891e927e4bf046acdb8af37bd">ripple::AbstractFetchPackContainer::getFetchPack</a></div><div class="ttdeci">virtual std::optional&lt; Blob &gt; getFetchPack(uint256 const &amp;nodeHash)=0</div><div class="ttdoc">Retrieves partial ledger data of the coresponding hash from peers.</div></div>
-<div class="ttc" id="aclassripple_1_1base__uint_html"><div class="ttname"><a href="classripple_1_1base__uint.html">ripple::base_uint&lt; 256 &gt;</a></div></div>
-<div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00006">algorithm.h:6</a></div></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="ttc" id="aclassxrpl_1_1AbstractFetchPackContainer_html"><div class="ttname"><a href="classxrpl_1_1AbstractFetchPackContainer.html">xrpl::AbstractFetchPackContainer</a></div><div class="ttdoc">An interface facilitating retrieval of fetch packs without an application or ledgermaster object.</div><div class="ttdef"><b>Definition</b> <a href="AbstractFetchPackContainer_8h_source.html#l00013">AbstractFetchPackContainer.h:14</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1AbstractFetchPackContainer_html_a567dab55e8d29bad374f48946e57f51f"><div class="ttname"><a href="classxrpl_1_1AbstractFetchPackContainer.html#a567dab55e8d29bad374f48946e57f51f">xrpl::AbstractFetchPackContainer::~AbstractFetchPackContainer</a></div><div class="ttdeci">virtual ~AbstractFetchPackContainer()=default</div></div>
+<div class="ttc" id="aclassxrpl_1_1AbstractFetchPackContainer_html_ac0a3ba5eb3bfc03259b5697b53af3521"><div class="ttname"><a href="classxrpl_1_1AbstractFetchPackContainer.html#ac0a3ba5eb3bfc03259b5697b53af3521">xrpl::AbstractFetchPackContainer::getFetchPack</a></div><div class="ttdeci">virtual std::optional&lt; Blob &gt; getFetchPack(uint256 const &amp;nodeHash)=0</div><div class="ttdoc">Retrieves partial ledger data of the corresponding hash from peers.</div></div>
+<div class="ttc" id="aclassxrpl_1_1base__uint_html"><div class="ttname"><a href="classxrpl_1_1base__uint.html">xrpl::base_uint&lt; 256 &gt;</a></div></div>
+<div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 <div class="ttc" id="aoptional_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/optional.html">optional</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

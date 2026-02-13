@@ -1,0 +1,11 @@
+<map id="xrpl::NodeStore::ManagerImp" name="xrpl::NodeStore::ManagerImp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="157,196,370,221"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStore_1_1Manager.html" title="Singleton for managing NodeStore factories and back ends." alt="" coords="5,101,193,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,130,244,194,242,198,130,135"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/mutex.html" title=" " alt="" coords="217,101,309,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="266,140,266,196,261,196,261,140"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="334,93,505,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="377,143,284,198,281,194,375,138"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1NodeStore_1_1Factory.html" title="Base class for backend factories." alt="" coords="330,5,509,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="422,44,422,93,417,93,417,44"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="xrpl::NFTokenCountTracking" name="xrpl::NFTokenCountTracking">
+<area shape="rect" id="Node000001" title="Invariant: Validates counts of NFTokens after all transaction types." alt="" coords="5,137,207,163"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="55,5,157,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,44,109,137,103,137,103,44"/>
+</map>

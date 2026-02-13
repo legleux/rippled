@@ -1,0 +1,22 @@
+<map id="xrpl::STInteger&lt; Integer &gt;" name="xrpl::STInteger&lt; Integer &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="960,231,1153,256"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1STBase.html" title="A type which can be exported to a well known binary format." alt="" coords="764,5,867,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="877,33,912,53,960,98,1001,148,1031,195,1051,229,1046,232,1027,198,996,151,956,101,909,57,874,38"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1SField.html" title="Identifies fields." alt="" coords="445,111,540,136"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="511,98,534,75,563,56,614,36,668,24,719,17,764,15,764,20,720,23,669,29,616,41,565,60,537,79,514,102"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="739,68,891,123"/>
+<area shape="poly" id="edge7_Node000007_Node000003" title=" " alt="" coords="523,101,563,85,608,77,654,75,739,80,739,85,654,80,609,83,565,90,525,106"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="739,160,891,215"/>
+<area shape="poly" id="edge10_Node000008_Node000003" title=" " alt="" coords="515,144,538,164,565,180,608,191,653,197,739,196,739,201,653,202,607,197,563,184,535,168,512,148"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="216,192,303,217"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="309,185,454,134,456,139,310,190"/>
+<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="316,205,486,210,591,209,696,203,739,198,740,204,696,209,591,214,486,215,316,210"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,185,144,225"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="158,202,216,202,216,207,158,207"/>
+<area shape="rect" id="Node000006" href="$classJson_1_1StaticString.html" title="Lightweight wrapper to tag static string." alt="" coords="193,111,325,136"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="339,121,445,121,445,126,339,126"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="726,106,540,122,540,117,725,100"/>
+<area shape="poly" id="edge8_Node000003_Node000008" title=" " alt="" coords="725,172,540,135,541,130,726,167"/>
+<area shape="rect" id="Node000009" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="720,239,911,279"/>
+<area shape="poly" id="edge11_Node000001_Node000009" title=" " alt="" coords="924,249,960,247,960,252,925,255"/>
+</map>

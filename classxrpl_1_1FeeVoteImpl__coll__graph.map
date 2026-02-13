@@ -1,0 +1,23 @@
+<map id="xrpl::FeeVoteImpl" name="xrpl::FeeVoteImpl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="853,127,989,153"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1FeeVote.html" title="Manager to process fee votes." alt="" coords="637,78,744,103"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="758,102,830,117,863,125,862,130,829,123,757,107"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1FeeSetup.html" title="Fee schedule for startup / standalone, and to vote for." alt="" coords="633,127,748,153"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="762,137,853,137,853,143,762,143"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1XRPAmount.html" title=" " alt="" coords="335,127,465,153"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="479,137,633,137,633,143,479,143"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="35,5,201,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="210,47,232,55,313,91,377,125,375,130,310,96,230,60,208,52"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="5,70,231,95"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="195,96,337,125,336,130,194,101"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="13,120,223,160"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="237,137,335,137,335,143,237,143"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="11,184,225,224"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="220,178,342,150,344,155,221,183"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="71,249,165,274"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="178,249,230,234,268,216,301,190,312,176,325,162,347,150,350,155,328,166,316,179,305,194,270,220,232,238,180,254"/>
+<area shape="rect" id="Node000010" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="635,177,746,202"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="759,172,829,157,862,150,863,155,830,163,760,178"/>
+<area shape="rect" id="Node000011" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="327,177,473,202"/>
+<area shape="poly" id="edge10_Node000010_Node000011" title=" " alt="" coords="488,187,635,187,635,192,488,192"/>
+</map>

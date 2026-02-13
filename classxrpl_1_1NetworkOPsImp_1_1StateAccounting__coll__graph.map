@@ -1,0 +1,18 @@
+<map id="xrpl::NetworkOPsImp::StateAccounting" name="xrpl::NetworkOPsImp::StateAccounting">
+<area shape="rect" id="Node000001" title="State accounting records two attributes for each possible server state: 1) Amount of time spent in ea..." alt="" coords="969,100,1129,140"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="667,61,853,115"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="867,97,969,109,969,114,867,102"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1NetworkOPsImp_1_1StateAccounting_1_1Counters.html" title=" " alt="" coords="319,68,521,108"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="535,85,666,85,666,91,535,91"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="50,26,153,51"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="166,30,293,21,465,16,659,22,757,31,854,45,937,69,1008,97,1006,102,935,74,853,51,757,36,658,27,465,21,294,26,167,35"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,46,319,70,318,75,166,51"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/chrono/duration.html" title=" " alt="" coords="5,90,197,115"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="211,101,295,99,318,97,319,102,295,104,211,106"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/mutex.html" title=" " alt="" coords="714,139,806,165"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="819,143,969,126,969,131,820,148"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="675,189,845,229"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="856,183,945,157,999,138,1001,143,946,163,858,188"/>
+<area shape="rect" id="Node000008" href="$classJson_1_1StaticString.html" title="Lightweight wrapper to tag static string." alt="" coords="354,197,486,222"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="500,207,675,207,675,212,500,212"/>
+</map>

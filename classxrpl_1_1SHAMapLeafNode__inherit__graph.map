@@ -1,0 +1,13 @@
+<map id="xrpl::SHAMapLeafNode" name="xrpl::SHAMapLeafNode">
+<area shape="rect" id="Node000001" title=" " alt="" coords="451,70,623,95"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1SHAMapAccountStateLeafNode.html" title="A leaf node for a state object." alt="" coords="697,5,893,45"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="607,64,704,43,705,48,609,70"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1SHAMapTxLeafNode.html" title="A leaf node for a transaction." alt="" coords="701,70,889,95"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="636,80,701,80,701,85,636,85"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1SHAMapTxPlusMetaLeafNode.html" title="A leaf node for a transaction and its associated metadata." alt="" coords="671,119,919,145"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="618,95,728,117,727,122,616,101"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1SHAMapTreeNode.html" title=" " alt="" coords="232,70,403,95"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="417,80,450,80,450,85,417,85"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1IntrusiveRefCounts.html" title="Implement the strong count, weak count, and bit flags for an intrusive pointer." alt="" coords="5,70,184,95"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,80,232,80,232,85,198,85"/>
+</map>

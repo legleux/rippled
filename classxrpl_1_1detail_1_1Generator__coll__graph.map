@@ -1,0 +1,15 @@
+<map id="xrpl::detail::Generator" name="xrpl::detail::Generator">
+<area shape="rect" id="Node000001" title="Produces a sequence of secp256k1 key pairs." alt="" coords="187,313,352,339"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1base__uint.html" title=" " alt="" coords="89,218,261,243"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="198,251,259,311,256,315,194,255"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="5,101,93,126"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="73,133,164,216,160,220,70,137"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="117,93,285,133"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="196,148,180,218,175,217,191,147"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="150,5,253,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="204,44,204,93,199,93,199,44"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="285,211,445,251"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="338,262,283,315,280,311,334,258"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="318,101,413,126"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="368,140,368,210,363,210,363,140"/>
+</map>

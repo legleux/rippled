@@ -1,0 +1,22 @@
+<map id="xrpl::EitherAmount" name="xrpl::EitherAmount">
+<area shape="rect" id="Node000001" title=" " alt="" coords="555,170,699,195"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1IOUAmount.html" title="Floating point representation of amounts with high dynamic range." alt="" coords="351,87,481,113"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="463,115,594,167,592,172,461,120"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="35,5,201,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="215,44,327,72,373,85,371,90,326,77,213,49"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="6,70,230,95"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="244,87,351,94,350,99,243,93"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="71,119,165,145"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="179,126,326,112,350,109,351,114,327,117,179,131"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1XRPAmount.html" title=" " alt="" coords="351,214,481,239"/>
+<area shape="poly" id="edge10_Node000006_Node000005" title=" " alt="" coords="180,141,231,155,280,172,328,191,382,211,380,216,326,196,278,177,230,160,178,147"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="490,209,565,193,566,198,491,214"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="35,169,201,209"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="215,199,351,216,350,221,214,204"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,234,231,259"/>
+<area shape="poly" id="edge7_Node000006_Node000008" title=" " alt="" coords="244,236,350,228,351,234,245,241"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="13,284,223,324"/>
+<area shape="poly" id="edge8_Node000006_Node000009" title=" " alt="" coords="209,278,365,237,367,242,210,283"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="11,348,225,388"/>
+<area shape="poly" id="edge9_Node000006_Node000010" title=" " alt="" coords="210,341,230,334,278,310,324,283,395,237,398,242,327,288,281,315,232,338,212,346"/>
+</map>

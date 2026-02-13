@@ -1,0 +1,41 @@
+<map id="xrpl::Consensus&lt; Adaptor &gt;" name="xrpl::Consensus&lt; Adaptor &gt;">
+<area shape="rect" id="Node000001" title="Generic implementation of consensus algorithm." alt="" coords="1001,423,1208,449"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1Consensus_1_1MonitoredMode.html" title=" " alt="" coords="598,11,789,51"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="802,16,848,18,894,25,939,40,979,65,1018,105,1049,154,1071,206,1087,260,1103,358,1106,423,1101,423,1097,359,1081,261,1066,208,1044,156,1014,109,976,69,937,45,893,30,847,23,802,21"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1abstract__clock.html" title="Abstract interface to a clock." alt="" coords="613,75,773,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="787,83,835,84,885,92,935,107,979,133,1013,165,1040,204,1061,246,1077,289,1097,368,1105,423,1100,423,1092,369,1072,290,1056,248,1035,206,1009,169,976,137,932,112,884,97,834,90,787,88"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1ConsensusTimer.html" title="Measures the duration of phases of consensus." alt="" coords="612,202,775,227"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="789,211,835,215,885,224,933,239,979,262,1002,279,1023,299,1059,345,1085,389,1100,422,1096,424,1080,391,1054,348,1019,303,999,283,976,266,931,244,883,230,835,221,789,216"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/chrono/duration.html" title=" " alt="" coords="275,158,459,183"/>
+<area shape="poly" id="edge6_Node000001_Node000005" title=" " alt="" coords="472,160,604,155,751,155,822,160,886,167,940,179,979,196,1008,220,1033,249,1054,281,1070,315,1093,378,1104,423,1098,424,1088,379,1065,317,1049,284,1029,252,1005,224,976,201,938,184,885,172,822,165,751,161,604,160,472,166"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="473,182,612,201,611,206,472,187"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/chrono/duration.html" title=" " alt="" coords="615,252,771,292"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="786,275,881,291,931,305,979,324,1015,346,1048,373,1095,421,1091,425,1044,377,1012,351,976,329,929,310,880,296,785,280"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/chrono/time_point.html" title=" " alt="" coords="281,333,453,373"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="467,350,573,353,701,360,840,373,978,395,1069,421,1068,426,977,400,839,379,701,365,573,358,467,356"/>
+<area shape="rect" id="Node000010" href="$structxrpl_1_1ConsensusCloseTimes.html" title="Stores the set of initial close times." alt="" coords="593,394,794,419"/>
+<area shape="poly" id="edge13_Node000010_Node000007" title=" " alt="" coords="467,370,498,376,597,391,596,397,497,381,466,376"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="611,443,775,498"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="789,460,1001,442,1001,447,789,465"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="615,523,771,563"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="784,523,877,503,977,477,1069,446,1071,451,978,483,879,508,785,528"/>
+<area shape="poly" id="edge10_Node000001_Node000010" title=" " alt="" coords="808,412,1001,426,1001,431,807,417"/>
+<area shape="rect" id="Node000011" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/map.html" title=" " alt="" coords="283,405,450,445"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="464,424,562,421,609,417,609,422,563,427,464,430"/>
+<area shape="rect" id="Node000012" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/chrono/time_point.html" title=" " alt="" coords="5,413,177,438"/>
+<area shape="poly" id="edge12_Node000011_Node000012" title=" " alt="" coords="191,423,283,423,283,428,191,428"/>
+<area shape="rect" id="Node000013" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="649,587,737,613"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="751,606,802,609,859,608,919,599,976,579,1017,550,1052,514,1078,477,1094,448,1099,450,1082,480,1056,517,1021,554,979,584,921,604,860,613,801,615,751,611"/>
+<area shape="rect" id="Node000014" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="587,637,800,677"/>
+<area shape="poly" id="edge15_Node000001_Node000014" title=" " alt="" coords="814,668,855,666,897,660,938,649,976,631,1001,612,1023,589,1059,537,1083,486,1097,448,1102,450,1088,488,1064,540,1028,593,1005,616,979,636,940,654,898,665,855,671,814,673"/>
+<area shape="rect" id="Node000015" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="607,702,780,757"/>
+<area shape="poly" id="edge16_Node000001_Node000015" title=" " alt="" coords="793,735,839,733,887,726,934,712,976,688,1005,662,1030,631,1050,597,1066,561,1088,495,1099,448,1104,449,1093,496,1071,563,1055,599,1034,634,1009,666,979,693,936,716,888,731,840,738,794,740"/>
+<area shape="rect" id="Node000016" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/deque.html" title=" " alt="" coords="260,717,473,742"/>
+<area shape="poly" id="edge17_Node000015_Node000016" title=" " alt="" coords="487,727,606,727,606,732,487,732"/>
+<area shape="rect" id="Node000017" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_set.html" title=" " alt="" coords="622,781,765,821"/>
+<area shape="poly" id="edge18_Node000001_Node000017" title=" " alt="" coords="779,806,828,805,880,798,930,782,976,755,1010,721,1037,680,1059,635,1075,590,1093,506,1100,448,1105,449,1099,506,1080,591,1064,637,1042,683,1014,724,979,759,933,787,881,803,828,810,779,812"/>
+<area shape="rect" id="Node000018" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="638,846,749,871"/>
+<area shape="poly" id="edge19_Node000001_Node000018" title=" " alt="" coords="763,868,814,871,871,868,926,854,952,842,976,826,1016,783,1047,733,1069,678,1085,621,1094,566,1099,517,1101,449,1106,449,1104,518,1099,567,1090,622,1074,679,1052,735,1020,787,979,830,955,846,928,859,871,873,814,876,762,873"/>
+<area shape="rect" id="Node000019" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="293,846,440,871"/>
+<area shape="poly" id="edge20_Node000018_Node000019" title=" " alt="" coords="454,856,638,856,638,861,454,861"/>
+</map>

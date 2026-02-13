@@ -1,0 +1,7 @@
+<map id="xrpl::peer_in_cluster" name="xrpl::peer_in_cluster">
+<area shape="rect" id="Node000001" title="Select all peers (except optional excluded) that are in our cluster." alt="" coords="5,181,160,207"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1match__peer.html" title="Select the specific peer." alt="" coords="17,93,149,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,133,85,181,80,181,80,133"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Peer.html" title="Represents a peer connection in the overlay." alt="" coords="41,5,125,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,45,85,93,80,93,80,45"/>
+</map>

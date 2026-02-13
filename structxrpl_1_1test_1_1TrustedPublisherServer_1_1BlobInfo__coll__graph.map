@@ -1,0 +1,7 @@
+<map id="xrpl::test::TrustedPublisherServer::BlobInfo" name="xrpl::test::TrustedPublisherServer::BlobInfo">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,197,200,237"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="59,95,146,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,134,105,197,100,197,100,134"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="33,5,172,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,59,105,94,100,94,100,59"/>
+</map>

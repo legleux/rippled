@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['negativeunlmodify_0',['NegativeUNLModify',['../classripple_1_1NegativeUNLVote.html#a4fc6405fdb02e58c350e175b6d58e7cf',1,'ripple::NegativeUNLVote']]],
-  ['nodeobjecttype_1',['NodeObjectType',['../namespaceripple.html#a57d7e7b27df7e719fdf5569f96be60a3',1,'ripple']]],
-  ['nodetype_2',['NodeType',['../classripple_1_1Pathfinder.html#a404497923954f689fbde4d0a46fd8304',1,'ripple::Pathfinder']]]
+  ['negativeunlmodify_0',['NegativeUNLModify',['../classxrpl_1_1NegativeUNLVote.html#aaaa7fc722f6291263214b325546175d2',1,'xrpl::NegativeUNLVote']]],
+  ['nodeobjecttype_1',['NodeObjectType',['../namespacexrpl.html#a663b0ac7aab40440c7da9e3ea84a2ebf',1,'xrpl']]],
+  ['nodetype_2',['NodeType',['../classxrpl_1_1Pathfinder.html#aced523050d53408c1101dadbf399fd03',1,'xrpl::Pathfinder']]]
 ];

@@ -1,0 +1,15 @@
+<map id="xrpl::AmendmentTable::FeatureInfo" name="xrpl::AmendmentTable::FeatureInfo">
+<area shape="rect" id="Node000001" title=" " alt="" coords="65,313,234,353"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="31,218,118,243"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,253,137,312,133,315,89,256"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,93,144,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,147,77,218,72,218,72,147"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1base__uint.html" title="Integers of any length that is a multiple of 32&#45;bits." alt="" coords="143,211,305,251"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="204,263,165,315,161,312,200,260"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="173,101,261,126"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="221,140,226,210,220,211,216,140"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="285,93,453,133"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="336,144,250,212,246,208,333,140"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="318,5,421,31"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="372,44,372,93,367,93,367,44"/>
+</map>

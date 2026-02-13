@@ -1,0 +1,5 @@
+<map id="xrpl::SharedWeakUnion&lt; T &gt;" name="xrpl::SharedWeakUnion&lt; T &gt;">
+<area shape="rect" id="Node000001" title="A combination of a strong and a weak intrusive pointer stored in the space of a single pointer." alt="" coords="5,123,217,148"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="59,5,164,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="114,44,114,123,109,123,109,44"/>
+</map>

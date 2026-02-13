@@ -1,0 +1,21 @@
+<map id="xrpl::detail::ReadViewFwdRange&lt; ValueType &gt;::iterator" name="xrpl::detail::ReadViewFwdRange&lt; ValueType &gt;::iterator">
+<area shape="rect" id="Node000001" title=" " alt="" coords="569,241,784,281"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="310,117,430,142"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="407,147,481,186,570,227,604,239,602,244,568,232,478,191,404,151"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="581,177,773,217"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="430,143,497,160,581,178,580,183,495,165,429,148"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="581,51,773,91"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="443,113,580,86,581,92,444,118"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1ReadView_1_1sles__type.html" title=" " alt="" coords="833,133,1023,158"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="819,145,430,134,430,128,820,140"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="786,172,865,155,867,161,787,177"/>
+<area shape="rect" id="Node000005" href="$structxrpl_1_1ReadView_1_1txs__type.html" title=" " alt="" coords="837,15,1019,41"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="823,23,701,24,634,30,570,41,518,57,469,78,393,119,390,114,467,74,517,52,569,36,634,24,700,18,823,18"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="785,50,852,38,853,43,786,55"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/unique_ptr.html" title=" " alt="" coords="268,304,472,344"/>
+<area shape="poly" id="edge8_Node000001_Node000007" title=" " alt="" coords="481,299,578,279,579,284,482,304"/>
+<area shape="rect" id="Node000008" href="$classxrpl_1_1detail_1_1ReadViewFwdIter.html" title=" " alt="" coords="5,304,197,344"/>
+<area shape="poly" id="edge9_Node000007_Node000008" title=" " alt="" coords="211,321,268,321,268,327,211,327"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="293,240,447,280"/>
+<area shape="poly" id="edge10_Node000001_Node000009" title=" " alt="" coords="461,258,569,258,569,264,461,263"/>
+</map>

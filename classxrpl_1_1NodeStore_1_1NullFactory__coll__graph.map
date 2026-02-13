@@ -1,0 +1,7 @@
+<map id="xrpl::NodeStore::NullFactory" name="xrpl::NodeStore::NullFactory">
+<area shape="rect" id="Node000001" title=" " alt="" coords="97,93,301,119"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStore_1_1Factory.html" title="Base class for backend factories." alt="" coords="5,5,184,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,37,186,91,183,95,117,41"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1NodeStore_1_1Manager.html" title="Singleton for managing NodeStore factories and back ends." alt="" coords="209,5,397,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="280,41,214,95,211,91,277,37"/>
+</map>

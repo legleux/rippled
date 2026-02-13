@@ -7,6 +7,6 @@ var searchData=
   ['year_5fmonth_5fweekday_4',['year_month_weekday',['http://en.cppreference.com/w/cpp/chrono/year_month_weekday/year_month_weekday.html',1,'std::chrono::year_month_weekday']]],
   ['year_5fmonth_5fweekday_5flast_5',['year_month_weekday_last',['http://en.cppreference.com/w/cpp/chrono/year_month_weekday_last/year_month_weekday_last.html',1,'std::chrono::year_month_weekday_last']]],
   ['years_6',['years',['http://en.cppreference.com/w/cpp/chrono/duration/duration.html',1,'std::chrono::years']]],
-  ['yield_7',['yield',['../classripple_1_1JobQueue_1_1Coro.html#adf59dc12d67b8e0d9dc82e8023e9de97',1,'ripple::JobQueue::Coro::yield()'],['http://en.cppreference.com/w/cpp/thread/yield.html',1,'std::this_thread::yield()']]],
+  ['yield_7',['yield',['../classxrpl_1_1JobQueue_1_1Coro.html#a6f0296efe5fc51ec89e937fa50406cc0',1,'xrpl::JobQueue::Coro::yield()'],['http://en.cppreference.com/w/cpp/thread/yield.html',1,'std::this_thread::yield()']]],
   ['yield_5fto_8',['yield_to',['../classbeast_1_1test_1_1enable__yield__to.html#a611cd725aff174c8578d112a122fe419',1,'beast::test::enable_yield_to']]]
 ];

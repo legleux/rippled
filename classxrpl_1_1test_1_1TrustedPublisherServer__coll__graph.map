@@ -1,0 +1,16 @@
+<map id="xrpl::test::TrustedPublisherServer" name="xrpl::test::TrustedPublisherServer">
+<area shape="rect" id="Node000001" title=" " alt="" coords="560,109,755,149"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="185,5,399,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="413,48,537,77,614,106,612,111,535,82,412,53"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/functional/function.html" title=" " alt="" coords="223,85,361,125"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="375,107,560,120,560,125,375,113"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1SecretKey.html" title="A secret key." alt="" coords="232,149,352,175"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="366,153,536,138,559,136,560,141,536,143,366,158"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,171,100,196"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="113,175,232,165,232,170,114,181"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1PublicKey.html" title="A public key." alt="" coords="233,199,351,224"/>
+<area shape="poly" id="edge7_Node000006_Node000005" title=" " alt="" coords="114,192,124,194,233,205,232,210,124,199,113,198"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="365,200,447,188,535,169,605,146,607,151,537,174,448,193,365,206"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="9,240,97,265"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="110,240,232,219,233,224,111,245"/>
+</map>

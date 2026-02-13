@@ -1,0 +1,9 @@
+<map id="xrpl::PeerSet" name="xrpl::PeerSet">
+<area shape="rect" id="Node000001" title="Supports data retrieval by managing a set of peers." alt="" coords="202,5,307,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1DummyPeerSet.html" title=" " alt="" coords="5,79,163,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="216,38,113,81,111,76,213,33"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1PeerSetImpl.html" title=" " alt="" coords="187,79,322,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="257,44,257,79,252,79,252,44"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1test_1_1TestPeerSet.html" title="Simulate a peerSet that supplies peers to ledger replay subtasks." alt="" coords="346,79,510,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="296,33,401,76,399,81,294,38"/>
+</map>

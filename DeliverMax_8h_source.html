@@ -81,32 +81,29 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">DeliverMax.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XRPL_APP_MISC_DELIVERMAX_H_INCLUDED</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XRPL_APP_MISC_DELIVERMAX_H_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;xrpl/protocol/TxFormats.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceJson.html">Json</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">class </span>Value;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>}</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceripple.html">ripple</a> {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span>RPC {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keywordtype">void</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><a class="code hl_function" href="namespaceripple_1_1RPC.html#abf346555d1927183974ae3feef4a25ec">insertDeliverMax</a>(<a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a>&amp; tx_json, <a class="code hl_enumeration" href="namespaceripple.html#a2ce3074a39ea65126b82fc59baf43126">TxType</a> txnType, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="namespaceripple_1_1RPC.html#a47dbdaa21d9c40b369424e671ccd7e20">apiVersion</a>);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}  <span class="comment">// namespace RPC</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>}  <span class="comment">// namespace ripple</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassJson_1_1Value_html"><div class="ttname"><a href="classJson_1_1Value.html">Json::Value</a></div><div class="ttdoc">Represents a JSON value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8h_source.html#l00130">json_value.h:131</a></div></div>
-<div class="ttc" id="anamespaceJson_html"><div class="ttname"><a href="namespaceJson.html">Json</a></div><div class="ttdoc">JSON (JavaScript Object Notation).</div><div class="ttdef"><b>Definition</b> <a href="json__errors_8h_source.html#l00006">json_errors.h:6</a></div></div>
-<div class="ttc" id="anamespaceripple_1_1RPC_html_a47dbdaa21d9c40b369424e671ccd7e20"><div class="ttname"><a href="namespaceripple_1_1RPC.html#a47dbdaa21d9c40b369424e671ccd7e20">ripple::RPC::apiVersion</a></div><div class="ttdeci">static constexpr std::integral_constant&lt; unsigned, Version &gt; apiVersion</div><div class="ttdef"><b>Definition</b> <a href="ApiVersion_8h_source.html#l00039">ApiVersion.h:39</a></div></div>
-<div class="ttc" id="anamespaceripple_1_1RPC_html_abf346555d1927183974ae3feef4a25ec"><div class="ttname"><a href="namespaceripple_1_1RPC.html#abf346555d1927183974ae3feef4a25ec">ripple::RPC::insertDeliverMax</a></div><div class="ttdeci">void insertDeliverMax(Json::Value &amp;tx_json, TxType txnType, unsigned int apiVersion)</div><div class="ttdoc">Copy Amount field to DeliverMax field in transaction output JSON.</div><div class="ttdef"><b>Definition</b> <a href="DeliverMax_8cpp_source.html#l00009">DeliverMax.cpp:9</a></div></div>
-<div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00006">algorithm.h:6</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a2ce3074a39ea65126b82fc59baf43126"><div class="ttname"><a href="namespaceripple.html#a2ce3074a39ea65126b82fc59baf43126">ripple::TxType</a></div><div class="ttdeci">TxType</div><div class="ttdoc">Transaction type identifiers.</div><div class="ttdef"><b>Definition</b> <a href="TxFormats_8h_source.html#l00037">TxFormats.h:38</a></div></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;xrpl/protocol/TxFormats.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceJson.html">Json</a> {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">class </span>Value;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>}</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacexrpl.html">xrpl</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>RPC {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keywordtype">void</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><a class="code hl_function" href="namespacexrpl_1_1RPC.html#a480829f05d4404b510e7d6ebae919b37">insertDeliverMax</a>(<a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a>&amp; tx_json, <a class="code hl_enumeration" href="namespacexrpl.html#a2302c0748b98cd689ea7eea653eda396">TxType</a> txnType, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> <a class="code hl_variable" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>}  <span class="comment">// namespace RPC</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="ttc" id="aclassJson_1_1Value_html"><div class="ttname"><a href="classJson_1_1Value.html">Json::Value</a></div><div class="ttdoc">Represents a JSON value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8h_source.html#l00129">json_value.h:130</a></div></div>
+<div class="ttc" id="anamespaceJson_html"><div class="ttname"><a href="namespaceJson.html">Json</a></div><div class="ttdoc">JSON (JavaScript Object Notation).</div><div class="ttdef"><b>Definition</b> <a href="json__errors_8h_source.html#l00005">json_errors.h:5</a></div></div>
+<div class="ttc" id="anamespacexrpl_1_1RPC_html_a480829f05d4404b510e7d6ebae919b37"><div class="ttname"><a href="namespacexrpl_1_1RPC.html#a480829f05d4404b510e7d6ebae919b37">xrpl::RPC::insertDeliverMax</a></div><div class="ttdeci">void insertDeliverMax(Json::Value &amp;tx_json, TxType txnType, unsigned int apiVersion)</div><div class="ttdoc">Copy Amount field to DeliverMax field in transaction output JSON.</div><div class="ttdef"><b>Definition</b> <a href="DeliverMax_8cpp_source.html#l00009">DeliverMax.cpp:9</a></div></div>
+<div class="ttc" id="anamespacexrpl_1_1RPC_html_a973a1e287dd3a3aded8ee4fd96a4af34"><div class="ttname"><a href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">xrpl::RPC::apiVersion</a></div><div class="ttdeci">static constexpr std::integral_constant&lt; unsigned, Version &gt; apiVersion</div><div class="ttdef"><b>Definition</b> <a href="ApiVersion_8h_source.html#l00038">ApiVersion.h:38</a></div></div>
+<div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a2302c0748b98cd689ea7eea653eda396"><div class="ttname"><a href="namespacexrpl.html#a2302c0748b98cd689ea7eea653eda396">xrpl::TxType</a></div><div class="ttdeci">TxType</div><div class="ttdoc">Transaction type identifiers.</div><div class="ttdef"><b>Definition</b> <a href="TxFormats_8h_source.html#l00036">TxFormats.h:37</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

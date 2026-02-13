@@ -1,0 +1,5 @@
+<map id="xrpl::AcceptedLedger" name="xrpl::AcceptedLedger">
+<area shape="rect" id="Node000001" title="A ledger that has become irrevocable." alt="" coords="5,93,164,119"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="7,5,163,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,59,87,93,82,93,82,59"/>
+</map>

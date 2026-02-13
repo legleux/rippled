@@ -1,0 +1,31 @@
+<map id="xrpl::ResolverAsioImpl" name="xrpl::ResolverAsioImpl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1313,169,1483,195"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ResolverAsio.html" title=" " alt="" coords="999,5,1139,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1139,32,1168,41,1231,65,1291,97,1343,134,1384,167,1380,171,1340,138,1288,102,1229,70,1166,46,1138,37"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Resolver.html" title=" " alt="" coords="706,5,818,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="832,15,999,15,999,21,832,21"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1AsyncObject.html" title=" " alt="" coords="992,55,1147,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="1161,92,1225,108,1290,129,1374,167,1372,172,1288,134,1224,113,1160,97"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/atomic/atomic.html" title=" " alt="" coords="691,63,833,88"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="847,73,992,73,992,78,847,78"/>
+<area shape="rect" id="Node000006" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="1014,120,1125,145"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="1139,140,1290,162,1319,167,1318,172,1289,167,1138,145"/>
+<area shape="rect" id="Node000007" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="689,120,835,145"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="849,130,1014,130,1014,135,849,135"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/condition_variable.html" title=" " alt="" coords="984,169,1155,195"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1168,179,1313,179,1313,185,1168,185"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/mutex.html" title=" " alt="" coords="1023,219,1115,244"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="1129,222,1289,199,1331,192,1332,197,1290,205,1130,227"/>
+<area shape="rect" id="Node000010" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/atomic/atomic.html" title=" " alt="" coords="993,275,1146,300"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="1159,278,1224,268,1288,249,1340,222,1380,193,1383,197,1343,226,1290,254,1225,273,1160,284"/>
+<area shape="rect" id="Node000011" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/deque.html" title=" " alt="" coords="972,325,1167,365"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="1180,331,1235,317,1288,294,1320,271,1348,243,1387,193,1391,196,1352,247,1324,275,1291,299,1237,322,1181,336"/>
+<area shape="rect" id="Node000012" href="$structxrpl_1_1ResolverAsioImpl_1_1Work.html" title=" " alt="" coords="677,325,847,365"/>
+<area shape="poly" id="edge11_Node000011_Node000012" title=" " alt="" coords="860,342,972,342,972,347,860,347"/>
+<area shape="rect" id="Node000013" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="393,332,580,357"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="594,342,677,342,677,347,594,347"/>
+<area shape="rect" id="Node000014" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="193,332,280,357"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="294,342,393,342,393,347,294,347"/>
+<area shape="rect" id="Node000015" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,325,144,365"/>
+<area shape="poly" id="edge14_Node000014_Node000015" title=" " alt="" coords="157,342,193,342,193,347,157,347"/>
+</map>

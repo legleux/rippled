@@ -1,0 +1,9 @@
+<map id="xrpl::ValidLoan" name="xrpl::ValidLoan">
+<area shape="rect" id="Node000001" title="Invariants: Loans are internally consistent." alt="" coords="29,328,148,353"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="7,211,170,265"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="91,279,91,328,86,328,86,279"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/pair.html" title=" " alt="" coords="5,108,172,148"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="91,161,91,211,86,211,86,161"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="69,5,108,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="91,45,91,108,86,108,86,45"/>
+</map>

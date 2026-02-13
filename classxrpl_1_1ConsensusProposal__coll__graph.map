@@ -1,0 +1,9 @@
+<map id="xrpl::ConsensusProposal&lt; NodeID_t, LedgerID_t, Position_t &gt;" name="xrpl::ConsensusProposal&lt; NodeID_t, LedgerID_t, Position_t &gt;">
+<area shape="rect" id="Node000001" title="Represents a proposed position taken during a round of consensus." alt="" coords="127,137,309,192"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,13,108,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,48,96,80,126,111,162,135,159,139,123,115,92,83,69,51"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/chrono/time_point.html" title=" " alt="" coords="132,5,304,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="221,59,221,137,215,137,215,59"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="328,5,471,45"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="373,57,304,115,267,139,264,135,300,111,369,53"/>
+</map>

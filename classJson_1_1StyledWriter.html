@@ -136,8 +136,8 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:aa25291f4e0ff0e9569f8a26e0805cc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc7fd4cf9c4c38bfc608d48f3dd608da" id="r_abc7fd4cf9c4c38bfc608d48f3dd608da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJson_1_1StyledWriter.html#abc7fd4cf9c4c38bfc608d48f3dd608da">writeArrayValue</a> (<a class="el" href="classJson_1_1Value.html">Value</a> const &amp;value)</td></tr>
 <tr class="separator:abc7fd4cf9c4c38bfc608d48f3dd608da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae39ca61f2b6318df425a9f2248466cb9" id="r_ae39ca61f2b6318df425a9f2248466cb9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJson_1_1StyledWriter.html#ae39ca61f2b6318df425a9f2248466cb9">isMultineArray</a> (<a class="el" href="classJson_1_1Value.html">Value</a> const &amp;value)</td></tr>
-<tr class="separator:ae39ca61f2b6318df425a9f2248466cb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37124038a1137c2996e3596b684b3ea0" id="r_a37124038a1137c2996e3596b684b3ea0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJson_1_1StyledWriter.html#a37124038a1137c2996e3596b684b3ea0">isMultilineArray</a> (<a class="el" href="classJson_1_1Value.html">Value</a> const &amp;value)</td></tr>
+<tr class="separator:a37124038a1137c2996e3596b684b3ea0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9bf778fe7e3e39e0bf7d7d6a5195d02a" id="r_a9bf778fe7e3e39e0bf7d7d6a5195d02a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJson_1_1StyledWriter.html#a9bf778fe7e3e39e0bf7d7d6a5195d02a">pushValue</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;value)</td></tr>
 <tr class="separator:a9bf778fe7e3e39e0bf7d7d6a5195d02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a885f4bfb5701896d60eee6716d2db7e4" id="r_a885f4bfb5701896d60eee6716d2db7e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classJson_1_1StyledWriter.html#a885f4bfb5701896d60eee6716d2db7e4">writeIndent</a> ()</td></tr>
@@ -167,12 +167,12 @@ Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Writes a <a class="el" href="classJson_1_1Value.html" title="Represents a JSON value.">Value</a> in <a href="http://www.json.org">JSON</a> format in a human friendly way. </p>
 <p>The rules for line break and indent are as follow:</p><ul>
-<li><a class="el" href="classJson_1_1Object.html" title="Represents a JSON object being written to a Writer.">Object</a> value:<ul>
+<li>Object value:<ul>
 <li>if empty then print {} without indent and line break</li>
 <li>if not empty the print '{', line break &amp; indent, print one value per line and then unindent and line break and print '}'.</li>
 </ul>
 </li>
-<li><a class="el" href="classJson_1_1Array.html" title="Represents a JSON array being written to a Writer.">Array</a> value:<ul>
+<li>Array value:<ul>
 <li>if empty then print [] without indent and line break</li>
 <li>if the array contains no object value, empty array or some other value types, and all the values fit on one lines, then print the array on a single line.</li>
 <li>otherwise, it the values do not fit on one line, or the array contains object or non empty array, then print one value per line.</li>
@@ -181,7 +181,7 @@ Private Attributes</h2></td></tr>
 </ul>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classJson_1_1Reader.html" title="Unserialize a JSON document into a Value.">Reader</a>, <a class="el" href="classJson_1_1Value.html" title="Represents a JSON value.">Value</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00071">71</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00070">70</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="ae52b9e38ffcb9e88cc122999afcd3de2" name="ae52b9e38ffcb9e88cc122999afcd3de2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae52b9e38ffcb9e88cc122999afcd3de2">&#9670;&#160;</a></span>ChildValues</h2>
@@ -203,7 +203,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00105">105</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00104">104</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -223,7 +223,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00260">260</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00255">255</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -250,7 +250,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00075">75</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00074">74</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -290,7 +290,7 @@ Private Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="classJson_1_1WriterBase.html#a54f3d399064f06d5a38d7864cba53709">Json::WriterBase</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00265">265</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00260">260</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -318,7 +318,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00276">276</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00271">271</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -346,12 +346,12 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00342">342</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00337">337</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
-<a id="ae39ca61f2b6318df425a9f2248466cb9" name="ae39ca61f2b6318df425a9f2248466cb9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae39ca61f2b6318df425a9f2248466cb9">&#9670;&#160;</a></span>isMultineArray()</h2>
+<a id="a37124038a1137c2996e3596b684b3ea0" name="a37124038a1137c2996e3596b684b3ea0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37124038a1137c2996e3596b684b3ea0">&#9670;&#160;</a></span>isMultilineArray()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -360,7 +360,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool Json::StyledWriter::isMultineArray </td>
+          <td class="memname">bool Json::StyledWriter::isMultilineArray </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classJson_1_1Value.html">Value</a> const &amp;&#160;</td>
           <td class="paramname"><em>value</em></td><td>)</td>
@@ -374,7 +374,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00401">401</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00394">394</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -402,7 +402,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00435">435</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00426">426</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -429,7 +429,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00444">444</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00435">435</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -457,7 +457,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00461">461</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00452">452</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -484,7 +484,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00468">468</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00459">459</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -511,7 +511,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00474">474</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8cpp_source.html#l00465">465</a> of file <a class="el" href="json__writer_8cpp_source.html">json_writer.cpp</a>.</p>
 
 </div>
 </div>
@@ -536,7 +536,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00107">107</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00106">106</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -560,7 +560,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00108">108</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00107">107</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -584,7 +584,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00109">109</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00108">108</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -608,7 +608,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00110">110</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00109">109</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -632,7 +632,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00111">111</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00110">110</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>
@@ -656,7 +656,7 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00112">112</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="json__writer_8h_source.html#l00111">111</a> of file <a class="el" href="json__writer_8h_source.html">json_writer.h</a>.</p>
 
 </div>
 </div>

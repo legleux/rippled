@@ -1,0 +1,5 @@
+<map id="xrpl::test::jtx::ter" name="xrpl::test::jtx::ter">
+<area shape="rect" id="Node000001" title="Set the expected result code for a JTx The test will fail if the code doesn&#39;t match." alt="" coords="11,108,142,133"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,5,148,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,59,79,108,74,108,74,59"/>
+</map>

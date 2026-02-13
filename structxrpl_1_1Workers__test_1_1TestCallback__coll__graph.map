@@ -1,0 +1,9 @@
+<map id="xrpl::Workers_test::TestCallback" name="xrpl::Workers_test::TestCallback">
+<area shape="rect" id="Node000001" title=" " alt="" coords="216,93,355,133"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1Workers_1_1Callback.html" title="Called to perform tasks as needed." alt="" coords="5,5,176,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="128,34,247,91,245,96,125,39"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/condition_variable.html" title=" " alt="" coords="200,5,371,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="288,44,288,93,283,93,283,44"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/thread/mutex.html" title=" " alt="" coords="395,5,487,31"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="412,40,318,95,316,91,409,35"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="xrpl::test::jtx::VoteArg" name="xrpl::test::jtx::VoteArg">
+<area shape="rect" id="Node000001" title=" " alt="" coords="264,159,428,185"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,5,160,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="146,48,161,55,202,72,241,92,291,126,331,157,328,161,288,130,239,97,200,77,159,60,144,53"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="31,70,134,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="138,97,241,131,312,157,310,162,239,136,137,102"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="13,120,152,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,147,264,159,264,165,165,153"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="11,184,154,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="167,191,263,179,264,185,168,196"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="12,249,153,303"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="164,241,312,182,314,187,166,246"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="11,328,154,368"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="148,320,159,314,210,280,259,243,329,183,333,187,262,248,213,284,161,318,150,324"/>
+</map>

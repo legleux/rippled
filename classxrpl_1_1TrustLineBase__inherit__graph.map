@@ -1,0 +1,7 @@
+<map id="xrpl::TrustLineBase" name="xrpl::TrustLineBase">
+<area shape="rect" id="Node000001" title="Wraps a trust line SLE for convenience." alt="" coords="105,5,250,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1PathFindTrustLine.html" title=" " alt="" coords="5,79,173,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,41,105,81,102,76,151,37"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1RPCTrustLine.html" title=" " alt="" coords="197,79,336,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,37,254,76,250,81,201,41"/>
+</map>

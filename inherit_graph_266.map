@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structripple_1_1detail_1_1basic__sha512__half__hasher.html" title="Returns the SHA512&#45;Half digest of a message." alt="" coords="5,5,176,60"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="5,5,156,45"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1LedgerReplay.html" title=" " alt="" coords="204,13,348,38"/>
+<area shape="poly" id="edge626_Node000000_Node000001" title=" " alt="" coords="170,23,204,23,204,28,170,28"/>
 </map>

@@ -81,29 +81,26 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">json_errors.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XRPL_JSON_JSON_ERRORS_H_INCLUDED</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XRPL_JSON_JSON_ERRORS_H_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/stdexcept.html">stdexcept</a>&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="foldopen" id="foldopen00006" data-start="{" data-end="}">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="namespaceJson.html">    6</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceJson.html">Json</a> {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="structJson_1_1error.html">    8</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structJson_1_1error.html">error</a> : <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/error/runtime_error.html">std::runtime_error</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">using </span><a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/error/runtime_error.html">std::runtime_error::runtime_error</a>;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>};</div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/stdexcept.html">stdexcept</a>&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="foldopen" id="foldopen00005" data-start="{" data-end="}">
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="namespaceJson.html">    5</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceJson.html">Json</a> {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="structJson_1_1error.html">    7</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structJson_1_1error.html">error</a> : <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/error/runtime_error.html">std::runtime_error</a></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">using </span><a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/error/runtime_error.html">std::runtime_error::runtime_error</a>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>};</div>
 </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>}  <span class="comment">// namespace Json</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>}  <span class="comment">// namespace Json</span></div>
 </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif  </span><span class="comment">// JSON_FORWARDS_H_INCLUDED</span></div>
-<div class="ttc" id="anamespaceJson_html"><div class="ttname"><a href="namespaceJson.html">Json</a></div><div class="ttdoc">JSON (JavaScript Object Notation).</div><div class="ttdef"><b>Definition</b> <a href="json__errors_8h_source.html#l00006">json_errors.h:6</a></div></div>
+<div class="ttc" id="anamespaceJson_html"><div class="ttname"><a href="namespaceJson.html">Json</a></div><div class="ttdoc">JSON (JavaScript Object Notation).</div><div class="ttdef"><b>Definition</b> <a href="json__errors_8h_source.html#l00005">json_errors.h:5</a></div></div>
 <div class="ttc" id="aruntime_error_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/error/runtime_error.html">std::runtime_error</a></div></div>
 <div class="ttc" id="astdexcept_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/stdexcept.html">stdexcept</a></div></div>
-<div class="ttc" id="astructJson_1_1error_html"><div class="ttname"><a href="structJson_1_1error.html">Json::error</a></div><div class="ttdef"><b>Definition</b> <a href="json__errors_8h_source.html#l00008">json_errors.h:9</a></div></div>
+<div class="ttc" id="astructJson_1_1error_html"><div class="ttname"><a href="structJson_1_1error.html">Json::error</a></div><div class="ttdef"><b>Definition</b> <a href="json__errors_8h_source.html#l00007">json_errors.h:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

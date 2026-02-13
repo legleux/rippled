@@ -1,0 +1,7 @@
+<map id="xrpl::test::PeerPartial" name="xrpl::test::PeerPartial">
+<area shape="rect" id="Node000001" title="Simulate two entities &#45; peer directly connected to the server (via squelch in PeerSim) and PeerImp (v..." alt="" coords="5,79,164,104"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1test_1_1PeerSim.html" title=" " alt="" coords="13,152,156,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="87,118,87,152,82,152,82,118"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1Peer.html" title="Represents a peer connection in the overlay." alt="" coords="43,5,127,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,44,87,79,82,79,82,44"/>
+</map>

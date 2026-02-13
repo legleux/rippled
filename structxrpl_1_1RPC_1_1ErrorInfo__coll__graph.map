@@ -1,0 +1,5 @@
+<map id="xrpl::RPC::ErrorInfo" name="xrpl::RPC::ErrorInfo">
+<area shape="rect" id="Node000001" title="Maps an rpc error code to its token, default message, and HTTP status." alt="" coords="5,108,151,133"/>
+<area shape="rect" id="Node000002" href="$classJson_1_1StaticString.html" title="Lightweight wrapper to tag static string." alt="" coords="12,5,144,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,45,81,108,75,108,75,45"/>
+</map>

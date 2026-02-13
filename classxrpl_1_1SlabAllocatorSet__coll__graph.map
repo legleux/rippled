@@ -1,0 +1,5 @@
+<map id="xrpl::SlabAllocatorSet&lt; Type &gt;" name="xrpl::SlabAllocatorSet&lt; Type &gt;">
+<area shape="rect" id="Node000001" title="A collection of slab allocators of various sizes for a given type." alt="" coords="5,93,168,133"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="43,5,131,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,44,89,93,84,93,84,44"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="xrpl::OpenView" name="xrpl::OpenView">
+<area shape="rect" id="Node000001" title="Writable ledger view that accumulates state and tx changes." alt="" coords="81,152,202,177"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="5,79,125,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="89,111,131,150,127,154,86,115"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1TxsRawView.html" title="Interface for changing ledger entries with transactions." alt="" coords="149,79,288,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="198,115,156,154,152,150,194,111"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1RawView.html" title="Interface for ledger entry changes." alt="" coords="161,5,276,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="221,44,221,79,216,79,216,44"/>
+</map>

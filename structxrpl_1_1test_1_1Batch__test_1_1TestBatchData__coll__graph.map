@@ -1,0 +1,7 @@
+<map id="xrpl::test::Batch_test::TestBatchData" name="xrpl::test::Batch_test::TestBatchData">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,197,163,237"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="41,95,127,120"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,134,87,197,81,197,81,134"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="15,5,153,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="87,59,87,94,81,94,81,59"/>
+</map>

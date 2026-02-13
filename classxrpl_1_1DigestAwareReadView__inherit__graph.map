@@ -1,0 +1,11 @@
+<map id="xrpl::DigestAwareReadView" name="xrpl::DigestAwareReadView">
+<area shape="rect" id="Node000001" title="ReadView that associates keys with digests." alt="" coords="43,79,245,104"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Ledger.html" title="Holds a ledger." alt="" coords="5,152,104,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="121,115,71,154,68,150,117,110"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1detail_1_1CachedViewImpl.html" title=" " alt="" coords="129,152,338,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="171,110,220,150,217,154,167,115"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="84,5,204,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,44,147,79,141,79,141,44"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1CachedView.html" title="Wraps a DigestAwareReadView to provide caching." alt="" coords="135,225,332,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="236,191,236,225,231,225,231,191"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="xrpl::detail::FileDirGuard" name="xrpl::detail::FileDirGuard">
+<area shape="rect" id="Node000001" title="Write a file in a directory and remove when done." alt="" coords="105,79,287,104"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1detail_1_1FileCfgGuard.html" title="Write a xrpld config file and remove when done." alt="" coords="5,159,189,185"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,115,114,161,110,157,169,111"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1detail_1_1ValidatorsTxtGuard.html" title="Write a validators.txt file and remove when done." alt="" coords="213,152,379,192"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="223,111,274,150,270,154,220,115"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1detail_1_1DirGuard.html" title="Create a directory and remove it when it&#39;s done." alt="" coords="117,5,275,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="199,44,199,79,193,79,193,44"/>
+</map>

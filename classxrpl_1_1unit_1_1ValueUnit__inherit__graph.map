@@ -1,0 +1,15 @@
+<map id="xrpl::unit::ValueUnit&lt; UnitTag, T &gt;" name="xrpl::unit::ValueUnit&lt; UnitTag, T &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="280,165,431,205"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="13,5,224,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="221,49,233,55,268,80,298,110,342,164,338,167,294,113,264,84,231,60,219,53"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="20,69,217,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,111,233,119,280,140,321,163,319,168,277,145,231,124,210,116"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,133,232,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="246,168,280,173,280,178,245,173"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="17,197,221,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="234,199,279,193,280,198,235,204"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="18,261,219,301"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="210,254,231,247,277,226,319,203,321,208,280,230,233,252,212,259"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="35,326,203,381"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="214,321,231,311,263,286,293,257,338,204,342,207,297,260,267,290,233,316,216,325"/>
+</map>

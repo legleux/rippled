@@ -1,0 +1,11 @@
+<map id="xrpl::PeerFinder::Bootcache" name="xrpl::PeerFinder::Bootcache">
+<area shape="rect" id="Node000001" title="Stores IP addresses useful for gaining initial connections." alt="" coords="177,196,377,221"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1PeerFinder_1_1Store.html" title="Abstract persistence for PeerFinder data." alt="" coords="5,101,172,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,130,255,193,252,198,123,135"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1abstract__clock.html" title="Abstract interface to a clock." alt="" coords="197,93,357,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="279,147,279,196,274,196,274,147"/>
+<area shape="rect" id="Node000004" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="381,101,492,126"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="408,135,342,174,299,198,297,193,339,170,405,131"/>
+<area shape="rect" id="Node000005" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="363,5,510,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="439,44,439,101,434,101,434,44"/>
+</map>

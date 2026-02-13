@@ -1,0 +1,9 @@
+<map id="xrpl::test::LPTokenTransfer_test" name="xrpl::test::LPTokenTransfer_test">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,225,229,251"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1test_1_1jtx_1_1AMMTest.html" title=" " alt="" coords="31,152,203,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="120,191,120,225,115,225,115,191"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1test_1_1jtx_1_1AMMTestBase.html" title=" " alt="" coords="15,79,219,104"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="120,118,120,152,115,152,115,118"/>
+<area shape="rect" id="Node000004" href="$classbeast_1_1unit__test_1_1suite.html" title="A testsuite class." alt="" coords="36,5,199,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="120,44,120,79,115,79,115,44"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="xrpl::IOUAmount" name="xrpl::IOUAmount">
+<area shape="rect" id="Node000001" title="Floating point representation of amounts with high dynamic range." alt="" coords="132,93,263,119"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="5,5,171,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="127,51,182,91,179,95,124,56"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="195,13,419,38"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="281,48,215,95,212,91,278,44"/>
+</map>

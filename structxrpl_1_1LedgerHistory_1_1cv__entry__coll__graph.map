@@ -1,0 +1,7 @@
+<map id="xrpl::LedgerHistory::cv_entry" name="xrpl::LedgerHistory::cv_entry">
+<area shape="rect" id="Node000001" title=" " alt="" coords="101,152,247,192"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,5,148,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="71,59,70,94,73,111,80,127,92,140,107,150,104,154,88,144,76,129,68,113,64,94,66,59"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="200,5,345,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="272,60,263,95,245,130,217,154,214,150,241,126,258,93,267,59"/>
+</map>

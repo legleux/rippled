@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['zero_0',['zero',['../classripple_1_1ValidVault.html#aa9ee40d033c2c8ac80df85735100cd0f',1,'ripple::ValidVault']]],
-  ['zerohash_1',['zerohash',['../classripple_1_1RPC_1_1LedgerRequestRPC__test.html#abcecdcec6422dc1575eed82af80462f7',1,'ripple::RPC::LedgerRequestRPC_test']]],
-  ['zeroonedist_5f_2',['zeroOneDist_',['../classripple_1_1test_1_1RandomAccountParams.html#a214d1020f20f43adc31d7c673a347698',1,'ripple::test::RandomAccountParams']]]
+  ['zero_0',['zero',['../classxrpl_1_1ValidVault.html#a5316051a3306cc19f32e1084af5d61b9',1,'xrpl::ValidVault']]],
+  ['zerohash_1',['zerohash',['../classxrpl_1_1RPC_1_1LedgerRequest__test.html#aa86aad86e373af046207bcc43c397318',1,'xrpl::RPC::LedgerRequest_test']]],
+  ['zeroonedist_5f_2',['zeroOneDist_',['../classxrpl_1_1test_1_1RandomAccountParams.html#af7d0d3657bf1159fbe24da45e68286e2',1,'xrpl::test::RandomAccountParams']]]
 ];

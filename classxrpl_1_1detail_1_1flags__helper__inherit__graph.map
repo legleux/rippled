@@ -1,0 +1,7 @@
+<map id="xrpl::detail::flags_helper" name="xrpl::detail::flags_helper">
+<area shape="rect" id="Node000001" title=" " alt="" coords="97,5,228,45"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1test_1_1jtx_1_1flags.html" title="Match set account flags." alt="" coords="5,93,149,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="134,57,92,95,88,91,130,53"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1test_1_1jtx_1_1nflags.html" title="Match clear account flags." alt="" coords="173,93,325,119"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,53,238,91,235,95,192,57"/>
+</map>

@@ -94,11 +94,11 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a7bd10c38927e9300544721c81ba22bb1" id="r_a7bd10c38927e9300544721c81ba22bb1"><td class="memTemplParams" colspan="2">template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;, class Char &gt; </td></tr>
+<tr class="memitem:a7bd10c38927e9300544721c81ba22bb1" id="r_a7bd10c38927e9300544721c81ba22bb1"><td class="memTemplParams" colspan="2">template&lt;class FwdIt , class Result  = std::vector&lt;std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;, class Char &gt; </td></tr>
 <tr class="memitem:a7bd10c38927e9300544721c81ba22bb1"><td class="memTemplItemLeft" align="right" valign="top">Result&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebeast_1_1rfc2616.html#a7bd10c38927e9300544721c81ba22bb1">split</a> (FwdIt first, FwdIt last, Char delim)</td></tr>
 <tr class="memdesc:a7bd10c38927e9300544721c81ba22bb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Parse a character sequence of values separated by commas.  <br /></td></tr>
 <tr class="separator:a7bd10c38927e9300544721c81ba22bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c2f1ae5d7c29a1b452c4fa1d3751e8e" id="r_a4c2f1ae5d7c29a1b452c4fa1d3751e8e"><td class="memTemplParams" colspan="2">template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;&gt; </td></tr>
+<tr class="memitem:a4c2f1ae5d7c29a1b452c4fa1d3751e8e" id="r_a4c2f1ae5d7c29a1b452c4fa1d3751e8e"><td class="memTemplParams" colspan="2">template&lt;class FwdIt , class Result  = std::vector&lt;std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;&gt; </td></tr>
 <tr class="memitem:a4c2f1ae5d7c29a1b452c4fa1d3751e8e"><td class="memTemplItemLeft" align="right" valign="top">Result&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacebeast_1_1rfc2616.html#a4c2f1ae5d7c29a1b452c4fa1d3751e8e">split_commas</a> (FwdIt first, FwdIt last)</td></tr>
 <tr class="separator:a4c2f1ae5d7c29a1b452c4fa1d3751e8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae322de61b901fb85572314f10ab6a100" id="r_ae322de61b901fb85572314f10ab6a100"><td class="memTemplParams" colspan="2">template&lt;class Result  = std::vector&lt;std::string&gt;&gt; </td></tr>
@@ -125,7 +125,7 @@ Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;, class Char &gt; </div>
+template&lt;class FwdIt , class Result  = std::vector&lt;std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;, class Char &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Result beast::rfc2616::split </td>
@@ -156,7 +156,7 @@ template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_stri
 <p>Parse a character sequence of values separated by commas. </p>
 <p>Double quotes and escape sequences will be converted. Excess white space, commas, double quotes, and empty elements are not copied. Format: #(token|quoted-string) Reference: <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2">http://www.w3.org/Protocols/rfc2616/rfc2616-sec2.html#sec2</a> </p>
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00104">104</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00101">101</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>
@@ -166,7 +166,7 @@ template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_stri
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;&gt; </div>
+template&lt;class FwdIt , class Result  = std::vector&lt;std::basic_string&lt;typename std::iterator_traits&lt;FwdIt&gt;::value_type&gt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">Result beast::rfc2616::split_commas </td>
@@ -188,7 +188,7 @@ template&lt;class FwdIt , class Result  = std::vector&lt;        std::basic_stri
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00180">180</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00174">174</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>
@@ -210,7 +210,7 @@ template&lt;class Result  = std::vector&lt;std::string&gt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00187">187</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00181">181</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>
@@ -243,7 +243,7 @@ template&lt;class Result  = std::vector&lt;std::string&gt;&gt; </div>
 <p>Returns true if two strings are equal. </p>
 <p>A case-insensitive comparison is used. </p>
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00337">337</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00327">327</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>
@@ -265,7 +265,7 @@ template&lt;class Result  = std::vector&lt;std::string&gt;&gt; </div>
 
 <p>Returns a range representing the list. </p>
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00344">344</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00334">334</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>
@@ -300,7 +300,7 @@ template&lt;class  = void&gt; </div>
 <p>Returns true if the specified token exists in the list. </p>
 <p>A case-insensitive comparison is used. </p>
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00357">357</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00346">346</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>
@@ -322,7 +322,7 @@ template&lt;bool isRequest, class Body , class Fields &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00367">367</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="rfc2616_8h_source.html#l00356">356</a> of file <a class="el" href="rfc2616_8h_source.html">rfc2616.h</a>.</p>
 
 </div>
 </div>

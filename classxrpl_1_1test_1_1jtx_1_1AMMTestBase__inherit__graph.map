@@ -1,0 +1,15 @@
+<map id="xrpl::test::jtx::AMMTestBase" name="xrpl::test::jtx::AMMTestBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="119,79,323,104"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1test_1_1AMMInfo__test.html" title=" " alt="" coords="31,152,210,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="195,114,139,154,135,150,192,110"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1test_1_1jtx_1_1AMMTest.html" title=" " alt="" coords="235,152,407,177"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="249,110,306,150,303,154,246,114"/>
+<area shape="rect" id="Node000002" href="$classbeast_1_1unit__test_1_1suite.html" title="A testsuite class." alt="" coords="139,5,302,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="223,44,223,79,218,79,218,44"/>
+<area shape="rect" id="Node000005" href="$structxrpl_1_1test_1_1AMMExtended__test.html" title="Tests of AMM that use offers too." alt="" coords="5,225,220,251"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="275,184,147,228,145,223,273,179"/>
+<area shape="rect" id="Node000006" href="$structxrpl_1_1test_1_1AMM__test.html" title="Basic tests of AMM that do not use offers." alt="" coords="244,225,397,251"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="323,191,323,225,318,225,318,191"/>
+<area shape="rect" id="Node000007" href="$classxrpl_1_1test_1_1LPTokenTransfer__test.html" title=" " alt="" coords="422,225,646,251"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="369,179,500,223,499,228,367,184"/>
+</map>

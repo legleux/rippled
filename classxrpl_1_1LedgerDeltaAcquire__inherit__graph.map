@@ -1,0 +1,9 @@
+<map id="xrpl::LedgerDeltaAcquire" name="xrpl::LedgerDeltaAcquire">
+<area shape="rect" id="Node000001" title="Manage the retrieval of a ledger delta (header and transactions) from the network." alt="" coords="303,63,485,88"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1TimeoutCounter.html" title="This class is an &quot;active&quot; object." alt="" coords="50,5,210,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="209,31,255,41,340,60,338,65,254,46,208,36"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,55,255,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="268,73,303,73,303,78,268,78"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="40,119,220,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="226,113,340,85,341,91,227,119"/>
+</map>

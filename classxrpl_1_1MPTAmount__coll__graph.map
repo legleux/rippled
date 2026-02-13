@@ -1,0 +1,13 @@
+<map id="xrpl::MPTAmount" name="xrpl::MPTAmount">
+<area shape="rect" id="Node000001" title=" " alt="" coords="328,127,461,153"/>
+<area shape="rect" id="Node000002" title=" " alt="" coords="36,5,201,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="212,47,233,55,311,91,373,125,370,129,309,96,231,60,210,52"/>
+<area shape="rect" id="Node000003" title=" " alt="" coords="5,70,232,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="194,96,333,125,332,130,193,101"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="13,120,224,160"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="238,137,328,137,328,143,238,143"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="11,184,227,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="219,178,338,150,339,155,220,183"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="71,249,166,274"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="179,249,231,234,273,214,313,192,374,151,377,155,316,196,275,219,233,238,180,254"/>
+</map>

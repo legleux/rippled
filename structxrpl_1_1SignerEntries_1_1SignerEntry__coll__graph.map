@@ -1,0 +1,15 @@
+<map id="xrpl::SignerEntries::SignerEntry" name="xrpl::SignerEntries::SignerEntry">
+<area shape="rect" id="Node000001" title=" " alt="" coords="765,87,907,127"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1base__uint.html" title=" " alt="" coords="487,29,661,69"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="675,69,766,89,764,94,674,74"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="261,11,349,37"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="363,27,487,38,486,44,363,32"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,61,389,101"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="403,67,486,57,487,62,403,72"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,69,108,94"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="122,79,221,79,221,84,122,84"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="523,94,625,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="639,104,765,104,765,109,639,109"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="503,144,645,184"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="658,143,765,119,766,125,659,148"/>
+</map>

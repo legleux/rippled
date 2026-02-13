@@ -1,7 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classripple_1_1detail_1_1flags__helper.html" title=" " alt="" coords="5,37,148,77"/>
-<area shape="rect" id="Node000001" href="$classripple_1_1test_1_1jtx_1_1flags.html" title="Match set account flags." alt="" coords="196,5,321,45"/>
-<area shape="poly" id="edge519_Node000000_Node000001" title=" " alt="" coords="161,40,195,34,196,39,162,45"/>
-<area shape="rect" id="Node000002" href="$classripple_1_1test_1_1jtx_1_1nflags.html" title="Match clear account flags." alt="" coords="196,69,321,109"/>
-<area shape="poly" id="edge520_Node000000_Node000002" title=" " alt="" coords="162,70,196,76,195,81,161,75"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="27,5,178,45"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1Transaction.html" title=" " alt="" coords="248,45,377,70"/>
+<area shape="poly" id="edge680_Node000000_Node000001" title=" " alt="" coords="192,36,248,45,247,50,191,42"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,69,200,109"/>
+<area shape="poly" id="edge681_Node000002_Node000001" title=" " alt="" coords="213,70,247,65,248,70,214,75"/>
 </map>

@@ -1,0 +1,29 @@
+<map id="xrpl::Permission" name="xrpl::Permission">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1215,163,1341,189"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="806,70,958,125"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="972,111,1191,153,1224,161,1223,166,1190,159,971,116"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="517,30,619,55"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="633,51,806,82,805,87,632,56"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="776,5,988,45"/>
+<area shape="poly" id="edge8_Node000008_Node000003" title=" " alt="" coords="633,36,776,29,776,34,633,42"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1base__uint.html" title="Integers of any length that is a multiple of 32&#45;bits." alt="" coords="487,96,649,136"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="663,114,738,112,805,105,806,111,739,117,663,120"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="261,70,349,95"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="363,87,487,103,486,108,362,93"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,120,389,160"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="403,129,462,124,486,122,487,127,463,129,403,135"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,127,108,153"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="122,137,221,137,221,143,122,143"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="1002,41,1097,65,1145,82,1192,103,1235,132,1266,161,1263,165,1231,136,1189,108,1143,87,1095,70,1001,46"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="763,227,1001,282"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="1014,228,1190,193,1223,186,1224,191,1191,199,1015,233"/>
+<area shape="rect" id="Node000010" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="525,211,611,237"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="626,227,763,240,762,246,625,232"/>
+<area shape="rect" id="Node000012" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="783,149,981,203"/>
+<area shape="poly" id="edge13_Node000012_Node000010" title=" " alt="" coords="625,213,782,189,783,194,626,218"/>
+<area shape="rect" id="Node000011" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="236,204,375,244"/>
+<area shape="poly" id="edge11_Node000010_Node000011" title=" " alt="" coords="389,221,524,221,524,227,389,227"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="995,173,1215,173,1215,179,995,179"/>
+<area shape="rect" id="Node000013" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="783,306,981,361"/>
+<area shape="poly" id="edge14_Node000001_Node000013" title=" " alt="" coords="994,312,1091,286,1142,268,1189,246,1231,217,1263,187,1266,191,1235,221,1192,250,1144,273,1093,291,995,317"/>
+</map>

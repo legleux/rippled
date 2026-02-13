@@ -1,0 +1,5 @@
+<map id="xrpl::ValidClawback" name="xrpl::ValidClawback">
+<area shape="rect" id="Node000001" title="Invariant: Token holder&#39;s trustline balance cannot be negative after Clawback." alt="" coords="5,108,156,133"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="29,5,132,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="83,45,83,108,78,108,78,45"/>
+</map>

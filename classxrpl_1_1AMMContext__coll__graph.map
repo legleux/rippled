@@ -1,0 +1,15 @@
+<map id="xrpl::AMMContext" name="xrpl::AMMContext">
+<area shape="rect" id="Node000001" title="Maintains AMM info per overall payment engine execution and individual iteration." alt="" coords="142,313,281,339"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,218,100,243"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="73,252,91,271,113,287,139,301,167,311,165,316,137,306,110,292,88,275,69,256"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1base__uint.html" title=" " alt="" coords="124,211,299,251"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="214,265,214,313,209,313,209,265"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="109,101,197,126"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="167,137,204,209,199,212,162,140"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,93,389,133"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="283,146,229,212,225,209,278,143"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="253,5,356,31"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="307,44,307,93,302,93,302,44"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="323,218,425,243"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="346,253,281,292,235,316,233,311,278,287,343,248"/>
+</map>

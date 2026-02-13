@@ -1,0 +1,24 @@
+<map id="xrpl::TrustedVotes" name="xrpl::TrustedVotes">
+<area shape="rect" id="Node000001" title="TrustedVotes records the most recent votes from trusted validators." alt="" coords="1733,48,1872,73"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="1311,33,1580,88"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1594,58,1733,58,1733,63,1594,63"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1PublicKey.html" title="A public key." alt="" coords="509,20,627,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="641,32,1287,53,1311,53,1310,59,1287,58,641,38"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="261,76,349,101"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="362,74,508,43,509,48,364,79"/>
+<area shape="rect" id="Node000008" href="$classxrpl_1_1base__uint.html" title="Integers of any length that is a multiple of 32&#45;bits." alt="" coords="487,134,649,174"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="364,100,488,131,486,137,362,105"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="258,5,353,31"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="367,19,508,27,508,32,367,24"/>
+<area shape="rect" id="Node000006" href="$structxrpl_1_1TrustedVotes_1_1UpvotesAndTimeout.html" title=" " alt="" coords="1035,70,1197,110"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="1211,79,1310,70,1311,75,1211,84"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="777,134,915,174"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="928,132,1034,107,1035,112,929,137"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="663,151,777,151,777,157,663,157"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,149,389,189"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="403,167,462,165,486,163,486,168,463,170,403,172"/>
+<area shape="rect" id="Node000010" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,156,108,181"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="122,166,221,166,221,171,122,171"/>
+<area shape="rect" id="Node000011" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="763,70,929,110"/>
+<area shape="poly" id="edge11_Node000006_Node000011" title=" " alt="" coords="943,87,1035,87,1035,93,943,93"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="xrpl::CollectorManager" name="xrpl::CollectorManager">
+<area shape="rect" id="Node000001" title="Provides the beast::insight::Collector service." alt="" coords="17,5,188,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1CollectorManagerImp.html" title=" " alt="" coords="5,79,200,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,44,105,79,100,79,100,44"/>
+</map>

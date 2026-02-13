@@ -1,0 +1,9 @@
+<map id="xrpl::test::csf::CollectByNode&lt; CollectorType &gt;" name="xrpl::test::csf::CollectByNode&lt; CollectorType &gt;">
+<area shape="rect" id="Node000001" title="Maintain an instance of a Collector per peer." alt="" coords="867,57,1057,97"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/map.html" title=" " alt="" coords="577,57,764,97"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="778,74,866,74,866,79,778,79"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1tagged__integer.html" title="A type&#45;safe wrap around standard integral types." alt="" coords="341,57,495,97"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="508,74,577,74,577,79,508,79"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,5,292,148"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="306,74,341,74,341,79,306,79"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="xrpl::FlowOfferStream&lt; TIn, TOut &gt;" name="xrpl::FlowOfferStream&lt; TIn, TOut &gt;">
+<area shape="rect" id="Node000001" title="Presents and consumes the offers in an order book." alt="" coords="10,93,175,133"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1TOfferStreamBase.html" title=" " alt="" coords="5,5,180,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="95,59,95,93,90,93,90,59"/>
+</map>

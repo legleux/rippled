@@ -81,44 +81,40 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">Work.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XRPL_APP_MISC_DETAIL_WORK_H_INCLUDED</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XRPL_APP_MISC_DETAIL_WORK_H_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;boost/beast/http/message.hpp&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;boost/beast/http/string_body.hpp&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceripple.html">ripple</a> {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>detail {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="namespaceripple_1_1detail.html#aeb2a1b7b18c8dd127461be172a910a66">   11</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespaceripple_1_1detail.html#aeb2a1b7b18c8dd127461be172a910a66">response_type</a> =</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    boost::beast::http::response&lt;boost::beast::http::string_body&gt;;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classripple_1_1detail_1_1Work.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="classripple_1_1detail_1_1Work.html">Work</a></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="classripple_1_1detail_1_1Work.html#a9a030009a5e1b80afc95774d504a397a">   17</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="classripple_1_1detail_1_1Work.html#a9a030009a5e1b80afc95774d504a397a">~Work</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classripple_1_1detail_1_1Work.html#a9fe9c929a9e21f162a78efe8f6bc2842">   20</a></span>    <a class="code hl_function" href="classripple_1_1detail_1_1Work.html#a9fe9c929a9e21f162a78efe8f6bc2842">run</a>() = 0;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="classripple_1_1detail_1_1Work.html#a157da65c7565e5016a6f9481bc045770">   23</a></span>    <a class="code hl_function" href="classripple_1_1detail_1_1Work.html#a157da65c7565e5016a6f9481bc045770">cancel</a>() = 0;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>};</div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;boost/beast/http/message.hpp&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;boost/beast/http/string_body.hpp&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacexrpl.html">xrpl</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>detail {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="namespacexrpl_1_1detail.html#afa4ffdf07349a512e21ba5d017a62bf8">   10</a></span><span class="keyword">using </span><a class="code hl_typedef" href="namespacexrpl_1_1detail.html#afa4ffdf07349a512e21ba5d017a62bf8">response_type</a> = boost::beast::http::response&lt;boost::beast::http::string_body&gt;;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classxrpl_1_1detail_1_1Work.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="classxrpl_1_1detail_1_1Work.html">Work</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classxrpl_1_1detail_1_1Work.html#afa173b7f03b9f3059196a39fa54c9ad8">   15</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="classxrpl_1_1detail_1_1Work.html#afa173b7f03b9f3059196a39fa54c9ad8">~Work</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="classxrpl_1_1detail_1_1Work.html#a1cf672d5d369be5d90258e9f3bd28580">   18</a></span>    <a class="code hl_function" href="classxrpl_1_1detail_1_1Work.html#a1cf672d5d369be5d90258e9f3bd28580">run</a>() = 0;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classxrpl_1_1detail_1_1Work.html#a3f77d6a54ca9ce4eb83d410051db06b1">   21</a></span>    <a class="code hl_function" href="classxrpl_1_1detail_1_1Work.html#a3f77d6a54ca9ce4eb83d410051db06b1">cancel</a>() = 0;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>};</div>
 </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}  <span class="comment">// namespace detail</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}  <span class="comment">// namespace detail</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}  <span class="comment">// namespace ripple</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassripple_1_1detail_1_1Work_html"><div class="ttname"><a href="classripple_1_1detail_1_1Work.html">ripple::detail::Work</a></div><div class="ttdef"><b>Definition</b> <a href="Work_8h_source.html#l00014">Work.h:15</a></div></div>
-<div class="ttc" id="aclassripple_1_1detail_1_1Work_html_a157da65c7565e5016a6f9481bc045770"><div class="ttname"><a href="classripple_1_1detail_1_1Work.html#a157da65c7565e5016a6f9481bc045770">ripple::detail::Work::cancel</a></div><div class="ttdeci">virtual void cancel()=0</div></div>
-<div class="ttc" id="aclassripple_1_1detail_1_1Work_html_a9a030009a5e1b80afc95774d504a397a"><div class="ttname"><a href="classripple_1_1detail_1_1Work.html#a9a030009a5e1b80afc95774d504a397a">ripple::detail::Work::~Work</a></div><div class="ttdeci">virtual ~Work()=default</div></div>
-<div class="ttc" id="aclassripple_1_1detail_1_1Work_html_a9fe9c929a9e21f162a78efe8f6bc2842"><div class="ttname"><a href="classripple_1_1detail_1_1Work.html#a9fe9c929a9e21f162a78efe8f6bc2842">ripple::detail::Work::run</a></div><div class="ttdeci">virtual void run()=0</div></div>
-<div class="ttc" id="anamespaceripple_1_1detail_html_aeb2a1b7b18c8dd127461be172a910a66"><div class="ttname"><a href="namespaceripple_1_1detail.html#aeb2a1b7b18c8dd127461be172a910a66">ripple::detail::response_type</a></div><div class="ttdeci">boost::beast::http::response&lt; boost::beast::http::string_body &gt; response_type</div><div class="ttdef"><b>Definition</b> <a href="Work_8h_source.html#l00011">Work.h:12</a></div></div>
-<div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00006">algorithm.h:6</a></div></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="ttc" id="aclassxrpl_1_1detail_1_1Work_html"><div class="ttname"><a href="classxrpl_1_1detail_1_1Work.html">xrpl::detail::Work</a></div><div class="ttdef"><b>Definition</b> <a href="Work_8h_source.html#l00012">Work.h:13</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1detail_1_1Work_html_a1cf672d5d369be5d90258e9f3bd28580"><div class="ttname"><a href="classxrpl_1_1detail_1_1Work.html#a1cf672d5d369be5d90258e9f3bd28580">xrpl::detail::Work::run</a></div><div class="ttdeci">virtual void run()=0</div></div>
+<div class="ttc" id="aclassxrpl_1_1detail_1_1Work_html_a3f77d6a54ca9ce4eb83d410051db06b1"><div class="ttname"><a href="classxrpl_1_1detail_1_1Work.html#a3f77d6a54ca9ce4eb83d410051db06b1">xrpl::detail::Work::cancel</a></div><div class="ttdeci">virtual void cancel()=0</div></div>
+<div class="ttc" id="aclassxrpl_1_1detail_1_1Work_html_afa173b7f03b9f3059196a39fa54c9ad8"><div class="ttname"><a href="classxrpl_1_1detail_1_1Work.html#afa173b7f03b9f3059196a39fa54c9ad8">xrpl::detail::Work::~Work</a></div><div class="ttdeci">virtual ~Work()=default</div></div>
+<div class="ttc" id="anamespacexrpl_1_1detail_html_afa4ffdf07349a512e21ba5d017a62bf8"><div class="ttname"><a href="namespacexrpl_1_1detail.html#afa4ffdf07349a512e21ba5d017a62bf8">xrpl::detail::response_type</a></div><div class="ttdeci">boost::beast::http::response&lt; boost::beast::http::string_body &gt; response_type</div><div class="ttdef"><b>Definition</b> <a href="Work_8h_source.html#l00010">Work.h:10</a></div></div>
+<div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

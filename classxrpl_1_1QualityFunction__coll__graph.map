@@ -1,0 +1,14 @@
+<map id="xrpl::QualityFunction" name="xrpl::QualityFunction">
+<area shape="rect" id="Node000001" title="Average quality of a path as a function of out: q(out) = m * out + b, where m = &#45;1 / poolGets,..." alt="" coords="773,94,931,119"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values." alt="" coords="525,67,631,93"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="646,84,773,96,773,102,645,89"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,37,108,62"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,36,132,35,165,35,315,31,381,33,464,43,507,52,545,65,543,70,505,58,464,48,381,38,315,37,165,40,132,40,122,41"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1MantissaRange.html" title="MantissaRange defines a range for the mantissa of a normalized Number." alt="" coords="198,67,353,93"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="122,62,132,64,198,72,198,77,132,69,121,67"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="366,77,524,77,524,83,366,83"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/functional/reference_wrapper.html" title=" " alt="" coords="189,117,361,171"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="374,120,524,89,525,94,375,126"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="488,117,668,142"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="682,128,749,124,795,117,796,122,750,129,682,133"/>
+</map>

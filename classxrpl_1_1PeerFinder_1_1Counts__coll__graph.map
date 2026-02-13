@@ -1,0 +1,5 @@
+<map id="xrpl::PeerFinder::Counts" name="xrpl::PeerFinder::Counts">
+<area shape="rect" id="Node000001" title="Manages the count of available connections for the various slots." alt="" coords="5,196,183,221"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="50,5,138,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,45,97,196,91,196,91,45"/>
+</map>

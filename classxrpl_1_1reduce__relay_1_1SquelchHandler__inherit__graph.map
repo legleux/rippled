@@ -1,0 +1,9 @@
+<map id="xrpl::reduce_relay::SquelchHandler" name="xrpl::reduce_relay::SquelchHandler">
+<area shape="rect" id="Node000001" title="Abstract class." alt="" coords="177,5,315,45"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1OverlayImpl.html" title=" " alt="" coords="5,101,140,126"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="197,54,97,103,95,98,195,49"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1test_1_1OverlaySim.html" title=" " alt="" coords="164,101,328,126"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="249,59,249,100,243,100,243,59"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1test_1_1reduce__relay__test_1_1Handler.html" title=" " alt="" coords="352,93,505,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="300,49,390,91,388,96,297,54"/>
+</map>

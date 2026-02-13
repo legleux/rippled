@@ -1,0 +1,15 @@
+<map id="xrpl::test::jtx::oracle::RemoveArg" name="xrpl::test::jtx::oracle::RemoveArg">
+<area shape="rect" id="Node000001" title=" " alt="" coords="280,156,433,196"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,5,148,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="160,47,209,67,257,91,301,122,337,154,333,158,298,126,255,96,207,72,158,52"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="7,69,146,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="160,107,257,135,308,153,306,158,255,140,159,112"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="25,134,128,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="142,151,280,165,280,171,141,156"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,184,148,224"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="161,196,256,188,279,185,280,190,256,193,162,202"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,248,148,288"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="161,245,255,216,311,194,313,199,257,221,162,250"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,312,148,352"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="159,305,208,286,255,262,299,228,335,194,339,198,303,232,257,266,210,291,161,310"/>
+</map>

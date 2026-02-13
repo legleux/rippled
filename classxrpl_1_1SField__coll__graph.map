@@ -1,0 +1,16 @@
+<map id="xrpl::SField" name="xrpl::SField">
+<area shape="rect" id="Node000001" title="Identifies fields." alt="" coords="445,77,540,102"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="720,130,872,185"/>
+<area shape="poly" id="edge5_Node000005_Node000001" title=" " alt="" coords="510,112,534,140,548,153,565,163,603,175,643,179,682,178,720,173,720,179,683,183,643,184,602,180,563,168,545,157,530,144,506,115"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="720,17,872,71"/>
+<area shape="poly" id="edge8_Node000006_Node000001" title=" " alt="" coords="554,94,623,96,695,88,747,69,748,74,697,93,623,102,554,99"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="216,13,303,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="317,38,446,74,445,79,315,43"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="316,22,486,23,696,31,720,33,720,38,696,36,486,28,316,27"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,5,144,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="158,23,216,23,216,28,158,28"/>
+<area shape="rect" id="Node000004" href="$classJson_1_1StaticString.html" title="Lightweight wrapper to tag static string." alt="" coords="193,77,325,102"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="339,87,445,87,445,92,339,92"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="706,150,636,138,563,121,520,105,522,100,565,116,637,133,707,145"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="706,56,564,76,541,81,540,75,564,71,706,51"/>
+</map>

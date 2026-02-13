@@ -1,0 +1,33 @@
+<map id="xrpl::path::detail::FlowDebugInfo::PassInfo" name="xrpl::path::detail::FlowDebugInfo::PassInfo">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1399,212,1589,252"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="812,163,951,203"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="964,176,1153,175,1264,181,1375,195,1435,209,1434,214,1374,200,1264,187,1153,180,964,181"/>
+<area shape="rect" id="Node000015" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="1064,212,1253,252"/>
+<area shape="poly" id="edge16_Node000015_Node000002" title=" " alt="" coords="965,195,1064,213,1063,218,964,200"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1EitherAmount.html" title=" " alt="" coords="555,170,699,195"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="712,180,812,180,812,185,712,185"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1IOUAmount.html" title="Floating point representation of amounts with high dynamic range." alt="" coords="351,87,481,113"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="463,115,594,167,592,172,461,120"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="35,5,201,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="215,44,327,72,373,85,371,90,326,77,213,49"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="6,70,230,95"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="244,87,351,94,350,99,243,93"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="71,119,165,145"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="179,126,326,112,350,109,351,114,327,117,179,131"/>
+<area shape="rect" id="Node000008" href="$classxrpl_1_1XRPAmount.html" title=" " alt="" coords="351,214,481,239"/>
+<area shape="poly" id="edge12_Node000008_Node000007" title=" " alt="" coords="180,141,231,155,280,172,328,191,382,211,380,216,326,196,278,177,230,160,178,147"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="490,209,565,193,566,198,491,214"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="35,169,201,209"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="215,199,351,216,350,221,214,204"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="5,234,231,259"/>
+<area shape="poly" id="edge9_Node000008_Node000010" title=" " alt="" coords="244,236,350,228,351,234,245,241"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="13,284,223,324"/>
+<area shape="poly" id="edge10_Node000008_Node000011" title=" " alt="" coords="209,278,365,237,367,242,210,283"/>
+<area shape="rect" id="Node000012" title=" " alt="" coords="11,348,225,388"/>
+<area shape="poly" id="edge11_Node000008_Node000012" title=" " alt="" coords="210,341,230,334,278,310,324,283,395,237,398,242,327,288,281,315,232,338,212,346"/>
+<area shape="rect" id="Node000013" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="1079,277,1238,302"/>
+<area shape="poly" id="edge13_Node000001_Node000013" title=" " alt="" coords="1247,272,1398,246,1399,251,1248,277"/>
+<area shape="rect" id="Node000014" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="837,277,925,302"/>
+<area shape="poly" id="edge14_Node000013_Node000014" title=" " alt="" coords="939,287,1079,287,1079,292,939,292"/>
+<area shape="poly" id="edge15_Node000001_Node000015" title=" " alt="" coords="1267,229,1399,229,1399,235,1267,235"/>
+</map>

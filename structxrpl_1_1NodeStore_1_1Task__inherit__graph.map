@@ -1,0 +1,5 @@
+<map id="xrpl::NodeStore::Task" name="xrpl::NodeStore::Task">
+<area shape="rect" id="Node000001" title="Derived classes perform scheduled tasks." alt="" coords="29,5,189,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStore_1_1BatchWriter.html" title="Batch&#45;writing assist logic." alt="" coords="5,79,213,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="112,44,112,79,107,79,107,44"/>
+</map>

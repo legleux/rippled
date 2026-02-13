@@ -1,0 +1,22 @@
+<map id="xrpl::reduce_relay::Slot&lt; clock_type &gt;" name="xrpl::reduce_relay::Slot&lt; clock_type &gt;">
+<area shape="rect" id="Node000001" title="Slot is associated with a specific validator via validator&#39;s public key." alt="" coords="781,156,936,196"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="451,69,605,139"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="619,121,782,157,781,162,618,126"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="209,26,311,51"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="326,52,451,83,450,88,325,57"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_set.html" title=" " alt="" coords="457,5,599,45"/>
+<area shape="poly" id="edge6_Node000006_Node000003" title=" " alt="" coords="325,33,456,26,456,32,325,38"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1reduce__relay_1_1Slot_1_1PeerInfo.html" title="Data maintained for each peer." alt="" coords="183,89,337,143"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="351,114,427,112,450,110,450,116,427,117,351,120"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="5,103,93,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="108,113,182,113,182,119,108,119"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="612,47,684,73,759,106,799,129,833,154,830,158,796,134,756,110,683,78,610,52"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="477,163,579,189"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="593,173,781,173,781,179,593,179"/>
+<area shape="rect" id="Node000008" href="$classxrpl_1_1reduce__relay_1_1SquelchHandler.html" title="Abstract class." alt="" coords="459,213,597,253"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="611,218,757,193,780,189,781,194,758,199,612,223"/>
+<area shape="rect" id="Node000009" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="473,278,583,303"/>
+<area shape="poly" id="edge9_Node000001_Node000009" title=" " alt="" coords="596,278,674,261,756,235,795,215,828,194,831,199,797,220,758,240,676,267,597,283"/>
+<area shape="rect" id="Node000010" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="187,278,333,303"/>
+<area shape="poly" id="edge10_Node000009_Node000010" title=" " alt="" coords="347,288,473,288,473,293,347,293"/>
+</map>

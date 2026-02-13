@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['category_0',['category',['../classripple_1_1TrafficCount.html#adbaee77c7a063c9aac783e54594aeda7',1,'ripple::TrafficCount::category'],['../classripple_1_1TxConsequences.html#af40159818c89963a904c9c4c0848cae9',1,'ripple::TxConsequences::Category']]],
-  ['chaintype_1',['ChainType',['../classripple_1_1STXChainBridge.html#a3b751ce2ed6b3f2cbde126e6e2d2f051',1,'ripple::STXChainBridge']]],
+  ['category_0',['category',['../classxrpl_1_1TrafficCount.html#a93a9bbac038b491a59722cb03d5285b3',1,'xrpl::TrafficCount::category'],['../classxrpl_1_1TxConsequences.html#a33f37210f363c069e6faa24cbdfd2231',1,'xrpl::TxConsequences::Category']]],
+  ['chaintype_1',['ChainType',['../classxrpl_1_1STXChainBridge.html#a35d2aae0feb4eb5b15ff5165d46c6f96',1,'xrpl::STXChainBridge']]],
   ['collectiontype_2',['CollectionType',['../classJson_1_1Writer.html#a53ecc840ddaba276dc429fd953d41ae0',1,'Json::Writer']]],
-  ['compressed_3',['Compressed',['../namespaceripple_1_1compression.html#a63d59b12f7e712c378860771ef3fdf5f',1,'ripple::compression']]],
-  ['condition_4',['Condition',['../namespaceripple_1_1RPC.html#a1ea15d2823ab0dfcdedc8fbc31c6a782',1,'ripple::RPC']]],
-  ['connectionstep_5',['ConnectionStep',['../classripple_1_1ConnectAttempt.html#afb1f4f2f566ea89049b4ff534ea4e236',1,'ripple::ConnectAttempt']]],
-  ['consensusmode_6',['ConsensusMode',['../namespaceripple.html#a33f8b6e68b5f63faf2e9755cc251563e',1,'ripple']]],
-  ['consensusphase_7',['ConsensusPhase',['../namespaceripple.html#a77adb10ef53a2e25195ccd38b46bfe9b',1,'ripple']]],
-  ['consensusstate_8',['ConsensusState',['../namespaceripple.html#a79cc3b590c118bd551b693bb333fb9d1',1,'ripple']]],
-  ['consequencesfactorytype_9',['ConsequencesFactoryType',['../classripple_1_1Transactor.html#a5c6d16e9402d182a835f50b37ce9a938',1,'ripple::Transactor']]]
+  ['compressed_3',['Compressed',['../namespacexrpl_1_1compression.html#afa1b05e6d181cde4f9fe013d5de84724',1,'xrpl::compression']]],
+  ['condition_4',['Condition',['../namespacexrpl_1_1RPC.html#a326b7cf1183b6f7b5a7fb711ff446f1d',1,'xrpl::RPC']]],
+  ['connectionstep_5',['ConnectionStep',['../classxrpl_1_1ConnectAttempt.html#a8411edc1709c039e0480f18a7138e5fa',1,'xrpl::ConnectAttempt']]],
+  ['consensusmode_6',['ConsensusMode',['../namespacexrpl.html#a1a5168a12a682f75ba179f4d0b53fa71',1,'xrpl']]],
+  ['consensusphase_7',['ConsensusPhase',['../namespacexrpl.html#a9c8671744cdb738dd01373eea36c285f',1,'xrpl']]],
+  ['consensusstate_8',['ConsensusState',['../namespacexrpl.html#a7b535130885568516b37cbb912cc6f2f',1,'xrpl']]],
+  ['consequencesfactorytype_9',['ConsequencesFactoryType',['../classxrpl_1_1Transactor.html#a9420945fd34d224b81b68fd3dcc9fed6',1,'xrpl::Transactor']]]
 ];

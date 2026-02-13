@@ -81,30 +81,27 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">Task.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef XRPL_NODESTORE_TASK_H_INCLUDED</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define XRPL_NODESTORE_TASK_H_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceripple.html">ripple</a> {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span>NodeStore {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="structripple_1_1NodeStore_1_1Task.html">    8</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structripple_1_1NodeStore_1_1Task.html">Task</a></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>{</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="structripple_1_1NodeStore_1_1Task.html#ab19643df31f79516d1b06f5cc1d4a359">   10</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="structripple_1_1NodeStore_1_1Task.html#ab19643df31f79516d1b06f5cc1d4a359">~Task</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="structripple_1_1NodeStore_1_1Task.html#a1ed44e570fe3bd98407aae13a554ec2b">   16</a></span>    <a class="code hl_function" href="structripple_1_1NodeStore_1_1Task.html#a1ed44e570fe3bd98407aae13a554ec2b">performScheduledTask</a>() = 0;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>};</div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacexrpl.html">xrpl</a> {</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span>NodeStore {</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="foldopen" id="foldopen00007" data-start="{" data-end="};">
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="structxrpl_1_1NodeStore_1_1Task.html">    7</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structxrpl_1_1NodeStore_1_1Task.html">Task</a></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>{</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="structxrpl_1_1NodeStore_1_1Task.html#ab81b085fedfe4bf85fc25f1447c7fc68">    9</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="structxrpl_1_1NodeStore_1_1Task.html#ab81b085fedfe4bf85fc25f1447c7fc68">~Task</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">virtual</span> <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structxrpl_1_1NodeStore_1_1Task.html#ad33e6991fa18519ca3eac9b852a77f1a">   15</a></span>    <a class="code hl_function" href="structxrpl_1_1NodeStore_1_1Task.html#ad33e6991fa18519ca3eac9b852a77f1a">performScheduledTask</a>() = 0;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>};</div>
 </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}  <span class="comment">// namespace NodeStore</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>}  <span class="comment">// namespace ripple</span></div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00006">algorithm.h:6</a></div></div>
-<div class="ttc" id="astructripple_1_1NodeStore_1_1Task_html"><div class="ttname"><a href="structripple_1_1NodeStore_1_1Task.html">ripple::NodeStore::Task</a></div><div class="ttdoc">Derived classes perform scheduled tasks.</div><div class="ttdef"><b>Definition</b> <a href="Task_8h_source.html#l00008">Task.h:9</a></div></div>
-<div class="ttc" id="astructripple_1_1NodeStore_1_1Task_html_a1ed44e570fe3bd98407aae13a554ec2b"><div class="ttname"><a href="structripple_1_1NodeStore_1_1Task.html#a1ed44e570fe3bd98407aae13a554ec2b">ripple::NodeStore::Task::performScheduledTask</a></div><div class="ttdeci">virtual void performScheduledTask()=0</div><div class="ttdoc">Performs the task.</div></div>
-<div class="ttc" id="astructripple_1_1NodeStore_1_1Task_html_ab19643df31f79516d1b06f5cc1d4a359"><div class="ttname"><a href="structripple_1_1NodeStore_1_1Task.html#ab19643df31f79516d1b06f5cc1d4a359">ripple::NodeStore::Task::~Task</a></div><div class="ttdeci">virtual ~Task()=default</div></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>}  <span class="comment">// namespace NodeStore</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
+<div class="ttc" id="astructxrpl_1_1NodeStore_1_1Task_html"><div class="ttname"><a href="structxrpl_1_1NodeStore_1_1Task.html">xrpl::NodeStore::Task</a></div><div class="ttdoc">Derived classes perform scheduled tasks.</div><div class="ttdef"><b>Definition</b> <a href="Task_8h_source.html#l00007">Task.h:8</a></div></div>
+<div class="ttc" id="astructxrpl_1_1NodeStore_1_1Task_html_ab81b085fedfe4bf85fc25f1447c7fc68"><div class="ttname"><a href="structxrpl_1_1NodeStore_1_1Task.html#ab81b085fedfe4bf85fc25f1447c7fc68">xrpl::NodeStore::Task::~Task</a></div><div class="ttdeci">virtual ~Task()=default</div></div>
+<div class="ttc" id="astructxrpl_1_1NodeStore_1_1Task_html_ad33e6991fa18519ca3eac9b852a77f1a"><div class="ttname"><a href="structxrpl_1_1NodeStore_1_1Task.html#ad33e6991fa18519ca3eac9b852a77f1a">xrpl::NodeStore::Task::performScheduledTask</a></div><div class="ttdeci">virtual void performScheduledTask()=0</div><div class="ttdoc">Performs the task.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

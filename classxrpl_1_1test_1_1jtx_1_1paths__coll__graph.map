@@ -1,0 +1,17 @@
+<map id="xrpl::test::jtx::paths" name="xrpl::test::jtx::paths">
+<area shape="rect" id="Node000001" title="Set Paths, SendMax on a JTx." alt="" coords="932,69,1081,94"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1Issue.html" title="A currency issued by an account." alt="" coords="771,69,860,94"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="874,79,932,79,932,84,874,84"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1base__uint.html" title=" " alt="" coords="491,29,657,69"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="671,60,771,73,770,78,671,65"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="261,39,349,65"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="362,38,413,32,490,34,490,39,413,37,363,44"/>
+<area shape="rect" id="Node000007" href="$classxrpl_1_1base__uint.html" title=" " alt="" coords="487,93,661,133"/>
+<area shape="poly" id="edge7_Node000007_Node000004" title=" " alt="" coords="363,62,487,91,486,96,362,67"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,105,389,145"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="402,120,433,114,461,103,473,92,485,79,508,67,510,72,488,83,477,96,464,108,434,119,403,126"/>
+<area shape="poly" id="edge8_Node000007_Node000005" title=" " alt="" coords="374,146,418,154,462,152,497,143,529,131,531,136,498,148,463,157,417,159,373,151"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,113,108,138"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="122,123,221,123,221,128,122,128"/>
+<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="675,99,746,89,770,86,771,91,747,95,676,104"/>
+</map>

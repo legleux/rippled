@@ -1,0 +1,9 @@
+<map id="xrpl::SHAMapInnerNode" name="xrpl::SHAMapInnerNode">
+<area shape="rect" id="Node000001" title=" " alt="" coords="105,167,282,192"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1SHAMapTreeNode.html" title=" " alt="" coords="9,86,180,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="122,118,180,164,177,169,118,122"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1IntrusiveRefCounts.html" title="Implement the strong count, weak count, and bit flags for an intrusive pointer." alt="" coords="5,5,184,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="97,44,97,86,92,86,92,44"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="205,79,379,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="259,129,210,168,206,164,256,125"/>
+</map>

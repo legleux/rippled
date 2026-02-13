@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['waivetransferfee_0',['WaiveTransferFee',['../namespaceripple.html#a9d22f4d38ac33f4258a0205f8e11d27e',1,'ripple']]],
-  ['warning_5fcode_5fi_1',['warning_code_i',['../namespaceripple.html#a53248e40c0a268c7c59fbe4a6e1179d9',1,'ripple']]],
-  ['whichfields_2',['WhichFields',['../classripple_1_1STObject.html#abfe55ede147301d55de3383deb20b288',1,'ripple::STObject']]],
-  ['withclaim_3',['WithClaim',['../structripple_1_1test_1_1XChainSim__test.html#a8026d7aa1a8bb042ae0fbdfe71fcacb7',1,'ripple::test::XChainSim_test']]],
-  ['withdrawall_4',['WithdrawAll',['../namespaceripple.html#a0ef1f7396e14a26a1d23238d68149a63',1,'ripple']]],
-  ['withfile_5',['WithFile',['../classripple_1_1PerfLog__test.html#a47194dbb7ad14c946919c6e54ae25f7e',1,'ripple::PerfLog_test']]]
+  ['waivetransferfee_0',['WaiveTransferFee',['../namespacexrpl.html#a53be00cb856ef39ec60e33cf9694b5eb',1,'xrpl']]],
+  ['warning_5fcode_5fi_1',['warning_code_i',['../namespacexrpl.html#aff4a654e77b3765dc81c4d840a01f5ec',1,'xrpl']]],
+  ['whichfields_2',['WhichFields',['../classxrpl_1_1STObject.html#acbc2f1206c07ff922ae7e6ad960c23fb',1,'xrpl::STObject']]],
+  ['withclaim_3',['WithClaim',['../structxrpl_1_1test_1_1XChainSim__test.html#a04fa2e085d2ceda924228e1a4a595fb9',1,'xrpl::test::XChainSim_test']]],
+  ['withdrawall_4',['WithdrawAll',['../namespacexrpl.html#a177f7e4b1df6ee8f4d1e11e3cd0b183c',1,'xrpl']]],
+  ['withfile_5',['WithFile',['../classxrpl_1_1PerfLog__test.html#aa16f728937d929c8a9a32d490f9c8a5c',1,'xrpl::PerfLog_test']]]
 ];

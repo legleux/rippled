@@ -1,0 +1,7 @@
+<map id="xrpl::STBitString&lt; Bits &gt;" name="xrpl::STBitString&lt; Bits &gt;">
+<area shape="rect" id="Node000001" title=" " alt="" coords="70,93,209,133"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1STBase.html" title="A type which can be exported to a well known binary format." alt="" coords="5,13,108,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,46,123,91,119,95,75,50"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="133,5,311,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="196,57,160,95,156,91,192,54"/>
+</map>

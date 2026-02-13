@@ -1,0 +1,7 @@
+<map id="xrpl::BaseHTTPPeer&lt; Handler, Impl &gt;" name="xrpl::BaseHTTPPeer&lt; Handler, Impl &gt;">
+<area shape="rect" id="Node000001" title="Represents an active connection." alt="" coords="69,79,220,119"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1io__list_1_1work.html" title=" " alt="" coords="5,5,140,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,39,129,77,125,80,90,43"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Session.html" title="Persistent state information for a connection session." alt="" coords="164,5,269,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="199,43,164,80,160,77,195,39"/>
+</map>

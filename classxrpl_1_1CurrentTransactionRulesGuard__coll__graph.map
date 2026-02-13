@@ -1,0 +1,5 @@
+<map id="xrpl::CurrentTransactionRulesGuard" name="xrpl::CurrentTransactionRulesGuard">
+<area shape="rect" id="Node000001" title="RAII class to set and restore the current transaction rules." alt="" coords="5,108,183,148"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="23,5,165,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="97,59,97,108,91,108,91,59"/>
+</map>

@@ -1,0 +1,9 @@
+<map id="xrpl::detail::WorkPlain" name="xrpl::detail::WorkPlain">
+<area shape="rect" id="Node000001" title=" " alt="" coords="105,167,271,192"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1detail_1_1WorkBase.html" title=" " alt="" coords="5,79,171,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,125,175,164,171,168,121,129"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1detail_1_1Work.html" title=" " alt="" coords="21,5,155,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="91,44,91,79,85,79,85,44"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="195,79,381,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="255,129,205,168,201,164,251,125"/>
+</map>

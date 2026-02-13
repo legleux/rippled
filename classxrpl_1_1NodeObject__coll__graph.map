@@ -1,0 +1,18 @@
+<map id="xrpl::NodeObject" name="xrpl::NodeObject">
+<area shape="rect" id="Node000001" title="A simple object that the Ledger uses to store entries." alt="" coords="764,90,895,115"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="509,5,659,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="674,43,741,63,802,87,800,92,739,68,672,48"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="261,90,349,115"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="363,100,764,100,764,105,363,105"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1base__uint.html" title="Integers of any length that is a multiple of 32&#45;bits." alt="" coords="503,132,665,172"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="361,117,414,129,503,142,502,148,413,135,360,122"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="678,130,765,113,766,118,679,136"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="221,152,389,192"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="403,177,478,175,509,169,510,175,479,180,403,183"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,159,108,185"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="122,169,221,169,221,175,122,175"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="519,203,649,229"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="630,196,664,182,739,148,805,113,807,118,741,153,666,186,632,201"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="286,217,325,242"/>
+<area shape="poly" id="edge8_Node000007_Node000008" title=" " alt="" coords="338,226,479,220,519,218,519,223,479,225,339,231"/>
+</map>

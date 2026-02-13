@@ -1,0 +1,27 @@
+<map id="xrpl::TxQ::FeeMetrics" name="xrpl::TxQ::FeeMetrics">
+<area shape="rect" id="Node000001" title="Track and use the fee escalation metrics of the current open ledger." alt="" coords="649,227,809,252"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="341,147,429,172"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="443,165,530,180,626,202,695,224,693,229,625,207,529,186,442,170"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="315,197,454,237"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="468,219,649,231,649,237,468,225"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1unit_1_1ValueUnit.html" title=" " alt="" coords="309,261,460,301"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="474,268,625,250,649,247,649,252,626,255,474,273"/>
+<area shape="rect" id="Node000005" title=" " alt="" coords="15,5,199,60"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="202,65,211,71,238,92,256,112,288,165,296,189,297,209,300,228,311,247,325,258,321,262,307,250,295,229,292,210,290,190,283,167,252,115,234,96,208,75,199,69"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="9,85,206,125"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="199,128,211,134,236,152,253,170,288,214,299,231,311,247,329,258,326,263,308,251,294,235,283,217,249,173,233,157,208,139,197,133"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="6,149,209,204"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="195,207,331,258,330,263,193,212"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="5,229,209,269"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="223,259,310,269,309,275,222,265"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="7,293,208,333"/>
+<area shape="poly" id="edge8_Node000004_Node000009" title=" " alt="" coords="221,297,309,287,309,292,222,302"/>
+<area shape="rect" id="Node000010" title=" " alt="" coords="15,357,199,412"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="193,350,330,298,331,303,195,355"/>
+<area shape="rect" id="Node000011" title=" " alt="" coords="88,436,127,461"/>
+<area shape="poly" id="edge10_Node000004_Node000011" title=" " alt="" coords="140,442,174,434,208,421,255,393,298,360,363,299,366,303,301,364,258,397,210,426,175,439,141,447"/>
+<area shape="rect" id="Node000012" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="329,389,440,415"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="425,381,624,288,701,250,704,255,626,292,427,386"/>
+<area shape="rect" id="Node000013" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="34,485,181,511"/>
+<area shape="poly" id="edge12_Node000012_Node000013" title=" " alt="" coords="194,505,240,502,284,490,312,474,337,454,372,413,376,417,341,457,315,479,286,495,241,507,194,510"/>
+</map>

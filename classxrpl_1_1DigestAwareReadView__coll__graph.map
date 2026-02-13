@@ -1,0 +1,15 @@
+<map id="xrpl::DigestAwareReadView" name="xrpl::DigestAwareReadView">
+<area shape="rect" id="Node000001" title="ReadView that associates keys with digests." alt="" coords="216,5,419,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="5,121,125,147"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="93,111,148,76,215,41,253,28,255,33,217,46,151,80,96,116"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="221,55,413,95"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="133,116,230,93,231,98,135,121"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="221,245,413,285"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="83,157,112,194,130,213,151,228,185,243,222,253,221,259,183,248,148,232,127,217,108,198,79,160"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1ReadView_1_1sles__type.html" title=" " alt="" coords="468,99,657,124"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="454,122,419,125,126,135,126,130,419,119,454,117"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="427,89,476,96,475,101,427,94"/>
+<area shape="rect" id="Node000005" href="$structxrpl_1_1ReadView_1_1txs__type.html" title=" " alt="" coords="471,200,654,225"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="468,201,125,146,126,141,469,195"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="425,239,501,223,502,228,426,244"/>
+</map>

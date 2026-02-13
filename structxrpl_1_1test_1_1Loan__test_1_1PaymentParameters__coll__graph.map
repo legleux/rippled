@@ -1,0 +1,16 @@
+<map id="xrpl::test::Loan_test::PaymentParameters" name="xrpl::test::Loan_test::PaymentParameters">
+<area shape="rect" id="Node000001" title=" " alt="" coords="809,119,971,159"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values." alt="" coords="506,69,613,94"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="627,89,786,116,810,120,809,126,785,121,626,94"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,38,108,63"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,37,132,36,165,36,250,34,316,31,381,32,465,44,500,54,532,66,530,71,498,59,463,49,381,38,316,37,250,40,165,41,132,41,122,42"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1MantissaRange.html" title="MantissaRange defines a range for the mantissa of a normalized Number." alt="" coords="198,69,353,94"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="122,63,132,65,198,73,198,79,132,71,121,69"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="366,79,506,79,506,84,366,84"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/functional/reference_wrapper.html" title=" " alt="" coords="189,118,361,173"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="374,120,505,91,506,96,375,126"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="488,119,631,159"/>
+<area shape="poly" id="edge6_Node000001_Node000006" title=" " alt="" coords="645,136,809,136,809,141,645,141"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="508,183,611,209"/>
+<area shape="poly" id="edge7_Node000001_Node000007" title=" " alt="" coords="624,183,785,156,809,152,810,157,786,161,625,189"/>
+</map>

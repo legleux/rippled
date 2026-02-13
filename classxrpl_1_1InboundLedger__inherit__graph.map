@@ -1,0 +1,9 @@
+<map id="xrpl::InboundLedger" name="xrpl::InboundLedger">
+<area shape="rect" id="Node000001" title=" " alt="" coords="271,63,421,88"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1TimeoutCounter.html" title="This class is an &quot;active&quot; object." alt="" coords="34,5,194,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="184,31,223,41,298,60,297,65,222,46,183,36"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,55,223,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="237,73,270,73,270,78,237,78"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="39,119,189,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="200,113,298,86,300,91,201,118"/>
+</map>

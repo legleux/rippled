@@ -1,0 +1,13 @@
+<map id="xrpl::ReadView::txs_type" name="xrpl::ReadView::txs_type">
+<area shape="rect" id="Node000001" title=" " alt="" coords="245,5,427,31"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="223,93,343,119"/>
+<area shape="poly" id="edge6_Node000003_Node000001" title=" " alt="" coords="324,44,292,94,288,91,319,41"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="300,181,492,221"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="383,169,337,32,342,30,388,167"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="300,129,324,155,359,179,356,183,321,159,296,132"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="5,181,197,221"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="231,126,185,145,126,183,123,179,183,140,229,121"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1ReadView_1_1sles__type.html" title=" " alt="" coords="79,271,268,296"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="186,258,273,117,278,120,190,260"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="130,230,165,269,161,272,126,234"/>
+</map>

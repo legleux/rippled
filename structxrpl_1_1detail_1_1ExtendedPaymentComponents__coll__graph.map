@@ -1,0 +1,15 @@
+<map id="xrpl::detail::ExtendedPaymentComponents" name="xrpl::detail::ExtendedPaymentComponents">
+<area shape="rect" id="Node000001" title=" " alt="" coords="1128,63,1347,103"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1detail_1_1PaymentComponents.html" title=" " alt="" coords="840,102,1079,127"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1083,98,1128,93,1128,98,1084,103"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values." alt="" coords="488,71,595,97"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="608,69,618,68,756,61,894,60,1128,71,1127,76,893,66,756,66,619,73,609,74"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="580,100,619,112,675,120,732,124,840,123,840,128,732,129,674,125,618,117,579,105"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="5,41,108,66"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="121,40,132,39,165,39,250,36,316,32,382,33,465,47,494,56,519,69,517,74,492,61,463,52,381,38,316,37,250,42,165,44,132,44,122,45"/>
+<area shape="rect" id="Node000005" href="$structxrpl_1_1MantissaRange.html" title="MantissaRange defines a range for the mantissa of a normalized Number." alt="" coords="198,71,353,97"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="122,66,132,68,198,76,198,81,132,73,121,71"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="366,81,488,81,488,87,366,87"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/functional/reference_wrapper.html" title=" " alt="" coords="189,121,361,175"/>
+<area shape="poly" id="edge6_Node000003_Node000006" title=" " alt="" coords="374,123,463,101,492,94,493,99,465,107,375,128"/>
+</map>

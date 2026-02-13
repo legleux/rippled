@@ -1,0 +1,9 @@
+<map id="xrpl::ResolverAsioImpl" name="xrpl::ResolverAsioImpl">
+<area shape="rect" id="Node000001" title=" " alt="" coords="76,167,245,192"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ResolverAsio.html" title=" " alt="" coords="5,86,145,111"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="100,119,150,164,146,168,96,123"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1Resolver.html" title=" " alt="" coords="19,5,131,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="78,44,78,86,73,86,73,44"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1AsyncObject.html" title=" " alt="" coords="170,79,325,119"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="218,130,175,168,172,164,214,126"/>
+</map>

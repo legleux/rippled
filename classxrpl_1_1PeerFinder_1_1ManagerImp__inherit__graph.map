@@ -1,0 +1,7 @@
+<map id="xrpl::PeerFinder::ManagerImp" name="xrpl::PeerFinder::ManagerImp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,167,220,192"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1PeerFinder_1_1Manager.html" title="Maintains a set of IP addresses used for getting into the network." alt="" coords="18,93,207,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="115,132,115,167,110,167,110,132"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1PropertyStream_1_1Source.html" title="Subclasses can be called to write to a stream and have children." alt="" coords="29,5,197,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="115,59,115,93,110,93,110,59"/>
+</map>

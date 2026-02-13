@@ -1,0 +1,17 @@
+<map id="xrpl::KnownFormats&lt; KeyType, Derived &gt;::Item" name="xrpl::KnownFormats&lt; KeyType, Derived &gt;::Item">
+<area shape="rect" id="Node000001" title="A known format." alt="" coords="238,387,403,441"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1SOTemplate.html" title="Defines the fields and their attributes within a STObject." alt="" coords="187,299,321,324"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="264,336,276,361,295,385,290,388,272,364,259,338"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="22,196,161,236"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="129,242,177,272,227,296,224,301,174,277,126,246"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1SOElement.html" title="An element in a SOTemplate." alt="" coords="28,108,155,133"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="94,147,94,196,89,196,89,147"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/functional/reference_wrapper.html" title=" " alt="" coords="5,5,177,45"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,59,94,108,89,108,89,59"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="185,203,323,229"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="257,242,257,299,251,299,251,242"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="359,299,445,324"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="386,336,344,388,340,385,382,333"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="347,196,486,236"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="414,250,406,299,401,298,409,249"/>
+</map>

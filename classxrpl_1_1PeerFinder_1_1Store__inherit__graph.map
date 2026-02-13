@@ -1,0 +1,7 @@
+<map id="xrpl::PeerFinder::Store" name="xrpl::PeerFinder::Store">
+<area shape="rect" id="Node000001" title="Abstract persistence for PeerFinder data." alt="" coords="135,5,301,31"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1PeerFinder_1_1PeerFinder__test_1_1TestStore.html" title=" " alt="" coords="5,79,207,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="192,41,135,81,131,76,189,36"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1PeerFinder_1_1StoreSqdb.html" title="Database persistence for PeerFinder using SQLite." alt="" coords="231,86,429,111"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="248,37,315,84,312,88,245,41"/>
+</map>

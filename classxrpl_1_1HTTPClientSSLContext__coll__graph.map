@@ -1,0 +1,7 @@
+<map id="xrpl::HTTPClientSSLContext" name="xrpl::HTTPClientSSLContext">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,181,207,207"/>
+<area shape="rect" id="Node000002" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="51,93,161,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="109,133,109,181,103,181,103,133"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="33,5,179,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="109,45,109,93,103,93,103,45"/>
+</map>

@@ -1,11 +1,10 @@
 var searchData=
 [
-  ['reason_0',['Reason',['../classripple_1_1InboundLedger.html#a3e8d7f8b5fa089a184dcc9b00b6e0da7',1,'ripple::InboundLedger']]],
-  ['refstrength_1',['RefStrength',['../classripple_1_1SharedWeakUnion.html#ab942abc90076d8d32944861198eb1c4b',1,'ripple::SharedWeakUnion']]],
-  ['releasestrongrefaction_2',['ReleaseStrongRefAction',['../namespaceripple.html#ac34a69f56216ea1e430c09ba049bf0ae',1,'ripple']]],
-  ['releaseweakrefaction_3',['ReleaseWeakRefAction',['../namespaceripple.html#a3b64e12be521bde0f95af971c64faf71',1,'ripple']]],
-  ['requirefullycanonicalsig_4',['RequireFullyCanonicalSig',['../classripple_1_1STTx.html#a8bb1ca29546758e0fe3e97d1753e3d8d',1,'ripple::STTx']]],
-  ['result_5',['result',['../classripple_1_1OpenLedger.html#a96bb5c3c9dfae39b054eedc8d6026a97',1,'ripple::OpenLedger::Result'],['../namespaceripple_1_1PeerFinder.html#ae15e107cb3b0b67dbf43bd4a0a229c15',1,'ripple::PeerFinder::Result']]],
-  ['role_6',['Role',['../namespaceripple.html#ae08fe18f17b24699ce41d3898fbb8c2c',1,'ripple']]],
-  ['rounding_5fmode_7',['rounding_mode',['../classripple_1_1Number.html#a33e3d8e7a95979bd1eb22c59703c8534',1,'ripple::Number']]]
+  ['reason_0',['Reason',['../classxrpl_1_1InboundLedger.html#ade00c970d116ec643a4ac7e050b26991',1,'xrpl::InboundLedger']]],
+  ['refstrength_1',['RefStrength',['../classxrpl_1_1SharedWeakUnion.html#a5794cb2d0256c15fbd8e54ed226ed712',1,'xrpl::SharedWeakUnion']]],
+  ['releasestrongrefaction_2',['ReleaseStrongRefAction',['../namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3',1,'xrpl']]],
+  ['releaseweakrefaction_3',['ReleaseWeakRefAction',['../namespacexrpl.html#ae5105aa43ab313d66422a20124fc1116',1,'xrpl']]],
+  ['result_4',['result',['../classxrpl_1_1OpenLedger.html#a9b1e78dd3d9a43e9abbdb2e54f43e74d',1,'xrpl::OpenLedger::Result'],['../namespacexrpl_1_1PeerFinder.html#aac5d7764141c8e3ce52d8d6909a217fc',1,'xrpl::PeerFinder::Result']]],
+  ['role_5',['Role',['../namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7',1,'xrpl']]],
+  ['rounding_5fmode_6',['rounding_mode',['../classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95',1,'xrpl::Number']]]
 ];

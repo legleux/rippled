@@ -1,0 +1,7 @@
+<map id="xrpl::short_read_test::Server::Acceptor" name="xrpl::short_read_test::Server::Acceptor">
+<area shape="rect" id="Node000001" title=" " alt="" coords="101,93,257,133"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1short__read__test_1_1Base_1_1Child.html" title=" " alt="" coords="5,5,161,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="117,53,160,91,156,95,113,57"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="186,5,365,45"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="245,57,202,95,199,91,242,53"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="xrpl::TaggedPointer" name="xrpl::TaggedPointer">
+<area shape="rect" id="Node000001" title="TaggedPointer is a combination of a pointer and a mask stored in the lowest two bits." alt="" coords="5,123,152,148"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="26,5,131,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,44,81,123,76,123,76,44"/>
+</map>

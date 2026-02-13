@@ -1,0 +1,21 @@
+<map id="xrpl::NodeStore::NuDBBackend" name="xrpl::NodeStore::NuDBBackend">
+<area shape="rect" id="Node000001" title=" " alt="" coords="576,160,799,185"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStore_1_1Backend.html" title="A backend used for the NodeStore." alt="" coords="256,5,443,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="416,31,447,39,501,51,525,57,553,69,590,90,624,115,674,158,671,162,620,119,587,95,551,74,523,62,500,56,446,45,415,37"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="298,55,401,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="415,75,482,89,553,109,613,133,664,158,661,162,611,138,551,114,481,94,414,80"/>
+<area shape="rect" id="Node000004" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="294,104,405,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="418,121,552,139,637,157,635,163,552,145,418,126"/>
+<area shape="rect" id="Node000005" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="5,104,152,129"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="166,114,294,114,294,119,166,119"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="305,156,393,181"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="407,167,471,169,576,170,576,175,471,174,407,173"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="306,205,393,231"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="406,209,552,190,603,183,604,188,552,195,407,214"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="9,198,148,238"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="162,215,306,215,306,221,162,221"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/atomic/atomic.html" title=" " alt="" coords="273,255,426,280"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="433,249,551,221,655,183,657,188,553,226,434,255"/>
+<area shape="rect" id="Node000010" href="$classxrpl_1_1NodeStore_1_1Scheduler.html" title="Scheduling for asynchronous backend activity." alt="" coords="252,304,447,329"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="415,298,446,290,500,278,551,261,618,222,669,184,672,188,621,226,553,266,501,284,447,295,416,303"/>
+</map>

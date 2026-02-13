@@ -1,0 +1,17 @@
+<map id="xrpl::CollectorManagerImp" name="xrpl::CollectorManagerImp">
+<area shape="rect" id="Node000001" title=" " alt="" coords="617,79,812,104"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1CollectorManager.html" title="Provides the beast::insight::Collector service." alt="" coords="299,5,470,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="474,31,594,55,671,76,670,81,593,61,473,36"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1Journal.html" title="A generic endpoint for log messages." alt="" coords="329,55,440,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="454,70,617,82,617,87,453,75"/>
+<area shape="rect" id="Node000004" href="$classbeast_1_1Journal_1_1Sink.html" title="Abstraction for the underlying message destination." alt="" coords="20,55,167,80"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="181,65,329,65,329,70,181,70"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/shared_ptr.html" title=" " alt="" coords="281,104,488,129"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="502,107,593,101,617,99,617,104,594,106,502,113"/>
+<area shape="rect" id="Node000006" href="$classbeast_1_1insight_1_1Collector.html" title="Interface for a manager that allows collection of metrics." alt="" coords="5,104,181,129"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="195,114,281,114,281,119,195,119"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/unique_ptr.html" title=" " alt="" coords="299,154,470,194"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="483,153,593,127,676,102,678,107,594,133,484,158"/>
+<area shape="rect" id="Node000008" href="$classbeast_1_1insight_1_1Groups.html" title="A container for managing a set of metric groups." alt="" coords="11,161,175,187"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="189,171,299,171,299,177,189,177"/>
+</map>

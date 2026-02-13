@@ -1,0 +1,9 @@
+<map id="xrpl::BaseWSPeer&lt; Handler, Impl &gt;" name="xrpl::BaseWSPeer&lt; Handler, Impl &gt;">
+<area shape="rect" id="Node000001" title="Represents an active WebSocket connection." alt="" coords="86,167,293,207"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1BasePeer.html" title=" " alt="" coords="5,79,192,119"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,126,171,165,167,168,127,130"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1io__list_1_1work.html" title=" " alt="" coords="31,5,166,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="101,44,101,79,96,79,96,44"/>
+<area shape="rect" id="Node000004" href="$structxrpl_1_1WSSession.html" title=" " alt="" coords="217,86,343,111"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="260,123,211,168,208,165,256,119"/>
+</map>

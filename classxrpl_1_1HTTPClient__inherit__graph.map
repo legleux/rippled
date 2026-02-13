@@ -1,0 +1,5 @@
+<map id="xrpl::HTTPClient" name="xrpl::HTTPClient">
+<area shape="rect" id="Node000001" title="Provides an asynchronous HTTP client implementation with optional SSL." alt="" coords="18,5,145,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1HTTPClientImp.html" title=" " alt="" coords="5,79,157,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="84,44,84,79,79,79,79,44"/>
+</map>

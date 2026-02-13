@@ -1,0 +1,9 @@
+<map id="xrpl::AccountRootsDeletedClean" name="xrpl::AccountRootsDeletedClean">
+<area shape="rect" id="Node000001" title="Invariant: a deleted account must not have any objects left." alt="" coords="885,27,1080,67"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="485,5,716,89"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="730,45,885,45,885,50,730,50"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/pair.html" title=" " alt="" coords="139,13,372,82"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="386,45,485,45,485,50,386,50"/>
+<area shape="rect" id="Node000004" title=" " alt="" coords="5,35,44,60"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="58,45,138,45,138,50,58,50"/>
+</map>

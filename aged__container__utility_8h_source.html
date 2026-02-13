@@ -81,42 +81,37 @@ $(document).ready(function() { init_codefold(0); });
   <div class="headertitle"><div class="title">aged_container_utility.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef BEAST_CONTAINER_AGED_CONTAINER_UTILITY_H_INCLUDED</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define BEAST_CONTAINER_AGED_CONTAINER_UTILITY_H_INCLUDED</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;xrpl/beast/container/aged_container.h&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/chrono.html">chrono</a>&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/type_traits.html">type_traits</a>&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebeast.html">beast</a> {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> AgedContainer, <span class="keyword">class</span> Rep, <span class="keyword">class</span> Period&gt;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">typename</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/enable_if.html">std::enable_if&lt;is_aged_container&lt;AgedContainer&gt;::value</a>, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&gt;::</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    type</div>
-<div class="foldopen" id="foldopen00015" data-start="{" data-end="}">
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="namespacebeast.html#abb430a45381177561de02886079786ad">   15</a></span>    <a class="code hl_function" href="namespacebeast.html#abb430a45381177561de02886079786ad">expire</a>(AgedContainer&amp; c, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::duration&lt;Rep, Period&gt;</a> <span class="keyword">const</span>&amp; age)</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>{</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> n(0);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">auto</span> <span class="keyword">const</span> expired(c.clock().now() - age);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> iter(c.chronological.cbegin());</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>         iter != c.chronological.cend() &amp;&amp; iter.when() &lt;= expired;)</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        iter = c.erase(iter);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        ++n;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    }</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">return</span> n;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}</div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;xrpl/beast/container/aged_container.h&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/chrono.html">chrono</a>&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="codeRef" href="http://en.cppreference.com/w/cpp/header/type_traits.html">type_traits</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacebeast.html">beast</a> {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> AgedContainer, <span class="keyword">class</span> Rep, <span class="keyword">class</span> Period&gt;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">typename</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/enable_if.html">std::enable_if&lt;is_aged_container&lt;AgedContainer&gt;::value</a>, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&gt;::type</div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="}">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="namespacebeast.html#abb430a45381177561de02886079786ad">   13</a></span><a class="code hl_function" href="namespacebeast.html#abb430a45381177561de02886079786ad">expire</a>(AgedContainer&amp; c, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::duration&lt;Rep, Period&gt;</a> <span class="keyword">const</span>&amp; age)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> n(0);</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">auto</span> <span class="keyword">const</span> expired(c.clock().now() - age);</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordflow">for</span> (<span class="keyword">auto</span> iter(c.chronological.cbegin()); iter != c.chronological.cend() &amp;&amp; iter.when() &lt;= expired;)</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        iter = c.erase(iter);</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        ++n;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    }</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="keywordflow">return</span> n;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>}</div>
 </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}  <span class="comment">// namespace beast</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}  <span class="comment">// namespace beast</span></div>
 <div class="ttc" id="achrono_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/chrono.html">chrono</a></div></div>
 <div class="ttc" id="aduration_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::duration</a></div></div>
 <div class="ttc" id="aenable_if_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/enable_if.html">std::enable_if</a></div></div>
-<div class="ttc" id="anamespacebeast_html"><div class="ttname"><a href="namespacebeast.html">beast</a></div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00653">base_uint.h:653</a></div></div>
-<div class="ttc" id="anamespacebeast_html_abb430a45381177561de02886079786ad"><div class="ttname"><a href="namespacebeast.html#abb430a45381177561de02886079786ad">beast::expire</a></div><div class="ttdeci">std::enable_if&lt; is_aged_container&lt; AgedContainer &gt;::value, std::size_t &gt;::type expire(AgedContainer &amp;c, std::chrono::duration&lt; Rep, Period &gt; const &amp;age)</div><div class="ttdoc">Expire aged container items past the specified age.</div><div class="ttdef"><b>Definition</b> <a href="aged__container__utility_8h_source.html#l00015">aged_container_utility.h:15</a></div></div>
+<div class="ttc" id="anamespacebeast_html"><div class="ttname"><a href="namespacebeast.html">beast</a></div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00637">base_uint.h:637</a></div></div>
+<div class="ttc" id="anamespacebeast_html_abb430a45381177561de02886079786ad"><div class="ttname"><a href="namespacebeast.html#abb430a45381177561de02886079786ad">beast::expire</a></div><div class="ttdeci">std::enable_if&lt; is_aged_container&lt; AgedContainer &gt;::value, std::size_t &gt;::type expire(AgedContainer &amp;c, std::chrono::duration&lt; Rep, Period &gt; const &amp;age)</div><div class="ttdoc">Expire aged container items past the specified age.</div><div class="ttdef"><b>Definition</b> <a href="aged__container__utility_8h_source.html#l00013">aged_container_utility.h:13</a></div></div>
 <div class="ttc" id="asize_t_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a></div></div>
 <div class="ttc" id="atype_traits_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/type_traits.html">type_traits</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

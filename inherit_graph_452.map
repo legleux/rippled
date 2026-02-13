@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classripple_1_1packed__spinlock.html" title="Classes to handle arrays of spinlocks packed into a single atomic integer:" alt="" coords="5,5,217,31"/>
+<area shape="rect" id="Node000000" title=" " alt="" coords="5,5,160,31"/>
+<area shape="rect" id="Node000001" href="$structstd_1_1hash_3_01xrpl_1_1NodeID_01_4.html" title=" " alt="" coords="208,5,400,31"/>
+<area shape="poly" id="edge715_Node000000_Node000001" title=" " alt="" coords="174,15,208,15,208,21,174,21"/>
 </map>

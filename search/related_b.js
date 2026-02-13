@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['rcltxset_0',['RCLTxSet',['../classripple_1_1RCLTxSet_1_1MutableTxSet.html#ae77e0f98f13b953d575d7872bf6e1186',1,'ripple::RCLTxSet::MutableTxSet']]],
-  ['ripple_3a_3adetail_3a_3astvar_1',['STVar',['../classripple_1_1STInteger.html#aa19bf94528b7060c0be2bce480531c68',1,'ripple::STInteger']]]
+  ['rcltxset_0',['RCLTxSet',['../classxrpl_1_1RCLTxSet_1_1MutableTxSet.html#ae77e0f98f13b953d575d7872bf6e1186',1,'xrpl::RCLTxSet::MutableTxSet']]],
+  ['root_1',['root',['../classxrpl_1_1Number.html#af59083b29186c11c2808135c5ff075b8',1,'xrpl::Number']]],
+  ['root2_2',['root2',['../classxrpl_1_1Number.html#ab83e07ef7e17606d7bcaeabe05ec1236',1,'xrpl::Number']]]
 ];

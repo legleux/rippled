@@ -1,0 +1,7 @@
+<map id="xrpl::perf::PerfLog" name="xrpl::perf::PerfLog">
+<area shape="rect" id="Node000001" title="Singleton class that maintains performance counters and optionally writes Json&#45;formatted data to a di..." alt="" coords="111,5,249,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1perf_1_1PerfLogImp.html" title="Implementation class for PerfLog." alt="" coords="5,79,168,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,41,104,81,100,76,153,37"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1perf_1_1PerfLogTest.html" title=" " alt="" coords="192,79,355,104"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="207,37,260,76,256,81,204,41"/>
+</map>

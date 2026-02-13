@@ -1,0 +1,5 @@
+<map id="xrpl::detail::basic_sha512_half_hasher&lt; Secure &gt;" name="xrpl::detail::basic_sha512_half_hasher&lt; Secure &gt;">
+<area shape="rect" id="Node000001" title="Returns the SHA512&#45;Half digest of a message." alt="" coords="5,108,164,163"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1openssl__sha512__hasher.html" title="SHA&#45;512 digest." alt="" coords="5,5,164,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="87,59,87,108,82,108,82,59"/>
+</map>

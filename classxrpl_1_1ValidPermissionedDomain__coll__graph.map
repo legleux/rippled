@@ -1,0 +1,9 @@
+<map id="xrpl::ValidPermissionedDomain" name="xrpl::ValidPermissionedDomain">
+<area shape="rect" id="Node000001" title="Invariants: Permissioned Domains must have some rules and AcceptedCredentials must have length betwee..." alt="" coords="5,313,232,339"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/vector.html" title=" " alt="" coords="22,196,215,251"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,264,121,313,116,313,116,264"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1ValidPermissionedDomain_1_1SleStatus.html" title=" " alt="" coords="5,93,232,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="121,147,121,196,116,196,116,147"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="75,5,163,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="121,44,121,93,116,93,116,44"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="xrpl::test::jtx::dtag" name="xrpl::test::jtx::dtag">
+<area shape="rect" id="Node000001" title="Set the destination tag on a JTx." alt="" coords="5,93,148,119"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="25,5,128,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,45,79,93,74,93,74,45"/>
+</map>

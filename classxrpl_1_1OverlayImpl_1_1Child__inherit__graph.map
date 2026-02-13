@@ -1,0 +1,13 @@
+<map id="xrpl::OverlayImpl::Child" name="xrpl::OverlayImpl::Child">
+<area shape="rect" id="Node000001" title=" " alt="" coords="5,55,148,95"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ConnectAttempt.html" title="Manages outbound peer connection attempts with comprehensive timeout handling." alt="" coords="196,5,357,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="159,49,231,28,232,33,161,54"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1OverlayImpl_1_1Timer.html" title=" " alt="" coords="205,55,348,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="162,73,205,73,205,78,162,78"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1PeerImp.html" title="This class manages established peer&#45;to&#45;peer connections, handles message exchange,..." alt="" coords="222,120,331,145"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="161,97,232,117,231,122,159,102"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1test_1_1TMGetObjectByHash__test_1_1PeerTest.html" title="Test peer that captures sent messages for verification." alt="" coords="405,81,596,121"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="345,120,405,112,406,117,345,126"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1test_1_1tx__reduce__relay__test_1_1PeerTest.html" title=" " alt="" coords="422,145,579,185"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="345,140,422,151,422,156,345,145"/>
+</map>

@@ -1,0 +1,15 @@
+<map id="xrpl::test::jtx::MPT" name="xrpl::test::jtx::MPT">
+<area shape="rect" id="Node000001" title="Converts to MPT Issue or STAmount." alt="" coords="80,299,221,324"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="31,211,118,236"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="96,245,142,296,138,300,92,248"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,93,144,133"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="77,147,77,210,72,210,72,147"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1base__uint.html" title=" " alt="" coords="142,211,314,236"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="210,248,163,300,159,296,206,245"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/size_t.html" title=" " alt="" coords="176,101,264,126"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="225,140,230,210,224,210,219,140"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/array.html" title=" " alt="" coords="288,93,456,133"/>
+<area shape="poly" id="edge5_Node000004_Node000006" title=" " alt="" coords="339,144,280,189,247,213,243,208,277,185,336,140"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="321,5,423,31"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="375,44,375,93,369,93,369,44"/>
+</map>

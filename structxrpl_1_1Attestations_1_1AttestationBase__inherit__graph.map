@@ -1,0 +1,7 @@
+<map id="xrpl::Attestations::AttestationBase" name="xrpl::Attestations::AttestationBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="104,5,239,45"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1Attestations_1_1AttestationClaim.html" title=" " alt="" coords="5,93,145,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="141,57,98,95,95,91,138,53"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1Attestations_1_1AttestationCreateAccount.html" title=" " alt="" coords="170,93,367,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="205,52,249,91,245,95,201,56"/>
+</map>

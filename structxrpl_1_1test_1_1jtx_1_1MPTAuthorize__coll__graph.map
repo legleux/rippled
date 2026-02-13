@@ -1,0 +1,11 @@
+<map id="xrpl::test::jtx::MPTAuthorize" name="xrpl::test::jtx::MPTAuthorize">
+<area shape="rect" id="Node000001" title=" " alt="" coords="288,114,491,139"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="5,5,160,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="162,47,265,80,354,111,352,116,263,85,161,52"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="11,69,154,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="168,97,288,112,287,117,167,102"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="13,144,152,184"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,165,214,163,264,159,309,149,351,137,352,142,311,154,264,164,215,169,166,170"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="11,208,154,248"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="167,211,263,185,319,162,365,137,368,142,321,166,265,191,168,216"/>
+</map>

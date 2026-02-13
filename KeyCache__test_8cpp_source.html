@@ -88,28 +88,28 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;xrpl/basics/chrono.h&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;xrpl/protocol/Protocol.h&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespaceripple.html">ripple</a> {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespacexrpl.html">xrpl</a> {</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classripple_1_1KeyCache__test.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="classripple_1_1KeyCache__test.html">KeyCache_test</a> : <span class="keyword">public</span> <a class="code hl_class" href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classxrpl_1_1KeyCache__test.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="classxrpl_1_1KeyCache__test.html">KeyCache_test</a> : <span class="keyword">public</span> <a class="code hl_class" href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>{</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">public</span>:</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keywordtype">void</span></div>
 <div class="foldopen" id="foldopen00014" data-start="{" data-end="}">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classripple_1_1KeyCache__test.html#ac70741753afa2cdc404aebed08b691f2">   14</a></span>    <a class="code hl_function" href="classripple_1_1KeyCache__test.html#ac70741753afa2cdc404aebed08b691f2">run</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classxrpl_1_1KeyCache__test.html#a4cfdf74327a3750cec258c511d21a25e">   14</a></span>    <a class="code hl_function" href="classxrpl_1_1KeyCache__test.html#a4cfdf74327a3750cec258c511d21a25e">run</a>()<span class="keyword"> override</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">    </span>{</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">using namespace </span>std::chrono_literals;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <a class="code hl_class" href="classbeast_1_1manual__clock.html">TestStopwatch</a> clock;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        clock.set(0);</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">using </span>Key = <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">using </span>Cache = <a class="code hl_class" href="classripple_1_1TaggedCache.html">TaggedCache&lt;Key, int, true&gt;</a>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">using </span>Cache = <a class="code hl_class" href="classxrpl_1_1TaggedCache.html">TaggedCache&lt;Key, int, true&gt;</a>;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_class" href="classripple_1_1test_1_1SuiteJournal.html">test::SuiteJournal</a> j(<span class="stringliteral">&quot;KeyCacheTest&quot;</span>, *<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_class" href="classxrpl_1_1test_1_1SuiteJournal.html">test::SuiteJournal</a> j(<span class="stringliteral">&quot;KeyCacheTest&quot;</span>, *<span class="keyword">this</span>);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="comment">// Insert an item, retrieve it, and age it so it gets purged.</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            Cache c(<span class="stringliteral">&quot;test&quot;</span>, <a class="code hl_typedef" href="namespaceripple.html#a12af8e98b794e8ee3b4dbecaed2a4efd">LedgerIndex</a>(1), 2s, clock, j);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            Cache c(<span class="stringliteral">&quot;test&quot;</span>, <a class="code hl_typedef" href="namespacexrpl.html#a93f5d90cfd55a948d64156c16029ad9b">LedgerIndex</a>(1), 2s, clock, j);</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            BEAST_EXPECT(c.size() == 0);</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            BEAST_EXPECT(c.insert(<span class="stringliteral">&quot;one&quot;</span>));</div>
@@ -127,7 +127,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="comment">// Insert two items, have one expire</span></div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        {</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            Cache c(<span class="stringliteral">&quot;test&quot;</span>, <a class="code hl_typedef" href="namespaceripple.html#a12af8e98b794e8ee3b4dbecaed2a4efd">LedgerIndex</a>(2), 2s, clock, j);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            Cache c(<span class="stringliteral">&quot;test&quot;</span>, <a class="code hl_typedef" href="namespacexrpl.html#a93f5d90cfd55a948d64156c16029ad9b">LedgerIndex</a>(2), 2s, clock, j);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            BEAST_EXPECT(c.insert(<span class="stringliteral">&quot;one&quot;</span>));</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            BEAST_EXPECT(c.size() == 1);</div>
@@ -144,7 +144,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="comment">// Insert three items (1 over limit), sweep</span></div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            Cache c(<span class="stringliteral">&quot;test&quot;</span>, <a class="code hl_typedef" href="namespaceripple.html#a12af8e98b794e8ee3b4dbecaed2a4efd">LedgerIndex</a>(2), 3s, clock, j);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            Cache c(<span class="stringliteral">&quot;test&quot;</span>, <a class="code hl_typedef" href="namespacexrpl.html#a93f5d90cfd55a948d64156c16029ad9b">LedgerIndex</a>(2), 3s, clock, j);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            BEAST_EXPECT(c.insert(<span class="stringliteral">&quot;one&quot;</span>));</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            ++clock;</div>
@@ -161,18 +161,18 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>};</div>
 </div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="namespaceripple.html#abd64e56fd6571625afd4c5a3935faf78">   77</a></span>BEAST_DEFINE_TESTSUITE(<a class="code hl_class" href="classripple_1_1TaggedCache.html">KeyCache</a>, basics, <a class="code hl_namespace" href="namespaceripple.html">ripple</a>);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a63654c5b1ab0f4b91950332691160d57">   77</a></span>BEAST_DEFINE_TESTSUITE(<a class="code hl_class" href="classxrpl_1_1TaggedCache.html">KeyCache</a>, basics, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}  <span class="comment">// namespace ripple</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
 <div class="ttc" id="aclassbeast_1_1manual__clock_html"><div class="ttname"><a href="classbeast_1_1manual__clock.html">beast::manual_clock&lt; std::chrono::steady_clock &gt;</a></div></div>
-<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div><div class="ttdoc">A testsuite class.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00051">suite.h:52</a></div></div>
-<div class="ttc" id="aclassripple_1_1KeyCache__test_html"><div class="ttname"><a href="classripple_1_1KeyCache__test.html">ripple::KeyCache_test</a></div><div class="ttdef"><b>Definition</b> <a href="KeyCache__test_8cpp_source.html#l00010">KeyCache_test.cpp:11</a></div></div>
-<div class="ttc" id="aclassripple_1_1KeyCache__test_html_ac70741753afa2cdc404aebed08b691f2"><div class="ttname"><a href="classripple_1_1KeyCache__test.html#ac70741753afa2cdc404aebed08b691f2">ripple::KeyCache_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="KeyCache__test_8cpp_source.html#l00014">KeyCache_test.cpp:14</a></div></div>
-<div class="ttc" id="aclassripple_1_1TaggedCache_html"><div class="ttname"><a href="classripple_1_1TaggedCache.html">ripple::TaggedCache</a></div><div class="ttdoc">Map/cache combination.</div><div class="ttdef"><b>Definition</b> <a href="TaggedCache_8h_source.html#l00042">TaggedCache.h:43</a></div></div>
-<div class="ttc" id="aclassripple_1_1test_1_1SuiteJournal_html"><div class="ttname"><a href="classripple_1_1test_1_1SuiteJournal.html">ripple::test::SuiteJournal</a></div><div class="ttdef"><b>Definition</b> <a href="SuiteJournal_8h_source.html#l00083">SuiteJournal.h:84</a></div></div>
-<div class="ttc" id="anamespaceripple_html"><div class="ttname"><a href="namespaceripple.html">ripple</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00006">algorithm.h:6</a></div></div>
-<div class="ttc" id="anamespaceripple_html_a12af8e98b794e8ee3b4dbecaed2a4efd"><div class="ttname"><a href="namespaceripple.html#a12af8e98b794e8ee3b4dbecaed2a4efd">ripple::LedgerIndex</a></div><div class="ttdeci">std::uint32_t LedgerIndex</div><div class="ttdoc">A ledger index.</div><div class="ttdef"><b>Definition</b> <a href="Protocol_8h_source.html#l00120">Protocol.h:120</a></div></div>
+<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div><div class="ttdoc">A testsuite class.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00050">suite.h:51</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1KeyCache__test_html"><div class="ttname"><a href="classxrpl_1_1KeyCache__test.html">xrpl::KeyCache_test</a></div><div class="ttdef"><b>Definition</b> <a href="KeyCache__test_8cpp_source.html#l00010">KeyCache_test.cpp:11</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1KeyCache__test_html_a4cfdf74327a3750cec258c511d21a25e"><div class="ttname"><a href="classxrpl_1_1KeyCache__test.html#a4cfdf74327a3750cec258c511d21a25e">xrpl::KeyCache_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="KeyCache__test_8cpp_source.html#l00014">KeyCache_test.cpp:14</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1TaggedCache_html"><div class="ttname"><a href="classxrpl_1_1TaggedCache.html">xrpl::TaggedCache</a></div><div class="ttdoc">Map/cache combination.</div><div class="ttdef"><b>Definition</b> <a href="TaggedCache_8h_source.html#l00041">TaggedCache.h:42</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1test_1_1SuiteJournal_html"><div class="ttname"><a href="classxrpl_1_1test_1_1SuiteJournal.html">xrpl::test::SuiteJournal</a></div><div class="ttdef"><b>Definition</b> <a href="SuiteJournal_8h_source.html#l00077">SuiteJournal.h:78</a></div></div>
+<div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a93f5d90cfd55a948d64156c16029ad9b"><div class="ttname"><a href="namespacexrpl.html#a93f5d90cfd55a948d64156c16029ad9b">xrpl::LedgerIndex</a></div><div class="ttdeci">std::uint32_t LedgerIndex</div><div class="ttdoc">A ledger index.</div><div class="ttdef"><b>Definition</b> <a href="Protocol_8h_source.html#l00254">Protocol.h:254</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

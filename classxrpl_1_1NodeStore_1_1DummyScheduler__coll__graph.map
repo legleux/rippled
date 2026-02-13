@@ -1,0 +1,5 @@
+<map id="xrpl::NodeStore::DummyScheduler" name="xrpl::NodeStore::DummyScheduler">
+<area shape="rect" id="Node000001" title="Simple NodeStore Scheduler that just performs the tasks synchronously." alt="" coords="5,79,252,104"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStore_1_1Scheduler.html" title="Scheduling for asynchronous backend activity." alt="" coords="31,5,226,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,44,131,79,126,79,126,44"/>
+</map>

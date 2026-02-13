@@ -1,0 +1,35 @@
+<map id="xrpl::STNumber" name="xrpl::STNumber">
+<area shape="rect" id="Node000001" title="A serializable number." alt="" coords="1273,314,1396,339"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1STTakesAsset.html" title="Intermediate class for any STBase&#45;derived class to store an Asset." alt="" coords="1031,251,1173,277"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1164,278,1287,311,1286,316,1162,283"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1STBase.html" title="A type which can be exported to a well known binary format." alt="" coords="763,115,865,141"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="880,142,901,150,954,174,1005,202,1083,249,1080,254,1003,206,952,179,899,154,878,147"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1SField.html" title="Identifies fields." alt="" coords="449,105,544,130"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="558,123,572,124,674,127,762,127,762,132,673,133,572,129,557,128"/>
+<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="738,165,890,219"/>
+<area shape="poly" id="edge8_Node000008_Node000004" title=" " alt="" coords="535,133,573,148,658,169,738,181,737,187,657,174,571,153,533,138"/>
+<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="738,10,890,65"/>
+<area shape="poly" id="edge11_Node000009_Node000004" title=" " alt="" coords="521,94,544,78,571,64,613,51,656,43,738,35,738,40,657,48,614,57,573,69,547,82,524,98"/>
+<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="216,30,303,55"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="315,57,456,102,455,107,313,62"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="316,33,489,18,596,15,704,19,738,22,737,27,704,24,596,21,489,24,316,38"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,23,144,63"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="158,40,216,40,216,45,158,45"/>
+<area shape="rect" id="Node000007" href="$classJson_1_1StaticString.html" title="Lightweight wrapper to tag static string." alt="" coords="193,105,325,130"/>
+<area shape="poly" id="edge6_Node000004_Node000007" title=" " alt="" coords="339,115,449,115,449,120,339,120"/>
+<area shape="poly" id="edge7_Node000004_Node000008" title=" " alt="" coords="728,226,690,233,650,236,609,233,571,220,545,201,525,177,501,131,505,129,529,174,549,197,573,215,610,228,650,231,690,228,727,220"/>
+<area shape="poly" id="edge9_Node000004_Node000009" title=" " alt="" coords="739,72,705,84,620,103,544,115,544,109,619,98,703,79,738,67"/>
+<area shape="rect" id="Node000010" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/optional.html" title=" " alt="" coords="743,244,885,284"/>
+<area shape="poly" id="edge12_Node000002_Node000010" title=" " alt="" coords="899,261,1030,261,1030,267,899,267"/>
+<area shape="rect" id="Node000011" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="1027,307,1177,347"/>
+<area shape="poly" id="edge13_Node000001_Node000011" title=" " alt="" coords="1191,324,1273,324,1273,329,1191,329"/>
+<area shape="rect" id="Node000012" href="$classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values." alt="" coords="1049,381,1155,406"/>
+<area shape="poly" id="edge14_Node000001_Node000012" title=" " alt="" coords="1159,374,1289,337,1290,342,1161,379"/>
+<area shape="rect" id="Node000013" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="445,351,548,377"/>
+<area shape="poly" id="edge15_Node000012_Node000013" title=" " alt="" coords="562,354,649,347,760,343,881,346,1003,359,1070,378,1069,383,1002,364,881,351,760,348,649,352,562,359"/>
+<area shape="rect" id="Node000014" href="$structxrpl_1_1MantissaRange.html" title="MantissaRange defines a range for the mantissa of a normalized Number." alt="" coords="737,386,891,411"/>
+<area shape="poly" id="edge17_Node000014_Node000013" title=" " alt="" coords="550,378,572,383,657,393,736,396,736,401,657,398,572,388,549,383"/>
+<area shape="poly" id="edge16_Node000012_Node000014" title=" " alt="" coords="905,394,1049,392,1049,397,905,400"/>
+<area shape="rect" id="Node000015" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/functional/reference_wrapper.html" title=" " alt="" coords="728,435,900,490"/>
+<area shape="poly" id="edge18_Node000012_Node000015" title=" " alt="" coords="913,436,1002,415,1048,403,1049,409,1003,420,914,442"/>
+</map>

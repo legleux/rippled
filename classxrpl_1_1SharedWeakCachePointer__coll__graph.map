@@ -1,0 +1,5 @@
+<map id="xrpl::SharedWeakCachePointer&lt; T &gt;" name="xrpl::SharedWeakCachePointer&lt; T &gt;">
+<area shape="rect" id="Node000001" title="A combination of a std::shared_ptr and a std::weak_pointer." alt="" coords="5,123,265,148"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/variant.html" title=" " alt="" coords="57,5,214,60"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,74,138,122,133,122,133,74"/>
+</map>

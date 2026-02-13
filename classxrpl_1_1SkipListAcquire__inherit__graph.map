@@ -1,0 +1,9 @@
+<map id="xrpl::SkipListAcquire" name="xrpl::SkipListAcquire">
+<area shape="rect" id="Node000001" title="Manage the retrieval of a skip list in a ledger from the network." alt="" coords="275,63,429,88"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1TimeoutCounter.html" title="This class is an &quot;active&quot; object." alt="" coords="36,5,196,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="187,31,227,41,303,60,302,65,226,46,186,36"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,55,227,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="240,73,274,73,274,78,240,78"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="40,119,192,159"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="203,113,303,86,305,91,204,118"/>
+</map>

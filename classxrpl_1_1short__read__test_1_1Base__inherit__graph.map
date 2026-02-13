@@ -1,0 +1,7 @@
+<map id="xrpl::short_read_test::Base" name="xrpl::short_read_test::Base">
+<area shape="rect" id="Node000001" title=" " alt="" coords="95,5,251,45"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1short__read__test_1_1Client.html" title=" " alt="" coords="5,93,161,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="145,57,105,95,101,91,141,53"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1short__read__test_1_1Server.html" title=" " alt="" coords="185,93,341,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,53,245,91,241,95,201,57"/>
+</map>

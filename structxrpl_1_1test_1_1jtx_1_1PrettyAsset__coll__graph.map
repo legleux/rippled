@@ -1,0 +1,9 @@
+<map id="xrpl::test::jtx::PrettyAsset" name="xrpl::test::jtx::PrettyAsset">
+<area shape="rect" id="Node000001" title=" " alt="" coords="47,196,235,221"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1Asset.html" title=" " alt="" coords="35,108,125,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="98,143,117,170,134,194,130,197,113,174,93,147"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/utility/variant.html" title=" " alt="" coords="5,5,155,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="83,59,83,108,77,108,77,59"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="150,108,253,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="187,146,152,197,148,194,183,143"/>
+</map>

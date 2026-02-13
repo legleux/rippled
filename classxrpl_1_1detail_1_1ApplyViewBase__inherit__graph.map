@@ -1,0 +1,15 @@
+<map id="xrpl::detail::ApplyViewBase" name="xrpl::detail::ApplyViewBase">
+<area shape="rect" id="Node000001" title=" " alt="" coords="167,152,368,177"/>
+<area shape="rect" id="Node000005" href="$classxrpl_1_1ApplyViewImpl.html" title="Editable, discardable view that can build metadata for one tx." alt="" coords="5,225,159,251"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="226,185,113,228,111,223,224,180"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1PaymentSandbox.html" title="A wrapper which makes credits unavailable to balances." alt="" coords="183,225,351,251"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="270,191,270,225,265,225,265,191"/>
+<area shape="rect" id="Node000007" href="$classxrpl_1_1Sandbox.html" title="Discardable, editable view to a ledger." alt="" coords="376,225,487,251"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="307,180,406,223,403,228,305,185"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ApplyView.html" title="Writeable view to a ledger, for applying a transaction." alt="" coords="133,79,257,104"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="219,112,258,150,254,154,215,116"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="135,5,255,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="198,44,198,79,193,79,193,44"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1RawView.html" title="Interface for ledger entry changes." alt="" coords="282,79,397,104"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="319,116,281,154,277,150,316,112"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="xrpl::STTakesAsset" name="xrpl::STTakesAsset">
+<area shape="rect" id="Node000001" title="Intermediate class for any STBase&#45;derived class to store an Asset." alt="" coords="5,79,148,104"/>
+<area shape="rect" id="Node000003" href="$classxrpl_1_1STNumber.html" title="A serializable number." alt="" coords="15,152,138,177"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="79,118,79,152,74,152,74,118"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1STBase.html" title="A type which can be exported to a well known binary format." alt="" coords="25,5,128,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="79,44,79,79,74,79,74,44"/>
+</map>

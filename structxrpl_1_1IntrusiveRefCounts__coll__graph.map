@@ -1,0 +1,8 @@
+<map id="xrpl::IntrusiveRefCounts" name="xrpl::IntrusiveRefCounts">
+<area shape="rect" id="Node000001" title="Implement the strong count, weak count, and bit flags for an intrusive pointer." alt="" coords="5,317,184,343"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="43,5,146,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,44,89,94,86,174,89,254,96,317,90,317,84,255,81,174,84,93,89,44"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/atomic/atomic.html" title=" " alt="" coords="246,161,453,187"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="129,35,228,91,334,159,331,164,225,96,126,39"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="323,197,228,257,117,320,115,315,225,252,320,192"/>
+</map>

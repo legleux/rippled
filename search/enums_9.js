@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['jobtype_0',['JobType',['../namespaceripple.html#ae0f54f8ce649d639bf3e2b295347e17a',1,'ripple']]]
+  ['jobtype_0',['JobType',['../namespacexrpl.html#a8cb315a10bb9d6ac744e47a352ba6c81',1,'xrpl']]]
 ];

@@ -1,0 +1,15 @@
+<map id="xrpl::ApplyView" name="xrpl::ApplyView">
+<area shape="rect" id="Node000001" title="Writeable view to a ledger, for applying a transaction." alt="" coords="250,5,374,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1ReadView.html" title="A view into a ledger." alt="" coords="5,121,125,147"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="94,111,148,76,215,41,252,28,254,33,217,46,151,80,97,116"/>
+<area shape="rect" id="Node000004" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="216,55,408,95"/>
+<area shape="poly" id="edge4_Node000004_Node000002" title=" " alt="" coords="132,115,226,93,228,98,134,121"/>
+<area shape="rect" id="Node000006" href="$classxrpl_1_1detail_1_1ReadViewFwdRange.html" title=" " alt="" coords="216,245,408,285"/>
+<area shape="poly" id="edge7_Node000006_Node000002" title=" " alt="" coords="83,157,112,194,130,213,151,228,183,242,217,252,215,257,181,247,148,232,127,217,108,198,79,160"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1ReadView_1_1sles__type.html" title=" " alt="" coords="457,99,647,124"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="444,122,408,125,126,135,126,130,408,119,443,117"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="422,89,468,96,467,101,421,94"/>
+<area shape="rect" id="Node000005" href="$structxrpl_1_1ReadView_1_1txs__type.html" title=" " alt="" coords="461,200,643,225"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="459,200,125,146,126,141,460,195"/>
+<area shape="poly" id="edge6_Node000005_Node000006" title=" " alt="" coords="417,239,492,223,493,228,419,244"/>
+</map>

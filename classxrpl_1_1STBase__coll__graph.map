@@ -1,0 +1,18 @@
+<map id="xrpl::STBase" name="xrpl::STBase">
+<area shape="rect" id="Node000001" title="A type which can be exported to a well known binary format." alt="" coords="745,5,847,31"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1SField.html" title="Identifies fields." alt="" coords="445,108,540,133"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="515,96,537,79,563,64,609,46,658,33,744,19,745,24,659,38,611,51,565,68,540,83,519,100"/>
+<area shape="rect" id="Node000006" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="720,68,872,123"/>
+<area shape="poly" id="edge6_Node000006_Node000002" title=" " alt="" coords="531,100,563,90,644,82,720,84,720,90,644,88,565,95,532,105"/>
+<area shape="rect" id="Node000007" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/container/unordered_map.html" title=" " alt="" coords="720,172,872,227"/>
+<area shape="poly" id="edge9_Node000007_Node000002" title=" " alt="" coords="512,143,535,168,565,189,603,201,643,208,720,208,720,213,643,213,602,206,563,194,532,172,508,146"/>
+<area shape="rect" id="Node000003" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="216,177,303,203"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="315,171,448,131,450,136,317,176"/>
+<area shape="poly" id="edge8_Node000007_Node000003" title=" " alt="" coords="317,196,486,214,591,218,696,214,720,211,720,217,696,219,591,223,486,219,316,201"/>
+<area shape="rect" id="Node000004" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/string/basic_string.html" title=" " alt="" coords="5,170,144,210"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="158,187,216,187,216,193,158,193"/>
+<area shape="rect" id="Node000005" href="$classJson_1_1StaticString.html" title="Lightweight wrapper to tag static string." alt="" coords="193,108,325,133"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="339,118,445,118,445,123,339,123"/>
+<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="707,109,696,110,540,121,540,116,696,105,706,104"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="706,179,540,135,541,130,707,174"/>
+</map>

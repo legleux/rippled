@@ -1,0 +1,7 @@
+<map id="xrpl::test::csf::CollectorRef" name="xrpl::test::csf::CollectorRef">
+<area shape="rect" id="Node000001" title="Holds a type&#45;erased reference to an arbitrary collector." alt="" coords="5,225,200,251"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/unique_ptr.html" title=" " alt="" coords="18,108,187,163"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="105,176,105,225,100,225,100,176"/>
+<area shape="rect" id="Node000003" href="$structxrpl_1_1test_1_1csf_1_1CollectorRef_1_1ICollector.html" title=" " alt="" coords="17,5,189,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="105,59,105,108,100,108,100,59"/>
+</map>

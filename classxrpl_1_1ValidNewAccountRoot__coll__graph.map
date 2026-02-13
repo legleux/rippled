@@ -1,0 +1,5 @@
+<map id="xrpl::ValidNewAccountRoot" name="xrpl::ValidNewAccountRoot">
+<area shape="rect" id="Node000001" title="Invariant: a new account root must be the consequence of a payment, must have the right starting sequ..." alt="" coords="5,123,204,148"/>
+<area shape="rect" id="Node000002" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/types/integer.html" title=" " alt="" coords="53,5,156,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="107,44,107,123,102,123,102,44"/>
+</map>
