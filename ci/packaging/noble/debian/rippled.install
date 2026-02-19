@@ -1,0 +1,11 @@
+opt/ripple/bin/rippled
+
+opt/ripple/etc/rippled.cfg
+opt/ripple/etc/validators.txt
+
+# systemd unit (if you keep it in debian/ as a source file, do NOT list it here)
+# If instead you stage it into debian/tmp, uncomment:
+# lib/systemd/system/rippled.service
+
+usr/share/doc/rippled/README.md
+usr/share/doc/rippled/LICENSE.md

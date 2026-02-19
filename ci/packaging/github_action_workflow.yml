@@ -1,0 +1,109 @@
+name: deb (reproducible)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+
+jobs:
+  deb:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:24.04  # pin OS; you can pin by digest for stricter reproducibility
+    env:
+      TZ: UTC
+      LC_ALL: C.UTF-8
+      LANG: C.UTF-8
+      UMASK: "0022"
+      GZIP: "-n"
+      # Optionally: XZ_OPT: "--threads=0"
+    steps:
+      - name: Install build tooling
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            ca-certificates git \
+            dpkg-dev debhelper devscripts lintian \
+            rsync file \
+            diffoscope
+          rm -rf /var/lib/apt/lists/*
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # needed for SOURCE_DATE_EPOCH from git history
+
+      - name: Normalize env for reproducible outputs
+        shell: bash
+        run: |
+          umask "$UMASK"
+          echo "UMASK=$(umask)" >> "$GITHUB_ENV"
+          echo "SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)" >> "$GITHUB_ENV"
+
+      # If your prebuilt install tree is produced by a previous job/artifact,
+      # download it here. This example assumes it already exists in-repo at ./installroot
+      - name: Verify install tree
+        shell: bash
+        run: |
+          test -d ./installroot || { echo "Missing ./installroot (expected prebuilt install tree root)"; exit 1; }
+          # Sanity: must not contain usr/local payload
+          test ! -d ./installroot/usr/local || { echo "ERROR: installroot contains usr/local/"; exit 1; }
+          # Optional: show top-level
+          find ./installroot -maxdepth 2 -type d | sed -n '1,50p'
+
+      - name: Build .deb (first pass)
+        shell: bash
+        env:
+          INSTALL_TREE: ${{ github.workspace }}/installroot
+        run: |
+          umask "$UMASK"
+          dpkg-buildpackage -us -uc -b
+          mkdir -p /tmp/deb-a
+          cp -a ../*.deb ../*.buildinfo ../*.changes /tmp/deb-a/ 2>/dev/null || true
+          ls -l /tmp/deb-a
+
+      - name: Clean packaging outputs (keep install tree)
+        shell: bash
+        run: |
+          rm -rf debian/tmp debian/.debhelper debian/*debhelper* debian/files debian/*substvars || true
+
+      - name: Build .deb (second pass)
+        shell: bash
+        env:
+          INSTALL_TREE: ${{ github.workspace }}/installroot
+        run: |
+          umask "$UMASK"
+          dpkg-buildpackage -us -uc -b
+          mkdir -p /tmp/deb-b
+          cp -a ../*.deb ../*.buildinfo ../*.changes /tmp/deb-b/ 2>/dev/null || true
+          ls -l /tmp/deb-b
+
+      - name: Compare artifacts (byte-for-byte)
+        shell: bash
+        run: |
+          a="$(ls -1 /tmp/deb-a/*.deb | head -1)"
+          b="$(ls -1 /tmp/deb-b/*.deb | head -1)"
+          echo "A: $a"
+          echo "B: $b"
+          if cmp -s "$a" "$b"; then
+            echo "OK: .deb files are identical"
+          else
+            echo "WARNING: .deb differs; running diffoscope (summary)"
+            diffoscope --text /tmp/diffoscope.txt "$a" "$b" || true
+            sed -n '1,200p' /tmp/diffoscope.txt || true
+            exit 1
+          fi
+
+      - name: Lintian
+        shell: bash
+        run: |
+          lintian -I --pedantic ../*.deb || true
+
+      - name: Upload .deb artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: debs
+          path: |
+            ../*.deb
+            ../*.buildinfo
+            ../*.changes

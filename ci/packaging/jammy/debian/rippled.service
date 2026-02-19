@@ -1,0 +1,48 @@
+[Unit]
+Description=XRPL rippled daemon
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+
+User=rippled
+Group=rippled
+
+# Canonical config location (as you described)
+ExecStart=/opt/ripple/bin/xrpld --conf /etc/opt/ripple/xrpld.cfg
+
+# Reasonable hardening defaults (trim if they break your runtime)
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectControlGroups=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+LockPersonality=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+MemoryDenyWriteExecute=true
+SystemCallArchitectures=native
+
+# Allow writes only where you actually need them
+ReadWritePaths=/var/lib/rippled /var/log/rippled /run/rippled
+
+# If rippled needs to bind low ports, you’d add:
+# AmbientCapabilities=CAP_NET_BIND_SERVICE
+# CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+
+# Create dirs (systemd-native); if you keep tmpfiles too, this is still fine.
+StateDirectory=rippled
+LogsDirectory=rippled
+RuntimeDirectory=rippled
+RuntimeDirectoryMode=0755
+
+# Restart policy
+Restart=on-failure
+RestartSec=2s
+TimeoutStopSec=30s
+
+[Install]
+WantedBy=multi-user.target

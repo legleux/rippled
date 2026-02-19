@@ -1,0 +1,8 @@
+/opt/ripple/bin/rippled         /usr/bin/rippled
+/opt/ripple/etc/rippled.cfg     /etc/opt/ripple/xrpld.cfg
+/opt/ripple/etc/validators.txt  /etc/opt/ripple/validators.txt
+
+# TODO: Remove when rippled deprecated
+/opt/ripple/bin/rippled         /opt/ripple/bin/xrpld
+/opt/ripple/etc/rippled.cfg     /etc/opt/ripple/xrpld.cfg
+/opt/ripple                     /opt/xrpld

@@ -1,0 +1,42 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_configure override_dh_auto_build override_dh_auto_test:
+	@:
+
+override_dh_auto_install:
+	rm -rf debian/tmp
+	mkdir -p debian/tmp/opt/ripple/bin
+	mkdir -p debian/tmp/opt/ripple/etc
+	mkdir -p debian/tmp/usr
+	cp -a "$(INSTALL_TREE)/bin" debian/tmp/opt/ripple
+	cp -a "$(INSTALL_TREE)/etc" debian/tmp/opt/ripple
+	cp -a "$(INSTALL_TREE)/usr" debian/tmp
+	rm -rf debian/tmp/usr/include
+	rm -rf debian/tmp/usr/lib
+	install -Dm0644 README.md debian/tmp/usr/share/doc/rippled/README.md
+	install -Dm0644 LICENSE.md debian/tmp/usr/share/doc/rippled/LICENSE.md
+	install -Dm0644 cfg/rippled-example.cfg     debian/tmp/opt/ripple/etc/rippled.cfg
+	install -Dm0644 cfg/validators-example.txt  debian/tmp/opt/ripple/etc/validators.txt
+
+override_dh_installsystemd:
+	dh_installsystemd
+
+override_dh_installsysusers:
+	dh_installsysusers
+
+override_dh_installtmpfiles:
+	dh_installtmpfiles
+
+override_dh_install:
+	dh_install
+
+override_dh_dwz:
+	@:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym

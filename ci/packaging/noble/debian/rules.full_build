@@ -1,0 +1,28 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@ --with systemd
+
+override_dh_auto_configure:
+	dh_auto_configure -- \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/
+# -GNinja
+override_dh_auto_build:
+	dh_auto_build
+
+override_dh_auto_install:
+	# Install into debian/tmp using CMake’s install rules.
+	cmake --install build --prefix=/ --destdir=$(CURDIR)/debian/tmp
+
+override_dh_installsysusers:
+	dh_installsysusers
+
+override_dh_installtmpfiles:
+	dh_installtmpfiles
+
+override_dh_install:
+	# Fail if something you expect wasn’t installed.
+	dh_install --fail-missing
