@@ -1,0 +1,21 @@
+Source: rippled
+Section: net
+Priority: optional
+Maintainer: Michael Legleux <mlegleux@ripple.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+Standards-Version: 4.7.0
+Homepage: https://github.com/XRPLF/rippled
+Vcs-Git: https://github.com/XRPLF/rippled.git
+Vcs-Browser: https://github.com/XRPLF/rippled
+
+Package: rippled
+Section: net
+Priority: optional
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Description: XRP Ledger server daemon
+ XRPL server daemon providing ledger validation and p2p network services.
