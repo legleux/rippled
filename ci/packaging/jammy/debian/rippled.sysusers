@@ -1,0 +1,5 @@
+u rippled - "XRPL Daemon" /var/lib/ripled
+
+# Type Name    ID   GECOS           Home            Shell
+g     rippled  -    -               -               -
+u     rippled  -    "XRPL rippled"   /var/lib/rippled /usr/sbin/nologin

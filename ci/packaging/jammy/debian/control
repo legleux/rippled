@@ -1,0 +1,18 @@
+Source: rippled
+Section: net
+Priority: optional
+Maintainer: Michael Legleux <mlegleux@ripple.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-sequence-systemd,
+Standards-Version: 4.6.2
+Homepage: https://github.com/XRPLF/rippled
+
+Package: rippled
+Architecture: any
+Depends:
+ ${shlibs:Depends},
+ ${misc:Depends}
+Description: XRPL server daemon
+ XRP Ledger server daemon (rippled naming release).

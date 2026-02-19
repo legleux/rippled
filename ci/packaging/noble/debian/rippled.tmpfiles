@@ -1,0 +1,3 @@
+# StateDirectory/LogsDirectory/RuntimeDirectory in systemd service makes this redundant but this enables apt purge.
+d /var/lib/rippled 0750 rippled rippled -
+d /var/log/rippled 0750 rippled rippled -
