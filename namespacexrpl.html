@@ -744,6 +744,8 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1Logs.html">Logs</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Manages partitions for logging.  <a href="classxrpl_1_1Logs.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1MallocTrimReport.html">MallocTrimReport</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1Manifest.html">Manifest</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ManifestCache.html">ManifestCache</a></td></tr>
@@ -3053,6 +3055,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ae4151d69bf62be92c7c8841a60e22c92" id="r_ae4151d69bf62be92c7c8841a60e22c92"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; boost::asio::ssl::context &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#ae4151d69bf62be92c7c8841a60e22c92">make_SSLContextAuthed</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;keyFile, <a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;certFile, <a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;chainFile, <a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;cipherList)</td></tr>
 <tr class="memdesc:ae4151d69bf62be92c7c8841a60e22c92"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create an authenticated SSL context using the specified files.  <br /></td></tr>
 <tr class="separator:ae4151d69bf62be92c7c8841a60e22c92"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac252c95c0b70ce97418c3e33465edf24" id="r_ac252c95c0b70ce97418c3e33465edf24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1MallocTrimReport.html">MallocTrimReport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#ac252c95c0b70ce97418c3e33465edf24">mallocTrim</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string_view.html">std::string_view</a> tag, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> journal)</td></tr>
+<tr class="memdesc:ac252c95c0b70ce97418c3e33465edf24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Attempt to return freed memory to the operating system.  <br /></td></tr>
+<tr class="separator:ac252c95c0b70ce97418c3e33465edf24"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a50ae4382e743150ec538c988ce0d1f31" id="r_a50ae4382e743150ec538c988ce0d1f31"><td class="memItemLeft" align="right" valign="top">constexpr <a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a50ae4382e743150ec538c988ce0d1f31">calculatePercent</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> count, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> total)</td></tr>
 <tr class="memdesc:a50ae4382e743150ec538c988ce0d1f31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate one number divided by another number in percentage.  <br /></td></tr>
 <tr class="separator:a50ae4382e743150ec538c988ce0d1f31"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -12835,6 +12840,52 @@ template&lt;class Stream , class Iter &gt; </div>
 <p>Create an authenticated SSL context using the specified files. </p>
 
 <p class="definition">Definition at line <a class="el" href="make__SSLContext_8cpp_source.html#l00359">359</a> of file <a class="el" href="make__SSLContext_8cpp_source.html">make_SSLContext.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac252c95c0b70ce97418c3e33465edf24" name="ac252c95c0b70ce97418c3e33465edf24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac252c95c0b70ce97418c3e33465edf24">&#9670;&#160;</a></span>mallocTrim()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structxrpl_1_1MallocTrimReport.html">MallocTrimReport</a> xrpl::mallocTrim </td>
+          <td>(</td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string_view.html">std::string_view</a>&#160;</td>
+          <td class="paramname"><em>tag</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>journal</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Attempt to return freed memory to the operating system. </p>
+<p>On Linux with glibc malloc, this issues ::malloc_trim(0), which may release free space from ptmalloc arenas back to the kernel. On other platforms, or if a different allocator is in use, this function is a no-op and the report will indicate that trimming is unsupported or had no effect.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">tag</td><td>Identifier for logging/debugging purposes. </td></tr>
+    <tr><td class="paramname">journal</td><td>Journal for diagnostic logging. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Report containing before/after metrics and the trim result.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>If an alternative allocator (jemalloc/tcmalloc) is linked or preloaded, calling glibc's malloc_trim may have no effect on the active heap. The call is harmless but typically does not reclaim memory under those allocators.</dd>
+<dd>
+Only memory served from glibc's sbrk/arena heaps is eligible for trim. Large allocations satisfied via mmap are usually returned on free independently of trimming.</dd>
+<dd>
+Intended for use after operations that free significant memory (e.g., cache sweeps, ledger cleanup, online delete). Consider rate limiting. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="libxrpl_2basics_2MallocTrim_8cpp_source.html#l00071">71</a> of file <a class="el" href="libxrpl_2basics_2MallocTrim_8cpp_source.html">libxrpl/basics/MallocTrim.cpp</a>.</p>
 
 </div>
 </div>
@@ -44848,7 +44899,7 @@ template&lt;class ApplyTxs &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02100">2100</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02103">2103</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -44884,7 +44935,7 @@ template&lt;class ApplyTxs &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02090">2090</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02093">2093</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>

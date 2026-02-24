@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['category_0',['category',['../classxrpl_1_1TrafficCount.html#a93a9bbac038b491a59722cb03d5285b3',1,'xrpl::TrafficCount::category'],['../classxrpl_1_1TxConsequences.html#a33f37210f363c069e6faa24cbdfd2231',1,'xrpl::TxConsequences::Category']]],
+  ['category_0',['category',['../classxrpl_1_1TxConsequences.html#a33f37210f363c069e6faa24cbdfd2231',1,'xrpl::TxConsequences::Category'],['../classxrpl_1_1TrafficCount.html#a93a9bbac038b491a59722cb03d5285b3',1,'xrpl::TrafficCount::category']]],
   ['chaintype_1',['ChainType',['../classxrpl_1_1STXChainBridge.html#a35d2aae0feb4eb5b15ff5165d46c6f96',1,'xrpl::STXChainBridge']]],
   ['collectiontype_2',['CollectionType',['../classJson_1_1Writer.html#a53ecc840ddaba276dc429fd953d41ae0',1,'Json::Writer']]],
   ['compressed_3',['Compressed',['../namespacexrpl_1_1compression.html#afa1b05e6d181cde4f9fe013d5de84724',1,'xrpl::compression']]],

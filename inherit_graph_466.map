@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structxrpl_1_1NodeStore_1_1MemoryDB.html" title=" " alt="" coords="5,5,209,31"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1NodeStore_1_1Manager.html" title="Singleton for managing NodeStore factories and back ends." alt="" coords="5,5,193,31"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1NodeStore_1_1ManagerImp.html" title=" " alt="" coords="241,5,455,31"/>
+<area shape="poly" id="edge726_Node000000_Node000001" title=" " alt="" coords="207,15,241,15,241,21,207,21"/>
 </map>

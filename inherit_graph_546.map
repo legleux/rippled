@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structxrpl_1_1PeerFinder_1_1Store_1_1Entry.html" title=" " alt="" coords="5,5,172,45"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1PeerFinder_1_1Store.html" title="Abstract persistence for PeerFinder data." alt="" coords="5,42,172,67"/>
+<area shape="rect" id="Node000001" href="$structxrpl_1_1PeerFinder_1_1PeerFinder__test_1_1TestStore.html" title=" " alt="" coords="220,5,421,45"/>
+<area shape="poly" id="edge748_Node000000_Node000001" title=" " alt="" coords="185,40,219,35,220,41,186,45"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1PeerFinder_1_1StoreSqdb.html" title="Database persistence for PeerFinder using SQLite." alt="" coords="221,70,420,95"/>
+<area shape="poly" id="edge749_Node000000_Node000002" title=" " alt="" coords="186,64,222,68,221,73,185,69"/>
 </map>

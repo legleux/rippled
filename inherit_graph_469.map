@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classxrpl_1_1NodeStore_1_1Sequence.html" title=" " alt="" coords="5,5,200,31"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1NodeStore_1_1Scheduler.html" title="Scheduling for asynchronous backend activity." alt="" coords="5,31,200,56"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1NodeStore_1_1DummyScheduler.html" title="Simple NodeStore Scheduler that just performs the tasks synchronously." alt="" coords="248,5,495,31"/>
+<area shape="poly" id="edge727_Node000000_Node000001" title=" " alt="" coords="213,30,247,27,248,32,214,36"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1NodeStoreScheduler.html" title="A NodeStore::Scheduler which uses the JobQueue." alt="" coords="278,55,465,80"/>
+<area shape="poly" id="edge728_Node000000_Node000002" title=" " alt="" coords="214,51,278,56,277,62,214,56"/>
 </map>

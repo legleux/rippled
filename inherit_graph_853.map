@@ -1,5 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structxrpl_1_1test_1_1jtx_1_1JTxField.html" title=" " alt="" coords="5,5,183,60"/>
-<area shape="rect" id="Node000001" href="$structxrpl_1_1test_1_1jtx_1_1uint256Field.html" title=" " alt="" coords="231,13,393,53"/>
-<area shape="poly" id="edge784_Node000000_Node000001" title=" " alt="" coords="196,30,230,30,230,35,196,35"/>
+<area shape="rect" id="Node000000" href="$structxrpl_1_1test_1_1jtx_1_1JTxField.html" title=" " alt="" coords="5,5,203,60"/>
+<area shape="rect" id="Node000001" href="$structxrpl_1_1test_1_1jtx_1_1stAmountField.html" title=" " alt="" coords="251,13,427,53"/>
+<area shape="poly" id="edge783_Node000000_Node000001" title=" " alt="" coords="216,30,251,30,251,35,216,35"/>
 </map>
