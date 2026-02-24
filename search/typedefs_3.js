@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dataseries_0',['DataSeries',['../namespacexrpl_1_1test_1_1jtx_1_1oracle.html#a1da4c25a9ca0896cbd62efcd0222df3d',1,'xrpl::test::jtx::oracle']]],
+  ['dataseries_0',['DataSeries',['../namespacexrpl_1_1test_1_1jtx_1_1oracle.html#a117c3ec21f46a516f4c633249d263486',1,'xrpl::test::jtx::oracle']]],
   ['days_1',['days',['../namespacexrpl.html#aa2d1ba00224b4cc1237cae2887ed50c3',1,'xrpl']]],
   ['deferrednode_2',['DeferredNode',['../structxrpl_1_1SHAMap_1_1MissingNodes.html#a35340215533a84e6b0faa02378aad183',1,'xrpl::SHAMap::MissingNodes']]],
   ['delta_3',['Delta',['../classxrpl_1_1SHAMap.html#a2a7ee4851fd7c66caac71e03d2c3dc43',1,'xrpl::SHAMap']]],

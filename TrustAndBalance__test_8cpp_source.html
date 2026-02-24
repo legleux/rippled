@@ -308,257 +308,263 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                auto const&amp; t = jval[jss::transaction];</div>
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                return t[jss::TransactionType] == jss::Payment;</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            }));</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            BEAST_EXPECT(wsc-&gt;findMsg(5s, [](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; jval) { return jval[jss::type] == <span class="stringliteral">&quot;ledgerClosed&quot;</span>; }));</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            BEAST_EXPECT(wsc-&gt;invoke(<span class="stringliteral">&quot;unsubscribe&quot;</span>, jv)[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        }</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            BEAST_EXPECT(wsc-&gt;findMsg(</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                5s, [](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; jval) { return jval[jss::type] == <span class="stringliteral">&quot;ledgerClosed&quot;</span>; }));</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            BEAST_EXPECT(wsc-&gt;invoke(<span class="stringliteral">&quot;unsubscribe&quot;</span>, jv)[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        }</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    }</div>
 </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span> </div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00225" data-start="{" data-end="}">
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">  225</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">testWithPath</a>(<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    {</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Payments With Paths and Fees&quot;</span>);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keyword">using namespace </span>test::jtx;</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        Env env{*<span class="keyword">this</span>, features};</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        Account gw{<span class="stringliteral">&quot;gateway&quot;</span>};</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        Account bob{<span class="stringliteral">&quot;bob&quot;</span>};</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>        env.fund(XRP(10000), gw, alice, bob);</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        env.close();</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="comment">// set a transfer rate</span></div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        env(rate(gw, 1.1));</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        env(trust(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](100)));</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        env(trust(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](100)));</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        env(pay(gw, alice, alice[<span class="stringliteral">&quot;AUD&quot;</span>](4.4)));</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](4.4)));</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="comment">// alice sends gw issues to bob with a max spend that allows for the</span></div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="comment">// xfer rate</span></div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](3.3)));</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1)));</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span> </div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        <span class="comment">// alice sends bob issues to bob with a max spend</span></div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        env(pay(alice, bob, bob[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](2.2)));</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](2)));</div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        <span class="comment">// alice sends gw issues to bob with a max spend</span></div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(alice[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](3)));</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span> </div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        <span class="comment">// alice sends bob issues to bob with a max spend in alice issues.</span></div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="comment">// expect fail since gw is not involved</span></div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        env(pay(alice, bob, bob[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(alice[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)), ter(<a class="code hl_enumvalue" href="namespacexrpl.html#ad78c115958eec639754bf9227f58556ba42408240f803abe8017433ecac4fe862">tecPATH_DRY</a>));</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](3)));</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    }</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">  226</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">testWithPath</a>(<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    {</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Payments With Paths and Fees&quot;</span>);</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="keyword">using namespace </span>test::jtx;</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        Env env{*<span class="keyword">this</span>, features};</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        Account gw{<span class="stringliteral">&quot;gateway&quot;</span>};</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        Account bob{<span class="stringliteral">&quot;bob&quot;</span>};</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        env.fund(XRP(10000), gw, alice, bob);</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        env.close();</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="comment">// set a transfer rate</span></div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        env(rate(gw, 1.1));</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        env(trust(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](100)));</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        env(trust(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](100)));</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        env(pay(gw, alice, alice[<span class="stringliteral">&quot;AUD&quot;</span>](4.4)));</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](4.4)));</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="comment">// alice sends gw issues to bob with a max spend that allows for the</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="comment">// xfer rate</span></div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](3.3)));</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1)));</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        <span class="comment">// alice sends bob issues to bob with a max spend</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        env(pay(alice, bob, bob[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](2.2)));</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](2)));</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="comment">// alice sends gw issues to bob with a max spend</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(alice[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](3)));</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>        <span class="comment">// alice sends bob issues to bob with a max spend in alice issues.</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="comment">// expect fail since gw is not involved</span></div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        env(pay(alice, bob, bob[<span class="stringliteral">&quot;AUD&quot;</span>](1)), sendmax(alice[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)), ter(<a class="code hl_enumvalue" href="namespacexrpl.html#ad78c115958eec639754bf9227f58556ba42408240f803abe8017433ecac4fe862">tecPATH_DRY</a>));</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;AUD&quot;</span>](1.1)));</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;AUD&quot;</span>](3)));</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    }</div>
 </div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00272" data-start="{" data-end="}">
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">  272</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">testIndirect</a>(<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    {</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Indirect Payment&quot;</span>);</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        <span class="keyword">using namespace </span>test::jtx;</div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        Env env{*<span class="keyword">this</span>, features};</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        Account gw{<span class="stringliteral">&quot;gateway&quot;</span>};</div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        Account bob{<span class="stringliteral">&quot;bob&quot;</span>};</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        env.fund(XRP(10000), gw, alice, bob);</div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        env.close();</div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        env(trust(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](600)));</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        env(trust(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](700)));</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        env(pay(gw, alice, alice[<span class="stringliteral">&quot;USD&quot;</span>](70)));</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        env(pay(gw, bob, bob[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span> </div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](70)));</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <span class="comment">// alice sends more than has to issuer: 100 out of 70</span></div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        env(pay(alice, gw, gw[<span class="stringliteral">&quot;USD&quot;</span>](100)), ter(<a class="code hl_enumvalue" href="namespacexrpl.html#ad78c115958eec639754bf9227f58556ba26bacb05f348fb9fb89a1eb54ceefc6d">tecPATH_PARTIAL</a>));</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        <span class="comment">// alice sends more than has to bob: 100 out of 70</span></div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](100)), ter(<a class="code hl_enumvalue" href="namespacexrpl.html#ad78c115958eec639754bf9227f58556ba26bacb05f348fb9fb89a1eb54ceefc6d">tecPATH_PARTIAL</a>));</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        env.close();</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](70)));</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span> </div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        <span class="comment">// send with an account path</span></div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](5)), <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(gw));</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](65)));</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](55)));</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    }</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00273" data-start="{" data-end="}">
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">  273</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">testIndirect</a>(<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    {</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Indirect Payment&quot;</span>);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>        <span class="keyword">using namespace </span>test::jtx;</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        Env env{*<span class="keyword">this</span>, features};</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        Account gw{<span class="stringliteral">&quot;gateway&quot;</span>};</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        Account bob{<span class="stringliteral">&quot;bob&quot;</span>};</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        env.fund(XRP(10000), gw, alice, bob);</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        env.close();</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        env(trust(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](600)));</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        env(trust(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](700)));</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span> </div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        env(pay(gw, alice, alice[<span class="stringliteral">&quot;USD&quot;</span>](70)));</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        env(pay(gw, bob, bob[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span> </div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](70)));</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        <span class="comment">// alice sends more than has to issuer: 100 out of 70</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        env(pay(alice, gw, gw[<span class="stringliteral">&quot;USD&quot;</span>](100)), ter(<a class="code hl_enumvalue" href="namespacexrpl.html#ad78c115958eec639754bf9227f58556ba26bacb05f348fb9fb89a1eb54ceefc6d">tecPATH_PARTIAL</a>));</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        <span class="comment">// alice sends more than has to bob: 100 out of 70</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](100)), ter(<a class="code hl_enumvalue" href="namespacexrpl.html#ad78c115958eec639754bf9227f58556ba26bacb05f348fb9fb89a1eb54ceefc6d">tecPATH_PARTIAL</a>));</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        env.close();</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](70)));</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        <span class="comment">// send with an account path</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        env(pay(alice, bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](5)), <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(gw));</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        env.require(balance(alice, gw[<span class="stringliteral">&quot;USD&quot;</span>](65)));</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](55)));</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    }</div>
 </div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span> </div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00313" data-start="{" data-end="}">
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">  313</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">testIndirectMultiPath</a>(<span class="keywordtype">bool</span> with_rate, <a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>    {</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;Indirect Payment, Multi Path, &quot;</span>) + (with_rate ? <span class="stringliteral">&quot;With &quot;</span> : <span class="stringliteral">&quot;Without &quot;</span>) + <span class="stringliteral">&quot; Xfer Fee, &quot;</span>);</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        <span class="keyword">using namespace </span>test::jtx;</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        Env env{*<span class="keyword">this</span>, features};</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        Account gw{<span class="stringliteral">&quot;gateway&quot;</span>};</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        Account amazon{<span class="stringliteral">&quot;amazon&quot;</span>};</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        Account bob{<span class="stringliteral">&quot;bob&quot;</span>};</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        Account carol{<span class="stringliteral">&quot;carol&quot;</span>};</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        env.fund(XRP(10000), gw, amazon, alice, bob, carol);</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        env.close();</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span> </div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00314" data-start="{" data-end="}">
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">  314</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">testIndirectMultiPath</a>(<span class="keywordtype">bool</span> with_rate, <a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    {</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;Indirect Payment, Multi Path, &quot;</span>) + (with_rate ? <span class="stringliteral">&quot;With &quot;</span> : <span class="stringliteral">&quot;Without &quot;</span>) +</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            <span class="stringliteral">&quot; Xfer Fee, &quot;</span>);</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        <span class="keyword">using namespace </span>test::jtx;</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span> </div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        Env env{*<span class="keyword">this</span>, features};</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        Account gw{<span class="stringliteral">&quot;gateway&quot;</span>};</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        Account amazon{<span class="stringliteral">&quot;amazon&quot;</span>};</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        Account bob{<span class="stringliteral">&quot;bob&quot;</span>};</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        Account carol{<span class="stringliteral">&quot;carol&quot;</span>};</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        env(trust(amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](2000)));</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        env(trust(bob, alice[<span class="stringliteral">&quot;USD&quot;</span>](600)));</div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        env(trust(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](1000)));</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        env(trust(carol, alice[<span class="stringliteral">&quot;USD&quot;</span>](700)));</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        env(trust(carol, gw[<span class="stringliteral">&quot;USD&quot;</span>](1000)));</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        <span class="keywordflow">if</span> (with_rate)</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>            env(rate(gw, 1.1));</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        env.fund(XRP(10000), gw, amazon, alice, bob, carol);</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        env.close();</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        env(trust(amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](2000)));</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        env(trust(bob, alice[<span class="stringliteral">&quot;USD&quot;</span>](600)));</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        env(trust(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](1000)));</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        env(trust(carol, alice[<span class="stringliteral">&quot;USD&quot;</span>](700)));</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        env(trust(carol, gw[<span class="stringliteral">&quot;USD&quot;</span>](1000)));</div>
 <div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        env(pay(gw, bob, bob[<span class="stringliteral">&quot;USD&quot;</span>](100)));</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        env(pay(gw, carol, carol[<span class="stringliteral">&quot;USD&quot;</span>](100)));</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        env.close();</div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span> </div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        <span class="comment">// alice pays amazon via multiple paths</span></div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        <span class="keywordflow">if</span> (with_rate)</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>            env(pay(alice, amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](150)),</div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>                sendmax(alice[<span class="stringliteral">&quot;USD&quot;</span>](200)),</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>                <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(bob),</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(carol));</div>
-<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>            env(pay(alice, amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](150)), <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(bob), <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(carol));</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span> </div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <span class="keywordflow">if</span> (with_rate)</div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        {</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>            env.require(</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>                balance(alice, <a class="code hl_class" href="classxrpl_1_1STAmount.html">STAmount</a>(carol[<span class="stringliteral">&quot;USD&quot;</span>].issue(), 6500000000000000ull, -14, <span class="keyword">true</span>, <a class="code hl_struct" href="structxrpl_1_1STAmount_1_1unchecked.html">STAmount::unchecked</a>{})));</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            env.require(balance(carol, gw[<span class="stringliteral">&quot;USD&quot;</span>](35)));</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        }</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        {</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            env.require(balance(alice, carol[<span class="stringliteral">&quot;USD&quot;</span>](-50)));</div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            env.require(balance(carol, gw[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        <span class="keywordflow">if</span> (with_rate)</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>            env(rate(gw, 1.1));</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>        env(pay(gw, bob, bob[<span class="stringliteral">&quot;USD&quot;</span>](100)));</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>        env(pay(gw, carol, carol[<span class="stringliteral">&quot;USD&quot;</span>](100)));</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        env.close();</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        <span class="comment">// alice pays amazon via multiple paths</span></div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        <span class="keywordflow">if</span> (with_rate)</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>            env(pay(alice, amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](150)),</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                sendmax(alice[<span class="stringliteral">&quot;USD&quot;</span>](200)),</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(bob),</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>                <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(carol));</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            env(pay(alice, amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](150)), <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(bob), <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1path.html">test::jtx::path</a>(carol));</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> </div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>        <span class="keywordflow">if</span> (with_rate)</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        {</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            env.require(balance(</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                alice,</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>                <a class="code hl_class" href="classxrpl_1_1STAmount.html">STAmount</a>(</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>                    carol[<span class="stringliteral">&quot;USD&quot;</span>].issue(), 6500000000000000ull, -14, <span class="keyword">true</span>, <a class="code hl_struct" href="structxrpl_1_1STAmount_1_1unchecked.html">STAmount::unchecked</a>{})));</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            env.require(balance(carol, gw[<span class="stringliteral">&quot;USD&quot;</span>](35)));</div>
 <div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        }</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        env.require(balance(alice, bob[<span class="stringliteral">&quot;USD&quot;</span>](-100)));</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        env.require(balance(amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](150)));</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](0)));</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>    }</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>        {</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>            env.require(balance(alice, carol[<span class="stringliteral">&quot;USD&quot;</span>](-50)));</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>            env.require(balance(carol, gw[<span class="stringliteral">&quot;USD&quot;</span>](50)));</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        }</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        env.require(balance(alice, bob[<span class="stringliteral">&quot;USD&quot;</span>](-100)));</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        env.require(balance(amazon, gw[<span class="stringliteral">&quot;USD&quot;</span>](150)));</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        env.require(balance(bob, gw[<span class="stringliteral">&quot;USD&quot;</span>](0)));</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    }</div>
 </div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00367" data-start="{" data-end="}">
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">  367</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">testInvoiceID</a>(<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    {</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Set Invoice ID on Payment&quot;</span>);</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        <span class="keyword">using namespace </span>test::jtx;</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>        Env env{*<span class="keyword">this</span>, features};</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <span class="keyword">auto</span> wsc = <a class="code hl_function" href="namespacexrpl_1_1test.html#ae0e9aadbd1c258af0ad925bd4f9740fa">test::makeWSClient</a>(env.app().config());</div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span> </div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        env.fund(XRP(10000), alice);</div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        env.close();</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> </div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> jvs;</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        jvs[jss::accounts] = <a class="code hl_enumvalue" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4">Json::arrayValue</a>;</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        jvs[jss::accounts].<a class="code hl_function" href="classJson_1_1Value.html#a21526b61dea2a1771030473e6248621e">append</a>(env.master.human());</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        jvs[jss::streams] = <a class="code hl_enumvalue" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4">Json::arrayValue</a>;</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        jvs[jss::streams].<a class="code hl_function" href="classJson_1_1Value.html#a21526b61dea2a1771030473e6248621e">append</a>(<span class="stringliteral">&quot;transactions&quot;</span>);</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        BEAST_EXPECT(wsc-&gt;invoke(<span class="stringliteral">&quot;subscribe&quot;</span>, jvs)[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> </div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        <span class="keywordtype">char</span> <span class="keyword">const</span>* invoiceId = <span class="stringliteral">&quot;243F6A8885A308D313198A2E03707344A4093822299F31D0082EFA98EC4E6C89&quot;</span>;</div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span> </div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> jv;</div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        <span class="keyword">auto</span> tx = env.jt(pay(env.master, alice, XRP(10000)), json(sfInvoiceID.fieldName, invoiceId));</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>        jv[jss::tx_blob] = <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(tx.stx-&gt;getSerializer().slice());</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        <span class="keyword">auto</span> jrr = wsc-&gt;invoke(<span class="stringliteral">&quot;submit&quot;</span>, jv)[jss::result];</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        BEAST_EXPECT(jrr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        BEAST_EXPECT(jrr[jss::tx_json][sfInvoiceID.fieldName] == invoiceId);</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        env.close();</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        <span class="keyword">using namespace </span>std::chrono_literals;</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        BEAST_EXPECT(wsc-&gt;findMsg(2s, [invoiceId](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; jval) {</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>            auto const&amp; t = jval[jss::transaction];</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>            return t[jss::TransactionType] == jss::Payment &amp;&amp; t[sfInvoiceID.fieldName] == invoiceId;</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        }));</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span> </div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00372" data-start="{" data-end="}">
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">  372</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">testInvoiceID</a>(<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features)</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    {</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Set Invoice ID on Payment&quot;</span>);</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        <span class="keyword">using namespace </span>test::jtx;</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span> </div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        Env env{*<span class="keyword">this</span>, features};</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>        Account alice{<span class="stringliteral">&quot;alice&quot;</span>};</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        <span class="keyword">auto</span> wsc = <a class="code hl_function" href="namespacexrpl_1_1test.html#ae0e9aadbd1c258af0ad925bd4f9740fa">test::makeWSClient</a>(env.app().config());</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span> </div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        env.fund(XRP(10000), alice);</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        env.close();</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span> </div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> jvs;</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        jvs[jss::accounts] = <a class="code hl_enumvalue" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4">Json::arrayValue</a>;</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        jvs[jss::accounts].<a class="code hl_function" href="classJson_1_1Value.html#a21526b61dea2a1771030473e6248621e">append</a>(env.master.human());</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        jvs[jss::streams] = <a class="code hl_enumvalue" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4">Json::arrayValue</a>;</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        jvs[jss::streams].<a class="code hl_function" href="classJson_1_1Value.html#a21526b61dea2a1771030473e6248621e">append</a>(<span class="stringliteral">&quot;transactions&quot;</span>);</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        BEAST_EXPECT(wsc-&gt;invoke(<span class="stringliteral">&quot;subscribe&quot;</span>, jvs)[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        <span class="keywordtype">char</span> <span class="keyword">const</span>* invoiceId = <span class="stringliteral">&quot;243F6A8885A308D313198A2E03707344A4093822299F31D0082EFA98EC4E6C89&quot;</span>;</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span> </div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> jv;</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        <span class="keyword">auto</span> tx =</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>            env.jt(pay(env.master, alice, XRP(10000)), json(sfInvoiceID.fieldName, invoiceId));</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        jv[jss::tx_blob] = <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(tx.stx-&gt;getSerializer().slice());</div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        <span class="keyword">auto</span> jrr = wsc-&gt;invoke(<span class="stringliteral">&quot;submit&quot;</span>, jv)[jss::result];</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>        BEAST_EXPECT(jrr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        BEAST_EXPECT(jrr[jss::tx_json][sfInvoiceID.fieldName] == invoiceId);</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        env.close();</div>
 <div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span> </div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        BEAST_EXPECT(wsc-&gt;invoke(<span class="stringliteral">&quot;unsubscribe&quot;</span>, jv)[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>    }</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        <span class="keyword">using namespace </span>std::chrono_literals;</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>        BEAST_EXPECT(wsc-&gt;findMsg(2s, [invoiceId](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; jval) {</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>            auto const&amp; t = jval[jss::transaction];</div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>            return t[jss::TransactionType] == jss::Payment &amp;&amp; t[sfInvoiceID.fieldName] == invoiceId;</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>        }));</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>        BEAST_EXPECT(wsc-&gt;invoke(<span class="stringliteral">&quot;unsubscribe&quot;</span>, jv)[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    }</div>
 </div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00407" data-start="{" data-end="}">
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#a93f34ccf6f2d2081928e95e2a53ba3c0">  407</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a93f34ccf6f2d2081928e95e2a53ba3c0">run</a>()<span class="keyword"> override</span></div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>        <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa8fbe30ab1653c9648424792528f6372">testTrustNonexistent</a>();</div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>        <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa8b02763494a1a7b1f0bc965712228a6">testCreditLimit</a>();</div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        <span class="keyword">auto</span> testWithFeatures = [<span class="keyword">this</span>](<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features) {</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a8c0da72d46cf0a909e27690e7b5420e0">testPayNonexistent</a>(features);</div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa721b73b5f0a2cbbeb75977c478df3d2">testDirectRipple</a>(features);</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">false</span>, <span class="keyword">false</span>, features);</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">false</span>, <span class="keyword">true</span>, features);</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">true</span>, <span class="keyword">false</span>, features);</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">true</span>, <span class="keyword">true</span>, features);</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">testWithPath</a>(features);</div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">testIndirect</a>(features);</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">testIndirectMultiPath</a>(<span class="keyword">true</span>, features);</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">testIndirectMultiPath</a>(<span class="keyword">false</span>, features);</div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">testInvoiceID</a>(features);</div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>        };</div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span> </div>
-<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>        <span class="keyword">using namespace </span>test::jtx;</div>
-<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        <span class="keyword">auto</span> <span class="keyword">const</span> sa = testable_amendments();</div>
-<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>        testWithFeatures(sa - featurePermissionedDEX);</div>
-<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>        testWithFeatures(sa);</div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    }</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span> </div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00413" data-start="{" data-end="}">
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno"><a class="line" href="classxrpl_1_1TrustAndBalance__test.html#a93f34ccf6f2d2081928e95e2a53ba3c0">  413</a></span>    <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a93f34ccf6f2d2081928e95e2a53ba3c0">run</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa8fbe30ab1653c9648424792528f6372">testTrustNonexistent</a>();</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa8b02763494a1a7b1f0bc965712228a6">testCreditLimit</a>();</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span> </div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        <span class="keyword">auto</span> testWithFeatures = [<span class="keyword">this</span>](<a class="code hl_class" href="classxrpl_1_1FeatureBitset.html">FeatureBitset</a> features) {</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a8c0da72d46cf0a909e27690e7b5420e0">testPayNonexistent</a>(features);</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa721b73b5f0a2cbbeb75977c478df3d2">testDirectRipple</a>(features);</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">false</span>, <span class="keyword">false</span>, features);</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">false</span>, <span class="keyword">true</span>, features);</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">true</span>, <span class="keyword">false</span>, features);</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">testWithTransferFee</a>(<span class="keyword">true</span>, <span class="keyword">true</span>, features);</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">testWithPath</a>(features);</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">testIndirect</a>(features);</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">testIndirectMultiPath</a>(<span class="keyword">true</span>, features);</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">testIndirectMultiPath</a>(<span class="keyword">false</span>, features);</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>            <a class="code hl_function" href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">testInvoiceID</a>(features);</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        };</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span> </div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        <span class="keyword">using namespace </span>test::jtx;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>        <span class="keyword">auto</span> <span class="keyword">const</span> sa = testable_amendments();</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>        testWithFeatures(sa - featurePermissionedDEX);</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>        testWithFeatures(sa);</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>    }</div>
 </div>
-<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>};</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>};</div>
 </div>
-<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span> </div>
-<div class="line"><a id="l00433" name="l00433"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a72672efbada6dc05957e138d57255acc">  433</a></span>BEAST_DEFINE_TESTSUITE(TrustAndBalance, app, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
-<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span> </div>
-<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span> </div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a72672efbada6dc05957e138d57255acc">  439</a></span>BEAST_DEFINE_TESTSUITE(TrustAndBalance, app, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span> </div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
 <div class="ttc" id="aclassJson_1_1Value_html"><div class="ttname"><a href="classJson_1_1Value.html">Json::Value</a></div><div class="ttdoc">Represents a JSON value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8h_source.html#l00129">json_value.h:130</a></div></div>
-<div class="ttc" id="aclassJson_1_1Value_html_a21526b61dea2a1771030473e6248621e"><div class="ttname"><a href="classJson_1_1Value.html#a21526b61dea2a1771030473e6248621e">Json::Value::append</a></div><div class="ttdeci">Value &amp; append(Value const &amp;value)</div><div class="ttdoc">Append value to array at the end.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00928">json_value.cpp:928</a></div></div>
+<div class="ttc" id="aclassJson_1_1Value_html_a21526b61dea2a1771030473e6248621e"><div class="ttname"><a href="classJson_1_1Value.html#a21526b61dea2a1771030473e6248621e">Json::Value::append</a></div><div class="ttdeci">Value &amp; append(Value const &amp;value)</div><div class="ttdoc">Append value to array at the end.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00953">json_value.cpp:953</a></div></div>
 <div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div><div class="ttdoc">A testsuite class.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00050">suite.h:51</a></div></div>
-<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html_aaa1237d9b85c69d35fe86645cee094b5"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">beast::unit_test::suite::testcase</a></div><div class="ttdeci">testcase_t testcase</div><div class="ttdoc">Memberspace for declaring test cases.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00147">suite.h:147</a></div></div>
+<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html_aaa1237d9b85c69d35fe86645cee094b5"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">beast::unit_test::suite::testcase</a></div><div class="ttdeci">testcase_t testcase</div><div class="ttdoc">Memberspace for declaring test cases.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00150">suite.h:150</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1FeatureBitset_html"><div class="ttname"><a href="classxrpl_1_1FeatureBitset.html">xrpl::FeatureBitset</a></div><div class="ttdef"><b>Definition</b> <a href="Feature_8h_source.html#l00142">Feature.h:143</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1STAmount_html"><div class="ttname"><a href="classxrpl_1_1STAmount.html">xrpl::STAmount</a></div><div class="ttdef"><b>Definition</b> <a href="STAmount_8h_source.html#l00029">STAmount.h:30</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html">xrpl::TrustAndBalance_test</a></div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00011">TrustAndBalance_test.cpp:12</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_a35e389a6f1c778bed90d4671be124a0c"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">xrpl::TrustAndBalance_test::testInvoiceID</a></div><div class="ttdeci">void testInvoiceID(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00367">TrustAndBalance_test.cpp:367</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_a35e389a6f1c778bed90d4671be124a0c"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#a35e389a6f1c778bed90d4671be124a0c">xrpl::TrustAndBalance_test::testInvoiceID</a></div><div class="ttdeci">void testInvoiceID(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00372">TrustAndBalance_test.cpp:372</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_a813b473e75c79ffc15ce95c9fa2f2fc8"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#a813b473e75c79ffc15ce95c9fa2f2fc8">xrpl::TrustAndBalance_test::testWithTransferFee</a></div><div class="ttdeci">void testWithTransferFee(bool subscribe, bool with_rate, FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00150">TrustAndBalance_test.cpp:150</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_a8c0da72d46cf0a909e27690e7b5420e0"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#a8c0da72d46cf0a909e27690e7b5420e0">xrpl::TrustAndBalance_test::testPayNonexistent</a></div><div class="ttdeci">void testPayNonexistent(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00014">TrustAndBalance_test.cpp:14</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_a93f34ccf6f2d2081928e95e2a53ba3c0"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#a93f34ccf6f2d2081928e95e2a53ba3c0">xrpl::TrustAndBalance_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00407">TrustAndBalance_test.cpp:407</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_aa218e14b832488eafbb9f41db5759463"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">xrpl::TrustAndBalance_test::testWithPath</a></div><div class="ttdeci">void testWithPath(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00225">TrustAndBalance_test.cpp:225</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_a93f34ccf6f2d2081928e95e2a53ba3c0"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#a93f34ccf6f2d2081928e95e2a53ba3c0">xrpl::TrustAndBalance_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00413">TrustAndBalance_test.cpp:413</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_aa218e14b832488eafbb9f41db5759463"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#aa218e14b832488eafbb9f41db5759463">xrpl::TrustAndBalance_test::testWithPath</a></div><div class="ttdeci">void testWithPath(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00226">TrustAndBalance_test.cpp:226</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_aa721b73b5f0a2cbbeb75977c478df3d2"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#aa721b73b5f0a2cbbeb75977c478df3d2">xrpl::TrustAndBalance_test::testDirectRipple</a></div><div class="ttdeci">void testDirectRipple(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00109">TrustAndBalance_test.cpp:109</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_aa8b02763494a1a7b1f0bc965712228a6"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#aa8b02763494a1a7b1f0bc965712228a6">xrpl::TrustAndBalance_test::testCreditLimit</a></div><div class="ttdeci">void testCreditLimit()</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00037">TrustAndBalance_test.cpp:37</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_aa8fbe30ab1653c9648424792528f6372"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#aa8fbe30ab1653c9648424792528f6372">xrpl::TrustAndBalance_test::testTrustNonexistent</a></div><div class="ttdeci">void testTrustNonexistent()</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00025">TrustAndBalance_test.cpp:25</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_adfa9aff28a2be1a3cf741b0fe948fbb4"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">xrpl::TrustAndBalance_test::testIndirectMultiPath</a></div><div class="ttdeci">void testIndirectMultiPath(bool with_rate, FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00313">TrustAndBalance_test.cpp:313</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_ae307208002af3625f366fbc1dd8893ed"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">xrpl::TrustAndBalance_test::testIndirect</a></div><div class="ttdeci">void testIndirect(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00272">TrustAndBalance_test.cpp:272</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1path_html"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1path.html">xrpl::test::jtx::path</a></div><div class="ttdoc">Add a path.</div><div class="ttdef"><b>Definition</b> <a href="paths_8h_source.html#l00036">paths.h:37</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_adfa9aff28a2be1a3cf741b0fe948fbb4"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#adfa9aff28a2be1a3cf741b0fe948fbb4">xrpl::TrustAndBalance_test::testIndirectMultiPath</a></div><div class="ttdeci">void testIndirectMultiPath(bool with_rate, FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00314">TrustAndBalance_test.cpp:314</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1TrustAndBalance__test_html_ae307208002af3625f366fbc1dd8893ed"><div class="ttname"><a href="classxrpl_1_1TrustAndBalance__test.html#ae307208002af3625f366fbc1dd8893ed">xrpl::TrustAndBalance_test::testIndirect</a></div><div class="ttdeci">void testIndirect(FeatureBitset features)</div><div class="ttdef"><b>Definition</b> <a href="TrustAndBalance__test_8cpp_source.html#l00273">TrustAndBalance_test.cpp:273</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1path_html"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1path.html">xrpl::test::jtx::path</a></div><div class="ttdoc">Add a path.</div><div class="ttdef"><b>Definition</b> <a href="paths_8h_source.html#l00037">paths.h:38</a></div></div>
 <div class="ttc" id="anamespaceJson_html_a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4"><div class="ttname"><a href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eadc8f264f36b55b063c78126b335415f4">Json::arrayValue</a></div><div class="ttdeci">@ arrayValue</div><div class="ttdoc">array value (ordered list)</div><div class="ttdef"><b>Definition</b> <a href="json__value_8h_source.html#l00025">json_value.h:25</a></div></div>
-<div class="ttc" id="anamespacexrpl_1_1test_html_ae0e9aadbd1c258af0ad925bd4f9740fa"><div class="ttname"><a href="namespacexrpl_1_1test.html#ae0e9aadbd1c258af0ad925bd4f9740fa">xrpl::test::makeWSClient</a></div><div class="ttdeci">std::unique_ptr&lt; WSClient &gt; makeWSClient(Config const &amp;cfg, bool v2, unsigned rpc_version, std::unordered_map&lt; std::string, std::string &gt; const &amp;headers)</div><div class="ttdoc">Returns a client operating through WebSockets/S.</div><div class="ttdef"><b>Definition</b> <a href="WSClient_8cpp_source.html#l00285">WSClient.cpp:285</a></div></div>
+<div class="ttc" id="anamespacexrpl_1_1test_html_ae0e9aadbd1c258af0ad925bd4f9740fa"><div class="ttname"><a href="namespacexrpl_1_1test.html#ae0e9aadbd1c258af0ad925bd4f9740fa">xrpl::test::makeWSClient</a></div><div class="ttdeci">std::unique_ptr&lt; WSClient &gt; makeWSClient(Config const &amp;cfg, bool v2, unsigned rpc_version, std::unordered_map&lt; std::string, std::string &gt; const &amp;headers)</div><div class="ttdoc">Returns a client operating through WebSockets/S.</div><div class="ttdef"><b>Definition</b> <a href="WSClient_8cpp_source.html#l00291">WSClient.cpp:291</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a36b95700599f590017b5912e220baf5b"><div class="ttname"><a href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">xrpl::strHex</a></div><div class="ttdeci">std::string strHex(FwdIt begin, FwdIt end)</div><div class="ttdef"><b>Definition</b> <a href="strHex_8h_source.html#l00010">strHex.h:10</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_ac8c50610643a4f902b9bb9e42d0b00e6a6396925a2c1d8c26fc5c00986cca0558"><div class="ttname"><a href="namespacexrpl.html#ac8c50610643a4f902b9bb9e42d0b00e6a6396925a2c1d8c26fc5c00986cca0558">xrpl::temBAD_LIMIT</a></div><div class="ttdeci">@ temBAD_LIMIT</div><div class="ttdef"><b>Definition</b> <a href="TER_8h_source.html#l00074">TER.h:74</a></div></div>

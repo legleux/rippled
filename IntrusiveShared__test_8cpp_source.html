@@ -570,384 +570,397 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>            <span class="keywordtype">int</span> s = destructionState.load(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_relaxed</a>);</div>
 <div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>            <span class="keywordflow">return</span> {(s &amp; 1) != 0, (s &amp; 2) != 0};</div>
 <div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>        };</div>
-<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>        <span class="keyword">auto</span> setDestructorRan = [&amp;]() -&gt; <span class="keywordtype">void</span> { destructionState.fetch_or(1, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>); };</div>
-<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>        <span class="keyword">auto</span> setPartialDeleteRan = [&amp;]() -&gt; <span class="keywordtype">void</span> { destructionState.fetch_or(2, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>); };</div>
-<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>        <span class="keyword">auto</span> tracingCallback = [&amp;](TrackedState cur, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TrackedState&gt;</a> next) {</div>
-<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>            <span class="keyword">using </span>enum TrackedState;</div>
-<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>            <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
-<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>            <span class="keywordflow">if</span> (next == partiallyDeleted)</div>
-<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>            {</div>
-<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>                BEAST_EXPECT(!partialDeleteRan &amp;&amp; !destructorRan);</div>
-<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>                setPartialDeleteRan();</div>
-<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>            }</div>
-<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>            <span class="keywordflow">if</span> (next == deleted)</div>
-<div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>            {</div>
-<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>                BEAST_EXPECT(!destructorRan);</div>
-<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>                setDestructorRan();</div>
-<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>            }</div>
-<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>        };</div>
-<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>        <span class="keyword">auto</span> createVecOfPointers = [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; toClone, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random.html">std::default_random_engine</a>&amp; eng)</div>
-<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>            -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector</a>&lt;<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/variant.html">std::variant</a>&lt;<a class="code hl_class" href="classxrpl_1_1SharedIntrusive.html">SharedIntrusive&lt;TIBase&gt;</a>, <a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive&lt;TIBase&gt;</a>&gt;&gt; {</div>
-<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::variant&lt;SharedIntrusive&lt;TIBase&gt;</a>, <a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive&lt;TIBase&gt;</a>&gt;&gt; result;</div>
-<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> toCreateDist(4, 64);</div>
-<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> isStrongDist(0, 1);</div>
-<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>            <span class="keyword">auto</span> numToCreate = toCreateDist(eng);</div>
-<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numToCreate);</div>
-<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numToCreate; ++i)</div>
-<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>            {</div>
-<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>                <span class="keywordflow">if</span> (isStrongDist(eng))</div>
-<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>                {</div>
-<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>                    result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/push_back.html">push_back</a>(<a class="code hl_class" href="classxrpl_1_1SharedIntrusive.html">SharedIntrusive&lt;TIBase&gt;</a>(toClone));</div>
-<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>                }</div>
-<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>        <span class="keyword">auto</span> setDestructorRan = [&amp;]() -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>            destructionState.fetch_or(1, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>        };</div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>        <span class="keyword">auto</span> setPartialDeleteRan = [&amp;]() -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>            destructionState.fetch_or(2, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>        };</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>        <span class="keyword">auto</span> tracingCallback = [&amp;](TrackedState cur, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TrackedState&gt;</a> next) {</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>            <span class="keyword">using </span>enum TrackedState;</div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>            <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span>            <span class="keywordflow">if</span> (next == partiallyDeleted)</div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>            {</div>
+<div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>                BEAST_EXPECT(!partialDeleteRan &amp;&amp; !destructorRan);</div>
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>                setPartialDeleteRan();</div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>            }</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>            <span class="keywordflow">if</span> (next == deleted)</div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>            {</div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>                BEAST_EXPECT(!destructorRan);</div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>                setDestructorRan();</div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>            }</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>        };</div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>        <span class="keyword">auto</span> createVecOfPointers = [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; toClone, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random.html">std::default_random_engine</a>&amp; eng)</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>            -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector</a>&lt;<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/variant.html">std::variant</a>&lt;<a class="code hl_class" href="classxrpl_1_1SharedIntrusive.html">SharedIntrusive&lt;TIBase&gt;</a>, <a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive&lt;TIBase&gt;</a>&gt;&gt; {</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::variant&lt;SharedIntrusive&lt;TIBase&gt;</a>, <a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive&lt;TIBase&gt;</a>&gt;&gt; result;</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> toCreateDist(4, 64);</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> isStrongDist(0, 1);</div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>            <span class="keyword">auto</span> numToCreate = toCreateDist(eng);</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numToCreate);</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numToCreate; ++i)</div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>            {</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span>                <span class="keywordflow">if</span> (isStrongDist(eng))</div>
 <div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span>                {</div>
-<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>                    result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/push_back.html">push_back</a>(<a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive&lt;TIBase&gt;</a>(toClone));</div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>                    result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/push_back.html">push_back</a>(<a class="code hl_class" href="classxrpl_1_1SharedIntrusive.html">SharedIntrusive&lt;TIBase&gt;</a>(toClone));</div>
 <div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span>                }</div>
-<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>            }</div>
-<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>            <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>        };</div>
-<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> loopIters = 2 * 1024;</div>
-<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> numThreads = 16;</div>
-<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedIntrusive&lt;TIBase&gt;</a>&gt; toClone;</div>
-<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> loopStartSyncPoint{numThreads};</div>
-<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateToCloneSyncPoint{numThreads};</div>
-<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateVecOfPointersSyncPoint{numThreads};</div>
-<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>        <span class="keyword">auto</span> engines = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> {</div>
-<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/random_device.html">std::random_device</a> rd;</div>
-<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> result;</div>
-<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numThreads);</div>
-<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(rd());</div>
-<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>            <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>        }();</div>
-<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span> </div>
-<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>        <span class="comment">// cloneAndDestroy clones the strong pointer into a vector of mixed</span></div>
-<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>        <span class="comment">// strong and weak pointers and destroys them all at once.</span></div>
-<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>        <span class="comment">// threadId==0 is special.</span></div>
-<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>        <span class="keyword">auto</span> cloneAndDestroy = [&amp;](<span class="keywordtype">int</span> threadId) {</div>
-<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; loopIters; ++i)</div>
-<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>            {</div>
-<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>                loopStartSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
-<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>                <span class="comment">// only thread 0 should reset the state</span></div>
-<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TIBase::ResetStatesGuard&gt;</a> rsg;</div>
-<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>                <span class="keywordflow">if</span> (threadId == 0)</div>
-<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>                {</div>
-<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>                    <span class="comment">// Thread 0 is the genesis thread. It creates the strong</span></div>
-<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>                    <span class="comment">// pointers to be cloned by the other threads. This</span></div>
-<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>                    <span class="comment">// thread will also check that the destructor ran and</span></div>
-<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>                    <span class="comment">// clear the temporary variables.</span></div>
-<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span> </div>
-<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>                    rsg.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/optional/emplace.html">emplace</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>                    <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
-<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>                    BEAST_EXPECT(!i || destructorRan);</div>
-<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>                    destructionState.store(0, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_release</a>);</div>
-<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span> </div>
-<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
-<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/resize.html">resize</a>(numThreads);</div>
-<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>                    <span class="keyword">auto</span> strong = make_SharedIntrusive&lt;TIBase&gt;();</div>
-<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>                    strong-&gt;tracingCallback_ = tracingCallback;</div>
-<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>                    <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/fill.html">std::fill</a>(toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/begin.html">begin</a>(), toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/end.html">end</a>(), strong);</div>
-<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>                }</div>
-<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span> </div>
-<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>                postCreateToCloneSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span> </div>
-<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>                <span class="keyword">auto</span> v = createVecOfPointers(toClone[threadId], engines[threadId]);</div>
-<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>                toClone[threadId].reset();</div>
-<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span> </div>
-<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>                postCreateVecOfPointersSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span> </div>
-<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>                v.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
-<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>            }</div>
-<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>        };</div>
-<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::thread&gt;</a> threads;</div>
-<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>        {</div>
-<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>            threads.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(cloneAndDestroy, i);</div>
-<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>        }</div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>                {</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>                    result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/push_back.html">push_back</a>(<a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive&lt;TIBase&gt;</a>(toClone));</div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>                }</div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>            }</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>        };</div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> loopIters = 2 * 1024;</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> numThreads = 16;</div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedIntrusive&lt;TIBase&gt;</a>&gt; toClone;</div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> loopStartSyncPoint{numThreads};</div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateToCloneSyncPoint{numThreads};</div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateVecOfPointersSyncPoint{numThreads};</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>        <span class="keyword">auto</span> engines = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> {</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/random_device.html">std::random_device</a> rd;</div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> result;</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numThreads);</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>                result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(rd());</div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span>        }();</div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span> </div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span>        <span class="comment">// cloneAndDestroy clones the strong pointer into a vector of mixed</span></div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>        <span class="comment">// strong and weak pointers and destroys them all at once.</span></div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>        <span class="comment">// threadId==0 is special.</span></div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>        <span class="keyword">auto</span> cloneAndDestroy = [&amp;](<span class="keywordtype">int</span> threadId) {</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; loopIters; ++i)</div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>            {</div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>                loopStartSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span> </div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span>                <span class="comment">// only thread 0 should reset the state</span></div>
+<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TIBase::ResetStatesGuard&gt;</a> rsg;</div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span>                <span class="keywordflow">if</span> (threadId == 0)</div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>                {</div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>                    <span class="comment">// Thread 0 is the genesis thread. It creates the strong</span></div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>                    <span class="comment">// pointers to be cloned by the other threads. This</span></div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>                    <span class="comment">// thread will also check that the destructor ran and</span></div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>                    <span class="comment">// clear the temporary variables.</span></div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span> </div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span>                    rsg.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/optional/emplace.html">emplace</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>                    <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>                    BEAST_EXPECT(!i || destructorRan);</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>                    destructionState.store(0, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_release</a>);</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span> </div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/resize.html">resize</a>(numThreads);</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span>                    <span class="keyword">auto</span> strong = make_SharedIntrusive&lt;TIBase&gt;();</div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>                    strong-&gt;tracingCallback_ = tracingCallback;</div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>                    <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/fill.html">std::fill</a>(toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/begin.html">begin</a>(), toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/end.html">end</a>(), strong);</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>                }</div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span> </div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>                postCreateToCloneSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span> </div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>                <span class="keyword">auto</span> v = createVecOfPointers(toClone[threadId], engines[threadId]);</div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>                toClone[threadId].reset();</div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span> </div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>                postCreateVecOfPointersSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span> </div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span>                v.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>            }</div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span>        };</div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::thread&gt;</a> threads;</div>
 <div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
 <div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span>        {</div>
-<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>            threads[i].join();</div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span>            threads.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(cloneAndDestroy, i);</div>
 <div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span>        }</div>
-<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>    }</div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>        {</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>            threads[i].join();</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>        }</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>    }</div>
 </div>
-<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span> </div>
-<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00602" data-start="{" data-end="}">
-<div class="line"><a id="l00602" name="l00602"></a><span class="lineno"><a class="line" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">  602</a></span>    <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">testMultithreadedClearMixedUnion</a>()</div>
-<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>    {</div>
-<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Multithreaded Clear Mixed Union&quot;</span>);</div>
-<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span> </div>
-<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>        <span class="comment">// This test creates and destroys many SharedWeak pointers in a</span></div>
-<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>        <span class="comment">// loop. All the pointers start as strong and a loop randomly</span></div>
-<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>        <span class="comment">// convert them between strong and weak pointers. Both threads clear</span></div>
-<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>        <span class="comment">// all the pointers and check that the invariants hold.</span></div>
-<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>        <span class="comment">//</span></div>
-<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>        <span class="comment">// Note: This test also differs from the test above in that the pointers</span></div>
-<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>        <span class="comment">// randomly change from strong to weak and from weak to strong in a</span></div>
-<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <span class="comment">// loop. This can&#39;t be done in the variant test above because variant is</span></div>
-<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        <span class="comment">// not thread safe while the SharedWeakUnion is thread safe.</span></div>
-<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span> </div>
-<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>        <span class="keyword">using </span>enum TrackedState;</div>
-<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span> </div>
-<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        TIBase::ResetStatesGuard rsg{<span class="keyword">true</span>};</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span> </div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00606" data-start="{" data-end="}">
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno"><a class="line" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">  606</a></span>    <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">testMultithreadedClearMixedUnion</a>()</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>    {</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Multithreaded Clear Mixed Union&quot;</span>);</div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span> </div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span>        <span class="comment">// This test creates and destroys many SharedWeak pointers in a</span></div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>        <span class="comment">// loop. All the pointers start as strong and a loop randomly</span></div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>        <span class="comment">// convert them between strong and weak pointers. Both threads clear</span></div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>        <span class="comment">// all the pointers and check that the invariants hold.</span></div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>        <span class="comment">//</span></div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>        <span class="comment">// Note: This test also differs from the test above in that the pointers</span></div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>        <span class="comment">// randomly change from strong to weak and from weak to strong in a</span></div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>        <span class="comment">// loop. This can&#39;t be done in the variant test above because variant is</span></div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span>        <span class="comment">// not thread safe while the SharedWeakUnion is thread safe.</span></div>
 <div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span> </div>
-<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/atomic/atomic.html">std::atomic&lt;int&gt;</a> destructionState{0};</div>
-<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>        <span class="comment">// returns destructorRan and partialDestructorRan (in that order)</span></div>
-<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        <span class="keyword">auto</span> getDestructorState = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair&lt;bool, bool&gt;</a> {</div>
-<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>            <span class="keywordtype">int</span> s = destructionState.load(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_relaxed</a>);</div>
-<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>            <span class="keywordflow">return</span> {(s &amp; 1) != 0, (s &amp; 2) != 0};</div>
-<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>        };</div>
-<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>        <span class="keyword">auto</span> setDestructorRan = [&amp;]() -&gt; <span class="keywordtype">void</span> { destructionState.fetch_or(1, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>); };</div>
-<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>        <span class="keyword">auto</span> setPartialDeleteRan = [&amp;]() -&gt; <span class="keywordtype">void</span> { destructionState.fetch_or(2, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>); };</div>
-<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>        <span class="keyword">auto</span> tracingCallback = [&amp;](TrackedState cur, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TrackedState&gt;</a> next) {</div>
-<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>            <span class="keyword">using </span>enum TrackedState;</div>
-<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>            <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
-<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>            <span class="keywordflow">if</span> (next == partiallyDeleted)</div>
-<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>            {</div>
-<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>                BEAST_EXPECT(!partialDeleteRan &amp;&amp; !destructorRan);</div>
-<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>                setPartialDeleteRan();</div>
-<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>            }</div>
-<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>            <span class="keywordflow">if</span> (next == deleted)</div>
-<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>            {</div>
-<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>                BEAST_EXPECT(!destructorRan);</div>
-<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>                setDestructorRan();</div>
-<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>            }</div>
-<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>        };</div>
-<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>        <span class="keyword">auto</span> createVecOfPointers = [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; toClone,</div>
-<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>                                       <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random.html">std::default_random_engine</a>&amp; eng) -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector</a>&lt;<a class="code hl_class" href="classxrpl_1_1SharedWeakUnion.html">SharedWeakUnion&lt;TIBase&gt;</a>&gt; {</div>
-<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedWeakUnion&lt;TIBase&gt;</a>&gt; result;</div>
-<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> toCreateDist(4, 64);</div>
-<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>            <span class="keyword">auto</span> numToCreate = toCreateDist(eng);</div>
-<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numToCreate);</div>
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numToCreate; ++i)</div>
-<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>                result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/push_back.html">push_back</a>(<a class="code hl_class" href="classxrpl_1_1SharedIntrusive.html">SharedIntrusive&lt;TIBase&gt;</a>(toClone));</div>
-<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>            <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>        };</div>
-<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> loopIters = 2 * 1024;</div>
-<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> flipPointersLoopIters = 256;</div>
-<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> numThreads = 16;</div>
-<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedIntrusive&lt;TIBase&gt;</a>&gt; toClone;</div>
-<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> loopStartSyncPoint{numThreads};</div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateToCloneSyncPoint{numThreads};</div>
-<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateVecOfPointersSyncPoint{numThreads};</div>
-<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postFlipPointersLoopSyncPoint{numThreads};</div>
-<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>        <span class="keyword">auto</span> engines = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> {</div>
-<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/random_device.html">std::random_device</a> rd;</div>
-<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> result;</div>
-<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numThreads);</div>
-<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>                result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(rd());</div>
-<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>            <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>        }();</div>
-<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span> </div>
-<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        <span class="comment">// cloneAndDestroy clones the strong pointer into a vector of</span></div>
-<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>        <span class="comment">// mixed strong and weak pointers, runs a loop that randomly</span></div>
-<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>        <span class="comment">// changes strong pointers to weak pointers,  and destroys them</span></div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>        <span class="comment">// all at once.</span></div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>        <span class="keyword">auto</span> cloneAndDestroy = [&amp;](<span class="keywordtype">int</span> threadId) {</div>
-<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; loopIters; ++i)</div>
-<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>            {</div>
-<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>                loopStartSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span> </div>
-<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>                <span class="comment">// only thread 0 should reset the state</span></div>
-<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TIBase::ResetStatesGuard&gt;</a> rsg;</div>
-<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>                <span class="keywordflow">if</span> (threadId == 0)</div>
-<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>                {</div>
-<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>                    <span class="comment">// threadId 0 is the genesis thread. It creates the</span></div>
-<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>                    <span class="comment">// strong point to be cloned by the other threads. This</span></div>
-<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                    <span class="comment">// thread will also check that the destructor ran and</span></div>
-<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>                    <span class="comment">// clear the temporary variables.</span></div>
-<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>                    rsg.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/optional/emplace.html">emplace</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>                    <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
-<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>                    BEAST_EXPECT(!i || destructorRan);</div>
-<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>                    destructionState.store(0, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_release</a>);</div>
-<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span> </div>
-<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
-<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/resize.html">resize</a>(numThreads);</div>
-<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>                    <span class="keyword">auto</span> strong = make_SharedIntrusive&lt;TIBase&gt;();</div>
-<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>                    strong-&gt;tracingCallback_ = tracingCallback;</div>
-<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>                    <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/fill.html">std::fill</a>(toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/begin.html">begin</a>(), toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/end.html">end</a>(), strong);</div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>                }</div>
-<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span> </div>
-<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span>                postCreateToCloneSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span> </div>
-<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span>                <span class="keyword">auto</span> v = createVecOfPointers(toClone[threadId], engines[threadId]);</div>
-<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>                toClone[threadId].reset();</div>
-<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span> </div>
-<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>                postCreateVecOfPointersSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>        <span class="keyword">using </span>enum TrackedState;</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span> </div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>        TIBase::ResetStatesGuard rsg{<span class="keyword">true</span>};</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span> </div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/atomic/atomic.html">std::atomic&lt;int&gt;</a> destructionState{0};</div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>        <span class="comment">// returns destructorRan and partialDestructorRan (in that order)</span></div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span>        <span class="keyword">auto</span> getDestructorState = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair&lt;bool, bool&gt;</a> {</div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>            <span class="keywordtype">int</span> s = destructionState.load(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>            <span class="keywordflow">return</span> {(s &amp; 1) != 0, (s &amp; 2) != 0};</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>        };</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>        <span class="keyword">auto</span> setDestructorRan = [&amp;]() -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>            destructionState.fetch_or(1, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>        };</div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>        <span class="keyword">auto</span> setPartialDeleteRan = [&amp;]() -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span>            destructionState.fetch_or(2, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>        };</div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>        <span class="keyword">auto</span> tracingCallback = [&amp;](TrackedState cur, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TrackedState&gt;</a> next) {</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>            <span class="keyword">using </span>enum TrackedState;</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>            <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>            <span class="keywordflow">if</span> (next == partiallyDeleted)</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>            {</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>                BEAST_EXPECT(!partialDeleteRan &amp;&amp; !destructorRan);</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span>                setPartialDeleteRan();</div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>            }</div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span>            <span class="keywordflow">if</span> (next == deleted)</div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span>            {</div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span>                BEAST_EXPECT(!destructorRan);</div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span>                setDestructorRan();</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span>            }</div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>        };</div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>        <span class="keyword">auto</span> createVecOfPointers =</div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>            [&amp;](<span class="keyword">auto</span> <span class="keyword">const</span>&amp; toClone,</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random.html">std::default_random_engine</a>&amp; eng) -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector</a>&lt;<a class="code hl_class" href="classxrpl_1_1SharedWeakUnion.html">SharedWeakUnion&lt;TIBase&gt;</a>&gt; {</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedWeakUnion&lt;TIBase&gt;</a>&gt; result;</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> toCreateDist(4, 64);</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>            <span class="keyword">auto</span> numToCreate = toCreateDist(eng);</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numToCreate);</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numToCreate; ++i)</div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>                result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/push_back.html">push_back</a>(<a class="code hl_class" href="classxrpl_1_1SharedIntrusive.html">SharedIntrusive&lt;TIBase&gt;</a>(toClone));</div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>        };</div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> loopIters = 2 * 1024;</div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> flipPointersLoopIters = 256;</div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> numThreads = 16;</div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedIntrusive&lt;TIBase&gt;</a>&gt; toClone;</div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> loopStartSyncPoint{numThreads};</div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateToCloneSyncPoint{numThreads};</div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateVecOfPointersSyncPoint{numThreads};</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postFlipPointersLoopSyncPoint{numThreads};</div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>        <span class="keyword">auto</span> engines = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> {</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/random_device.html">std::random_device</a> rd;</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::default_random_engine&gt;</a> result;</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>            result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/reserve.html">reserve</a>(numThreads);</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>                result.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(rd());</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>            <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>        }();</div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span> </div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>        <span class="comment">// cloneAndDestroy clones the strong pointer into a vector of</span></div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>        <span class="comment">// mixed strong and weak pointers, runs a loop that randomly</span></div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>        <span class="comment">// changes strong pointers to weak pointers,  and destroys them</span></div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>        <span class="comment">// all at once.</span></div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>        <span class="keyword">auto</span> cloneAndDestroy = [&amp;](<span class="keywordtype">int</span> threadId) {</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; loopIters; ++i)</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>            {</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>                loopStartSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span> </div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span>                <span class="comment">// only thread 0 should reset the state</span></div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TIBase::ResetStatesGuard&gt;</a> rsg;</div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span>                <span class="keywordflow">if</span> (threadId == 0)</div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>                {</div>
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno">  692</span>                    <span class="comment">// threadId 0 is the genesis thread. It creates the</span></div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span>                    <span class="comment">// strong point to be cloned by the other threads. This</span></div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span>                    <span class="comment">// thread will also check that the destructor ran and</span></div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>                    <span class="comment">// clear the temporary variables.</span></div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>                    rsg.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/optional/emplace.html">emplace</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>                    <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>                    BEAST_EXPECT(!i || destructorRan);</div>
+<div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>                    destructionState.store(0, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_release</a>);</div>
+<div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span> </div>
+<div class="line"><a id="l00701" name="l00701"></a><span class="lineno">  701</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
+<div class="line"><a id="l00702" name="l00702"></a><span class="lineno">  702</span>                    toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/resize.html">resize</a>(numThreads);</div>
+<div class="line"><a id="l00703" name="l00703"></a><span class="lineno">  703</span>                    <span class="keyword">auto</span> strong = make_SharedIntrusive&lt;TIBase&gt;();</div>
+<div class="line"><a id="l00704" name="l00704"></a><span class="lineno">  704</span>                    strong-&gt;tracingCallback_ = tracingCallback;</div>
+<div class="line"><a id="l00705" name="l00705"></a><span class="lineno">  705</span>                    <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/fill.html">std::fill</a>(toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/begin.html">begin</a>(), toClone.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/end.html">end</a>(), strong);</div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>                }</div>
 <div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span> </div>
-<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> isStrongDist(0, 1);</div>
-<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> f = 0; f &lt; flipPointersLoopIters; ++f)</div>
-<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>                {</div>
-<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; p : v)</div>
-<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>                    {</div>
-<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span>                        <span class="keywordflow">if</span> (isStrongDist(engines[threadId]))</div>
-<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>                        {</div>
-<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>                            p.convertToStrong();</div>
-<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span>                        }</div>
-<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>                        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>                        {</div>
-<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                            p.convertToWeak();</div>
-<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>                        }</div>
-<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>                    }</div>
-<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>                }</div>
-<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span> </div>
-<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>                postFlipPointersLoopSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span> </div>
-<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>                v.clear();</div>
-<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>            }</div>
-<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>        };</div>
-<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::thread&gt;</a> threads;</div>
-<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>        {</div>
-<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>            threads.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(cloneAndDestroy, i);</div>
-<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>        }</div>
-<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>        {</div>
-<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>            threads[i].join();</div>
-<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>        }</div>
-<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>    }</div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>                postCreateToCloneSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span> </div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>                <span class="keyword">auto</span> v = createVecOfPointers(toClone[threadId], engines[threadId]);</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span>                toClone[threadId].reset();</div>
+<div class="line"><a id="l00713" name="l00713"></a><span class="lineno">  713</span> </div>
+<div class="line"><a id="l00714" name="l00714"></a><span class="lineno">  714</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00715" name="l00715"></a><span class="lineno">  715</span>                postCreateVecOfPointersSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00716" name="l00716"></a><span class="lineno">  716</span> </div>
+<div class="line"><a id="l00717" name="l00717"></a><span class="lineno">  717</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution.html">std::uniform_int_distribution&lt;&gt;</a> isStrongDist(0, 1);</div>
+<div class="line"><a id="l00718" name="l00718"></a><span class="lineno">  718</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> f = 0; f &lt; flipPointersLoopIters; ++f)</div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>                {</div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; p : v)</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span>                    {</div>
+<div class="line"><a id="l00722" name="l00722"></a><span class="lineno">  722</span>                        <span class="keywordflow">if</span> (isStrongDist(engines[threadId]))</div>
+<div class="line"><a id="l00723" name="l00723"></a><span class="lineno">  723</span>                        {</div>
+<div class="line"><a id="l00724" name="l00724"></a><span class="lineno">  724</span>                            p.convertToStrong();</div>
+<div class="line"><a id="l00725" name="l00725"></a><span class="lineno">  725</span>                        }</div>
+<div class="line"><a id="l00726" name="l00726"></a><span class="lineno">  726</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00727" name="l00727"></a><span class="lineno">  727</span>                        {</div>
+<div class="line"><a id="l00728" name="l00728"></a><span class="lineno">  728</span>                            p.convertToWeak();</div>
+<div class="line"><a id="l00729" name="l00729"></a><span class="lineno">  729</span>                        }</div>
+<div class="line"><a id="l00730" name="l00730"></a><span class="lineno">  730</span>                    }</div>
+<div class="line"><a id="l00731" name="l00731"></a><span class="lineno">  731</span>                }</div>
+<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span> </div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>                postFlipPointersLoopSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span> </div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>                v.clear();</div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>            }</div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>        };</div>
+<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::thread&gt;</a> threads;</div>
+<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>        {</div>
+<div class="line"><a id="l00742" name="l00742"></a><span class="lineno">  742</span>            threads.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(cloneAndDestroy, i);</div>
+<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>        }</div>
+<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span>        {</div>
+<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>            threads[i].join();</div>
+<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>        }</div>
+<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>    }</div>
 </div>
-<div class="line"><a id="l00740" name="l00740"></a><span class="lineno">  740</span> </div>
-<div class="line"><a id="l00741" name="l00741"></a><span class="lineno">  741</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00742" data-start="{" data-end="}">
-<div class="line"><a id="l00742" name="l00742"></a><span class="lineno"><a class="line" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">  742</a></span>    <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">testMultithreadedLockingWeak</a>()</div>
-<div class="line"><a id="l00743" name="l00743"></a><span class="lineno">  743</span>    {</div>
-<div class="line"><a id="l00744" name="l00744"></a><span class="lineno">  744</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Multithreaded Locking Weak&quot;</span>);</div>
-<div class="line"><a id="l00745" name="l00745"></a><span class="lineno">  745</span> </div>
-<div class="line"><a id="l00746" name="l00746"></a><span class="lineno">  746</span>        <span class="comment">// This test creates a single shared atomic pointer that multiple thread</span></div>
-<div class="line"><a id="l00747" name="l00747"></a><span class="lineno">  747</span>        <span class="comment">// create weak pointers from. The threads then lock the weak pointers.</span></div>
-<div class="line"><a id="l00748" name="l00748"></a><span class="lineno">  748</span>        <span class="comment">// Both threads clear all the pointers and check that the invariants</span></div>
-<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span>        <span class="comment">// hold.</span></div>
-<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span> </div>
-<div class="line"><a id="l00751" name="l00751"></a><span class="lineno">  751</span>        <span class="keyword">using </span>enum TrackedState;</div>
-<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span> </div>
-<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>        TIBase::ResetStatesGuard rsg{<span class="keyword">true</span>};</div>
+<div class="line"><a id="l00749" name="l00749"></a><span class="lineno">  749</span> </div>
+<div class="line"><a id="l00750" name="l00750"></a><span class="lineno">  750</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00751" data-start="{" data-end="}">
+<div class="line"><a id="l00751" name="l00751"></a><span class="lineno"><a class="line" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">  751</a></span>    <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">testMultithreadedLockingWeak</a>()</div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>    {</div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>        <a class="code hl_variable" href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">testcase</a>(<span class="stringliteral">&quot;Multithreaded Locking Weak&quot;</span>);</div>
 <div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span> </div>
-<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/atomic/atomic.html">std::atomic&lt;int&gt;</a> destructionState{0};</div>
-<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>        <span class="comment">// returns destructorRan and partialDestructorRan (in that order)</span></div>
-<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>        <span class="keyword">auto</span> getDestructorState = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair&lt;bool, bool&gt;</a> {</div>
-<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>            <span class="keywordtype">int</span> s = destructionState.load(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_relaxed</a>);</div>
-<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>            <span class="keywordflow">return</span> {(s &amp; 1) != 0, (s &amp; 2) != 0};</div>
-<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>        };</div>
-<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span>        <span class="keyword">auto</span> setDestructorRan = [&amp;]() -&gt; <span class="keywordtype">void</span> { destructionState.fetch_or(1, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>); };</div>
-<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>        <span class="keyword">auto</span> setPartialDeleteRan = [&amp;]() -&gt; <span class="keywordtype">void</span> { destructionState.fetch_or(2, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>); };</div>
-<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span>        <span class="keyword">auto</span> tracingCallback = [&amp;](TrackedState cur, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TrackedState&gt;</a> next) {</div>
-<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>            <span class="keyword">using </span>enum TrackedState;</div>
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>            <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
-<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>            <span class="keywordflow">if</span> (next == partiallyDeleted)</div>
-<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>            {</div>
-<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>                BEAST_EXPECT(!partialDeleteRan &amp;&amp; !destructorRan);</div>
-<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>                setPartialDeleteRan();</div>
-<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span>            }</div>
-<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>            <span class="keywordflow">if</span> (next == deleted)</div>
-<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>            {</div>
-<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>                BEAST_EXPECT(!destructorRan);</div>
-<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>                setDestructorRan();</div>
-<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>            }</div>
-<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>        };</div>
-<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span> </div>
-<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> loopIters = 2 * 1024;</div>
-<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> lockWeakLoopIters = 256;</div>
-<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> numThreads = 16;</div>
-<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedIntrusive&lt;TIBase&gt;</a>&gt; toLock;</div>
-<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> loopStartSyncPoint{numThreads};</div>
-<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateToLockSyncPoint{numThreads};</div>
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postLockWeakLoopSyncPoint{numThreads};</div>
-<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span> </div>
-<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>        <span class="comment">// lockAndDestroy creates weak pointers from the strong pointer</span></div>
-<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>        <span class="comment">// and runs a loop that locks the weak pointer. At the end of the loop</span></div>
-<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>        <span class="comment">// all the pointers are destroyed all at once.</span></div>
-<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>        <span class="keyword">auto</span> lockAndDestroy = [&amp;](<span class="keywordtype">int</span> threadId) {</div>
-<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; loopIters; ++i)</div>
-<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span>            {</div>
-<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>                loopStartSyncPoint.<a class="code hl_function" href="structxrpl_1_1tests_1_1Barrier.html#a45aa0783759c899d16f8a6bcd0317296">arrive_and_wait</a>();</div>
-<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span> </div>
-<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>                <span class="comment">// only thread 0 should reset the state</span></div>
-<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TIBase::ResetStatesGuard&gt;</a> rsg;</div>
-<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>                <span class="keywordflow">if</span> (threadId == 0)</div>
-<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>                {</div>
-<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>                    <span class="comment">// threadId 0 is the genesis thread. It creates the</span></div>
-<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>                    <span class="comment">// strong point to be locked by the other threads. This</span></div>
-<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>                    <span class="comment">// thread will also check that the destructor ran and</span></div>
-<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>                    <span class="comment">// clear the temporary variables.</span></div>
-<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>                    rsg.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/optional/emplace.html">emplace</a>(<span class="keyword">false</span>);</div>
-<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>                    <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
-<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>                    BEAST_EXPECT(!i || destructorRan);</div>
-<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>                    destructionState.store(0, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_release</a>);</div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>        <span class="comment">// This test creates a single shared atomic pointer that multiple thread</span></div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>        <span class="comment">// create weak pointers from. The threads then lock the weak pointers.</span></div>
+<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>        <span class="comment">// Both threads clear all the pointers and check that the invariants</span></div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>        <span class="comment">// hold.</span></div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span> </div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>        <span class="keyword">using </span>enum TrackedState;</div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span> </div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>        TIBase::ResetStatesGuard rsg{<span class="keyword">true</span>};</div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span> </div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/atomic/atomic.html">std::atomic&lt;int&gt;</a> destructionState{0};</div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span>        <span class="comment">// returns destructorRan and partialDestructorRan (in that order)</span></div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>        <span class="keyword">auto</span> getDestructorState = [&amp;]() -&gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair&lt;bool, bool&gt;</a> {</div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span>            <span class="keywordtype">int</span> s = destructionState.load(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_relaxed</a>);</div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span>            <span class="keywordflow">return</span> {(s &amp; 1) != 0, (s &amp; 2) != 0};</div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span>        };</div>
+<div class="line"><a id="l00770" name="l00770"></a><span class="lineno">  770</span>        <span class="keyword">auto</span> setDestructorRan = [&amp;]() -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00771" name="l00771"></a><span class="lineno">  771</span>            destructionState.fetch_or(1, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><a id="l00772" name="l00772"></a><span class="lineno">  772</span>        };</div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>        <span class="keyword">auto</span> setPartialDeleteRan = [&amp;]() -&gt; <span class="keywordtype">void</span> {</div>
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno">  774</span>            destructionState.fetch_or(2, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_acq_rel</a>);</div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>        };</div>
+<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>        <span class="keyword">auto</span> tracingCallback = [&amp;](TrackedState cur, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TrackedState&gt;</a> next) {</div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span>            <span class="keyword">using </span>enum TrackedState;</div>
+<div class="line"><a id="l00778" name="l00778"></a><span class="lineno">  778</span>            <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
+<div class="line"><a id="l00779" name="l00779"></a><span class="lineno">  779</span>            <span class="keywordflow">if</span> (next == partiallyDeleted)</div>
+<div class="line"><a id="l00780" name="l00780"></a><span class="lineno">  780</span>            {</div>
+<div class="line"><a id="l00781" name="l00781"></a><span class="lineno">  781</span>                BEAST_EXPECT(!partialDeleteRan &amp;&amp; !destructorRan);</div>
+<div class="line"><a id="l00782" name="l00782"></a><span class="lineno">  782</span>                setPartialDeleteRan();</div>
+<div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span>            }</div>
+<div class="line"><a id="l00784" name="l00784"></a><span class="lineno">  784</span>            <span class="keywordflow">if</span> (next == deleted)</div>
+<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>            {</div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>                BEAST_EXPECT(!destructorRan);</div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>                setDestructorRan();</div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>            }</div>
+<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>        };</div>
+<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span> </div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> loopIters = 2 * 1024;</div>
+<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> lockWeakLoopIters = 256;</div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>        <span class="keyword">constexpr</span> <span class="keywordtype">int</span> numThreads = 16;</div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;SharedIntrusive&lt;TIBase&gt;</a>&gt; toLock;</div>
+<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> loopStartSyncPoint{numThreads};</div>
+<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postCreateToLockSyncPoint{numThreads};</div>
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>        <a class="code hl_struct" href="structxrpl_1_1tests_1_1Barrier.html">Barrier</a> postLockWeakLoopSyncPoint{numThreads};</div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span> </div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>        <span class="comment">// lockAndDestroy creates weak pointers from the strong pointer</span></div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>        <span class="comment">// and runs a loop that locks the weak pointer. At the end of the loop</span></div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span>        <span class="comment">// all the pointers are destroyed all at once.</span></div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>        <span class="keyword">auto</span> lockAndDestroy = [&amp;](<span class="keywordtype">int</span> threadId) {</div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; loopIters; ++i)</div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span>            {</div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>                loopStartSyncPoint.<a class="code hl_function" href="structxrpl_1_1tests_1_1Barrier.html#a45aa0783759c899d16f8a6bcd0317296">arrive_and_wait</a>();</div>
 <div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span> </div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>                    toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
-<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>                    toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/resize.html">resize</a>(numThreads);</div>
-<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>                    <span class="keyword">auto</span> strong = make_SharedIntrusive&lt;TIBase&gt;();</div>
-<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>                    strong-&gt;tracingCallback_ = tracingCallback;</div>
-<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>                    <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/fill.html">std::fill</a>(toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/begin.html">begin</a>(), toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/end.html">end</a>(), strong);</div>
-<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>                }</div>
-<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span> </div>
-<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>                postCreateToLockSyncPoint.arrive_and_wait();</div>
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span> </div>
-<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>                <span class="comment">// Multiple threads all create a weak pointer from the same</span></div>
-<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>                <span class="comment">// strong pointer</span></div>
-<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>                <a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive</a> weak{toLock[threadId]};</div>
-<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wi = 0; wi &lt; lockWeakLoopIters; ++wi)</div>
-<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                {</div>
-<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                    BEAST_EXPECT(!weak.expired());</div>
-<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                    <span class="keyword">auto</span> strong = weak.lock();</div>
-<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>                    BEAST_EXPECT(strong);</div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>                <span class="comment">// only thread 0 should reset the state</span></div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>                <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;TIBase::ResetStatesGuard&gt;</a> rsg;</div>
+<div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>                <span class="keywordflow">if</span> (threadId == 0)</div>
+<div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>                {</div>
+<div class="line"><a id="l00812" name="l00812"></a><span class="lineno">  812</span>                    <span class="comment">// threadId 0 is the genesis thread. It creates the</span></div>
+<div class="line"><a id="l00813" name="l00813"></a><span class="lineno">  813</span>                    <span class="comment">// strong point to be locked by the other threads. This</span></div>
+<div class="line"><a id="l00814" name="l00814"></a><span class="lineno">  814</span>                    <span class="comment">// thread will also check that the destructor ran and</span></div>
+<div class="line"><a id="l00815" name="l00815"></a><span class="lineno">  815</span>                    <span class="comment">// clear the temporary variables.</span></div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>                    rsg.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/optional/emplace.html">emplace</a>(<span class="keyword">false</span>);</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno">  817</span>                    <span class="keyword">auto</span> [destructorRan, partialDeleteRan] = getDestructorState();</div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>                    BEAST_EXPECT(!i || destructorRan);</div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>                    destructionState.store(0, <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::memory_order_release</a>);</div>
+<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span> </div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>                    toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/clear.html">clear</a>();</div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>                    toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/resize.html">resize</a>(numThreads);</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span>                    <span class="keyword">auto</span> strong = make_SharedIntrusive&lt;TIBase&gt;();</div>
+<div class="line"><a id="l00824" name="l00824"></a><span class="lineno">  824</span>                    strong-&gt;tracingCallback_ = tracingCallback;</div>
+<div class="line"><a id="l00825" name="l00825"></a><span class="lineno">  825</span>                    <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/fill.html">std::fill</a>(toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/begin.html">begin</a>(), toLock.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/end.html">end</a>(), strong);</div>
 <div class="line"><a id="l00826" name="l00826"></a><span class="lineno">  826</span>                }</div>
 <div class="line"><a id="l00827" name="l00827"></a><span class="lineno">  827</span> </div>
 <div class="line"><a id="l00828" name="l00828"></a><span class="lineno">  828</span>                <span class="comment">// ------ Sync Point ------</span></div>
-<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>                postLockWeakLoopSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00829" name="l00829"></a><span class="lineno">  829</span>                postCreateToLockSyncPoint.arrive_and_wait();</div>
 <div class="line"><a id="l00830" name="l00830"></a><span class="lineno">  830</span> </div>
-<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>                toLock[threadId].reset();</div>
-<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>            }</div>
-<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>        };</div>
-<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::thread&gt;</a> threads;</div>
-<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>        {</div>
-<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>            threads.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(lockAndDestroy, i);</div>
-<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>        }</div>
-<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
-<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>        {</div>
-<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>            threads[i].join();</div>
-<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>        }</div>
-<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>    }</div>
+<div class="line"><a id="l00831" name="l00831"></a><span class="lineno">  831</span>                <span class="comment">// Multiple threads all create a weak pointer from the same</span></div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>                <span class="comment">// strong pointer</span></div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>                <a class="code hl_class" href="classxrpl_1_1WeakIntrusive.html">WeakIntrusive</a> weak{toLock[threadId]};</div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> wi = 0; wi &lt; lockWeakLoopIters; ++wi)</div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>                {</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>                    BEAST_EXPECT(!weak.expired());</div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>                    <span class="keyword">auto</span> strong = weak.lock();</div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>                    BEAST_EXPECT(strong);</div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span>                }</div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span> </div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>                <span class="comment">// ------ Sync Point ------</span></div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>                postLockWeakLoopSyncPoint.arrive_and_wait();</div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span> </div>
+<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>                toLock[threadId].reset();</div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>            }</div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>        };</div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/vector.html">std::vector&lt;std::thread&gt;</a> threads;</div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>        {</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>            threads.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">emplace_back</a>(lockAndDestroy, i);</div>
+<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>        }</div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; numThreads; ++i)</div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>        {</div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>            threads[i].join();</div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>        }</div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span>    }</div>
 </div>
-<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span> </div>
-<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00846" data-start="{" data-end="}">
-<div class="line"><a id="l00846" name="l00846"></a><span class="lineno"><a class="line" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aee30328bbbddfe190e1e5f6957c7f5f3">  846</a></span>    <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aee30328bbbddfe190e1e5f6957c7f5f3">run</a>()<span class="keyword"> override</span></div>
-<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a80506dcf4fecb42abe98544d153e9d1b">testBasics</a>();</div>
-<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a82fc02e5e802ff5cb3da35efbb7640df">testPartialDelete</a>();</div>
-<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aaa6b215039f313e174c12867fa82f510">testDestructor</a>();</div>
-<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a37d45b92ce88349244d196e69d932aff">testMultithreadedClearMixedVariant</a>();</div>
-<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">testMultithreadedClearMixedUnion</a>();</div>
-<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">testMultithreadedLockingWeak</a>();</div>
-<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span>    }</div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span> </div>
+<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00859" data-start="{" data-end="}">
+<div class="line"><a id="l00859" name="l00859"></a><span class="lineno"><a class="line" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aee30328bbbddfe190e1e5f6957c7f5f3">  859</a></span>    <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aee30328bbbddfe190e1e5f6957c7f5f3">run</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a80506dcf4fecb42abe98544d153e9d1b">testBasics</a>();</div>
+<div class="line"><a id="l00862" name="l00862"></a><span class="lineno">  862</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a82fc02e5e802ff5cb3da35efbb7640df">testPartialDelete</a>();</div>
+<div class="line"><a id="l00863" name="l00863"></a><span class="lineno">  863</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aaa6b215039f313e174c12867fa82f510">testDestructor</a>();</div>
+<div class="line"><a id="l00864" name="l00864"></a><span class="lineno">  864</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a37d45b92ce88349244d196e69d932aff">testMultithreadedClearMixedVariant</a>();</div>
+<div class="line"><a id="l00865" name="l00865"></a><span class="lineno">  865</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">testMultithreadedClearMixedUnion</a>();</div>
+<div class="line"><a id="l00866" name="l00866"></a><span class="lineno">  866</span>        <a class="code hl_function" href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">testMultithreadedLockingWeak</a>();</div>
+<div class="line"><a id="l00867" name="l00867"></a><span class="lineno">  867</span>    }</div>
 </div>
-<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span>};  <span class="comment">// namespace tests</span></div>
+<div class="line"><a id="l00868" name="l00868"></a><span class="lineno">  868</span>};  <span class="comment">// namespace tests</span></div>
 </div>
-<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span> </div>
-<div class="line"><a id="l00857" name="l00857"></a><span class="lineno"><a class="line" href="namespacexrpl_1_1tests.html#ab3cc2fd1062ed257c4e61a315dd9e910">  857</a></span>BEAST_DEFINE_TESTSUITE(IntrusiveShared, basics, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
-<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>}  <span class="comment">// namespace tests</span></div>
+<div class="line"><a id="l00869" name="l00869"></a><span class="lineno">  869</span> </div>
+<div class="line"><a id="l00870" name="l00870"></a><span class="lineno"><a class="line" href="namespacexrpl_1_1tests.html#ab3cc2fd1062ed257c4e61a315dd9e910">  870</a></span>BEAST_DEFINE_TESTSUITE(IntrusiveShared, basics, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
+<div class="line"><a id="l00871" name="l00871"></a><span class="lineno">  871</span>}  <span class="comment">// namespace tests</span></div>
 </div>
-<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="aarray_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/array.html">array</a></div></div>
 <div class="ttc" id="aatomic_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/atomic.html">atomic</a></div></div>
 <div class="ttc" id="abegin_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/container/vector/begin.html">std::vector::begin</a></div><div class="ttdeci">T begin(T... args)</div></div>
 <div class="ttc" id="achrono_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/chrono.html">chrono</a></div></div>
 <div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div><div class="ttdoc">A testsuite class.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00050">suite.h:51</a></div></div>
-<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html_aaa1237d9b85c69d35fe86645cee094b5"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">beast::unit_test::suite::testcase</a></div><div class="ttdeci">testcase_t testcase</div><div class="ttdoc">Memberspace for declaring test cases.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00147">suite.h:147</a></div></div>
+<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html_aaa1237d9b85c69d35fe86645cee094b5"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">beast::unit_test::suite::testcase</a></div><div class="ttdeci">testcase_t testcase</div><div class="ttdoc">Memberspace for declaring test cases.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00150">suite.h:150</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1SharedIntrusive_html"><div class="ttname"><a href="classxrpl_1_1SharedIntrusive.html">xrpl::SharedIntrusive</a></div><div class="ttdoc">A shared intrusive pointer class that supports weak pointers.</div><div class="ttdef"><b>Definition</b> <a href="IntrusivePointer_8h_source.html#l00067">IntrusivePointer.h:68</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1SharedWeakUnion_html"><div class="ttname"><a href="classxrpl_1_1SharedWeakUnion.html">xrpl::SharedWeakUnion</a></div><div class="ttdoc">A combination of a strong and a weak intrusive pointer stored in the space of a single pointer.</div><div class="ttdef"><b>Definition</b> <a href="IntrusivePointer_8h_source.html#l00297">IntrusivePointer.h:298</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1SharedWeakUnion_html_a4decb33936c3b7ed6ed34558123a07f0"><div class="ttname"><a href="classxrpl_1_1SharedWeakUnion.html#a4decb33936c3b7ed6ed34558123a07f0">xrpl::SharedWeakUnion::reset</a></div><div class="ttdeci">void reset()</div><div class="ttdoc">Set the pointer to null, decrement the appropriate ref count, and run the appropriate release action.</div></div>
@@ -955,13 +968,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassxrpl_1_1SharedWeakUnion_html_add7fba885a5ca549c7eddee2493746d9"><div class="ttname"><a href="classxrpl_1_1SharedWeakUnion.html#add7fba885a5ca549c7eddee2493746d9">xrpl::SharedWeakUnion::isStrong</a></div><div class="ttdeci">bool isStrong() const</div><div class="ttdoc">Return true is this represents a strong pointer.</div></div>
 <div class="ttc" id="aclassxrpl_1_1WeakIntrusive_html"><div class="ttname"><a href="classxrpl_1_1WeakIntrusive.html">xrpl::WeakIntrusive</a></div><div class="ttdoc">A weak intrusive pointer class for the SharedIntrusive pointer class.</div><div class="ttdef"><b>Definition</b> <a href="IntrusivePointer_8h_source.html#l00219">IntrusivePointer.h:220</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html">xrpl::tests::IntrusiveShared_test</a></div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00185">IntrusiveShared_test.cpp:186</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a23b4818e870458ce84c064da0c36a084"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">xrpl::tests::IntrusiveShared_test::testMultithreadedClearMixedUnion</a></div><div class="ttdeci">void testMultithreadedClearMixedUnion()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00602">IntrusiveShared_test.cpp:602</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a23b4818e870458ce84c064da0c36a084"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a23b4818e870458ce84c064da0c36a084">xrpl::tests::IntrusiveShared_test::testMultithreadedClearMixedUnion</a></div><div class="ttdeci">void testMultithreadedClearMixedUnion()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00606">IntrusiveShared_test.cpp:606</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a37d45b92ce88349244d196e69d932aff"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a37d45b92ce88349244d196e69d932aff">xrpl::tests::IntrusiveShared_test::testMultithreadedClearMixedVariant</a></div><div class="ttdeci">void testMultithreadedClearMixedVariant()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00479">IntrusiveShared_test.cpp:479</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a68aacb4e7af4c663a265c0a0fa776b36"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">xrpl::tests::IntrusiveShared_test::testMultithreadedLockingWeak</a></div><div class="ttdeci">void testMultithreadedLockingWeak()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00742">IntrusiveShared_test.cpp:742</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a68aacb4e7af4c663a265c0a0fa776b36"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a68aacb4e7af4c663a265c0a0fa776b36">xrpl::tests::IntrusiveShared_test::testMultithreadedLockingWeak</a></div><div class="ttdeci">void testMultithreadedLockingWeak()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00751">IntrusiveShared_test.cpp:751</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a80506dcf4fecb42abe98544d153e9d1b"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a80506dcf4fecb42abe98544d153e9d1b">xrpl::tests::IntrusiveShared_test::testBasics</a></div><div class="ttdeci">void testBasics()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00189">IntrusiveShared_test.cpp:189</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_a82fc02e5e802ff5cb3da35efbb7640df"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#a82fc02e5e802ff5cb3da35efbb7640df">xrpl::tests::IntrusiveShared_test::testPartialDelete</a></div><div class="ttdeci">void testPartialDelete()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00364">IntrusiveShared_test.cpp:364</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_aaa6b215039f313e174c12867fa82f510"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aaa6b215039f313e174c12867fa82f510">xrpl::tests::IntrusiveShared_test::testDestructor</a></div><div class="ttdeci">void testDestructor()</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00430">IntrusiveShared_test.cpp:430</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_aee30328bbbddfe190e1e5f6957c7f5f3"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aee30328bbbddfe190e1e5f6957c7f5f3">xrpl::tests::IntrusiveShared_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00846">IntrusiveShared_test.cpp:846</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1tests_1_1IntrusiveShared__test_html_aee30328bbbddfe190e1e5f6957c7f5f3"><div class="ttname"><a href="classxrpl_1_1tests_1_1IntrusiveShared__test.html#aee30328bbbddfe190e1e5f6957c7f5f3">xrpl::tests::IntrusiveShared_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveShared__test_8cpp_source.html#l00859">IntrusiveShared_test.cpp:859</a></div></div>
 <div class="ttc" id="aclear_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/container/vector/clear.html">std::vector::clear</a></div><div class="ttdeci">T clear(T... args)</div></div>
 <div class="ttc" id="acondition_variable_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/condition_variable.html">condition_variable</a></div></div>
 <div class="ttc" id="aemplace_back_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/container/vector/emplace_back.html">std::vector::emplace_back</a></div><div class="ttdeci">T emplace_back(T... args)</div></div>
@@ -977,7 +990,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="alatch_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/thread/latch.html">std::latch</a></div></div>
 <div class="ttc" id="amutex_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/thread/mutex.html">std::mutex</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
-<div class="ttc" id="anamespacexrpl_html_a480169c5118d805d09d79aa4a48aba87"><div class="ttname"><a href="namespacexrpl.html#a480169c5118d805d09d79aa4a48aba87">xrpl::partialDestructorFinished</a></div><div class="ttdeci">void partialDestructorFinished(T **o)</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveRefCounts_8h_source.html#l00442">IntrusiveRefCounts.h:442</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a480169c5118d805d09d79aa4a48aba87"><div class="ttname"><a href="namespacexrpl.html#a480169c5118d805d09d79aa4a48aba87">xrpl::partialDestructorFinished</a></div><div class="ttdeci">void partialDestructorFinished(T **o)</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveRefCounts_8h_source.html#l00448">IntrusiveRefCounts.h:448</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_adfcfa25ccc459fa509f891e4009ac1e3aeb6e922eacce325bdb070a71f7ef7894"><div class="ttname"><a href="namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3aeb6e922eacce325bdb070a71f7ef7894">xrpl::ReleaseStrongRefAction::partialDestroy</a></div><div class="ttdeci">@ partialDestroy</div></div>
 <div class="ttc" id="anamespacexrpl_html_ae5105aa43ab313d66422a20124fc1116afb14982288108e1fbd6207ef55f05027"><div class="ttname"><a href="namespacexrpl.html#ae5105aa43ab313d66422a20124fc1116afb14982288108e1fbd6207ef55f05027">xrpl::ReleaseWeakRefAction::destroy</a></div><div class="ttdeci">@ destroy</div></div>
 <div class="ttc" id="anotify_all_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/thread/condition_variable/notify_all.html">std::condition_variable::notify_all</a></div><div class="ttdeci">T notify_all(T... args)</div></div>

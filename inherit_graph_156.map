@@ -1,53 +1,9 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="33,28,211,68"/>
-<area shape="rect" id="Node000001" href="$classxrpl_1_1Door_1_1Detector.html" title=" " alt="" coords="313,29,465,69"/>
-<area shape="poly" id="edge452_Node000000_Node000001" title=" " alt="" coords="225,46,312,46,312,52,225,51"/>
-<area shape="rect" id="Node000023" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,92,239,132"/>
-<area shape="rect" id="Node000022" href="$classxrpl_1_1Door.html" title="A listening socket." alt="" coords="305,97,472,122"/>
-<area shape="poly" id="edge453_Node000023_Node000022" title=" " alt="" coords="252,108,305,107,305,113,252,113"/>
-<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="288,533,489,587"/>
-<area shape="rect" id="Node000004" href="$classxrpl_1_1PlainHTTPPeer.html" title=" " alt="" coords="567,468,717,508"/>
-<area shape="poly" id="edge454_Node000005_Node000004" title=" " alt="" coords="498,526,570,506,572,511,499,531"/>
-<area shape="rect" id="Node000016" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="548,70,736,125"/>
-<area shape="rect" id="Node000015" href="$classxrpl_1_1PlainWSPeer.html" title=" " alt="" coords="823,41,971,81"/>
-<area shape="poly" id="edge455_Node000016_Node000015" title=" " alt="" coords="749,80,823,69,823,74,750,85"/>
-<area shape="rect" id="Node000009" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="293,690,485,745"/>
-<area shape="rect" id="Node000008" href="$classxrpl_1_1SSLHTTPPeer.html" title=" " alt="" coords="566,657,718,697"/>
-<area shape="poly" id="edge456_Node000009_Node000008" title=" " alt="" coords="498,697,565,687,566,692,498,703"/>
-<area shape="rect" id="Node000020" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="553,149,731,203"/>
-<area shape="rect" id="Node000019" href="$classxrpl_1_1SSLWSPeer.html" title=" " alt="" coords="793,231,1001,257"/>
-<area shape="poly" id="edge457_Node000020_Node000019" title=" " alt="" coords="745,201,849,229,848,234,744,206"/>
-<area shape="rect" id="Node000006" href="$classxrpl_1_1Session.html" title="Persistent state information for a connection session." alt="" coords="69,475,175,501"/>
-<area shape="rect" id="Node000003" href="$classxrpl_1_1BaseHTTPPeer.html" title=" " alt="" coords="293,389,484,443"/>
-<area shape="poly" id="edge458_Node000006_Node000003" title=" " alt="" coords="182,469,292,439,294,444,184,474"/>
-<area shape="rect" id="Node000007" href="$classxrpl_1_1BaseHTTPPeer.html" title=" " alt="" coords="297,611,480,666"/>
-<area shape="poly" id="edge460_Node000006_Node000007" title=" " alt="" coords="152,507,212,551,288,598,311,609,309,614,285,602,210,556,148,511"/>
-<area shape="rect" id="Node000010" href="$classxrpl_1_1BaseHTTPPeer.html" title="Represents an active connection." alt="" coords="313,468,464,508"/>
-<area shape="poly" id="edge462_Node000006_Node000010" title=" " alt="" coords="188,485,313,485,313,491,188,491"/>
-<area shape="poly" id="edge459_Node000003_Node000004" title=" " alt="" coords="498,444,572,465,570,470,496,449"/>
-<area shape="poly" id="edge461_Node000007_Node000008" title=" " alt="" coords="494,652,566,663,565,668,493,657"/>
-<area shape="rect" id="Node000002" href="$classxrpl_1_1io__list_1_1work.html" title=" " alt="" coords="55,299,189,325"/>
-<area shape="poly" id="edge475_Node000002_Node000001" title=" " alt="" coords="138,286,222,166,285,82,311,67,314,71,288,86,227,169,142,289"/>
-<area shape="poly" id="edge474_Node000002_Node000022" title=" " alt="" coords="136,286,161,251,195,209,237,167,285,131,311,120,313,125,288,136,241,171,199,212,165,254,141,289"/>
-<area shape="poly" id="edge463_Node000002_Node000003" title=" " alt="" coords="169,327,318,386,317,391,167,332"/>
-<area shape="poly" id="edge464_Node000002_Node000007" title=" " alt="" coords="146,333,193,390,241,463,255,502,260,535,267,566,275,582,289,598,302,609,298,613,285,602,271,585,262,568,255,536,250,503,236,465,189,393,142,337"/>
-<area shape="poly" id="edge467_Node000002_Node000010" title=" " alt="" coords="145,333,206,393,245,425,288,454,314,466,312,471,285,458,242,430,202,397,141,337"/>
-<area shape="rect" id="Node000011" href="$classxrpl_1_1BasePeer.html" title=" " alt="" coords="287,324,491,364"/>
-<area shape="poly" id="edge465_Node000002_Node000011" title=" " alt="" coords="203,319,287,329,286,334,203,324"/>
-<area shape="rect" id="Node000012" href="$classxrpl_1_1BasePeer.html" title=" " alt="" coords="291,196,486,236"/>
-<area shape="poly" id="edge466_Node000002_Node000012" title=" " alt="" coords="166,291,286,245,321,234,323,239,288,251,168,296"/>
-<area shape="rect" id="Node000013" href="$classxrpl_1_1BasePeer.html" title=" " alt="" coords="295,260,482,300"/>
-<area shape="poly" id="edge468_Node000002_Node000013" title=" " alt="" coords="203,300,295,289,295,294,203,305"/>
-<area shape="rect" id="Node000014" href="$classxrpl_1_1BaseWSPeer.html" title=" " alt="" coords="539,5,745,45"/>
-<area shape="poly" id="edge469_Node000013_Node000014" title=" " alt="" coords="485,250,489,246,505,223,512,200,514,176,512,153,510,129,512,104,519,80,537,56,552,43,555,48,541,59,524,82,517,105,516,129,517,152,519,176,518,201,510,225,493,250,489,254"/>
-<area shape="rect" id="Node000018" href="$classxrpl_1_1BaseWSPeer.html" title=" " alt="" coords="539,292,745,332"/>
-<area shape="poly" id="edge471_Node000013_Node000018" title=" " alt="" coords="496,291,539,296,538,302,495,296"/>
-<area shape="rect" id="Node000021" href="$classxrpl_1_1BaseWSPeer.html" title="Represents an active WebSocket connection." alt="" coords="539,228,745,268"/>
-<area shape="poly" id="edge473_Node000013_Node000021" title=" " alt="" coords="495,264,538,258,539,264,496,269"/>
-<area shape="poly" id="edge470_Node000014_Node000015" title=" " alt="" coords="759,39,823,48,823,54,759,44"/>
-<area shape="poly" id="edge472_Node000018_Node000019" title=" " alt="" coords="730,286,848,254,849,259,732,291"/>
-<area shape="rect" id="Node000017" href="$structxrpl_1_1WSSession.html" title=" " alt="" coords="325,146,452,171"/>
-<area shape="poly" id="edge476_Node000017_Node000014" title=" " alt="" coords="464,144,489,131,505,114,512,95,520,75,537,55,557,43,559,48,540,59,525,78,517,97,510,116,492,135,467,149"/>
-<area shape="poly" id="edge477_Node000017_Node000018" title=" " alt="" coords="466,167,492,182,504,194,511,206,518,231,524,255,530,267,540,278,558,290,555,294,537,282,526,270,519,257,512,232,506,208,500,197,489,186,464,172"/>
-<area shape="poly" id="edge478_Node000017_Node000021" title=" " alt="" coords="466,172,492,182,516,198,540,214,569,225,567,230,537,218,513,202,489,186,464,177"/>
+<area shape="rect" id="Node000000" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,37,192,77"/>
+<area shape="rect" id="Node000001" href="$classbeast_1_1insight_1_1EventImpl.html" title=" " alt="" coords="240,45,424,70"/>
+<area shape="poly" id="edge473_Node000000_Node000001" title=" " alt="" coords="206,55,240,55,240,60,206,60"/>
+<area shape="rect" id="Node000002" href="$classbeast_1_1insight_1_1detail_1_1NullEventImpl.html" title=" " alt="" coords="472,5,627,45"/>
+<area shape="poly" id="edge474_Node000001_Node000002" title=" " alt="" coords="432,40,471,34,472,39,432,45"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1insight_1_1detail_1_1StatsDEventImpl.html" title=" " alt="" coords="472,69,627,109"/>
+<area shape="poly" id="edge475_Node000001_Node000003" title=" " alt="" coords="432,69,472,75,471,81,432,75"/>
 </map>

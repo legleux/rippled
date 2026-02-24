@@ -219,351 +219,371 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="keyword">private</span>:</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keyword">template</span> &lt;<span class="keyword">class</span> ConstBufferSequence&gt;</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <a class="code hl_function" href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">create</a>(<span class="keywordtype">bool</span> ssl, ConstBufferSequence <span class="keyword">const</span>&amp; buffers, <a class="code hl_typedef" href="namespacexrpl.html#a44797ff79b646579ffa6da0b2432b331">stream_type</a>&amp;&amp; stream, <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address);</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <a class="code hl_function" href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">do_accept</a>(<a class="code hl_typedef" href="classxrpl_1_1Door.html#a47764c8c2c34e7d5f3c8734b41556000">yield_context</a> yield);</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>};</div>
-</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <a class="code hl_function" href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">create</a>(</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="keywordtype">bool</span> ssl,</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        ConstBufferSequence <span class="keyword">const</span>&amp; buffers,</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <a class="code hl_typedef" href="namespacexrpl.html#a44797ff79b646579ffa6da0b2432b331">stream_type</a>&amp;&amp; stream,</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address);</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="foldopen" id="foldopen00146" data-start="{" data-end="}">
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a4da4afb102eb5f9564c412bc782e52e6">  146</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a4da4afb102eb5f9564c412bc782e52e6">Door&lt;Handler&gt;::Detector::Detector</a>(</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <a class="code hl_struct" href="structxrpl_1_1Port.html">Port</a> <span class="keyword">const</span>&amp; port,</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    Handler&amp; handler,</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    boost::asio::io_context&amp; ioc,</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a4d296c44a6087cd17f5b5b207e241a3b">stream_type</a>&amp;&amp; stream,</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address,</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a> j)</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    : port_(port)</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    , handler_(handler)</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    , ioc_(ioc)</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    , stream_(<a class="code hl_namespace" href="namespacestd.html">std</a>::move(stream))</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    , socket_(stream_.socket())</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    , remote_address_(remote_address)</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    , strand_(<a class="code hl_namespace" href="namespaceboost.html">boost</a>::asio::make_strand(ioc_))</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    , j_(j)</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>{</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>}</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <a class="code hl_function" href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">do_accept</a>(<a class="code hl_typedef" href="classxrpl_1_1Door.html#a47764c8c2c34e7d5f3c8734b41556000">yield_context</a> yield);</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>};</div>
 </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00166" data-start="{" data-end="}">
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a6b34f51f17b00a07d5c2070dfc814368">  166</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a6b34f51f17b00a07d5c2070dfc814368">Door&lt;Handler&gt;::Detector::run</a>()</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>{</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <a class="code hl_function" href="namespacexrpl_1_1util.html#a37c09fd3bf672bfc8ab99c7ab8569038">util::spawn</a>(<a class="code hl_variable" href="classxrpl_1_1Door.html#a3c812a19a951761b6cc509763735500a">strand_</a>, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a>(&amp;<a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">Detector::do_detect</a>, this-&gt;<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/memory/enable_shared_from_this/shared_from_this.html">shared_from_this</a>(), std::placeholders::_1));</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="foldopen" id="foldopen00150" data-start="{" data-end="}">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a4da4afb102eb5f9564c412bc782e52e6">  150</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a4da4afb102eb5f9564c412bc782e52e6">Door&lt;Handler&gt;::Detector::Detector</a>(</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <a class="code hl_struct" href="structxrpl_1_1Port.html">Port</a> <span class="keyword">const</span>&amp; port,</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    Handler&amp; handler,</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    boost::asio::io_context&amp; ioc,</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a4d296c44a6087cd17f5b5b207e241a3b">stream_type</a>&amp;&amp; stream,</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address,</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a> j)</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    : port_(port)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    , handler_(handler)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>    , ioc_(ioc)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    , stream_(<a class="code hl_namespace" href="namespacestd.html">std</a>::move(stream))</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    , socket_(stream_.socket())</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    , remote_address_(remote_address)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    , strand_(<a class="code hl_namespace" href="namespaceboost.html">boost</a>::asio::make_strand(ioc_))</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    , j_(j)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>{</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>}</div>
 </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00173" data-start="{" data-end="}">
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a853026966f29ea597a6f8a38c813d7e8">  173</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a853026966f29ea597a6f8a38c813d7e8">Door&lt;Handler&gt;::Detector::close</a>()</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>{</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    stream_.close();</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>}</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00170" data-start="{" data-end="}">
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a6b34f51f17b00a07d5c2070dfc814368">  170</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a6b34f51f17b00a07d5c2070dfc814368">Door&lt;Handler&gt;::Detector::run</a>()</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>{</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    <a class="code hl_function" href="namespacexrpl_1_1util.html#a37c09fd3bf672bfc8ab99c7ab8569038">util::spawn</a>(</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <a class="code hl_variable" href="classxrpl_1_1Door.html#a3c812a19a951761b6cc509763735500a">strand_</a>, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a>(&amp;<a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">Detector::do_detect</a>, this-&gt;<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/memory/enable_shared_from_this/shared_from_this.html">shared_from_this</a>(), std::placeholders::_1));</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>}</div>
 </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00180" data-start="{" data-end="}">
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">  180</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">Door&lt;Handler&gt;::Detector::do_detect</a>(boost::asio::yield_context do_yield)</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>{</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    boost::beast::multi_buffer buf(16);</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    stream_.expires_after(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a>(15));</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    boost::system::error_code ec;</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keywordtype">bool</span> <span class="keyword">const</span> ssl = async_detect_ssl(stream_, buf, do_yield[ec]);</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    stream_.expires_never();</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keywordflow">if</span> (!ec)</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">if</span> (ssl)</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        {</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = <a class="code hl_function" href="classxrpl_1_1io__list_1_1work.html#a50f0526991161def806bc175d1216efa">ios</a>().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1SSLHTTPPeer.html">SSLHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                    <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">handler_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">ioc_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>, remote_address_, buf.data(), std::move(stream_)))</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                sp-&gt;run();</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        }</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = <a class="code hl_function" href="classxrpl_1_1io__list_1_1work.html#a50f0526991161def806bc175d1216efa">ios</a>().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1PlainHTTPPeer.html">PlainHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">handler_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">ioc_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>, remote_address_, buf.data(), std::move(stream_)))</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            sp-&gt;run();</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    }</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="keywordflow">if</span> (ec != boost::asio::error::operation_aborted)</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">trace</a>()) &lt;&lt; <span class="stringliteral">&quot;Error detecting ssl: &quot;</span> &lt;&lt; ec.message() &lt;&lt; <span class="stringliteral">&quot; from &quot;</span> &lt;&lt; remote_address_;</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    }</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>}</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a853026966f29ea597a6f8a38c813d7e8">  178</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a853026966f29ea597a6f8a38c813d7e8">Door&lt;Handler&gt;::Detector::close</a>()</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>{</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    stream_.close();</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>}</div>
 </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span><span class="comment">//------------------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00211" data-start="{" data-end="}">
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">  211</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">Door&lt;Handler&gt;::reOpen</a>()</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>{</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">error_code</a> ec;</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.is_open())</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    {</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.close(ec);</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="keywordflow">if</span> (ec)</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/io/basic_stringstream.html">std::stringstream</a> ss;</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            ss &lt;&lt; <span class="stringliteral">&quot;Can&#39;t close acceptor: &quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; ec.message();</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; ss.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_stringstream/str.html">str</a>();</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            Throw&lt;std::runtime_error&gt;(ss.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_stringstream/str.html">str</a>());</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        }</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    }</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> <span class="keyword">const</span> local_address = <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a>(<a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#adb2f99d81e45706af6aff53e9ce4c7f6">ip</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#afe48f74d97bd8ba7085195d4c947b40c">port</a>);</div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span> </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.open(local_address.protocol(), ec);</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <span class="keywordflow">if</span> (ec)</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    {</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Open port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        Throw&lt;std::exception&gt;();</div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    }</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.set_option(boost::asio::ip::tcp::acceptor::reuse_address(<span class="keyword">true</span>), ec);</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <span class="keywordflow">if</span> (ec)</div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    {</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Option for port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        Throw&lt;std::exception&gt;();</div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    }</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.bind(local_address, ec);</div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordflow">if</span> (ec)</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    {</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Bind port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        Throw&lt;std::exception&gt;();</div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    }</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.listen(boost::asio::socket_base::max_listen_connections, ec);</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <span class="keywordflow">if</span> (ec)</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    {</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Listen on port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        Throw&lt;std::exception&gt;();</div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    }</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a87d6bd59020d94110027dcab3d9e3357">info</a>()) &lt;&lt; <span class="stringliteral">&quot;Opened &quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>;</div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>}</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00185" data-start="{" data-end="}">
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">  185</a></span><a class="code hl_function" href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">Door&lt;Handler&gt;::Detector::do_detect</a>(boost::asio::yield_context do_yield)</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>{</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    boost::beast::multi_buffer buf(16);</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    stream_.expires_after(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a>(15));</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    boost::system::error_code ec;</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="keywordtype">bool</span> <span class="keyword">const</span> ssl = async_detect_ssl(stream_, buf, do_yield[ec]);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    stream_.expires_never();</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keywordflow">if</span> (!ec)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    {</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">if</span> (ssl)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        {</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = <a class="code hl_function" href="classxrpl_1_1io__list_1_1work.html#a50f0526991161def806bc175d1216efa">ios</a>().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1SSLHTTPPeer.html">SSLHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>                    <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">handler_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">ioc_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>, remote_address_, buf.data(), std::move(stream_)))</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                sp-&gt;run();</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        }</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = <a class="code hl_function" href="classxrpl_1_1io__list_1_1work.html#a50f0526991161def806bc175d1216efa">ios</a>().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1PlainHTTPPeer.html">PlainHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>                <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">handler_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">ioc_</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>, remote_address_, buf.data(), std::move(stream_)))</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>            sp-&gt;run();</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    }</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="keywordflow">if</span> (ec != boost::asio::error::operation_aborted)</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    {</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">trace</a>()) &lt;&lt; <span class="stringliteral">&quot;Error detecting ssl: &quot;</span> &lt;&lt; ec.message() &lt;&lt; <span class="stringliteral">&quot; from &quot;</span> &lt;&lt; remote_address_;</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    }</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>}</div>
 </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="foldopen" id="foldopen00261" data-start="{" data-end="}">
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a38f628bdbc911b7e359f42d7a796825c">  261</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a38f628bdbc911b7e359f42d7a796825c">Door&lt;Handler&gt;::Door</a>(Handler&amp; handler, boost::asio::io_context&amp; io_context, <a class="code hl_struct" href="structxrpl_1_1Port.html">Port</a> <span class="keyword">const</span>&amp; port, <a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a> j)</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    : <a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>(j)</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>(port)</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">handler_</a>(handler)</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">ioc_</a>(io_context)</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>(io_context)</div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a3c812a19a951761b6cc509763735500a">strand_</a>(<a class="code hl_namespace" href="namespaceboost.html">boost</a>::asio::make_strand(io_context))</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a2ea2d5489c2c1524ad64f6d953c4129d">ssl_</a>(</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>          <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;https&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;wss&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;wss2&quot;</span>) &gt; 0 ||</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>          <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;peer&quot;</span>) &gt; 0)</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a46cb82efef65e960579ddc8694e0d248">plain_</a>(<a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;http&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;ws&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;ws2&quot;</span>))</div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a42824b10f2c87c67cfb4a6b778148600">backoff_timer_</a>(io_context)</div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>{</div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <a class="code hl_function" href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">reOpen</a>();</div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>}</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">  216</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">Door&lt;Handler&gt;::reOpen</a>()</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>{</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">error_code</a> ec;</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <span class="keywordflow">if</span> (<a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.is_open())</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    {</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.close(ec);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="keywordflow">if</span> (ec)</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        {</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/io/basic_stringstream.html">std::stringstream</a> ss;</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>            ss &lt;&lt; <span class="stringliteral">&quot;Can&#39;t close acceptor: &quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; ec.message();</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>            JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; ss.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_stringstream/str.html">str</a>();</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>            Throw&lt;std::runtime_error&gt;(ss.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_stringstream/str.html">str</a>());</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        }</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    }</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> <span class="keyword">const</span> local_address = <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a>(<a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#adb2f99d81e45706af6aff53e9ce4c7f6">ip</a>, <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#afe48f74d97bd8ba7085195d4c947b40c">port</a>);</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.open(local_address.protocol(), ec);</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>    <span class="keywordflow">if</span> (ec)</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>    {</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Open port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        Throw&lt;std::exception&gt;();</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    }</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.set_option(boost::asio::ip::tcp::acceptor::reuse_address(<span class="keyword">true</span>), ec);</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    <span class="keywordflow">if</span> (ec)</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    {</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Option for port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        Throw&lt;std::exception&gt;();</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    }</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.bind(local_address, ec);</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">if</span> (ec)</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    {</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Bind port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        Throw&lt;std::exception&gt;();</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    }</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>.listen(boost::asio::socket_base::max_listen_connections, ec);</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keywordflow">if</span> (ec)</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    {</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;Listen on port &#39;&quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_variable" href="structxrpl_1_1Port.html#ae25635b8323d311ef86c2fcdde108824">name</a> &lt;&lt; <span class="stringliteral">&quot;&#39; failed:&quot;</span> &lt;&lt; ec.message();</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        Throw&lt;std::exception&gt;();</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>    }</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    JLOG(<a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>.<a class="code hl_function" href="classbeast_1_1Journal.html#a87d6bd59020d94110027dcab3d9e3357">info</a>()) &lt;&lt; <span class="stringliteral">&quot;Opened &quot;</span> &lt;&lt; <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>;</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>}</div>
 </div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00279" data-start="{" data-end="}">
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a0d109974a895b8cf0ac833405d0e0b6a">  279</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a0d109974a895b8cf0ac833405d0e0b6a">Door&lt;Handler&gt;::run</a>()</div>
-<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>{</div>
-<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <a class="code hl_function" href="namespacexrpl_1_1util.html#a37c09fd3bf672bfc8ab99c7ab8569038">util::spawn</a>(strand_, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a>(&amp;<a class="code hl_class" href="classxrpl_1_1Door.html">Door&lt;Handler&gt;::do_accept</a>, this-&gt;shared_from_this(), std::placeholders::_1));</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>}</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="foldopen" id="foldopen00266" data-start="{" data-end="}">
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a38f628bdbc911b7e359f42d7a796825c">  266</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a38f628bdbc911b7e359f42d7a796825c">Door&lt;Handler&gt;::Door</a>(</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    Handler&amp; handler,</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    boost::asio::io_context&amp; io_context,</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>    <a class="code hl_struct" href="structxrpl_1_1Port.html">Port</a> <span class="keyword">const</span>&amp; port,</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <a class="code hl_class" href="classbeast_1_1Journal.html">beast::Journal</a> j)</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>    : <a class="code hl_variable" href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">j_</a>(j)</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>(port)</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">handler_</a>(handler)</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">ioc_</a>(io_context)</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">acceptor_</a>(io_context)</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a3c812a19a951761b6cc509763735500a">strand_</a>(<a class="code hl_namespace" href="namespaceboost.html">boost</a>::asio::make_strand(io_context))</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a2ea2d5489c2c1524ad64f6d953c4129d">ssl_</a>(</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>          <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;https&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;wss&quot;</span>) &gt; 0 ||</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>          <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;wss2&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;peer&quot;</span>) &gt; 0)</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a46cb82efef65e960579ddc8694e0d248">plain_</a>(</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>          <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;http&quot;</span>) &gt; 0 || <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;ws&quot;</span>) &gt; 0 ||</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>          <a class="code hl_variable" href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">port_</a>.<a class="code hl_namespace" href="namespaceprotocol.html">protocol</a>.count(<span class="stringliteral">&quot;ws2&quot;</span>))</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>    , <a class="code hl_variable" href="classxrpl_1_1Door.html#a42824b10f2c87c67cfb4a6b778148600">backoff_timer_</a>(io_context)</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>{</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <a class="code hl_function" href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">reOpen</a>();</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>}</div>
 </div>
-<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00286" data-start="{" data-end="}">
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a9eb269f786a6b04140990ba9feb966d4">  286</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a9eb269f786a6b04140990ba9feb966d4">Door&lt;Handler&gt;::close</a>()</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>{</div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>    <span class="keywordflow">if</span> (!strand_.running_in_this_thread())</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <span class="keywordflow">return</span> boost::asio::post(strand_, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a>(&amp;<a class="code hl_class" href="classxrpl_1_1Door.html">Door&lt;Handler&gt;::close</a>, this-&gt;shared_from_this()));</div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>    backoff_timer_.cancel();</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">error_code</a> ec;</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    acceptor_.close(ec);</div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>}</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00290" data-start="{" data-end="}">
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a0d109974a895b8cf0ac833405d0e0b6a">  290</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a0d109974a895b8cf0ac833405d0e0b6a">Door&lt;Handler&gt;::run</a>()</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>{</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <a class="code hl_function" href="namespacexrpl_1_1util.html#a37c09fd3bf672bfc8ab99c7ab8569038">util::spawn</a>(</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        strand_,</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a>(&amp;<a class="code hl_class" href="classxrpl_1_1Door.html">Door&lt;Handler&gt;::do_accept</a>, this-&gt;shared_from_this(), std::placeholders::_1));</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>}</div>
 </div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="comment">//------------------------------------------------------------------------------</span></div>
 <div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> ConstBufferSequence&gt;</div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00300" data-start="{" data-end="}">
-<div class="line"><a id="l00300" name="l00300"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">  300</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">Door&lt;Handler&gt;::create</a>(<span class="keywordtype">bool</span> ssl, ConstBufferSequence <span class="keyword">const</span>&amp; buffers, <a class="code hl_typedef" href="classxrpl_1_1Door.html#a4d296c44a6087cd17f5b5b207e241a3b">stream_type</a>&amp;&amp; stream, <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address)</div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>{</div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keywordflow">if</span> (ssl)</div>
-<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    {</div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = ios().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1SSLHTTPPeer.html">SSLHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>                port_, handler_, ioc_, j_, remote_address, buffers, std::move(stream)))</div>
-<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>            sp-&gt;run();</div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>    }</div>
-<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = ios().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1PlainHTTPPeer.html">PlainHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
-<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            port_, handler_, ioc_, j_, remote_address, buffers, std::move(stream)))</div>
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        sp-&gt;run();</div>
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>}</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00299" data-start="{" data-end="}">
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a9eb269f786a6b04140990ba9feb966d4">  299</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a9eb269f786a6b04140990ba9feb966d4">Door&lt;Handler&gt;::close</a>()</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>{</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>    <span class="keywordflow">if</span> (!strand_.running_in_this_thread())</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        <span class="keywordflow">return</span> boost::asio::post(</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            strand_, <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a>(&amp;<a class="code hl_class" href="classxrpl_1_1Door.html">Door&lt;Handler&gt;::close</a>, this-&gt;shared_from_this()));</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>    backoff_timer_.cancel();</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">error_code</a> ec;</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>    acceptor_.close(ec);</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>}</div>
 </div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00316" data-start="{" data-end="}">
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">  316</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">Door&lt;Handler&gt;::do_accept</a>(boost::asio::yield_context do_yield)</div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>{</div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <span class="keywordflow">while</span> (acceptor_.is_open())</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    {</div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        <span class="keywordflow">if</span> (should_throttle_for_fds())</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        {</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            backoff_timer_.expires_after(accept_delay_);</div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            boost::system::error_code tec;</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            backoff_timer_.async_wait(do_yield[tec]);</div>
-<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>            accept_delay_ = <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/min.html">std::min</a>(accept_delay_ * 2, MAX_ACCEPT_DELAY);</div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>            JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">warn</a>()) &lt;&lt; <span class="stringliteral">&quot;Throttling do_accept for &quot;</span> &lt;&lt; accept_delay_.count() &lt;&lt; <span class="stringliteral">&quot;ms.&quot;</span>;</div>
-<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        }</div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span> </div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">error_code</a> ec;</div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address;</div>
-<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a4d296c44a6087cd17f5b5b207e241a3b">stream_type</a> stream(ioc_);</div>
-<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a164234bf354c2f3183b03f504911c08f">socket_type</a>&amp; socket = stream.socket();</div>
-<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        acceptor_.async_accept(socket, remote_address, do_yield[ec]);</div>
-<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>        <span class="keywordflow">if</span> (ec)</div>
-<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>        {</div>
-<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>            <span class="keywordflow">if</span> (ec == boost::asio::error::operation_aborted)</div>
-<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span> </div>
-<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>            <span class="keywordflow">if</span> (ec == boost::asio::error::no_descriptors || ec == boost::asio::error::no_buffer_space)</div>
-<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>            {</div>
-<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">warn</a>()) &lt;&lt; <span class="stringliteral">&quot;accept: Too many open files. Pausing for &quot;</span> &lt;&lt; accept_delay_.count() &lt;&lt; <span class="stringliteral">&quot;ms.&quot;</span>;</div>
-<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span> </div>
-<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>                backoff_timer_.expires_after(accept_delay_);</div>
-<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>                boost::system::error_code tec;</div>
-<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                backoff_timer_.async_wait(do_yield[tec]);</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span><span class="comment">//------------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> ConstBufferSequence&gt;</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00314" data-start="{" data-end="}">
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">  314</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">Door&lt;Handler&gt;::create</a>(</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>    <span class="keywordtype">bool</span> ssl,</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    ConstBufferSequence <span class="keyword">const</span>&amp; buffers,</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a4d296c44a6087cd17f5b5b207e241a3b">stream_type</a>&amp;&amp; stream,</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address)</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>{</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keywordflow">if</span> (ssl)</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    {</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = ios().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1SSLHTTPPeer.html">SSLHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>                port_, handler_, ioc_, j_, remote_address, buffers, std::move(stream)))</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            sp-&gt;run();</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    }</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>    <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = ios().<span class="keyword">template</span> emplace&lt;<a class="code hl_class" href="classxrpl_1_1PlainHTTPPeer.html">PlainHTTPPeer&lt;Handler&gt;</a>&gt;(</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            port_, handler_, ioc_, j_, remote_address, buffers, std::move(stream)))</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        sp-&gt;run();</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>}</div>
+</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00334" data-start="{" data-end="}">
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">  334</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">Door&lt;Handler&gt;::do_accept</a>(boost::asio::yield_context do_yield)</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>{</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordflow">while</span> (acceptor_.is_open())</div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    {</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>        <span class="keywordflow">if</span> (should_throttle_for_fds())</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        {</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>            backoff_timer_.expires_after(accept_delay_);</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>            boost::system::error_code tec;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>            backoff_timer_.async_wait(do_yield[tec]);</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>            accept_delay_ = <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/min.html">std::min</a>(accept_delay_ * 2, MAX_ACCEPT_DELAY);</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>            JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">warn</a>()) &lt;&lt; <span class="stringliteral">&quot;Throttling do_accept for &quot;</span> &lt;&lt; accept_delay_.count() &lt;&lt; <span class="stringliteral">&quot;ms.&quot;</span>;</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        }</div>
 <div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span> </div>
-<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                accept_delay_ = <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/min.html">std::min</a>(accept_delay_ * 2, MAX_ACCEPT_DELAY);</div>
-<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>            }</div>
-<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>            <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            {</div>
-<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;accept error: &quot;</span> &lt;&lt; ec.message();</div>
-<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>            }</div>
-<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>            <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        }</div>
-<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span> </div>
-<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        accept_delay_ = INITIAL_ACCEPT_DELAY;</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span> </div>
-<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>        <span class="keywordflow">if</span> (ssl_ &amp;&amp; plain_)</div>
-<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        {</div>
-<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp =</div>
-<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                    ios().<span class="keyword">template</span> emplace&lt;Detector&gt;(port_, handler_, ioc_, std::move(stream), remote_address, j_))</div>
-<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>                sp-&gt;run();</div>
-<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        }</div>
-<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ssl_ || plain_)</div>
-<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        {</div>
-<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>            create(ssl_, boost::asio::null_buffers{}, std::move(stream), remote_address);</div>
-<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        }</div>
-<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    }</div>
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>}</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">error_code</a> ec;</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">endpoint_type</a> remote_address;</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a4d296c44a6087cd17f5b5b207e241a3b">stream_type</a> stream(ioc_);</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        <a class="code hl_typedef" href="classxrpl_1_1Door.html#a164234bf354c2f3183b03f504911c08f">socket_type</a>&amp; socket = stream.socket();</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>        acceptor_.async_accept(socket, remote_address, do_yield[ec]);</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>        <span class="keywordflow">if</span> (ec)</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        {</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>            <span class="keywordflow">if</span> (ec == boost::asio::error::operation_aborted)</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> </div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            <span class="keywordflow">if</span> (ec == boost::asio::error::no_descriptors ||</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>                ec == boost::asio::error::no_buffer_space)</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            {</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">warn</a>()) &lt;&lt; <span class="stringliteral">&quot;accept: Too many open files. Pausing for &quot;</span></div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                                &lt;&lt; accept_delay_.count() &lt;&lt; <span class="stringliteral">&quot;ms.&quot;</span>;</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>                backoff_timer_.expires_after(accept_delay_);</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>                boost::system::error_code tec;</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>                backoff_timer_.async_wait(do_yield[tec]);</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>                accept_delay_ = <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/algorithm/min.html">std::min</a>(accept_delay_ * 2, MAX_ACCEPT_DELAY);</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>            }</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>            <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>            {</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>                JLOG(j_.<a class="code hl_function" href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">error</a>()) &lt;&lt; <span class="stringliteral">&quot;accept error: &quot;</span> &lt;&lt; ec.message();</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>            }</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>            <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>        }</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span> </div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        accept_delay_ = INITIAL_ACCEPT_DELAY;</div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> </div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        <span class="keywordflow">if</span> (ssl_ &amp;&amp; plain_)</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        {</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>            <span class="keywordflow">if</span> (<span class="keyword">auto</span> sp = ios().<span class="keyword">template</span> emplace&lt;Detector&gt;(</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>                    port_, handler_, ioc_, std::move(stream), remote_address, j_))</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>                sp-&gt;run();</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        }</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (ssl_ || plain_)</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span>        {</div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>            create(ssl_, boost::asio::null_buffers{}, std::move(stream), remote_address);</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        }</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>    }</div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>}</div>
 </div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
-<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;typename Door&lt;Handler&gt;::FDStats</a>&gt;</div>
-<div class="foldopen" id="foldopen00374" data-start="{" data-end="}">
-<div class="line"><a id="l00374" name="l00374"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a8679316fb0121ef11f2fb6df10becc5f">  374</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a8679316fb0121ef11f2fb6df10becc5f">Door&lt;Handler&gt;::query_fd_stats</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span><span class="preprocessor">#if BOOST_OS_WINDOWS</span></div>
-<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>;</div>
-<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    <a class="code hl_struct" href="structxrpl_1_1Door_1_1FDStats.html">FDStats</a> s;</div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>    <span class="keyword">struct </span>rlimit rl;</div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>    <span class="keywordflow">if</span> (getrlimit(RLIMIT_NOFILE, &amp;rl) != 0 || rl.rlim_cur == RLIM_INFINITY)</div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>;</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>    s.<a class="code hl_variable" href="structxrpl_1_1Door_1_1FDStats.html#a56dc93e45691a9dcda95a75544ff6969">limit</a> = <span class="keyword">static_cast&lt;</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint64_t</a><span class="keyword">&gt;</span>(rl.rlim_cur);</div>
-<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span><span class="preprocessor">#if BOOST_OS_LINUX</span></div>
-<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>    <span class="keyword">constexpr</span> <span class="keywordtype">char</span> <span class="keyword">const</span>* kFdDir = <span class="stringliteral">&quot;/proc/self/fd&quot;</span>;</div>
-<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    <span class="keyword">constexpr</span> <span class="keywordtype">char</span> <span class="keyword">const</span>* kFdDir = <span class="stringliteral">&quot;/dev/fd&quot;</span>;</div>
-<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>    <span class="keywordflow">if</span> (DIR* d = ::opendir(kFdDir))</div>
-<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>    {</div>
-<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint64_t</a> cnt = 0;</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        <span class="keywordflow">while</span> (::readdir(d) != <span class="keyword">nullptr</span>)</div>
-<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>            ++cnt;</div>
-<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        ::closedir(d);</div>
-<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        <span class="comment">// readdir counts &#39;.&#39;, &#39;..&#39;, and the DIR* itself shows in the list</span></div>
-<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        s.<a class="code hl_variable" href="structxrpl_1_1Door_1_1FDStats.html#af73e04a86aa8b14ea82e825abe8e5a64">used</a> = (cnt &gt;= 3) ? (cnt - 3) : 0;</div>
-<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        <span class="keywordflow">return</span> s;</div>
-<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span>    }</div>
-<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>;</div>
-<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>}</div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span> </div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional&lt;typename Door&lt;Handler&gt;::FDStats</a>&gt;</div>
+<div class="foldopen" id="foldopen00394" data-start="{" data-end="}">
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#a8679316fb0121ef11f2fb6df10becc5f">  394</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#a8679316fb0121ef11f2fb6df10becc5f">Door&lt;Handler&gt;::query_fd_stats</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span><span class="preprocessor">#if BOOST_OS_WINDOWS</span></div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>;</div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>    <a class="code hl_struct" href="structxrpl_1_1Door_1_1FDStats.html">FDStats</a> s;</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    <span class="keyword">struct </span>rlimit rl;</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>    <span class="keywordflow">if</span> (getrlimit(RLIMIT_NOFILE, &amp;rl) != 0 || rl.rlim_cur == RLIM_INFINITY)</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>;</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>    s.<a class="code hl_variable" href="structxrpl_1_1Door_1_1FDStats.html#a56dc93e45691a9dcda95a75544ff6969">limit</a> = <span class="keyword">static_cast&lt;</span><a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint64_t</a><span class="keyword">&gt;</span>(rl.rlim_cur);</div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span><span class="preprocessor">#if BOOST_OS_LINUX</span></div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span>    <span class="keyword">constexpr</span> <span class="keywordtype">char</span> <span class="keyword">const</span>* kFdDir = <span class="stringliteral">&quot;/proc/self/fd&quot;</span>;</div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="keyword">constexpr</span> <span class="keywordtype">char</span> <span class="keyword">const</span>* kFdDir = <span class="stringliteral">&quot;/dev/fd&quot;</span>;</div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span>    <span class="keywordflow">if</span> (DIR* d = ::opendir(kFdDir))</div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    {</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint64_t</a> cnt = 0;</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        <span class="keywordflow">while</span> (::readdir(d) != <span class="keyword">nullptr</span>)</div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>            ++cnt;</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>        ::closedir(d);</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="comment">// readdir counts &#39;.&#39;, &#39;..&#39;, and the DIR* itself shows in the list</span></div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        s.<a class="code hl_variable" href="structxrpl_1_1Door_1_1FDStats.html#af73e04a86aa8b14ea82e825abe8e5a64">used</a> = (cnt &gt;= 3) ? (cnt - 3) : 0;</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>        <span class="keywordflow">return</span> s;</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>    }</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>    <span class="keywordflow">return</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>;</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>}</div>
 </div>
-<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span> </div>
-<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
-<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span><span class="keywordtype">bool</span></div>
-<div class="foldopen" id="foldopen00405" data-start="{" data-end="}">
-<div class="line"><a id="l00405" name="l00405"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#ac40373b0c16c65a66202871bea6290b8">  405</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#ac40373b0c16c65a66202871bea6290b8">Door&lt;Handler&gt;::should_throttle_for_fds</a>()</div>
-<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span>{</div>
-<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span><span class="preprocessor">#if BOOST_OS_WINDOWS</span></div>
-<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span>    <span class="keyword">auto</span> <span class="keyword">const</span> stats = query_fd_stats();</div>
-<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>    <span class="keywordflow">if</span> (!stats || stats-&gt;limit == 0)</div>
-<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; s = *stats;</div>
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>    <span class="keyword">auto</span> <span class="keyword">const</span> free = (s.limit &gt; s.used) ? (s.limit - s.used) : 0ull;</div>
-<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    <span class="keywordtype">double</span> <span class="keyword">const</span> free_ratio = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(free) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(s.limit);</div>
-<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>    <span class="keywordflow">if</span> (free_ratio &lt; FREE_FD_THRESHOLD)</div>
-<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>    {</div>
-<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    }</div>
-<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>}</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span> </div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Handler&gt;</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span><span class="keywordtype">bool</span></div>
+<div class="foldopen" id="foldopen00425" data-start="{" data-end="}">
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno"><a class="line" href="classxrpl_1_1Door.html#ac40373b0c16c65a66202871bea6290b8">  425</a></span><a class="code hl_function" href="classxrpl_1_1Door.html#ac40373b0c16c65a66202871bea6290b8">Door&lt;Handler&gt;::should_throttle_for_fds</a>()</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>{</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span><span class="preprocessor">#if BOOST_OS_WINDOWS</span></div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    <span class="keyword">auto</span> <span class="keyword">const</span> stats = query_fd_stats();</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>    <span class="keywordflow">if</span> (!stats || stats-&gt;limit == 0)</div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span> </div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>    <span class="keyword">auto</span> <span class="keyword">const</span>&amp; s = *stats;</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>    <span class="keyword">auto</span> <span class="keyword">const</span> free = (s.limit &gt; s.used) ? (s.limit - s.used) : 0ull;</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>    <span class="keywordtype">double</span> <span class="keyword">const</span> free_ratio = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(free) / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(s.limit);</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>    <span class="keywordflow">if</span> (free_ratio &lt; FREE_FD_THRESHOLD)</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>    {</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>    }</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span>    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>}</div>
 </div>
-<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span> </div>
-<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span> </div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="aalgorithm_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/algorithm.html">algorithm</a></div></div>
 <div class="ttc" id="abasic_stringstream_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/io/basic_stringstream.html">std::stringstream</a></div></div>
 <div class="ttc" id="abind_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/utility/functional/bind.html">std::bind</a></div><div class="ttdeci">T bind(T... args)</div></div>
 <div class="ttc" id="achrono_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/chrono.html">chrono</a></div></div>
 <div class="ttc" id="aclassbeast_1_1Journal_html"><div class="ttname"><a href="classbeast_1_1Journal.html">beast::Journal</a></div><div class="ttdoc">A generic endpoint for log messages.</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00039">Journal.h:40</a></div></div>
-<div class="ttc" id="aclassbeast_1_1Journal_html_a49b0713e65bb8e2c51b76fbf16252afe"><div class="ttname"><a href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">beast::Journal::error</a></div><div class="ttdeci">Stream error() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00318">Journal.h:318</a></div></div>
-<div class="ttc" id="aclassbeast_1_1Journal_html_a87d6bd59020d94110027dcab3d9e3357"><div class="ttname"><a href="classbeast_1_1Journal.html#a87d6bd59020d94110027dcab3d9e3357">beast::Journal::info</a></div><div class="ttdeci">Stream info() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00306">Journal.h:306</a></div></div>
-<div class="ttc" id="aclassbeast_1_1Journal_html_abbe082bd27ca0f1d1365af2824e4f85b"><div class="ttname"><a href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">beast::Journal::trace</a></div><div class="ttdeci">Stream trace() const</div><div class="ttdoc">Severity stream access functions.</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00294">Journal.h:294</a></div></div>
-<div class="ttc" id="aclassbeast_1_1Journal_html_ad8fefe3e8ad583e1ed1bf02094ac3d8f"><div class="ttname"><a href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">beast::Journal::warn</a></div><div class="ttdeci">Stream warn() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00312">Journal.h:312</a></div></div>
+<div class="ttc" id="aclassbeast_1_1Journal_html_a49b0713e65bb8e2c51b76fbf16252afe"><div class="ttname"><a href="classbeast_1_1Journal.html#a49b0713e65bb8e2c51b76fbf16252afe">beast::Journal::error</a></div><div class="ttdeci">Stream error() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00319">Journal.h:319</a></div></div>
+<div class="ttc" id="aclassbeast_1_1Journal_html_a87d6bd59020d94110027dcab3d9e3357"><div class="ttname"><a href="classbeast_1_1Journal.html#a87d6bd59020d94110027dcab3d9e3357">beast::Journal::info</a></div><div class="ttdeci">Stream info() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00307">Journal.h:307</a></div></div>
+<div class="ttc" id="aclassbeast_1_1Journal_html_abbe082bd27ca0f1d1365af2824e4f85b"><div class="ttname"><a href="classbeast_1_1Journal.html#abbe082bd27ca0f1d1365af2824e4f85b">beast::Journal::trace</a></div><div class="ttdeci">Stream trace() const</div><div class="ttdoc">Severity stream access functions.</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00295">Journal.h:295</a></div></div>
+<div class="ttc" id="aclassbeast_1_1Journal_html_ad8fefe3e8ad583e1ed1bf02094ac3d8f"><div class="ttname"><a href="classbeast_1_1Journal.html#ad8fefe3e8ad583e1ed1bf02094ac3d8f">beast::Journal::warn</a></div><div class="ttdeci">Stream warn() const</div><div class="ttdef"><b>Definition</b> <a href="Journal_8h_source.html#l00313">Journal.h:313</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html">xrpl::Door::Detector</a></div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00055">Door.h:56</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a26e9e297e0c703968a5d45de4aa11681"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a26e9e297e0c703968a5d45de4aa11681">xrpl::Door::Detector::handler_</a></div><div class="ttdeci">Handler &amp; handler_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00059">Door.h:59</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a2738eed673877a724cf5b2e4bda1fde7"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a2738eed673877a724cf5b2e4bda1fde7">xrpl::Door::Detector::stream_</a></div><div class="ttdeci">stream_type stream_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00061">Door.h:61</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a4b1ae3bc618994e0dc51707457cb3637"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">xrpl::Door::Detector::do_detect</a></div><div class="ttdeci">void do_detect(yield_context yield)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00180">Door.h:180</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a4da4afb102eb5f9564c412bc782e52e6"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a4da4afb102eb5f9564c412bc782e52e6">xrpl::Door::Detector::Detector</a></div><div class="ttdeci">Detector(Port const &amp;port, Handler &amp;handler, boost::asio::io_context &amp;ioc, stream_type &amp;&amp;stream, endpoint_type remote_address, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00146">Door.h:146</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a4b1ae3bc618994e0dc51707457cb3637"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a4b1ae3bc618994e0dc51707457cb3637">xrpl::Door::Detector::do_detect</a></div><div class="ttdeci">void do_detect(yield_context yield)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00185">Door.h:185</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a4da4afb102eb5f9564c412bc782e52e6"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a4da4afb102eb5f9564c412bc782e52e6">xrpl::Door::Detector::Detector</a></div><div class="ttdeci">Detector(Port const &amp;port, Handler &amp;handler, boost::asio::io_context &amp;ioc, stream_type &amp;&amp;stream, endpoint_type remote_address, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00150">Door.h:150</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a4df54ab8deca09aa10201c39fa2da986"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a4df54ab8deca09aa10201c39fa2da986">xrpl::Door::Detector::remote_address_</a></div><div class="ttdeci">endpoint_type remote_address_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00063">Door.h:63</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a69126ba2dfd6d52a89340a0214294d9d"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a69126ba2dfd6d52a89340a0214294d9d">xrpl::Door::Detector::port_</a></div><div class="ttdeci">Port const  &amp; port_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00058">Door.h:58</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a6b34f51f17b00a07d5c2070dfc814368"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a6b34f51f17b00a07d5c2070dfc814368">xrpl::Door::Detector::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00166">Door.h:166</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a6b34f51f17b00a07d5c2070dfc814368"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a6b34f51f17b00a07d5c2070dfc814368">xrpl::Door::Detector::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00170">Door.h:170</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a793344c32d17e8c60d78d6784d64ddbc"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a793344c32d17e8c60d78d6784d64ddbc">xrpl::Door::Detector::strand_</a></div><div class="ttdeci">boost::asio::strand&lt; boost::asio::io_context::executor_type &gt; strand_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00064">Door.h:64</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a853026966f29ea597a6f8a38c813d7e8"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a853026966f29ea597a6f8a38c813d7e8">xrpl::Door::Detector::close</a></div><div class="ttdeci">void close() override</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00173">Door.h:173</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a853026966f29ea597a6f8a38c813d7e8"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a853026966f29ea597a6f8a38c813d7e8">xrpl::Door::Detector::close</a></div><div class="ttdeci">void close() override</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00178">Door.h:178</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a92011a89ec781d4449dd155e8a9b2f97"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a92011a89ec781d4449dd155e8a9b2f97">xrpl::Door::Detector::j_</a></div><div class="ttdeci">beast::Journal const j_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00065">Door.h:65</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_a9ff69b3c333f821e0ab31796f0b29c7f"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#a9ff69b3c333f821e0ab31796f0b29c7f">xrpl::Door::Detector::ioc_</a></div><div class="ttdeci">boost::asio::io_context &amp; ioc_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00060">Door.h:60</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_1_1Detector_html_ab9e2e07dfa057b1e7a48e11b4ed40861"><div class="ttname"><a href="classxrpl_1_1Door_1_1Detector.html#ab9e2e07dfa057b1e7a48e11b4ed40861">xrpl::Door::Detector::socket_</a></div><div class="ttdeci">socket_type &amp; socket_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00062">Door.h:62</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html"><div class="ttname"><a href="classxrpl_1_1Door.html">xrpl::Door</a></div><div class="ttdoc">A listening socket.</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00041">Door.h:42</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a016dcd2ecac55ece8a7a44833fafd34a"><div class="ttname"><a href="classxrpl_1_1Door.html#a016dcd2ecac55ece8a7a44833fafd34a">xrpl::Door::j_</a></div><div class="ttdeci">beast::Journal const j_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00085">Door.h:85</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a065672f71a35a236dfc2d2821666be6a"><div class="ttname"><a href="classxrpl_1_1Door.html#a065672f71a35a236dfc2d2821666be6a">xrpl::Door::acceptor_type</a></div><div class="ttdeci">protocol_type::acceptor acceptor_type</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00049">Door.h:49</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_a0d109974a895b8cf0ac833405d0e0b6a"><div class="ttname"><a href="classxrpl_1_1Door.html#a0d109974a895b8cf0ac833405d0e0b6a">xrpl::Door::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00279">Door.h:279</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_a0d109974a895b8cf0ac833405d0e0b6a"><div class="ttname"><a href="classxrpl_1_1Door.html#a0d109974a895b8cf0ac833405d0e0b6a">xrpl::Door::run</a></div><div class="ttdeci">void run()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00290">Door.h:290</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a138d1cdcdc68ae240b24bc1a44c871a7"><div class="ttname"><a href="classxrpl_1_1Door.html#a138d1cdcdc68ae240b24bc1a44c871a7">xrpl::Door::INITIAL_ACCEPT_DELAY</a></div><div class="ttdeci">static constexpr std::chrono::milliseconds INITIAL_ACCEPT_DELAY</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00093">Door.h:93</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a14d6e8ad9fa655bb5120ff296310e9b7"><div class="ttname"><a href="classxrpl_1_1Door.html#a14d6e8ad9fa655bb5120ff296310e9b7">xrpl::Door::get_endpoint</a></div><div class="ttdeci">endpoint_type get_endpoint() const</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00131">Door.h:131</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a164234bf354c2f3183b03f504911c08f"><div class="ttname"><a href="classxrpl_1_1Door.html#a164234bf354c2f3183b03f504911c08f">xrpl::Door::socket_type</a></div><div class="ttdeci">boost::asio::ip::tcp::socket socket_type</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00051">Door.h:51</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a275e3dac0107a68c5e91851b4dedd577"><div class="ttname"><a href="classxrpl_1_1Door.html#a275e3dac0107a68c5e91851b4dedd577">xrpl::Door::ioc_</a></div><div class="ttdeci">boost::asio::io_context &amp; ioc_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00088">Door.h:88</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a2876269dfe1618d482a74e31dd624c91"><div class="ttname"><a href="classxrpl_1_1Door.html#a2876269dfe1618d482a74e31dd624c91">xrpl::Door::MAX_ACCEPT_DELAY</a></div><div class="ttdeci">static constexpr std::chrono::milliseconds MAX_ACCEPT_DELAY</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00094">Door.h:94</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a2ea2d5489c2c1524ad64f6d953c4129d"><div class="ttname"><a href="classxrpl_1_1Door.html#a2ea2d5489c2c1524ad64f6d953c4129d">xrpl::Door::ssl_</a></div><div class="ttdeci">bool ssl_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00091">Door.h:91</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_a38f628bdbc911b7e359f42d7a796825c"><div class="ttname"><a href="classxrpl_1_1Door.html#a38f628bdbc911b7e359f42d7a796825c">xrpl::Door::Door</a></div><div class="ttdeci">Door(Handler &amp;handler, boost::asio::io_context &amp;io_context, Port const &amp;port, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00261">Door.h:261</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_a38f628bdbc911b7e359f42d7a796825c"><div class="ttname"><a href="classxrpl_1_1Door.html#a38f628bdbc911b7e359f42d7a796825c">xrpl::Door::Door</a></div><div class="ttdeci">Door(Handler &amp;handler, boost::asio::io_context &amp;io_context, Port const &amp;port, beast::Journal j)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00266">Door.h:266</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a3c812a19a951761b6cc509763735500a"><div class="ttname"><a href="classxrpl_1_1Door.html#a3c812a19a951761b6cc509763735500a">xrpl::Door::strand_</a></div><div class="ttdeci">boost::asio::strand&lt; boost::asio::io_context::executor_type &gt; strand_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00090">Door.h:90</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a3e064cfaf6047be85343a7cd33dc4cc8"><div class="ttname"><a href="classxrpl_1_1Door.html#a3e064cfaf6047be85343a7cd33dc4cc8">xrpl::Door::acceptor_</a></div><div class="ttdeci">acceptor_type acceptor_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00089">Door.h:89</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a42824b10f2c87c67cfb4a6b778148600"><div class="ttname"><a href="classxrpl_1_1Door.html#a42824b10f2c87c67cfb4a6b778148600">xrpl::Door::backoff_timer_</a></div><div class="ttdeci">boost::asio::steady_timer backoff_timer_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00096">Door.h:96</a></div></div>
@@ -573,17 +593,17 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassxrpl_1_1Door_html_a567e9ca8556307ce6627aada1b0aa93d"><div class="ttname"><a href="classxrpl_1_1Door.html#a567e9ca8556307ce6627aada1b0aa93d">xrpl::Door::endpoint_type</a></div><div class="ttdeci">protocol_type::endpoint endpoint_type</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00050">Door.h:50</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a6f8d2e93bf9eadd754dfeca301f2222d"><div class="ttname"><a href="classxrpl_1_1Door.html#a6f8d2e93bf9eadd754dfeca301f2222d">xrpl::Door::FREE_FD_THRESHOLD</a></div><div class="ttdeci">static constexpr double FREE_FD_THRESHOLD</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00097">Door.h:97</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a77cb0943c6882ad5466e46b9297bbef8"><div class="ttname"><a href="classxrpl_1_1Door.html#a77cb0943c6882ad5466e46b9297bbef8">xrpl::Door::error_code</a></div><div class="ttdeci">boost::system::error_code error_code</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00046">Door.h:46</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_a83bff7a9b386e4e0c41680fc9c46a5e5"><div class="ttname"><a href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">xrpl::Door::create</a></div><div class="ttdeci">void create(bool ssl, ConstBufferSequence const &amp;buffers, stream_type &amp;&amp;stream, endpoint_type remote_address)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00300">Door.h:300</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_a8679316fb0121ef11f2fb6df10becc5f"><div class="ttname"><a href="classxrpl_1_1Door.html#a8679316fb0121ef11f2fb6df10becc5f">xrpl::Door::query_fd_stats</a></div><div class="ttdeci">std::optional&lt; FDStats &gt; query_fd_stats() const</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00374">Door.h:374</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_a83bff7a9b386e4e0c41680fc9c46a5e5"><div class="ttname"><a href="classxrpl_1_1Door.html#a83bff7a9b386e4e0c41680fc9c46a5e5">xrpl::Door::create</a></div><div class="ttdeci">void create(bool ssl, ConstBufferSequence const &amp;buffers, stream_type &amp;&amp;stream, endpoint_type remote_address)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00314">Door.h:314</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_a8679316fb0121ef11f2fb6df10becc5f"><div class="ttname"><a href="classxrpl_1_1Door.html#a8679316fb0121ef11f2fb6df10becc5f">xrpl::Door::query_fd_stats</a></div><div class="ttdeci">std::optional&lt; FDStats &gt; query_fd_stats() const</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00394">Door.h:394</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_a97a8170e47fc5ca72b3e742679923028"><div class="ttname"><a href="classxrpl_1_1Door.html#a97a8170e47fc5ca72b3e742679923028">xrpl::Door::timer_type</a></div><div class="ttdeci">boost::asio::basic_waitable_timer&lt; clock_type &gt; timer_type</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00045">Door.h:45</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_a9eb269f786a6b04140990ba9feb966d4"><div class="ttname"><a href="classxrpl_1_1Door.html#a9eb269f786a6b04140990ba9feb966d4">xrpl::Door::close</a></div><div class="ttdeci">void close() override</div><div class="ttdoc">Close the Door listening socket and connections.</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00286">Door.h:286</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_a9eb269f786a6b04140990ba9feb966d4"><div class="ttname"><a href="classxrpl_1_1Door.html#a9eb269f786a6b04140990ba9feb966d4">xrpl::Door::close</a></div><div class="ttdeci">void close() override</div><div class="ttdoc">Close the Door listening socket and connections.</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00299">Door.h:299</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_ab489ff2fe79f6b70550dd772e6c9b2d9"><div class="ttname"><a href="classxrpl_1_1Door.html#ab489ff2fe79f6b70550dd772e6c9b2d9">xrpl::Door::protocol_type</a></div><div class="ttdeci">boost::asio::ip::tcp protocol_type</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00048">Door.h:48</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_ab4cf0223487261d21c76b866ea5dc286"><div class="ttname"><a href="classxrpl_1_1Door.html#ab4cf0223487261d21c76b866ea5dc286">xrpl::Door::accept_delay_</a></div><div class="ttdeci">std::chrono::milliseconds accept_delay_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00095">Door.h:95</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_ac40373b0c16c65a66202871bea6290b8"><div class="ttname"><a href="classxrpl_1_1Door.html#ac40373b0c16c65a66202871bea6290b8">xrpl::Door::should_throttle_for_fds</a></div><div class="ttdeci">bool should_throttle_for_fds()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00405">Door.h:405</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_ac40373b0c16c65a66202871bea6290b8"><div class="ttname"><a href="classxrpl_1_1Door.html#ac40373b0c16c65a66202871bea6290b8">xrpl::Door::should_throttle_for_fds</a></div><div class="ttdeci">bool should_throttle_for_fds()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00425">Door.h:425</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_ac6e6e2eed0a1c735508fd21612690049"><div class="ttname"><a href="classxrpl_1_1Door.html#ac6e6e2eed0a1c735508fd21612690049">xrpl::Door::handler_</a></div><div class="ttdeci">Handler &amp; handler_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00087">Door.h:87</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_ad0fe8373df1101a383df940615432d3c"><div class="ttname"><a href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">xrpl::Door::do_accept</a></div><div class="ttdeci">void do_accept(yield_context yield)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00316">Door.h:316</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_ad0fe8373df1101a383df940615432d3c"><div class="ttname"><a href="classxrpl_1_1Door.html#ad0fe8373df1101a383df940615432d3c">xrpl::Door::do_accept</a></div><div class="ttdeci">void do_accept(yield_context yield)</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00334">Door.h:334</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Door_html_ae0721c1a135f12e428160e9e503d706f"><div class="ttname"><a href="classxrpl_1_1Door.html#ae0721c1a135f12e428160e9e503d706f">xrpl::Door::port_</a></div><div class="ttdeci">Port const  &amp; port_</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00086">Door.h:86</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Door_html_ae221a77b103a8f9dbadfbe3de5aaab4c"><div class="ttname"><a href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">xrpl::Door::reOpen</a></div><div class="ttdeci">void reOpen()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00211">Door.h:211</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Door_html_ae221a77b103a8f9dbadfbe3de5aaab4c"><div class="ttname"><a href="classxrpl_1_1Door.html#ae221a77b103a8f9dbadfbe3de5aaab4c">xrpl::Door::reOpen</a></div><div class="ttdeci">void reOpen()</div><div class="ttdef"><b>Definition</b> <a href="Door_8h_source.html#l00216">Door.h:216</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1PlainHTTPPeer_html"><div class="ttname"><a href="classxrpl_1_1PlainHTTPPeer.html">xrpl::PlainHTTPPeer</a></div><div class="ttdef"><b>Definition</b> <a href="PlainHTTPPeer_8h_source.html#l00014">PlainHTTPPeer.h:16</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1SSLHTTPPeer_html"><div class="ttname"><a href="classxrpl_1_1SSLHTTPPeer.html">xrpl::SSLHTTPPeer</a></div><div class="ttdef"><b>Definition</b> <a href="SSLHTTPPeer_8h_source.html#l00017">SSLHTTPPeer.h:19</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1io__list_1_1work_html"><div class="ttname"><a href="classxrpl_1_1io__list_1_1work.html">xrpl::io_list::work</a></div><div class="ttdef"><b>Definition</b> <a href="io__list_8h_source.html#l00018">io_list.h:19</a></div></div>
@@ -599,7 +619,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespaceboost_html"><div class="ttname"><a href="namespaceboost.html">boost</a></div><div class="ttdef"><b>Definition</b> <a href="IPAddress_8h_source.html#l00085">IPAddress.h:85</a></div></div>
 <div class="ttc" id="anamespaceprotocol_html"><div class="ttname"><a href="namespaceprotocol.html">protocol</a></div><div class="ttdef"><b>Definition</b> <a href="ValidatorList_8h_source.html#l00018">ValidatorList.h:18</a></div></div>
 <div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div><div class="ttdoc">STL namespace.</div></div>
-<div class="ttc" id="anamespacexrpl_1_1util_html_a37c09fd3bf672bfc8ab99c7ab8569038"><div class="ttname"><a href="namespacexrpl_1_1util.html#a37c09fd3bf672bfc8ab99c7ab8569038">xrpl::util::spawn</a></div><div class="ttdeci">void spawn(Ctx &amp;&amp;ctx, F &amp;&amp;func)</div><div class="ttdoc">Spawns a coroutine using boost::asio::spawn</div><div class="ttdef"><b>Definition</b> <a href="Spawn_8h_source.html#l00065">Spawn.h:65</a></div></div>
+<div class="ttc" id="anamespacexrpl_1_1util_html_a37c09fd3bf672bfc8ab99c7ab8569038"><div class="ttname"><a href="namespacexrpl_1_1util.html#a37c09fd3bf672bfc8ab99c7ab8569038">xrpl::util::spawn</a></div><div class="ttdeci">void spawn(Ctx &amp;&amp;ctx, F &amp;&amp;func)</div><div class="ttdoc">Spawns a coroutine using boost::asio::spawn</div><div class="ttdef"><b>Definition</b> <a href="Spawn_8h_source.html#l00066">Spawn.h:66</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a44797ff79b646579ffa6da0b2432b331"><div class="ttname"><a href="namespacexrpl.html#a44797ff79b646579ffa6da0b2432b331">xrpl::stream_type</a></div><div class="ttdeci">boost::beast::ssl_stream&lt; socket_type &gt; stream_type</div><div class="ttdef"><b>Definition</b> <a href="Handshake_8h_source.html#l00022">Handshake.h:22</a></div></div>
 <div class="ttc" id="aoptional_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/optional.html">optional</a></div></div>

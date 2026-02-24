@@ -1,5 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classxrpl_1_1InboundTransactions.html" title="Manages the acquisition and lifetime of transaction sets." alt="" coords="5,5,193,31"/>
-<area shape="rect" id="Node000001" href="$classxrpl_1_1InboundTransactionsImp.html" title=" " alt="" coords="241,5,455,31"/>
-<area shape="poly" id="edge705_Node000000_Node000001" title=" " alt="" coords="207,15,241,15,241,21,207,21"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1InboundLedgers.html" title="Manages the lifetime of inbound ledgers." alt="" coords="5,35,164,60"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1InboundLedgersImp.html" title=" " alt="" coords="212,5,395,31"/>
+<area shape="poly" id="edge703_Node000000_Node000001" title=" " alt="" coords="178,32,211,28,212,33,178,37"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1test_1_1MagicInboundLedgers.html" title="Simulate a network InboundLedgers." alt="" coords="214,55,393,95"/>
+<area shape="poly" id="edge704_Node000000_Node000002" title=" " alt="" coords="178,57,214,61,214,67,178,62"/>
 </map>

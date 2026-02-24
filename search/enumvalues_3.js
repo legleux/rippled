@@ -31,7 +31,7 @@ var searchData=
   ['credential_28',['CREDENTIAL',['../namespacexrpl.html#aa040fac78e4975614b31771a1bc5f7ada9bdc8b294d9eb8696390079578c659db',1,'xrpl']]],
   ['cur_29',['cur',['../classxrpl_1_1test_1_1ElementComboIter.html#acf4052cee4b4b3466a9b60d7f29576acab5fddf1ef601e74db01c1425561a38cb',1,'xrpl::test::ElementComboIter']]],
   ['currencyfield_30',['CurrencyField',['../namespacexrpl_1_1test.html#a04b3b5ab4e41a5be8a4c9e33e9fb051aad0da868d50d0bc8c56d861a6b90c51f0',1,'xrpl::test']]],
-  ['current_31',['current',['../namespacexrpl.html#a709d0628574726b9aa3968d867c2991aa222a267cc5778206b253be35ee3ddab5',1,'xrpl::Current'],['../namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000',1,'xrpl::current']]],
+  ['current_31',['current',['../namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000',1,'xrpl::current'],['../namespacexrpl.html#a709d0628574726b9aa3968d867c2991aa222a267cc5778206b253be35ee3ddab5',1,'xrpl::Current']]],
   ['currentschemaversion_32',['currentSchemaVersion',['../classxrpl_1_1PeerFinder_1_1StoreSqdb.html#aabd20433c15ba9011b7d93282b8e9505a5e5efa59b30e050cc9e25aae57a6c50e',1,'xrpl::PeerFinder::StoreSqdb']]],
   ['custom_33',['Custom',['../classxrpl_1_1Transactor.html#a9420945fd34d224b81b68fd3dcc9fed6a0512ccca18ad134fcb5eec993d41603a',1,'xrpl::Transactor']]],
   ['customcode_34',['customCode',['../namespacexrpl_1_1NodeStore.html#a4883b8bc797bf7591fde489676a6e96bac96bf3bd4e61ef8258b8c66ebec35f1b',1,'xrpl::NodeStore']]]

@@ -129,44 +129,48 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> {};</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    }</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span> result{<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/iterator/istreambuf_iterator.html">std::istreambuf_iterator&lt;char&gt;</a>{fileStream}, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/iterator/istreambuf_iterator.html">std::istreambuf_iterator&lt;char&gt;</a>{}};</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">if</span> (fileStream.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_ios/bad.html">bad</a>())</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        ec = <a class="code hl_function" href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">make_error_code</a>(<span class="keyword">static_cast&lt;</span>errc_t<span class="keyword">&gt;</span>(errno));</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    }</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span> result{</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/iterator/istreambuf_iterator.html">std::istreambuf_iterator&lt;char&gt;</a>{fileStream}, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/iterator/istreambuf_iterator.html">std::istreambuf_iterator&lt;char&gt;</a>{}};</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">if</span> (fileStream.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_ios/bad.html">bad</a>())</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        ec = <a class="code hl_function" href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">make_error_code</a>(<span class="keyword">static_cast&lt;</span>errc_t<span class="keyword">&gt;</span>(errno));</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
 </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00060" data-start="{" data-end="}">
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a9ecabaeaf4ef40da63886bf612a17c2a">   60</a></span><a class="code hl_function" href="namespacexrpl.html#a9ecabaeaf4ef40da63886bf612a17c2a">writeFileContents</a>(boost::system::error_code&amp; ec, boost::filesystem::path <span class="keyword">const</span>&amp; destPath, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span>&amp; contents)</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>{</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">using namespace </span>boost::filesystem;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">using namespace </span>boost::system::errc;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/io/basic_ofstream.html">std::ofstream</a> fileStream(destPath.string(), std::ios::out | std::ios::trunc);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">if</span> (!fileStream)</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        ec = <a class="code hl_function" href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">make_error_code</a>(<span class="keyword">static_cast&lt;</span>errc_t<span class="keyword">&gt;</span>(errno));</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    fileStream &lt;&lt; contents;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">if</span> (fileStream.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_ios/bad.html">bad</a>())</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        ec = <a class="code hl_function" href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">make_error_code</a>(<span class="keyword">static_cast&lt;</span>errc_t<span class="keyword">&gt;</span>(errno));</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">return</span>;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00061" data-start="{" data-end="}">
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a9ecabaeaf4ef40da63886bf612a17c2a">   61</a></span><a class="code hl_function" href="namespacexrpl.html#a9ecabaeaf4ef40da63886bf612a17c2a">writeFileContents</a>(</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    boost::system::error_code&amp; ec,</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    boost::filesystem::path <span class="keyword">const</span>&amp; destPath,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span>&amp; contents)</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>{</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keyword">using namespace </span>boost::filesystem;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">using namespace </span>boost::system::errc;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/io/basic_ofstream.html">std::ofstream</a> fileStream(destPath.string(), std::ios::out | std::ios::trunc);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">if</span> (!fileStream)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        ec = <a class="code hl_function" href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">make_error_code</a>(<span class="keyword">static_cast&lt;</span>errc_t<span class="keyword">&gt;</span>(errno));</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    fileStream &lt;&lt; contents;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">if</span> (fileStream.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/io/basic_ios/bad.html">bad</a>())</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        ec = <a class="code hl_function" href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">make_error_code</a>(<span class="keyword">static_cast&lt;</span>errc_t<span class="keyword">&gt;</span>(errno));</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordflow">return</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
 </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abad_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/io/basic_ios/bad.html">std::ifstream::bad</a></div><div class="ttdeci">T bad(T... args)</div></div>
 <div class="ttc" id="abasic_ifstream_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/io/basic_ifstream.html">std::ifstream</a></div></div>
 <div class="ttc" id="abasic_ofstream_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/io/basic_ofstream.html">std::ofstream</a></div></div>
@@ -180,7 +184,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a0d9d7f4d7302b6a2a670b3a7b41b9182"><div class="ttname"><a href="namespacexrpl.html#a0d9d7f4d7302b6a2a670b3a7b41b9182">xrpl::make_error_code</a></div><div class="ttdeci">std::error_code make_error_code(xrpl::TokenCodecErrc e)</div><div class="ttdef"><b>Definition</b> <a href="token__errors_8h_source.html#l00077">token_errors.h:77</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a1549b0e65e0106b13e81b0cd33468ee9"><div class="ttname"><a href="namespacexrpl.html#a1549b0e65e0106b13e81b0cd33468ee9">xrpl::getFileContents</a></div><div class="ttdeci">std::string getFileContents(boost::system::error_code &amp;ec, boost::filesystem::path const &amp;sourcePath, std::optional&lt; std::size_t &gt; maxSize=std::nullopt)</div><div class="ttdef"><b>Definition</b> <a href="FileUtilities_8cpp_source.html#l00021">FileUtilities.cpp:21</a></div></div>
-<div class="ttc" id="anamespacexrpl_html_a9ecabaeaf4ef40da63886bf612a17c2a"><div class="ttname"><a href="namespacexrpl.html#a9ecabaeaf4ef40da63886bf612a17c2a">xrpl::writeFileContents</a></div><div class="ttdeci">void writeFileContents(boost::system::error_code &amp;ec, boost::filesystem::path const &amp;destPath, std::string const &amp;contents)</div><div class="ttdef"><b>Definition</b> <a href="FileUtilities_8cpp_source.html#l00060">FileUtilities.cpp:60</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a9ecabaeaf4ef40da63886bf612a17c2a"><div class="ttname"><a href="namespacexrpl.html#a9ecabaeaf4ef40da63886bf612a17c2a">xrpl::writeFileContents</a></div><div class="ttdeci">void writeFileContents(boost::system::error_code &amp;ec, boost::filesystem::path const &amp;destPath, std::string const &amp;contents)</div><div class="ttdef"><b>Definition</b> <a href="FileUtilities_8cpp_source.html#l00061">FileUtilities.cpp:61</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_acb1a9b1647370fa776aaad063944ea17a9f3fda2fef6dda85970e12ce9a9b8cbe"><div class="ttname"><a href="namespacexrpl.html#acb1a9b1647370fa776aaad063944ea17a9f3fda2fef6dda85970e12ce9a9b8cbe">xrpl::ECDSACanonicality::canonical</a></div><div class="ttdeci">@ canonical</div></div>
 <div class="ttc" id="aoptional_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/optional.html">optional</a></div></div>
 <div class="ttc" id="astring_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/string.html">string</a></div></div>

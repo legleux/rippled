@@ -226,166 +226,168 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keyword">requires</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::convertible_to&lt;U, E&gt;</a> &amp;&amp; (!<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::is_reference_v&lt;U&gt;</a>)</div>
 <div class="foldopen" id="foldopen00123" data-start="{" data-end="}">
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad24a18da415b8736bd6bd683c2bce201">  123</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="classxrpl_1_1Expected.html#ad24a18da415b8736bd6bd683c2bce201">Expected</a>(<a class="code hl_class" href="classxrpl_1_1Unexpected.html">Unexpected&lt;U&gt;</a> e) : <a class="code hl_typedef" href="classxrpl_1_1Expected.html#a5766b6da48c32824bc0d9b1de91139ed">Base</a>(boost::outcome_v2::in_place_type_t&lt;E&gt;{}, std::move(e.<a class="code hl_function" href="classxrpl_1_1Unexpected.html#a64b41830c207608994c9a9c2cfe9e685">value</a>()))</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    }</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad24a18da415b8736bd6bd683c2bce201">  123</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="classxrpl_1_1Expected.html#ad24a18da415b8736bd6bd683c2bce201">Expected</a>(<a class="code hl_class" href="classxrpl_1_1Unexpected.html">Unexpected&lt;U&gt;</a> e)</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        : <a class="code hl_typedef" href="classxrpl_1_1Expected.html#a5766b6da48c32824bc0d9b1de91139ed">Base</a>(boost::outcome_v2::in_place_type_t&lt;E&gt;{}, std::move(e.<a class="code hl_function" href="classxrpl_1_1Unexpected.html#a64b41830c207608994c9a9c2cfe9e685">value</a>()))</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    {</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    }</div>
 </div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">constexpr</span> <span class="keywordtype">bool</span></div>
-<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a09bd8127af39fd41246ed0d9665965c8">  128</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a09bd8127af39fd41246ed0d9665965c8">has_value</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="keywordflow">return</span> Base::has_value();</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keyword">constexpr</span> <span class="keywordtype">bool</span></div>
+<div class="foldopen" id="foldopen00129" data-start="{" data-end="}">
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a09bd8127af39fd41246ed0d9665965c8">  129</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a09bd8127af39fd41246ed0d9665965c8">has_value</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="keywordflow">return</span> Base::has_value();</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    }</div>
 </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keyword">constexpr</span> T <span class="keyword">const</span>&amp;</div>
-<div class="foldopen" id="foldopen00134" data-start="{" data-end="}">
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a2b4327b2654030cd1f2d75f006cc5d5d">  134</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a2b4327b2654030cd1f2d75f006cc5d5d">value</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <span class="keywordflow">return</span> Base::value();</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">constexpr</span> T <span class="keyword">const</span>&amp;</div>
+<div class="foldopen" id="foldopen00135" data-start="{" data-end="}">
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a2b4327b2654030cd1f2d75f006cc5d5d">  135</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a2b4327b2654030cd1f2d75f006cc5d5d">value</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="keywordflow">return</span> Base::value();</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    }</div>
 </div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keyword">constexpr</span> T&amp;</div>
-<div class="foldopen" id="foldopen00140" data-start="{" data-end="}">
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad5f15c9b099da6966cf5c98f493fd41a">  140</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#ad5f15c9b099da6966cf5c98f493fd41a">value</a>()</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    {</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keywordflow">return</span> Base::value();</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    }</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keyword">constexpr</span> T&amp;</div>
+<div class="foldopen" id="foldopen00141" data-start="{" data-end="}">
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad5f15c9b099da6966cf5c98f493fd41a">  141</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#ad5f15c9b099da6966cf5c98f493fd41a">value</a>()</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="keywordflow">return</span> Base::value();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    }</div>
 </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keyword">constexpr</span> E <span class="keyword">const</span>&amp;</div>
-<div class="foldopen" id="foldopen00146" data-start="{" data-end="}">
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad7cb15a4dfe5bf1fa5a3c904027405c5">  146</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#ad7cb15a4dfe5bf1fa5a3c904027405c5">error</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="keywordflow">return</span> Base::error();</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    }</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keyword">constexpr</span> E <span class="keyword">const</span>&amp;</div>
+<div class="foldopen" id="foldopen00147" data-start="{" data-end="}">
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad7cb15a4dfe5bf1fa5a3c904027405c5">  147</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#ad7cb15a4dfe5bf1fa5a3c904027405c5">error</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="keywordflow">return</span> Base::error();</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    }</div>
 </div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keyword">constexpr</span> E&amp;</div>
-<div class="foldopen" id="foldopen00152" data-start="{" data-end="}">
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#aa9a786af6553266f6db617727b1efa77">  152</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#aa9a786af6553266f6db617727b1efa77">error</a>()</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    {</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <span class="keywordflow">return</span> Base::error();</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keyword">constexpr</span> E&amp;</div>
+<div class="foldopen" id="foldopen00153" data-start="{" data-end="}">
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#aa9a786af6553266f6db617727b1efa77">  153</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#aa9a786af6553266f6db617727b1efa77">error</a>()</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    {</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        <span class="keywordflow">return</span> Base::error();</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    }</div>
 </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keyword">constexpr</span> <span class="keyword">explicit</span></div>
-<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a917a75ef480571c799d0e9547fd98b0e">  158</a></span>    <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">return</span> has_value();</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">constexpr</span> <span class="keyword">explicit</span></div>
+<div class="foldopen" id="foldopen00159" data-start="{" data-end="}">
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a917a75ef480571c799d0e9547fd98b0e">  159</a></span>    <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keywordflow">return</span> has_value();</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    }</div>
 </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="comment">// Add operator* and operator-&gt; so the Expected API looks a bit more like</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="comment">// what std::expected is likely to look like.  See:</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="comment">// http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0323r10.html</span></div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    [[nodiscard]] <span class="keyword">constexpr</span> T&amp;</div>
-<div class="foldopen" id="foldopen00167" data-start="{" data-end="}">
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a4e22d0da2a7635b0624833cb1fa6ea15">  167</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a4e22d0da2a7635b0624833cb1fa6ea15">operator*</a>()</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    {</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        <span class="keywordflow">return</span> this-&gt;value();</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="comment">// Add operator* and operator-&gt; so the Expected API looks a bit more like</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="comment">// what std::expected is likely to look like.  See:</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="comment">// http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2021/p0323r10.html</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    [[nodiscard]] <span class="keyword">constexpr</span> T&amp;</div>
+<div class="foldopen" id="foldopen00168" data-start="{" data-end="}">
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a4e22d0da2a7635b0624833cb1fa6ea15">  168</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a4e22d0da2a7635b0624833cb1fa6ea15">operator*</a>()</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordflow">return</span> this-&gt;value();</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    }</div>
 </div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    [[nodiscard]] <span class="keyword">constexpr</span> T <span class="keyword">const</span>&amp;</div>
-<div class="foldopen" id="foldopen00173" data-start="{" data-end="}">
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a481bb262abd3960e324202ff19ef8d18">  173</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a481bb262abd3960e324202ff19ef8d18">operator*</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="keywordflow">return</span> this-&gt;value();</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    }</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    [[nodiscard]] <span class="keyword">constexpr</span> T <span class="keyword">const</span>&amp;</div>
+<div class="foldopen" id="foldopen00174" data-start="{" data-end="}">
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a481bb262abd3960e324202ff19ef8d18">  174</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a481bb262abd3960e324202ff19ef8d18">operator*</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        <span class="keywordflow">return</span> this-&gt;value();</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    }</div>
 </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    [[nodiscard]] <span class="keyword">constexpr</span> T*</div>
-<div class="foldopen" id="foldopen00179" data-start="{" data-end="}">
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a65bc638cf00e31ecebc0da157ca6812f">  179</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a65bc638cf00e31ecebc0da157ca6812f">operator-&gt;</a>()</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    {</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keywordflow">return</span> &amp;this-&gt;value();</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    [[nodiscard]] <span class="keyword">constexpr</span> T*</div>
+<div class="foldopen" id="foldopen00180" data-start="{" data-end="}">
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#a65bc638cf00e31ecebc0da157ca6812f">  180</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#a65bc638cf00e31ecebc0da157ca6812f">operator-&gt;</a>()</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    {</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        <span class="keywordflow">return</span> &amp;this-&gt;value();</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    }</div>
 </div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    [[nodiscard]] <span class="keyword">constexpr</span> T <span class="keyword">const</span>*</div>
-<div class="foldopen" id="foldopen00185" data-start="{" data-end="}">
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad00d92021e37b5685dc1c6759747a67b">  185</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#ad00d92021e37b5685dc1c6759747a67b">operator-&gt;</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keywordflow">return</span> &amp;this-&gt;value();</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    }</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    [[nodiscard]] <span class="keyword">constexpr</span> T <span class="keyword">const</span>*</div>
+<div class="foldopen" id="foldopen00186" data-start="{" data-end="}">
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected.html#ad00d92021e37b5685dc1c6759747a67b">  186</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected.html#ad00d92021e37b5685dc1c6759747a67b">operator-&gt;</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keywordflow">return</span> &amp;this-&gt;value();</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    }</div>
 </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>};</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>};</div>
 </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span><span class="comment">// Specialization of Expected&lt;void, E&gt;.  Allows returning either success</span></div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment">// (without a value) or the reason for the failure.</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
-<div class="foldopen" id="foldopen00194" data-start="{" data-end="};">
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html">  194</a></span><span class="keyword">class </span>[[nodiscard]] <a class="code hl_class" href="classxrpl_1_1Expected.html">Expected</a>&lt;void, E&gt; : <span class="keyword">private</span> boost::outcome_v2::result&lt;void, E, detail::throw_policy&gt;</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>{</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">  196</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">Base</a> = boost::outcome_v2::result&lt;void, E, detail::throw_policy&gt;;</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    <span class="comment">// The default constructor makes a successful Expected&lt;void, E&gt;.</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>    <span class="comment">// This aligns with std::expected behavior proposed in P0323R10.</span></div>
-<div class="foldopen" id="foldopen00201" data-start="{" data-end="}">
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a588cad80fc86375ba109fa4b811c5e3f">  201</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a588cad80fc86375ba109fa4b811c5e3f">Expected</a>() : <a class="code hl_typedef" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">Base</a>(<a class="code hl_namespace" href="namespaceboost.html">boost</a>::outcome_v2::<a class="code hl_enumvalue" href="namespacexrpl.html#ad1f0c105424fa7b20beea9ff9a0f2656a260ca9dd8a4577fc00b7bd5810298076">success</a>())</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    {</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    }</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="comment">// Specialization of Expected&lt;void, E&gt;.  Allows returning either success</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span><span class="comment">// (without a value) or the reason for the failure.</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> E&gt;</div>
+<div class="foldopen" id="foldopen00195" data-start="{" data-end="};">
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html">  195</a></span><span class="keyword">class </span>[[nodiscard]]</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><a class="code hl_class" href="classxrpl_1_1Expected.html">Expected</a>&lt;void, E&gt; : <span class="keyword">private</span> boost::outcome_v2::result&lt;void, E, detail::throw_policy&gt;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>{</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">  198</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">Base</a> = boost::outcome_v2::result&lt;void, E, detail::throw_policy&gt;;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="comment">// The default constructor makes a successful Expected&lt;void, E&gt;.</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>    <span class="comment">// This aligns with std::expected behavior proposed in P0323R10.</span></div>
+<div class="foldopen" id="foldopen00203" data-start="{" data-end="}">
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a588cad80fc86375ba109fa4b811c5e3f">  203</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a588cad80fc86375ba109fa4b811c5e3f">Expected</a>() : <a class="code hl_typedef" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">Base</a>(<a class="code hl_namespace" href="namespaceboost.html">boost</a>::outcome_v2::<a class="code hl_enumvalue" href="namespacexrpl.html#ad1f0c105424fa7b20beea9ff9a0f2656a260ca9dd8a4577fc00b7bd5810298076">success</a>())</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    }</div>
 </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="keyword">requires</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::convertible_to&lt;U, E&gt;</a> &amp;&amp; (!<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::is_reference_v&lt;U&gt;</a>)</div>
-<div class="foldopen" id="foldopen00207" data-start="{" data-end="}">
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af47f9d8a6bbf985217fd5c44ff2ae04e">  207</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af47f9d8a6bbf985217fd5c44ff2ae04e">Expected</a>(<a class="code hl_class" href="classxrpl_1_1Unexpected.html">Unexpected&lt;U&gt;</a> e) : <a class="code hl_typedef" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">Base</a>(E(std::move(e.<a class="code hl_function" href="classxrpl_1_1Unexpected.html#a64b41830c207608994c9a9c2cfe9e685">value</a>())))</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    }</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="keyword">template</span> &lt;<span class="keyword">typename</span> U&gt;</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keyword">requires</span> <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::convertible_to&lt;U, E&gt;</a> &amp;&amp; (!<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::is_reference_v&lt;U&gt;</a>)</div>
+<div class="foldopen" id="foldopen00209" data-start="{" data-end="}">
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af47f9d8a6bbf985217fd5c44ff2ae04e">  209</a></span>    <span class="keyword">constexpr</span> <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af47f9d8a6bbf985217fd5c44ff2ae04e">Expected</a>(<a class="code hl_class" href="classxrpl_1_1Unexpected.html">Unexpected&lt;U&gt;</a> e) : <a class="code hl_typedef" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">Base</a>(E(std::move(e.<a class="code hl_function" href="classxrpl_1_1Unexpected.html#a64b41830c207608994c9a9c2cfe9e685">value</a>())))</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    {</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    }</div>
 </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keyword">constexpr</span> E <span class="keyword">const</span>&amp;</div>
-<div class="foldopen" id="foldopen00212" data-start="{" data-end="}">
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af2ef8bd599a823fa975df32c741a595c">  212</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af2ef8bd599a823fa975df32c741a595c">error</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        <span class="keywordflow">return</span> Base::error();</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    }</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span> </div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keyword">constexpr</span> E <span class="keyword">const</span>&amp;</div>
+<div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af2ef8bd599a823fa975df32c741a595c">  214</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af2ef8bd599a823fa975df32c741a595c">error</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="keywordflow">return</span> Base::error();</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    }</div>
 </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span> </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    <span class="keyword">constexpr</span> E&amp;</div>
-<div class="foldopen" id="foldopen00218" data-start="{" data-end="}">
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#ac82297502acc555bc2146f6790483a2e">  218</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#ac82297502acc555bc2146f6790483a2e">error</a>()</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    {</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordflow">return</span> Base::error();</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keyword">constexpr</span> E&amp;</div>
+<div class="foldopen" id="foldopen00220" data-start="{" data-end="}">
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#ac82297502acc555bc2146f6790483a2e">  220</a></span>    <a class="code hl_function" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#ac82297502acc555bc2146f6790483a2e">error</a>()</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    {</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <span class="keywordflow">return</span> Base::error();</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    }</div>
 </div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <span class="keyword">constexpr</span> <span class="keyword">explicit</span></div>
-<div class="foldopen" id="foldopen00224" data-start="{" data-end="}">
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a581b88fa459bc20a8f92b5726761456c">  224</a></span>    <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        <span class="keywordflow">return</span> Base::has_value();</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    }</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <span class="keyword">constexpr</span> <span class="keyword">explicit</span></div>
+<div class="foldopen" id="foldopen00226" data-start="{" data-end="}">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a581b88fa459bc20a8f92b5726761456c">  226</a></span>    <span class="keyword">operator</span> bool()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="keywordflow">return</span> Base::has_value();</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    }</div>
 </div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>};</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>};</div>
 </div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>}  <span class="comment">// namespace xrpl</span></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_a18cac430883f4570a7b118f0b0aa3452"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">xrpl::Expected&lt; void, E &gt;::Base</a></div><div class="ttdeci">boost::outcome_v2::result&lt; void, E, detail::throw_policy &gt; Base</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00196">Expected.h:196</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_a588cad80fc86375ba109fa4b811c5e3f"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a588cad80fc86375ba109fa4b811c5e3f">xrpl::Expected&lt; void, E &gt;::Expected</a></div><div class="ttdeci">constexpr Expected()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00201">Expected.h:201</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_ac82297502acc555bc2146f6790483a2e"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#ac82297502acc555bc2146f6790483a2e">xrpl::Expected&lt; void, E &gt;::error</a></div><div class="ttdeci">constexpr E &amp; error()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00218">Expected.h:218</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_af2ef8bd599a823fa975df32c741a595c"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af2ef8bd599a823fa975df32c741a595c">xrpl::Expected&lt; void, E &gt;::error</a></div><div class="ttdeci">constexpr E const &amp; error() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00212">Expected.h:212</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_af47f9d8a6bbf985217fd5c44ff2ae04e"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af47f9d8a6bbf985217fd5c44ff2ae04e">xrpl::Expected&lt; void, E &gt;::Expected</a></div><div class="ttdeci">constexpr Expected(Unexpected&lt; U &gt; e)</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00207">Expected.h:207</a></div></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_a18cac430883f4570a7b118f0b0aa3452"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a18cac430883f4570a7b118f0b0aa3452">xrpl::Expected&lt; void, E &gt;::Base</a></div><div class="ttdeci">boost::outcome_v2::result&lt; void, E, detail::throw_policy &gt; Base</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00198">Expected.h:198</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_a588cad80fc86375ba109fa4b811c5e3f"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#a588cad80fc86375ba109fa4b811c5e3f">xrpl::Expected&lt; void, E &gt;::Expected</a></div><div class="ttdeci">constexpr Expected()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00203">Expected.h:203</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_ac82297502acc555bc2146f6790483a2e"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#ac82297502acc555bc2146f6790483a2e">xrpl::Expected&lt; void, E &gt;::error</a></div><div class="ttdeci">constexpr E &amp; error()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00220">Expected.h:220</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_af2ef8bd599a823fa975df32c741a595c"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af2ef8bd599a823fa975df32c741a595c">xrpl::Expected&lt; void, E &gt;::error</a></div><div class="ttdeci">constexpr E const &amp; error() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00214">Expected.h:214</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_3_01void_00_01E_01_4_html_af47f9d8a6bbf985217fd5c44ff2ae04e"><div class="ttname"><a href="classxrpl_1_1Expected_3_01void_00_01E_01_4.html#af47f9d8a6bbf985217fd5c44ff2ae04e">xrpl::Expected&lt; void, E &gt;::Expected</a></div><div class="ttdeci">constexpr Expected(Unexpected&lt; U &gt; e)</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00209">Expected.h:209</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Expected_html"><div class="ttname"><a href="classxrpl_1_1Expected.html">xrpl::Expected</a></div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00110">Expected.h:111</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_a09bd8127af39fd41246ed0d9665965c8"><div class="ttname"><a href="classxrpl_1_1Expected.html#a09bd8127af39fd41246ed0d9665965c8">xrpl::Expected::has_value</a></div><div class="ttdeci">constexpr bool has_value() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00128">Expected.h:128</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_a2b4327b2654030cd1f2d75f006cc5d5d"><div class="ttname"><a href="classxrpl_1_1Expected.html#a2b4327b2654030cd1f2d75f006cc5d5d">xrpl::Expected::value</a></div><div class="ttdeci">constexpr T const &amp; value() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00134">Expected.h:134</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_a09bd8127af39fd41246ed0d9665965c8"><div class="ttname"><a href="classxrpl_1_1Expected.html#a09bd8127af39fd41246ed0d9665965c8">xrpl::Expected::has_value</a></div><div class="ttdeci">constexpr bool has_value() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00129">Expected.h:129</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_a2b4327b2654030cd1f2d75f006cc5d5d"><div class="ttname"><a href="classxrpl_1_1Expected.html#a2b4327b2654030cd1f2d75f006cc5d5d">xrpl::Expected::value</a></div><div class="ttdeci">constexpr T const &amp; value() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00135">Expected.h:135</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Expected_html_a407ad0143a2da7363a68eecb8928e5af"><div class="ttname"><a href="classxrpl_1_1Expected.html#a407ad0143a2da7363a68eecb8928e5af">xrpl::Expected::Expected</a></div><div class="ttdeci">constexpr Expected(U &amp;&amp;r)</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00117">Expected.h:117</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_a481bb262abd3960e324202ff19ef8d18"><div class="ttname"><a href="classxrpl_1_1Expected.html#a481bb262abd3960e324202ff19ef8d18">xrpl::Expected::operator*</a></div><div class="ttdeci">constexpr T const &amp; operator*() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00173">Expected.h:173</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_a4e22d0da2a7635b0624833cb1fa6ea15"><div class="ttname"><a href="classxrpl_1_1Expected.html#a4e22d0da2a7635b0624833cb1fa6ea15">xrpl::Expected::operator*</a></div><div class="ttdeci">constexpr T &amp; operator*()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00167">Expected.h:167</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_a481bb262abd3960e324202ff19ef8d18"><div class="ttname"><a href="classxrpl_1_1Expected.html#a481bb262abd3960e324202ff19ef8d18">xrpl::Expected::operator*</a></div><div class="ttdeci">constexpr T const &amp; operator*() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00174">Expected.h:174</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_a4e22d0da2a7635b0624833cb1fa6ea15"><div class="ttname"><a href="classxrpl_1_1Expected.html#a4e22d0da2a7635b0624833cb1fa6ea15">xrpl::Expected::operator*</a></div><div class="ttdeci">constexpr T &amp; operator*()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00168">Expected.h:168</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Expected_html_a5766b6da48c32824bc0d9b1de91139ed"><div class="ttname"><a href="classxrpl_1_1Expected.html#a5766b6da48c32824bc0d9b1de91139ed">xrpl::Expected::Base</a></div><div class="ttdeci">boost::outcome_v2::result&lt; T, E, detail::throw_policy &gt; Base</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00112">Expected.h:112</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_a65bc638cf00e31ecebc0da157ca6812f"><div class="ttname"><a href="classxrpl_1_1Expected.html#a65bc638cf00e31ecebc0da157ca6812f">xrpl::Expected::operator-&gt;</a></div><div class="ttdeci">constexpr T * operator-&gt;()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00179">Expected.h:179</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_aa9a786af6553266f6db617727b1efa77"><div class="ttname"><a href="classxrpl_1_1Expected.html#aa9a786af6553266f6db617727b1efa77">xrpl::Expected::error</a></div><div class="ttdeci">constexpr E &amp; error()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00152">Expected.h:152</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_ad00d92021e37b5685dc1c6759747a67b"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad00d92021e37b5685dc1c6759747a67b">xrpl::Expected::operator-&gt;</a></div><div class="ttdeci">constexpr T const * operator-&gt;() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00185">Expected.h:185</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_a65bc638cf00e31ecebc0da157ca6812f"><div class="ttname"><a href="classxrpl_1_1Expected.html#a65bc638cf00e31ecebc0da157ca6812f">xrpl::Expected::operator-&gt;</a></div><div class="ttdeci">constexpr T * operator-&gt;()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00180">Expected.h:180</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_aa9a786af6553266f6db617727b1efa77"><div class="ttname"><a href="classxrpl_1_1Expected.html#aa9a786af6553266f6db617727b1efa77">xrpl::Expected::error</a></div><div class="ttdeci">constexpr E &amp; error()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00153">Expected.h:153</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_ad00d92021e37b5685dc1c6759747a67b"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad00d92021e37b5685dc1c6759747a67b">xrpl::Expected::operator-&gt;</a></div><div class="ttdeci">constexpr T const * operator-&gt;() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00186">Expected.h:186</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Expected_html_ad24a18da415b8736bd6bd683c2bce201"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad24a18da415b8736bd6bd683c2bce201">xrpl::Expected::Expected</a></div><div class="ttdeci">constexpr Expected(Unexpected&lt; U &gt; e)</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00123">Expected.h:123</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_ad5f15c9b099da6966cf5c98f493fd41a"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad5f15c9b099da6966cf5c98f493fd41a">xrpl::Expected::value</a></div><div class="ttdeci">constexpr T &amp; value()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00140">Expected.h:140</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1Expected_html_ad7cb15a4dfe5bf1fa5a3c904027405c5"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad7cb15a4dfe5bf1fa5a3c904027405c5">xrpl::Expected::error</a></div><div class="ttdeci">constexpr E const &amp; error() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00146">Expected.h:146</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_ad5f15c9b099da6966cf5c98f493fd41a"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad5f15c9b099da6966cf5c98f493fd41a">xrpl::Expected::value</a></div><div class="ttdeci">constexpr T &amp; value()</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00141">Expected.h:141</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1Expected_html_ad7cb15a4dfe5bf1fa5a3c904027405c5"><div class="ttname"><a href="classxrpl_1_1Expected.html#ad7cb15a4dfe5bf1fa5a3c904027405c5">xrpl::Expected::error</a></div><div class="ttdeci">constexpr E const &amp; error() const</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00147">Expected.h:147</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Unexpected_html"><div class="ttname"><a href="classxrpl_1_1Unexpected.html">xrpl::Unexpected</a></div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00061">Expected.h:62</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Unexpected_html_a13b2db8a2069722e14437be8ec0d1a93"><div class="ttname"><a href="classxrpl_1_1Unexpected.html#a13b2db8a2069722e14437be8ec0d1a93">xrpl::Unexpected::value</a></div><div class="ttdeci">constexpr E &amp;&amp; value() &amp;&amp;</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00089">Expected.h:89</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Unexpected_html_a2f37bad9f723800a7cf05782cc9dd968"><div class="ttname"><a href="classxrpl_1_1Unexpected.html#a2f37bad9f723800a7cf05782cc9dd968">xrpl::Unexpected::val_</a></div><div class="ttdeci">E val_</div><div class="ttdef"><b>Definition</b> <a href="Expected_8h_source.html#l00101">Expected.h:101</a></div></div>

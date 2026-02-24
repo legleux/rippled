@@ -90,65 +90,73 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>STAmount</div>
 <div class="foldopen" id="foldopen00009" data-start="{" data-end="}">
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">    9</a></span><a class="code hl_function" href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">creditLimit</a>(<a class="code hl_class" href="classxrpl_1_1ReadView.html">ReadView</a> <span class="keyword">const</span>&amp; view, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; account, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; issuer, <a class="code hl_class" href="classxrpl_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; currency)</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>{</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="classxrpl_1_1STAmount.html">STAmount</a> result(<a class="code hl_class" href="classxrpl_1_1Issue.html">Issue</a>{currency, account});</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">auto</span> sleRippleState = view.<a class="code hl_function" href="classxrpl_1_1ReadView.html#ae7286da5df8ee36f950cc43fd3a46806">read</a>(<a class="code hl_function" href="namespacexrpl_1_1keylet.html#aa21a42ef67381b26994fa7a9960b1306">keylet::line</a>(account, issuer, currency));</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keywordflow">if</span> (sleRippleState)</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        result = sleRippleState-&gt;getFieldAmount(account &lt; issuer ? sfLowLimit : sfHighLimit);</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        result.setIssuer(account);</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    }</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    XRPL_ASSERT(result.getIssuer() == account, <span class="stringliteral">&quot;xrpl::creditLimit : result issuer match&quot;</span>);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    XRPL_ASSERT(result.getCurrency() == currency, <span class="stringliteral">&quot;xrpl::creditLimit : result currency match&quot;</span>);</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>}</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">    9</a></span><a class="code hl_function" href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">creditLimit</a>(</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_class" href="classxrpl_1_1ReadView.html">ReadView</a> <span class="keyword">const</span>&amp; view,</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; account,</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; issuer,</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <a class="code hl_class" href="classxrpl_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; currency)</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="classxrpl_1_1STAmount.html">STAmount</a> result(<a class="code hl_class" href="classxrpl_1_1Issue.html">Issue</a>{currency, account});</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">auto</span> sleRippleState = view.<a class="code hl_function" href="classxrpl_1_1ReadView.html#ae7286da5df8ee36f950cc43fd3a46806">read</a>(<a class="code hl_function" href="namespacexrpl_1_1keylet.html#aa21a42ef67381b26994fa7a9960b1306">keylet::line</a>(account, issuer, currency));</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">if</span> (sleRippleState)</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        result = sleRippleState-&gt;getFieldAmount(account &lt; issuer ? sfLowLimit : sfHighLimit);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        result.setIssuer(account);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    }</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    XRPL_ASSERT(result.getIssuer() == account, <span class="stringliteral">&quot;xrpl::creditLimit : result issuer match&quot;</span>);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    XRPL_ASSERT(result.getCurrency() == currency, <span class="stringliteral">&quot;xrpl::creditLimit : result currency match&quot;</span>);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
 </div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>IOUAmount</div>
-<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a7d80263dd562d13fe89a37179552979b">   27</a></span><a class="code hl_function" href="namespacexrpl.html#a7d80263dd562d13fe89a37179552979b">creditLimit2</a>(<a class="code hl_class" href="classxrpl_1_1ReadView.html">ReadView</a> <span class="keyword">const</span>&amp; v, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; acc, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; iss, <a class="code hl_class" href="classxrpl_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; cur)</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>{</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacexrpl.html#aca16307bc2bd096a064cbce3af895ac9">toAmount&lt;IOUAmount&gt;</a>(<a class="code hl_function" href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">creditLimit</a>(v, acc, iss, cur));</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>}</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>IOUAmount</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a7d80263dd562d13fe89a37179552979b">   31</a></span><a class="code hl_function" href="namespacexrpl.html#a7d80263dd562d13fe89a37179552979b">creditLimit2</a>(<a class="code hl_class" href="classxrpl_1_1ReadView.html">ReadView</a> <span class="keyword">const</span>&amp; v, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; acc, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; iss, <a class="code hl_class" href="classxrpl_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; cur)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>{</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacexrpl.html#aca16307bc2bd096a064cbce3af895ac9">toAmount&lt;IOUAmount&gt;</a>(<a class="code hl_function" href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">creditLimit</a>(v, acc, iss, cur));</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}</div>
 </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>STAmount</div>
-<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespacexrpl.html#aa02ddd7fd103324c4ac6c80efc16f1bd">   33</a></span><a class="code hl_function" href="namespacexrpl.html#aa02ddd7fd103324c4ac6c80efc16f1bd">creditBalance</a>(<a class="code hl_class" href="classxrpl_1_1ReadView.html">ReadView</a> <span class="keyword">const</span>&amp; view, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; account, <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; issuer, <a class="code hl_class" href="classxrpl_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; currency)</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>{</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classxrpl_1_1STAmount.html">STAmount</a> result(<a class="code hl_class" href="classxrpl_1_1Issue.html">Issue</a>{currency, account});</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">auto</span> sleRippleState = view.<a class="code hl_function" href="classxrpl_1_1ReadView.html#ae7286da5df8ee36f950cc43fd3a46806">read</a>(<a class="code hl_function" href="namespacexrpl_1_1keylet.html#aa21a42ef67381b26994fa7a9960b1306">keylet::line</a>(account, issuer, currency));</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">if</span> (sleRippleState)</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    {</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        result = sleRippleState-&gt;getFieldAmount(sfBalance);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keywordflow">if</span> (account &lt; issuer)</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            result.negate();</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        result.setIssuer(account);</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>STAmount</div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespacexrpl.html#aa02ddd7fd103324c4ac6c80efc16f1bd">   37</a></span><a class="code hl_function" href="namespacexrpl.html#aa02ddd7fd103324c4ac6c80efc16f1bd">creditBalance</a>(</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <a class="code hl_class" href="classxrpl_1_1ReadView.html">ReadView</a> <span class="keyword">const</span>&amp; view,</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; account,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_class" href="classxrpl_1_1base__uint.html">AccountID</a> <span class="keyword">const</span>&amp; issuer,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_class" href="classxrpl_1_1base__uint.html">Currency</a> <span class="keyword">const</span>&amp; currency)</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>{</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_class" href="classxrpl_1_1STAmount.html">STAmount</a> result(<a class="code hl_class" href="classxrpl_1_1Issue.html">Issue</a>{currency, account});</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">auto</span> sleRippleState = view.<a class="code hl_function" href="classxrpl_1_1ReadView.html#ae7286da5df8ee36f950cc43fd3a46806">read</a>(<a class="code hl_function" href="namespacexrpl_1_1keylet.html#aa21a42ef67381b26994fa7a9960b1306">keylet::line</a>(account, issuer, currency));</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    XRPL_ASSERT(result.getIssuer() == account, <span class="stringliteral">&quot;xrpl::creditBalance : result issuer match&quot;</span>);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    XRPL_ASSERT(result.getCurrency() == currency, <span class="stringliteral">&quot;xrpl::creditBalance : result currency match&quot;</span>);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">if</span> (sleRippleState)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        result = sleRippleState-&gt;getFieldAmount(sfBalance);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">if</span> (account &lt; issuer)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            result.negate();</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        result.setIssuer(account);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    XRPL_ASSERT(result.getIssuer() == account, <span class="stringliteral">&quot;xrpl::creditBalance : result issuer match&quot;</span>);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    XRPL_ASSERT(result.getCurrency() == currency, <span class="stringliteral">&quot;xrpl::creditBalance : result currency match&quot;</span>);</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
 </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="aclassxrpl_1_1Issue_html"><div class="ttname"><a href="classxrpl_1_1Issue.html">xrpl::Issue</a></div><div class="ttdoc">A currency issued by an account.</div><div class="ttdef"><b>Definition</b> <a href="Issue_8h_source.html#l00012">Issue.h:13</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1ReadView_html"><div class="ttname"><a href="classxrpl_1_1ReadView.html">xrpl::ReadView</a></div><div class="ttdoc">A view into a ledger.</div><div class="ttdef"><b>Definition</b> <a href="ReadView_8h_source.html#l00030">ReadView.h:31</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1ReadView_html_ae7286da5df8ee36f950cc43fd3a46806"><div class="ttname"><a href="classxrpl_1_1ReadView.html#ae7286da5df8ee36f950cc43fd3a46806">xrpl::ReadView::read</a></div><div class="ttdeci">virtual std::shared_ptr&lt; SLE const &gt; read(Keylet const &amp;k) const =0</div><div class="ttdoc">Return the state item associated with a key.</div></div>
 <div class="ttc" id="aclassxrpl_1_1STAmount_html"><div class="ttname"><a href="classxrpl_1_1STAmount.html">xrpl::STAmount</a></div><div class="ttdef"><b>Definition</b> <a href="STAmount_8h_source.html#l00029">STAmount.h:30</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1base__uint_html"><div class="ttname"><a href="classxrpl_1_1base__uint.html">xrpl::base_uint&lt; 160, detail::AccountIDTag &gt;</a></div></div>
-<div class="ttc" id="anamespacexrpl_1_1keylet_html_aa21a42ef67381b26994fa7a9960b1306"><div class="ttname"><a href="namespacexrpl_1_1keylet.html#aa21a42ef67381b26994fa7a9960b1306">xrpl::keylet::line</a></div><div class="ttdeci">Keylet line(AccountID const &amp;id0, AccountID const &amp;id1, Currency const &amp;currency) noexcept</div><div class="ttdoc">The index of a trust line for a given currency.</div><div class="ttdef"><b>Definition</b> <a href="Indexes_8cpp_source.html#l00214">Indexes.cpp:214</a></div></div>
+<div class="ttc" id="anamespacexrpl_1_1keylet_html_aa21a42ef67381b26994fa7a9960b1306"><div class="ttname"><a href="namespacexrpl_1_1keylet.html#aa21a42ef67381b26994fa7a9960b1306">xrpl::keylet::line</a></div><div class="ttdeci">Keylet line(AccountID const &amp;id0, AccountID const &amp;id1, Currency const &amp;currency) noexcept</div><div class="ttdoc">The index of a trust line for a given currency.</div><div class="ttdef"><b>Definition</b> <a href="Indexes_8cpp_source.html#l00220">Indexes.cpp:220</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a6827ba10f9a74582eb39009494f651a7"><div class="ttname"><a href="namespacexrpl.html#a6827ba10f9a74582eb39009494f651a7">xrpl::creditLimit</a></div><div class="ttdeci">STAmount creditLimit(ReadView const &amp;view, AccountID const &amp;account, AccountID const &amp;issuer, Currency const &amp;currency)</div><div class="ttdoc">Calculate the maximum amount of IOUs that an account can hold.</div><div class="ttdef"><b>Definition</b> <a href="Credit_8cpp_source.html#l00009">Credit.cpp:9</a></div></div>
-<div class="ttc" id="anamespacexrpl_html_a7d80263dd562d13fe89a37179552979b"><div class="ttname"><a href="namespacexrpl.html#a7d80263dd562d13fe89a37179552979b">xrpl::creditLimit2</a></div><div class="ttdeci">IOUAmount creditLimit2(ReadView const &amp;v, AccountID const &amp;acc, AccountID const &amp;iss, Currency const &amp;cur)</div><div class="ttdef"><b>Definition</b> <a href="Credit_8cpp_source.html#l00027">Credit.cpp:27</a></div></div>
-<div class="ttc" id="anamespacexrpl_html_aa02ddd7fd103324c4ac6c80efc16f1bd"><div class="ttname"><a href="namespacexrpl.html#aa02ddd7fd103324c4ac6c80efc16f1bd">xrpl::creditBalance</a></div><div class="ttdeci">STAmount creditBalance(ReadView const &amp;view, AccountID const &amp;account, AccountID const &amp;issuer, Currency const &amp;currency)</div><div class="ttdoc">Returns the amount of IOUs issued by issuer that are held by an account.</div><div class="ttdef"><b>Definition</b> <a href="Credit_8cpp_source.html#l00033">Credit.cpp:33</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a7d80263dd562d13fe89a37179552979b"><div class="ttname"><a href="namespacexrpl.html#a7d80263dd562d13fe89a37179552979b">xrpl::creditLimit2</a></div><div class="ttdeci">IOUAmount creditLimit2(ReadView const &amp;v, AccountID const &amp;acc, AccountID const &amp;iss, Currency const &amp;cur)</div><div class="ttdef"><b>Definition</b> <a href="Credit_8cpp_source.html#l00031">Credit.cpp:31</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_aa02ddd7fd103324c4ac6c80efc16f1bd"><div class="ttname"><a href="namespacexrpl.html#aa02ddd7fd103324c4ac6c80efc16f1bd">xrpl::creditBalance</a></div><div class="ttdeci">STAmount creditBalance(ReadView const &amp;view, AccountID const &amp;account, AccountID const &amp;issuer, Currency const &amp;currency)</div><div class="ttdoc">Returns the amount of IOUs issued by issuer that are held by an account.</div><div class="ttdef"><b>Definition</b> <a href="Credit_8cpp_source.html#l00037">Credit.cpp:37</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_aca16307bc2bd096a064cbce3af895ac9"><div class="ttname"><a href="namespacexrpl.html#aca16307bc2bd096a064cbce3af895ac9">xrpl::toAmount&lt; IOUAmount &gt;</a></div><div class="ttdeci">IOUAmount toAmount&lt; IOUAmount &gt;(STAmount const &amp;amt)</div><div class="ttdef"><b>Definition</b> <a href="AmountConversions_8h_source.html#l00052">AmountConversions.h:53</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

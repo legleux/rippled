@@ -274,10 +274,42 @@ Functions</h2></td></tr>
 <tr class="separator:a01e8a79935362d23faa6f8e10aa4121a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab16f52fb9807eaac88d112015e2f712c" id="r_ab16f52fb9807eaac88d112015e2f712c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1SlabAllocatorSet.html">SlabAllocatorSet</a>&lt; <a class="el" href="classxrpl_1_1SHAMapItem.html">SHAMapItem</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ab16f52fb9807eaac88d112015e2f712c">slabber</a> ({ { 128, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(60)) }, { 192, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(46)) }, { 272, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(60)) }, { 384, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(56)) }, { 564, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(40)) }, { 772, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(46)) }, { 1052, <a class="el" href="namespacexrpl.html#a87dbe1831075eeaf14847f09dc2b0988">megabytes</a>(<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>(60)) }, })</td></tr>
 <tr class="separator:ab16f52fb9807eaac88d112015e2f712c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac75aadb29b03de461d13f8bd75eda11d" id="r_ac75aadb29b03de461d13f8bd75eda11d"><td class="memTemplParams" colspan="2">template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </td></tr>
+<tr class="memitem:ae5628469209fa748fa0f8e12860268b5" id="r_ae5628469209fa748fa0f8e12860268b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ae5628469209fa748fa0f8e12860268b5">preflightCheckSigningKey</a> (<a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;sigObject, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
+<tr class="memdesc:ae5628469209fa748fa0f8e12860268b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the validity of the transactor signing key.  <br /></td></tr>
+<tr class="separator:ae5628469209fa748fa0f8e12860268b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00a7ae071cd330670b50ab9a9f544d5f" id="r_a00a7ae071cd330670b50ab9a9f544d5f"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a00a7ae071cd330670b50ab9a9f544d5f">preflightCheckSimulateKeys</a> (<a class="el" href="namespacexrpl.html#abd040209899a4fb5e9c298f9156a074e">ApplyFlags</a> flags, <a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;sigObject, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
+<tr class="memdesc:a00a7ae071cd330670b50ab9a9f544d5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the special signing key state needed for simulation.  <br /></td></tr>
+<tr class="separator:a00a7ae071cd330670b50ab9a9f544d5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21d650c348c672943bc1f72867a05f79" id="r_a21d650c348c672943bc1f72867a05f79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a21d650c348c672943bc1f72867a05f79">reduceOffer</a> (auto const &amp;amount)</td></tr>
+<tr class="separator:a21d650c348c672943bc1f72867a05f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a7d505d49059bfda5a0abe8e45d7a3c" id="r_a8a7d505d49059bfda5a0abe8e45d7a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a8a7d505d49059bfda5a0abe8e45d7a3c">getLPTokenRounding</a> (<a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a> isDeposit)</td></tr>
+<tr class="separator:a8a7d505d49059bfda5a0abe8e45d7a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf56f4d1d1f7a6f319713befdd38c507" id="r_abf56f4d1d1f7a6f319713befdd38c507"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#abf56f4d1d1f7a6f319713befdd38c507">getAssetRounding</a> (<a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a> isDeposit)</td></tr>
+<tr class="separator:abf56f4d1d1f7a6f319713befdd38c507"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadaa77a178d0d1d06b7fd1c24e6d6ddf" id="r_aadaa77a178d0d1d06b7fd1c24e6d6ddf"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="structxrpl_1_1LoanProperties.html">LoanProperties</a> &gt;, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#aadaa77a178d0d1d06b7fd1c24e6d6ddf">tryOverpayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;overpaymentComponents, <a class="el" href="structxrpl_1_1LoanState.html">LoanState</a> const &amp;roundedLoanState, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentRemaining, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
+<tr class="separator:aadaa77a178d0d1d06b7fd1c24e6d6ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c6bcd1d73b4c1d5ea9aaf544db61773" id="r_a1c6bcd1d73b4c1d5ea9aaf544db61773"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a1c6bcd1d73b4c1d5ea9aaf544db61773">computeRaisedRate</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
+<tr class="separator:a1c6bcd1d73b4c1d5ea9aaf544db61773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a854dd19e0480b5ce3c9a4de7237c84e8" id="r_a854dd19e0480b5ce3c9a4de7237c84e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a854dd19e0480b5ce3c9a4de7237c84e8">computePaymentFactor</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
+<tr class="separator:a854dd19e0480b5ce3c9a4de7237c84e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74526fc90ae53e8e61d94db5bf7327e9" id="r_a74526fc90ae53e8e61d94db5bf7327e9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="classxrpl_1_1Number.html">Number</a>, <a class="el" href="classxrpl_1_1Number.html">Number</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a74526fc90ae53e8e61d94db5bf7327e9">computeInterestAndFeeParts</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;interest, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale)</td></tr>
+<tr class="separator:a74526fc90ae53e8e61d94db5bf7327e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27ec776a76adbf24c9977eff5f9fdfe6" id="r_a27ec776a76adbf24c9977eff5f9fdfe6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a27ec776a76adbf24c9977eff5f9fdfe6">loanPeriodicPayment</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
+<tr class="separator:a27ec776a76adbf24c9977eff5f9fdfe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9cb3bfa78dfb3083bb2592e519aa1fc2" id="r_a9cb3bfa78dfb3083bb2592e519aa1fc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a9cb3bfa78dfb3083bb2592e519aa1fc2">loanPrincipalFromPeriodicPayment</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
+<tr class="separator:a9cb3bfa78dfb3083bb2592e519aa1fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74c45da413598f6093a963c624b14bec" id="r_a74c45da413598f6093a963c624b14bec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a74c45da413598f6093a963c624b14bec">loanLatePaymentInterest</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> lateInterestRate, <a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a> parentCloseTime, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> nextPaymentDueDate)</td></tr>
+<tr class="separator:a74c45da413598f6093a963c624b14bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68244c94afe5c9e0a34aed3ff10e1225" id="r_a68244c94afe5c9e0a34aed3ff10e1225"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a68244c94afe5c9e0a34aed3ff10e1225">loanAccruedInterest</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a> parentCloseTime, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> startDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> prevPaymentDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentInterval)</td></tr>
+<tr class="separator:a68244c94afe5c9e0a34aed3ff10e1225"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3066a3a4109319b673e8db6bf09dd208" id="r_a3066a3a4109319b673e8db6bf09dd208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a3066a3a4109319b673e8db6bf09dd208">computeOverpaymentComponents</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, int32_t const loanScale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;<a class="el" href="namespacexrpl.html#a18040b3096f725088b176428273a6e6ca0b5398b7cf60888ad8de87df87e7c1e9">overpayment</a>, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const overpaymentInterestRate, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const overpaymentFeeRate, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const managementFeeRate)</td></tr>
+<tr class="separator:a3066a3a4109319b673e8db6bf09dd208"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a15d4f3e9643b3ad99537596be2abca8f" id="r_a15d4f3e9643b3ad99537596be2abca8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1detail_1_1PaymentComponents.html">PaymentComponents</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a15d4f3e9643b3ad99537596be2abca8f">computePaymentComponents</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> scale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;totalValueOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;managementFeeOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentRemaining, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate)</td></tr>
+<tr class="separator:a15d4f3e9643b3ad99537596be2abca8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac75aadb29b03de461d13f8bd75eda11d" id="r_ac75aadb29b03de461d13f8bd75eda11d"><td class="memTemplParams" colspan="2">template&lt;class V , class N , class  = std::enable_if_t&lt;        std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </td></tr>
 <tr class="memitem:ac75aadb29b03de461d13f8bd75eda11d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ac75aadb29b03de461d13f8bd75eda11d">internalDirNext</a> (V &amp;view, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;<a class="el" href="namespacexrpl.html#a5a08adf1bad37c44d2ada7ae983dd12f">root</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; N &gt; &amp;page, unsigned int &amp;index, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> &amp;entry)</td></tr>
 <tr class="separator:ac75aadb29b03de461d13f8bd75eda11d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88d31bef9c5d4d58370a6306c685f192" id="r_a88d31bef9c5d4d58370a6306c685f192"><td class="memTemplParams" colspan="2">template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </td></tr>
+<tr class="memitem:a88d31bef9c5d4d58370a6306c685f192" id="r_a88d31bef9c5d4d58370a6306c685f192"><td class="memTemplParams" colspan="2">template&lt;class V , class N , class  = std::enable_if_t&lt;        std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </td></tr>
 <tr class="memitem:a88d31bef9c5d4d58370a6306c685f192"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a88d31bef9c5d4d58370a6306c685f192">internalDirFirst</a> (V &amp;view, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;<a class="el" href="namespacexrpl.html#a5a08adf1bad37c44d2ada7ae983dd12f">root</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; N &gt; &amp;page, unsigned int &amp;index, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> &amp;entry)</td></tr>
 <tr class="separator:a88d31bef9c5d4d58370a6306c685f192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a44f06028b1bda4ff4d7b4bf9ff51b179" id="r_a44f06028b1bda4ff4d7b4bf9ff51b179"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a44f06028b1bda4ff4d7b4bf9ff51b179">as_amount</a> (<a class="el" href="structxrpl_1_1Rate.html">Rate</a> const &amp;rate)</td></tr>
@@ -290,6 +322,16 @@ Functions</h2></td></tr>
 <tr class="separator:a2699c9d4f86511047e0294db24de0e61"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7d7f21b0570f0c3e1e7ac1c699a52c7" id="r_ae7d7f21b0570f0c3e1e7ac1c699a52c7"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ae7d7f21b0570f0c3e1e7ac1c699a52c7">getSociInit</a> (<a class="el" href="classxrpl_1_1BasicConfig.html">BasicConfig</a> const &amp;config, <a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;dbName)</td></tr>
 <tr class="separator:ae7d7f21b0570f0c3e1e7ac1c699a52c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af70ce6e662a17de27fef50564a4a8944" id="r_af70ce6e662a17de27fef50564a4a8944"><td class="memTemplParams" colspan="2">template&lt;class NumberProxy , class UInt32Proxy , class UInt32OptionalProxy &gt; </td></tr>
+<tr class="memitem:af70ce6e662a17de27fef50564a4a8944"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#af70ce6e662a17de27fef50564a4a8944">doPayment</a> (<a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;payment, NumberProxy &amp;totalValueOutstandingProxy, NumberProxy &amp;principalOutstandingProxy, NumberProxy &amp;managementFeeOutstandingProxy, UInt32Proxy &amp;paymentRemainingProxy, UInt32Proxy &amp;prevPaymentDateProxy, UInt32OptionalProxy &amp;nextDueDateProxy, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentInterval)</td></tr>
+<tr class="separator:af70ce6e662a17de27fef50564a4a8944"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45834c9016f224c507fe46b5fb6834b9" id="r_a45834c9016f224c507fe46b5fb6834b9"><td class="memTemplParams" colspan="2">template&lt;class NumberProxy &gt; </td></tr>
+<tr class="memitem:a45834c9016f224c507fe46b5fb6834b9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a45834c9016f224c507fe46b5fb6834b9">doOverpayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;overpaymentComponents, NumberProxy &amp;totalValueOutstandingProxy, NumberProxy &amp;principalOutstandingProxy, NumberProxy &amp;managementFeeOutstandingProxy, NumberProxy &amp;periodicPaymentProxy, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const paymentRemaining, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
+<tr class="separator:a45834c9016f224c507fe46b5fb6834b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5143b712974ff58f23a5b68454533145" id="r_a5143b712974ff58f23a5b68454533145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a5143b712974ff58f23a5b68454533145">computeLatePayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> const &amp;view, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> nextDueDate, <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;periodic, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> lateInterestRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;latePaymentFee, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
+<tr class="separator:a5143b712974ff58f23a5b68454533145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1987e4abb6916c5edb63687534395966" id="r_a1987e4abb6916c5edb63687534395966"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a1987e4abb6916c5edb63687534395966">computeFullPayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;managementFeeOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentRemaining, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> prevPaymentDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const startDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const paymentInterval, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const closeInterestRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;totalInterestOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;closePaymentFee, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
+<tr class="separator:a1987e4abb6916c5edb63687534395966"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada9667ed39eda34257d427309f5f3c75" id="r_ada9667ed39eda34257d427309f5f3c75"><td class="memItemLeft" align="right" valign="top">constexpr char const *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ada9667ed39eda34257d427309f5f3c75">realValidatorContents</a> ()</td></tr>
 <tr class="separator:ada9667ed39eda34257d427309f5f3c75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6698adcceb6507d20a908b4d923ab95" id="r_aa6698adcceb6507d20a908b4d923ab95"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#aa6698adcceb6507d20a908b4d923ab95">configContents</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;dbPath, <a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> const &amp;validatorsFile)</td></tr>
@@ -311,42 +353,6 @@ Functions</h2></td></tr>
 <tr class="separator:a9e978292464686f22ea6307b7223d142"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34d8ee087be85bbac9a7ebbefcdce619" id="r_a34d8ee087be85bbac9a7ebbefcdce619"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a34d8ee087be85bbac9a7ebbefcdce619">fmtdur</a> (typename clock_type::duration const &amp;d)</td></tr>
 <tr class="separator:a34d8ee087be85bbac9a7ebbefcdce619"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a21d650c348c672943bc1f72867a05f79" id="r_a21d650c348c672943bc1f72867a05f79"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a21d650c348c672943bc1f72867a05f79">reduceOffer</a> (auto const &amp;amount)</td></tr>
-<tr class="separator:a21d650c348c672943bc1f72867a05f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a7d505d49059bfda5a0abe8e45d7a3c" id="r_a8a7d505d49059bfda5a0abe8e45d7a3c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a8a7d505d49059bfda5a0abe8e45d7a3c">getLPTokenRounding</a> (<a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a> isDeposit)</td></tr>
-<tr class="separator:a8a7d505d49059bfda5a0abe8e45d7a3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf56f4d1d1f7a6f319713befdd38c507" id="r_abf56f4d1d1f7a6f319713befdd38c507"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#abf56f4d1d1f7a6f319713befdd38c507">getAssetRounding</a> (<a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a> isDeposit)</td></tr>
-<tr class="separator:abf56f4d1d1f7a6f319713befdd38c507"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c6bcd1d73b4c1d5ea9aaf544db61773" id="r_a1c6bcd1d73b4c1d5ea9aaf544db61773"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a1c6bcd1d73b4c1d5ea9aaf544db61773">computeRaisedRate</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
-<tr class="separator:a1c6bcd1d73b4c1d5ea9aaf544db61773"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a854dd19e0480b5ce3c9a4de7237c84e8" id="r_a854dd19e0480b5ce3c9a4de7237c84e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a854dd19e0480b5ce3c9a4de7237c84e8">computePaymentFactor</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
-<tr class="separator:a854dd19e0480b5ce3c9a4de7237c84e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a27ec776a76adbf24c9977eff5f9fdfe6" id="r_a27ec776a76adbf24c9977eff5f9fdfe6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a27ec776a76adbf24c9977eff5f9fdfe6">loanPeriodicPayment</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
-<tr class="separator:a27ec776a76adbf24c9977eff5f9fdfe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cb3bfa78dfb3083bb2592e519aa1fc2" id="r_a9cb3bfa78dfb3083bb2592e519aa1fc2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a9cb3bfa78dfb3083bb2592e519aa1fc2">loanPrincipalFromPeriodicPayment</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentsRemaining)</td></tr>
-<tr class="separator:a9cb3bfa78dfb3083bb2592e519aa1fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74526fc90ae53e8e61d94db5bf7327e9" id="r_a74526fc90ae53e8e61d94db5bf7327e9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="classxrpl_1_1Number.html">Number</a>, <a class="el" href="classxrpl_1_1Number.html">Number</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a74526fc90ae53e8e61d94db5bf7327e9">computeInterestAndFeeParts</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;interest, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale)</td></tr>
-<tr class="separator:a74526fc90ae53e8e61d94db5bf7327e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a74c45da413598f6093a963c624b14bec" id="r_a74c45da413598f6093a963c624b14bec"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a74c45da413598f6093a963c624b14bec">loanLatePaymentInterest</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> lateInterestRate, <a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a> parentCloseTime, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> nextPaymentDueDate)</td></tr>
-<tr class="separator:a74c45da413598f6093a963c624b14bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68244c94afe5c9e0a34aed3ff10e1225" id="r_a68244c94afe5c9e0a34aed3ff10e1225"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Number.html">Number</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a68244c94afe5c9e0a34aed3ff10e1225">loanAccruedInterest</a> (<a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a> parentCloseTime, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> startDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> prevPaymentDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentInterval)</td></tr>
-<tr class="separator:a68244c94afe5c9e0a34aed3ff10e1225"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af70ce6e662a17de27fef50564a4a8944" id="r_af70ce6e662a17de27fef50564a4a8944"><td class="memTemplParams" colspan="2">template&lt;class NumberProxy , class UInt32Proxy , class UInt32OptionalProxy &gt; </td></tr>
-<tr class="memitem:af70ce6e662a17de27fef50564a4a8944"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#af70ce6e662a17de27fef50564a4a8944">doPayment</a> (<a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;payment, NumberProxy &amp;totalValueOutstandingProxy, NumberProxy &amp;principalOutstandingProxy, NumberProxy &amp;managementFeeOutstandingProxy, UInt32Proxy &amp;paymentRemainingProxy, UInt32Proxy &amp;prevPaymentDateProxy, UInt32OptionalProxy &amp;nextDueDateProxy, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentInterval)</td></tr>
-<tr class="separator:af70ce6e662a17de27fef50564a4a8944"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca6e0314d2254e8552eaf0c0117c49e3" id="r_aca6e0314d2254e8552eaf0c0117c49e3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="structxrpl_1_1LoanProperties.html">LoanProperties</a> &gt;, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#aca6e0314d2254e8552eaf0c0117c49e3">tryOverpayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;overpaymentComponents, <a class="el" href="structxrpl_1_1LoanState.html">LoanState</a> const &amp;roundedOldState, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentRemaining, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
-<tr class="separator:aca6e0314d2254e8552eaf0c0117c49e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45834c9016f224c507fe46b5fb6834b9" id="r_a45834c9016f224c507fe46b5fb6834b9"><td class="memTemplParams" colspan="2">template&lt;class NumberProxy &gt; </td></tr>
-<tr class="memitem:a45834c9016f224c507fe46b5fb6834b9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a45834c9016f224c507fe46b5fb6834b9">doOverpayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;overpaymentComponents, NumberProxy &amp;totalValueOutstandingProxy, NumberProxy &amp;principalOutstandingProxy, NumberProxy &amp;managementFeeOutstandingProxy, NumberProxy &amp;periodicPaymentProxy, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const paymentRemaining, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
-<tr class="separator:a45834c9016f224c507fe46b5fb6834b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5143b712974ff58f23a5b68454533145" id="r_a5143b712974ff58f23a5b68454533145"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a5143b712974ff58f23a5b68454533145">computeLatePayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> const &amp;view, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> nextDueDate, <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;periodic, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> lateInterestRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;latePaymentFee, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
-<tr class="separator:a5143b712974ff58f23a5b68454533145"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1987e4abb6916c5edb63687534395966" id="r_a1987e4abb6916c5edb63687534395966"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a1987e4abb6916c5edb63687534395966">computeFullPayment</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;managementFeeOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentRemaining, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> prevPaymentDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const startDate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const paymentInterval, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const closeInterestRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> loanScale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;totalInterestOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;closePaymentFee, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
-<tr class="separator:a1987e4abb6916c5edb63687534395966"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15d4f3e9643b3ad99537596be2abca8f" id="r_a15d4f3e9643b3ad99537596be2abca8f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1detail_1_1PaymentComponents.html">PaymentComponents</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a15d4f3e9643b3ad99537596be2abca8f">computePaymentComponents</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a> scale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;totalValueOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;principalOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;managementFeeOutstanding, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicPayment, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;periodicRate, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> paymentRemaining, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> managementFeeRate)</td></tr>
-<tr class="separator:a15d4f3e9643b3ad99537596be2abca8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3066a3a4109319b673e8db6bf09dd208" id="r_a3066a3a4109319b673e8db6bf09dd208"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a3066a3a4109319b673e8db6bf09dd208">computeOverpaymentComponents</a> (<a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;asset, int32_t const loanScale, <a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;<a class="el" href="namespacexrpl.html#a18040b3096f725088b176428273a6e6ca0b5398b7cf60888ad8de87df87e7c1e9">overpayment</a>, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const overpaymentInterestRate, <a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const overpaymentFeeRate, <a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const managementFeeRate)</td></tr>
-<tr class="separator:a3066a3a4109319b673e8db6bf09dd208"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a020b577ee9f9e88477abbc05637fa067" id="r_a020b577ee9f9e88477abbc05637fa067"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; bool, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint64_t</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#a020b577ee9f9e88477abbc05637fa067">sumOfFirstSquares</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> xIn)</td></tr>
 <tr class="separator:a020b577ee9f9e88477abbc05637fa067"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4fd8c8564cf7710bebdbc7d7ce49095b" id="r_a4fd8c8564cf7710bebdbc7d7ce49095b"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
@@ -445,12 +451,6 @@ Functions</h2></td></tr>
 <tr class="memitem:ac94d7e9f981f79325ec60e2feb4e3c98" id="r_ac94d7e9f981f79325ec60e2feb4e3c98"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ac94d7e9f981f79325ec60e2feb4e3c98">dbHasSpace</a> (soci::session &amp;session, <a class="el" href="classxrpl_1_1Config.html">Config</a> const  &amp;config, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
 <tr class="memdesc:ac94d7e9f981f79325ec60e2feb4e3c98"><td class="mdescLeft">&#160;</td><td class="mdescRight">dbHasSpace Checks if given database has available space.  <br /></td></tr>
 <tr class="separator:ac94d7e9f981f79325ec60e2feb4e3c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5628469209fa748fa0f8e12860268b5" id="r_ae5628469209fa748fa0f8e12860268b5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#ae5628469209fa748fa0f8e12860268b5">preflightCheckSigningKey</a> (<a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;sigObject, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
-<tr class="memdesc:ae5628469209fa748fa0f8e12860268b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the validity of the transactor signing key.  <br /></td></tr>
-<tr class="separator:ae5628469209fa748fa0f8e12860268b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb52de5279b0895cde0e4375d9266efc" id="r_aeb52de5279b0895cde0e4375d9266efc"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#aeb52de5279b0895cde0e4375d9266efc">preflightCheckSimulateKeys</a> (<a class="el" href="namespacexrpl.html#abd040209899a4fb5e9c298f9156a074e">ApplyFlags</a> flags, <a class="el" href="classxrpl_1_1STObject.html">STObject</a> const  &amp;sigObject, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j)</td></tr>
-<tr class="memdesc:aeb52de5279b0895cde0e4375d9266efc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks the special signing key state needed for simulation.  <br /></td></tr>
-<tr class="separator:aeb52de5279b0895cde0e4375d9266efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab0d439c679dd08479e44456b6821746" id="r_aab0d439c679dd08479e44456b6821746"><td class="memTemplParams" colspan="2">template&lt;typename BufferSequence &gt; </td></tr>
 <tr class="memitem:aab0d439c679dd08479e44456b6821746"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1detail.html#aab0d439c679dd08479e44456b6821746">buffersBegin</a> (BufferSequence const &amp;bufs)</td></tr>
 <tr class="separator:aab0d439c679dd08479e44456b6821746"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -523,7 +523,7 @@ template&lt;class Engine , class <a class="el" href="namespacexrpl.html#ad3f1943
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="include_2xrpl_2basics_2random_8h_source.html#l00030">30</a> of file <a class="el" href="include_2xrpl_2basics_2random_8h_source.html">include/xrpl/basics/random.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2xrpl_2basics_2random_8h_source.html#l00031">31</a> of file <a class="el" href="include_2xrpl_2basics_2random_8h_source.html">include/xrpl/basics/random.h</a>.</p>
 
 </div>
 </div>
@@ -657,7 +657,7 @@ template&lt;class T &gt; </div>
 <tr><td class="fieldname"><a id="a230ef83732e01df4f26a546cfadcbab0aea9f91b2cda019730f2891bd12a7a4d6" name="a230ef83732e01df4f26a546cfadcbab0aea9f91b2cda019730f2891bd12a7a4d6"></a>extra&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8h_source.html#l00218">218</a> of file <a class="el" href="LendingHelpers_8h_source.html">LendingHelpers.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8h_source.html#l00226">226</a> of file <a class="el" href="LendingHelpers_8h_source.html">LendingHelpers.h</a>.</p>
 
 </div>
 </div>
@@ -873,7 +873,7 @@ template&lt;class T , class... Args&gt; </div>
 <p>Amendments that this server supports.</p>
 <p>Whether they are enabled depends on the <a class="el" href="classxrpl_1_1Rules.html" title="Rules controlling protocol behavior.">Rules</a> defined in the validated ledger </p>
 
-<p class="definition">Definition at line <a class="el" href="Feature_8cpp_source.html#l00314">314</a> of file <a class="el" href="Feature_8cpp_source.html">Feature.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Feature_8cpp_source.html#l00320">320</a> of file <a class="el" href="Feature_8cpp_source.html">Feature.cpp</a>.</p>
 
 </div>
 </div>
@@ -895,7 +895,7 @@ template&lt;class T , class... Args&gt; </div>
 <p>Amendments that this server won't vote for by default. </p>
 <p>This function is only used in unit tests. </p>
 
-<p class="definition">Definition at line <a class="el" href="Feature_8cpp_source.html#l00321">321</a> of file <a class="el" href="Feature_8cpp_source.html">Feature.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Feature_8cpp_source.html#l00327">327</a> of file <a class="el" href="Feature_8cpp_source.html">Feature.cpp</a>.</p>
 
 </div>
 </div>
@@ -917,7 +917,7 @@ template&lt;class T , class... Args&gt; </div>
 <p>Amendments that this server will vote for by default. </p>
 <p>This function is only used in unit tests. </p>
 
-<p class="definition">Definition at line <a class="el" href="Feature_8cpp_source.html#l00328">328</a> of file <a class="el" href="Feature_8cpp_source.html">Feature.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Feature_8cpp_source.html#l00334">334</a> of file <a class="el" href="Feature_8cpp_source.html">Feature.cpp</a>.</p>
 
 </div>
 </div>
@@ -983,13 +983,614 @@ template&lt;class T , class... Args&gt; </div>
 
 </div>
 </div>
+<a id="ae5628469209fa748fa0f8e12860268b5" name="ae5628469209fa748fa0f8e12860268b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5628469209fa748fa0f8e12860268b5">&#9670;&#160;</a></span>preflightCheckSigningKey()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> xrpl::detail::preflightCheckSigningKey </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;&#160;</td>
+          <td class="paramname"><em>sigObject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks the validity of the transactor signing key. </p>
+<p>Normally called from preflight1 with ctx.tx.</p>
+<p>Normally called from preflight1. </p>
+
+<p class="definition">Definition at line <a class="el" href="Transactor_8cpp_source.html#l00082">82</a> of file <a class="el" href="Transactor_8cpp_source.html">Transactor.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a00a7ae071cd330670b50ab9a9f544d5f" name="a00a7ae071cd330670b50ab9a9f544d5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00a7ae071cd330670b50ab9a9f544d5f">&#9670;&#160;</a></span>preflightCheckSimulateKeys()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> &gt; xrpl::detail::preflightCheckSimulateKeys </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd040209899a4fb5e9c298f9156a074e">ApplyFlags</a>&#160;</td>
+          <td class="paramname"><em>flags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;&#160;</td>
+          <td class="paramname"><em>sigObject</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Checks the special signing key state needed for simulation. </p>
+<p>Normally called from preflight2 with ctx.tx. </p>
+
+<p class="definition">Definition at line <a class="el" href="Transactor_8cpp_source.html#l00094">94</a> of file <a class="el" href="Transactor_8cpp_source.html">Transactor.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a21d650c348c672943bc1f72867a05f79" name="a21d650c348c672943bc1f72867a05f79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21d650c348c672943bc1f72867a05f79">&#9670;&#160;</a></span>reduceOffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::reduceOffer </td>
+          <td>(</td>
+          <td class="paramtype">auto const &amp;&#160;</td>
+          <td class="paramname"><em>amount</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="AMMHelpers_8h_source.html#l00020">20</a> of file <a class="el" href="AMMHelpers_8h_source.html">AMMHelpers.h</a>.</p>
+
+</div>
+</div>
+<a id="a8a7d505d49059bfda5a0abe8e45d7a3c" name="a8a7d505d49059bfda5a0abe8e45d7a3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a7d505d49059bfda5a0abe8e45d7a3c">&#9670;&#160;</a></span>getLPTokenRounding()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a> xrpl::detail::getLPTokenRounding </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a>&#160;</td>
+          <td class="paramname"><em>isDeposit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="AMMHelpers_8h_source.html#l00593">593</a> of file <a class="el" href="AMMHelpers_8h_source.html">AMMHelpers.h</a>.</p>
+
+</div>
+</div>
+<a id="abf56f4d1d1f7a6f319713befdd38c507" name="abf56f4d1d1f7a6f319713befdd38c507"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf56f4d1d1f7a6f319713befdd38c507">&#9670;&#160;</a></span>getAssetRounding()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a> xrpl::detail::getAssetRounding </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a>&#160;</td>
+          <td class="paramname"><em>isDeposit</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="AMMHelpers_8h_source.html#l00601">601</a> of file <a class="el" href="AMMHelpers_8h_source.html">AMMHelpers.h</a>.</p>
+
+</div>
+</div>
+<a id="aadaa77a178d0d1d06b7fd1c24e6d6ddf" name="aadaa77a178d0d1d06b7fd1c24e6d6ddf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadaa77a178d0d1d06b7fd1c24e6d6ddf">&#9670;&#160;</a></span>tryOverpayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="structxrpl_1_1LoanProperties.html">LoanProperties</a> &gt;, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::tryOverpayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>loanScale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
+          <td class="paramname"><em>overpaymentComponents</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structxrpl_1_1LoanState.html">LoanState</a> const &amp;&#160;</td>
+          <td class="paramname"><em>roundedLoanState</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicPayment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentRemaining</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00371">371</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1c6bcd1d73b4c1d5ea9aaf544db61773" name="a1c6bcd1d73b4c1d5ea9aaf544db61773"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c6bcd1d73b4c1d5ea9aaf544db61773">&#9670;&#160;</a></span>computeRaisedRate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::computeRaisedRate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00085">85</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a854dd19e0480b5ce3c9a4de7237c84e8" name="a854dd19e0480b5ce3c9a4de7237c84e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a854dd19e0480b5ce3c9a4de7237c84e8">&#9670;&#160;</a></span>computePaymentFactor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::computePaymentFactor </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00096">96</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a74526fc90ae53e8e61d94db5bf7327e9" name="a74526fc90ae53e8e61d94db5bf7327e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74526fc90ae53e8e61d94db5bf7327e9">&#9670;&#160;</a></span>computeInterestAndFeeParts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="classxrpl_1_1Number.html">Number</a>, <a class="el" href="classxrpl_1_1Number.html">Number</a> &gt; xrpl::detail::computeInterestAndFeeParts </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>interest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>loanScale</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00157">157</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a27ec776a76adbf24c9977eff5f9fdfe6" name="a27ec776a76adbf24c9977eff5f9fdfe6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27ec776a76adbf24c9977eff5f9fdfe6">&#9670;&#160;</a></span>loanPeriodicPayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanPeriodicPayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00116">116</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9cb3bfa78dfb3083bb2592e519aa1fc2" name="a9cb3bfa78dfb3083bb2592e519aa1fc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9cb3bfa78dfb3083bb2592e519aa1fc2">&#9670;&#160;</a></span>loanPrincipalFromPeriodicPayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanPrincipalFromPeriodicPayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicPayment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00137">137</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a74c45da413598f6093a963c624b14bec" name="a74c45da413598f6093a963c624b14bec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74c45da413598f6093a963c624b14bec">&#9670;&#160;</a></span>loanLatePaymentInterest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanLatePaymentInterest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a>&#160;</td>
+          <td class="paramname"><em>lateInterestRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a>&#160;</td>
+          <td class="paramname"><em>parentCloseTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>nextPaymentDueDate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00174">174</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a68244c94afe5c9e0a34aed3ff10e1225" name="a68244c94afe5c9e0a34aed3ff10e1225"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68244c94afe5c9e0a34aed3ff10e1225">&#9670;&#160;</a></span>loanAccruedInterest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanAccruedInterest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a>&#160;</td>
+          <td class="paramname"><em>parentCloseTime</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>startDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>prevPaymentDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentInterval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00207">207</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a3066a3a4109319b673e8db6bf09dd208" name="a3066a3a4109319b673e8db6bf09dd208"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3066a3a4109319b673e8db6bf09dd208">&#9670;&#160;</a></span>computeOverpaymentComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> xrpl::detail::computeOverpaymentComponents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t const&#160;</td>
+          <td class="paramname"><em>loanScale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>overpayment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const&#160;</td>
+          <td class="paramname"><em>overpaymentInterestRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const&#160;</td>
+          <td class="paramname"><em>overpaymentFeeRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l01100">1100</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a15d4f3e9643b3ad99537596be2abca8f" name="a15d4f3e9643b3ad99537596be2abca8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15d4f3e9643b3ad99537596be2abca8f">&#9670;&#160;</a></span>computePaymentComponents()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structxrpl_1_1detail_1_1PaymentComponents.html">PaymentComponents</a> xrpl::detail::computePaymentComponents </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>scale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>totalValueOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>managementFeeOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicPayment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentRemaining</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00891">891</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ac75aadb29b03de461d13f8bd75eda11d" name="ac75aadb29b03de461d13f8bd75eda11d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac75aadb29b03de461d13f8bd75eda11d">&#9670;&#160;</a></span>internalDirNext()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </div>
+template&lt;class V , class N , class  = std::enable_if_t&lt;        std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool xrpl::detail::internalDirNext </td>
@@ -1029,7 +1630,7 @@ template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;s
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="View_8cpp_source.html#l00032">32</a> of file <a class="el" href="View_8cpp_source.html">View.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="View_8cpp_source.html#l00033">33</a> of file <a class="el" href="View_8cpp_source.html">View.cpp</a>.</p>
 
 </div>
 </div>
@@ -1039,7 +1640,7 @@ template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;s
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </div>
+template&lt;class V , class N , class  = std::enable_if_t&lt;        std::is_same_v&lt;std::remove_cv_t&lt;N&gt;, SLE&gt; &amp;&amp; std::is_base_of_v&lt;ReadView, V&gt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">bool xrpl::detail::internalDirFirst </td>
@@ -1079,7 +1680,7 @@ template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;s
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="View_8cpp_source.html#l00071">71</a> of file <a class="el" href="View_8cpp_source.html">View.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="View_8cpp_source.html#l00078">78</a> of file <a class="el" href="View_8cpp_source.html">View.cpp</a>.</p>
 
 </div>
 </div>
@@ -1215,7 +1816,365 @@ template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;s
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="SociDB_8cpp_source.html#l00037">37</a> of file <a class="el" href="SociDB_8cpp_source.html">SociDB.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="SociDB_8cpp_source.html#l00038">38</a> of file <a class="el" href="SociDB_8cpp_source.html">SociDB.cpp</a>.</p>
+
+</div>
+</div>
+<a id="af70ce6e662a17de27fef50564a4a8944" name="af70ce6e662a17de27fef50564a4a8944"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af70ce6e662a17de27fef50564a4a8944">&#9670;&#160;</a></span>doPayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class NumberProxy , class UInt32Proxy , class UInt32OptionalProxy &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a> xrpl::detail::doPayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
+          <td class="paramname"><em>payment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>totalValueOutstandingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstandingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>managementFeeOutstandingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UInt32Proxy &amp;&#160;</td>
+          <td class="paramname"><em>paymentRemainingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UInt32Proxy &amp;&#160;</td>
+          <td class="paramname"><em>prevPaymentDateProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">UInt32OptionalProxy &amp;&#160;</td>
+          <td class="paramname"><em>nextDueDateProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentInterval</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00249">249</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a45834c9016f224c507fe46b5fb6834b9" name="a45834c9016f224c507fe46b5fb6834b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45834c9016f224c507fe46b5fb6834b9">&#9670;&#160;</a></span>doOverpayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class NumberProxy &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::doOverpayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>loanScale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
+          <td class="paramname"><em>overpaymentComponents</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>totalValueOutstandingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstandingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>managementFeeOutstandingProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">NumberProxy &amp;&#160;</td>
+          <td class="paramname"><em>periodicPaymentProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const&#160;</td>
+          <td class="paramname"><em>paymentRemaining</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00547">547</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5143b712974ff58f23a5b68454533145" name="a5143b712974ff58f23a5b68454533145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5143b712974ff58f23a5b68454533145">&#9670;&#160;</a></span>computeLatePayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::computeLatePayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> const &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>nextDueDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodic</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a>&#160;</td>
+          <td class="paramname"><em>lateInterestRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>loanScale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>latePaymentFee</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
+          <td class="paramname"><em>amount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00665">665</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a1987e4abb6916c5edb63687534395966" name="a1987e4abb6916c5edb63687534395966"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1987e4abb6916c5edb63687534395966">&#9670;&#160;</a></span>computeFullPayment()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::computeFullPayment </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
+          <td class="paramname"><em>asset</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>principalOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>managementFeeOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicPayment</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>paymentRemaining</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>prevPaymentDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const&#160;</td>
+          <td class="paramname"><em>startDate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const&#160;</td>
+          <td class="paramname"><em>paymentInterval</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const&#160;</td>
+          <td class="paramname"><em>closeInterestRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
+          <td class="paramname"><em>loanScale</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>totalInterestOutstanding</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>periodicRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
+          <td class="paramname"><em>closePaymentFee</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
+          <td class="paramname"><em>amount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
+          <td class="paramname"><em>managementFeeRate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00759">759</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -1291,7 +2250,7 @@ template&lt;class V , class N , class  = std::enable_if_t&lt;std::is_same_v&lt;s
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Config__test_8cpp_source.html#l00189">189</a> of file <a class="el" href="Config__test_8cpp_source.html">Config_test.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Config__test_8cpp_source.html#l00191">191</a> of file <a class="el" href="Config__test_8cpp_source.html">Config_test.cpp</a>.</p>
 
 </div>
 </div>
@@ -1485,892 +2444,6 @@ template&lt;class Period , class Rep &gt; </div>
 
 </div>
 </div>
-<a id="a21d650c348c672943bc1f72867a05f79" name="a21d650c348c672943bc1f72867a05f79"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a21d650c348c672943bc1f72867a05f79">&#9670;&#160;</a></span>reduceOffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::reduceOffer </td>
-          <td>(</td>
-          <td class="paramtype">auto const &amp;&#160;</td>
-          <td class="paramname"><em>amount</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="AMMHelpers_8h_source.html#l00020">20</a> of file <a class="el" href="AMMHelpers_8h_source.html">AMMHelpers.h</a>.</p>
-
-</div>
-</div>
-<a id="a8a7d505d49059bfda5a0abe8e45d7a3c" name="a8a7d505d49059bfda5a0abe8e45d7a3c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8a7d505d49059bfda5a0abe8e45d7a3c">&#9670;&#160;</a></span>getLPTokenRounding()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a> xrpl::detail::getLPTokenRounding </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a>&#160;</td>
-          <td class="paramname"><em>isDeposit</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="AMMHelpers_8h_source.html#l00572">572</a> of file <a class="el" href="AMMHelpers_8h_source.html">AMMHelpers.h</a>.</p>
-
-</div>
-</div>
-<a id="abf56f4d1d1f7a6f319713befdd38c507" name="abf56f4d1d1f7a6f319713befdd38c507"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf56f4d1d1f7a6f319713befdd38c507">&#9670;&#160;</a></span>getAssetRounding()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html#a40e08f75077897215c66d102b5b75f95">Number::rounding_mode</a> xrpl::detail::getAssetRounding </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a36f952e305630142ea1bb1946a6dd383">IsDeposit</a>&#160;</td>
-          <td class="paramname"><em>isDeposit</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="AMMHelpers_8h_source.html#l00580">580</a> of file <a class="el" href="AMMHelpers_8h_source.html">AMMHelpers.h</a>.</p>
-
-</div>
-</div>
-<a id="a1c6bcd1d73b4c1d5ea9aaf544db61773" name="a1c6bcd1d73b4c1d5ea9aaf544db61773"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1c6bcd1d73b4c1d5ea9aaf544db61773">&#9670;&#160;</a></span>computeRaisedRate()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::computeRaisedRate </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00084">84</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a854dd19e0480b5ce3c9a4de7237c84e8" name="a854dd19e0480b5ce3c9a4de7237c84e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a854dd19e0480b5ce3c9a4de7237c84e8">&#9670;&#160;</a></span>computePaymentFactor()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::computePaymentFactor </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00095">95</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a27ec776a76adbf24c9977eff5f9fdfe6" name="a27ec776a76adbf24c9977eff5f9fdfe6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a27ec776a76adbf24c9977eff5f9fdfe6">&#9670;&#160;</a></span>loanPeriodicPayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanPeriodicPayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00115">115</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a9cb3bfa78dfb3083bb2592e519aa1fc2" name="a9cb3bfa78dfb3083bb2592e519aa1fc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9cb3bfa78dfb3083bb2592e519aa1fc2">&#9670;&#160;</a></span>loanPrincipalFromPeriodicPayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanPrincipalFromPeriodicPayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicPayment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentsRemaining</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00133">133</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a74526fc90ae53e8e61d94db5bf7327e9" name="a74526fc90ae53e8e61d94db5bf7327e9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74526fc90ae53e8e61d94db5bf7327e9">&#9670;&#160;</a></span>computeInterestAndFeeParts()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="classxrpl_1_1Number.html">Number</a>, <a class="el" href="classxrpl_1_1Number.html">Number</a> &gt; xrpl::detail::computeInterestAndFeeParts </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>interest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>loanScale</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00153">153</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a74c45da413598f6093a963c624b14bec" name="a74c45da413598f6093a963c624b14bec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a74c45da413598f6093a963c624b14bec">&#9670;&#160;</a></span>loanLatePaymentInterest()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanLatePaymentInterest </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a>&#160;</td>
-          <td class="paramname"><em>lateInterestRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a>&#160;</td>
-          <td class="paramname"><em>parentCloseTime</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>nextPaymentDueDate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00170">170</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a68244c94afe5c9e0a34aed3ff10e1225" name="a68244c94afe5c9e0a34aed3ff10e1225"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a68244c94afe5c9e0a34aed3ff10e1225">&#9670;&#160;</a></span>loanAccruedInterest()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Number.html">Number</a> xrpl::detail::loanAccruedInterest </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1NetClock.html#a6fdfbe103d809c714f11b914b391f8df">NetClock::time_point</a>&#160;</td>
-          <td class="paramname"><em>parentCloseTime</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>startDate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>prevPaymentDate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentInterval</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00203">203</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="af70ce6e662a17de27fef50564a4a8944" name="af70ce6e662a17de27fef50564a4a8944"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af70ce6e662a17de27fef50564a4a8944">&#9670;&#160;</a></span>doPayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class NumberProxy , class UInt32Proxy , class UInt32OptionalProxy &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a> xrpl::detail::doPayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
-          <td class="paramname"><em>payment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>totalValueOutstandingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstandingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>managementFeeOutstandingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UInt32Proxy &amp;&#160;</td>
-          <td class="paramname"><em>paymentRemainingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UInt32Proxy &amp;&#160;</td>
-          <td class="paramname"><em>prevPaymentDateProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">UInt32OptionalProxy &amp;&#160;</td>
-          <td class="paramname"><em>nextDueDateProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentInterval</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00245">245</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="aca6e0314d2254e8552eaf0c0117c49e3" name="aca6e0314d2254e8552eaf0c0117c49e3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aca6e0314d2254e8552eaf0c0117c49e3">&#9670;&#160;</a></span>tryOverpayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="structxrpl_1_1LoanProperties.html">LoanProperties</a> &gt;, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::tryOverpayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>loanScale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
-          <td class="paramname"><em>overpaymentComponents</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structxrpl_1_1LoanState.html">LoanState</a> const &amp;&#160;</td>
-          <td class="paramname"><em>roundedOldState</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicPayment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentRemaining</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00361">361</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a45834c9016f224c507fe46b5fb6834b9" name="a45834c9016f224c507fe46b5fb6834b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45834c9016f224c507fe46b5fb6834b9">&#9670;&#160;</a></span>doOverpayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class NumberProxy &gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1LoanPaymentParts.html">LoanPaymentParts</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::doOverpayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>loanScale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
-          <td class="paramname"><em>overpaymentComponents</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>totalValueOutstandingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstandingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>managementFeeOutstandingProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">NumberProxy &amp;&#160;</td>
-          <td class="paramname"><em>periodicPaymentProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const&#160;</td>
-          <td class="paramname"><em>paymentRemaining</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00525">525</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5143b712974ff58f23a5b68454533145" name="a5143b712974ff58f23a5b68454533145"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5143b712974ff58f23a5b68454533145">&#9670;&#160;</a></span>computeLatePayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::computeLatePayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> const &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>nextDueDate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodic</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a>&#160;</td>
-          <td class="paramname"><em>lateInterestRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>loanScale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>latePaymentFee</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
-          <td class="paramname"><em>amount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00640">640</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a1987e4abb6916c5edb63687534395966" name="a1987e4abb6916c5edb63687534395966"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1987e4abb6916c5edb63687534395966">&#9670;&#160;</a></span>computeFullPayment()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt; <a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a>, <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt; xrpl::detail::computeFullPayment </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>managementFeeOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicPayment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentRemaining</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>prevPaymentDate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const&#160;</td>
-          <td class="paramname"><em>startDate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> const&#160;</td>
-          <td class="paramname"><em>paymentInterval</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const&#160;</td>
-          <td class="paramname"><em>closeInterestRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>loanScale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>totalInterestOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>closePaymentFee</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
-          <td class="paramname"><em>amount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00731">731</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a15d4f3e9643b3ad99537596be2abca8f" name="a15d4f3e9643b3ad99537596be2abca8f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a15d4f3e9643b3ad99537596be2abca8f">&#9670;&#160;</a></span>computePaymentComponents()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structxrpl_1_1detail_1_1PaymentComponents.html">PaymentComponents</a> xrpl::detail::computePaymentComponents </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::int32_t</a>&#160;</td>
-          <td class="paramname"><em>scale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>totalValueOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>principalOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>managementFeeOutstanding</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicPayment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>periodicRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>paymentRemaining</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a>&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l00859">859</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a3066a3a4109319b673e8db6bf09dd208" name="a3066a3a4109319b673e8db6bf09dd208"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3066a3a4109319b673e8db6bf09dd208">&#9670;&#160;</a></span>computeOverpaymentComponents()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="structxrpl_1_1detail_1_1ExtendedPaymentComponents.html">ExtendedPaymentComponents</a> xrpl::detail::computeOverpaymentComponents </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Asset.html">Asset</a> const &amp;&#160;</td>
-          <td class="paramname"><em>asset</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t const&#160;</td>
-          <td class="paramname"><em>loanScale</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Number.html">Number</a> const &amp;&#160;</td>
-          <td class="paramname"><em>overpayment</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const&#160;</td>
-          <td class="paramname"><em>overpaymentInterestRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a64347051276d9ee7646d93623f5039b4">TenthBips32</a> const&#160;</td>
-          <td class="paramname"><em>overpaymentFeeRate</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd6a0d13118fcad34069500c471c3ec6">TenthBips16</a> const&#160;</td>
-          <td class="paramname"><em>managementFeeRate</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="LendingHelpers_8cpp_source.html#l01057">1057</a> of file <a class="el" href="LendingHelpers_8cpp_source.html">LendingHelpers.cpp</a>.</p>
-
-</div>
-</div>
 <a id="a020b577ee9f9e88477abbc05637fa067" name="a020b577ee9f9e88477abbc05637fa067"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a020b577ee9f9e88477abbc05637fa067">&#9670;&#160;</a></span>sumOfFirstSquares()</h2>
 
@@ -2395,7 +2468,7 @@ template&lt;class NumberProxy &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8cpp_source.html#l00160">160</a> of file <a class="el" href="TxQ_8cpp_source.html">TxQ.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8cpp_source.html#l00169">169</a> of file <a class="el" href="TxQ_8cpp_source.html">TxQ.cpp</a>.</p>
 
 </div>
 </div>
@@ -2470,7 +2543,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Name of the table. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00028">28</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00029">29</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2524,7 +2597,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Struct <a class="el" href="structxrpl_1_1detail_1_1DatabasePairValid.html">DatabasePairValid</a> which contain unique pointers to ledger and transaction databases and flag if opening was successful. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00049">49</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00050">50</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2564,7 +2637,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> sequence or none if no ledgers exist. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00100">100</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00105">105</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2604,7 +2677,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> sequence or none if no ledgers exist. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00110">110</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00115">115</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2650,7 +2723,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00120">120</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00125">125</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2696,7 +2769,7 @@ template&lt;class T &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00126">126</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00131">131</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2736,7 +2809,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values.">Number</a> of rows. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00132">132</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00137">137</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2776,7 +2849,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Struct CountMinMax which contain minimum sequence, maximum sequence and number of rows. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00144">144</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00149">149</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2837,7 +2910,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True is saving was successful. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00158">158</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00164">164</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2892,7 +2965,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> info or no value if the ledger was not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00353">353</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00369">369</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2939,7 +3012,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> or none if ledger not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00417">417</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00434">434</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -2979,7 +3052,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> info or none if ledger not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00425">425</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00442">442</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3026,7 +3099,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> info or none if ledger not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00433">433</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00450">450</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3073,7 +3146,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> info or none if ledger not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00441">441</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00459">459</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3120,7 +3193,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a> or none if ledger not found. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00449">449</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00468">468</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3160,7 +3233,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Hash of the ledger. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00457">457</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00476">476</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3207,7 +3280,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Struct <a class="el" href="structxrpl_1_1LedgerHashPair.html">LedgerHashPair</a> which contain hashes of the ledger and its parent ledger. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00486">486</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00505">505</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3261,7 +3334,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Map which points sequence number of found ledger to the struct <a class="el" href="structxrpl_1_1LedgerHashPair.html">LedgerHashPair</a> which contains ledger hash and its parent hash. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00514">514</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00533">533</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3315,7 +3388,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of shared pointers to transactions sorted in descending order by ledger sequence. Also number of transactions if count == true. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00550">550</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00569">569</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3398,7 +3471,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>SQL query string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00608">608</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00631">631</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3474,7 +3547,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of pairs of found transactions and their metadata sorted by account sequence in the specified order along with the number of transactions processed or skipped. If this number is &gt;= 0, then it represents the number of transactions processed, if it is &lt; 0, then -number represents the number of transactions skipped. We need to skip some number of transactions if option offset is &gt; 0 in the options structure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00696">696</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00726">726</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3535,7 +3608,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of pairs of found transactions and their metadata sorted in ascending order by account sequence. Also number of transactions processed or skipped. If this number is &gt;= 0, then it means number of transactions processed, if it is &lt; 0, then -number means number of transactions skipped. We need to skip some quantity of transactions if option offset is &gt; 0 in the options structure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00764">764</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00801">801</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3596,7 +3669,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of pairs of found transactions and their metadata sorted in descending order by account sequence. Also number of transactions processed or skipped. If this number is &gt;= 0, then it means number of transactions processed, if it is &lt; 0, then -number means number of transactions skipped. We need to skip some quantity of transactions if option offset is &gt; 0 in the options structure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00775">775</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00812">812</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3665,7 +3738,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of tuples each containing (the found transactions, their metadata, and their account sequences) sorted by account sequence in the specified order along with the number of transactions processed or skipped. If this number is &gt;= 0, then it represents the number of transactions processed, if it is &lt; 0, then -number represents the number of transactions skipped. We need to skip some number of transactions if option offset is &gt; 0 in the options structure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00806">806</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00843">843</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3719,7 +3792,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of tuples of found transactions, their metadata and account sequences sorted in ascending order by account sequence. Also number of transactions processed or skipped. If this number is &gt;= 0, then it means number of transactions processed, if it is &lt; 0, then -number means number of transactions skipped. We need to skip some quantity of transactions if option offset is &gt; 0 in the options structure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00857">857</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00900">900</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3773,7 +3846,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of tuples of found transactions, their metadata and account sequences sorted in descending order by account sequence. Also number of transactions processed or skipped. If this number is &gt;= 0, then it means number of transactions processed, if it is &lt; 0, then -number means number of transactions skipped. We need to skip some quantity of transactions if option offset is &gt; 0 in the options structure. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00867">867</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00910">910</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3849,7 +3922,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of tuples of found transactions, their metadata and account sequences sorted in the specified order by account sequence, a marker for the next search if the search was not finished and the number of transactions processed during this call. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00896">896</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l00939">939</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3910,7 +3983,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of tuples of found transactions, their metadata and account sequences sorted in ascending order by account sequence and marker for next search if search not finished. Also number of transactions processed during this call. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01039">1039</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01086">1086</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -3971,7 +4044,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Vector of tuples of found transactions, their metadata and account sequences sorted in descending order by account sequence and marker for next search if search not finished. Also number of transactions processed during this call. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01050">1050</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01097">1097</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -4032,7 +4105,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Transaction.html">Transaction</a> and its metadata if found, <a class="el" href="namespacexrpl.html#ab2fee6d98c0fcdead09c04e35ab453a6aa181a603769c1f98ad927e7367c7aa51">TxSearched::all</a> if range given and all ledgers from range are present in the database, <a class="el" href="namespacexrpl.html#ab2fee6d98c0fcdead09c04e35ab453a6a03d59e663c1af9ac33a9949d1193505a">TxSearched::some</a> if range given and not all ledgers are present, <a class="el" href="namespacexrpl.html#ab2fee6d98c0fcdead09c04e35ab453a6aad921d60486366258809553a3db49a4a">TxSearched::unknown</a> if range not given or deserializing error occurred. In the last case error code modified in ec link parameter, in other cases default error code remained. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01061">1061</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01108">1108</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -4079,80 +4152,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>True if space is available. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01136">1136</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
-
-</div>
-</div>
-<a id="ae5628469209fa748fa0f8e12860268b5" name="ae5628469209fa748fa0f8e12860268b5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5628469209fa748fa0f8e12860268b5">&#9670;&#160;</a></span>preflightCheckSigningKey()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> xrpl::detail::preflightCheckSigningKey </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;&#160;</td>
-          <td class="paramname"><em>sigObject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Checks the validity of the transactor signing key. </p>
-<p>Normally called from preflight1.</p>
-<p>Normally called from preflight1 with ctx.tx. </p>
-
-<p class="definition">Definition at line <a class="el" href="Transactor_8cpp_source.html#l00081">81</a> of file <a class="el" href="Transactor_8cpp_source.html">Transactor.cpp</a>.</p>
-
-</div>
-</div>
-<a id="aeb52de5279b0895cde0e4375d9266efc" name="aeb52de5279b0895cde0e4375d9266efc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb52de5279b0895cde0e4375d9266efc">&#9670;&#160;</a></span>preflightCheckSimulateKeys()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> &gt; xrpl::detail::preflightCheckSimulateKeys </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#abd040209899a4fb5e9c298f9156a074e">ApplyFlags</a>&#160;</td>
-          <td class="paramname"><em>flags</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STObject.html">STObject</a> const &amp;&#160;</td>
-          <td class="paramname"><em>sigObject</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Checks the special signing key state needed for simulation. </p>
-<p>Normally called from preflight2 with ctx.tx. </p>
-
-<p class="definition">Definition at line <a class="el" href="Transactor_8cpp_source.html#l00092">92</a> of file <a class="el" href="Transactor_8cpp_source.html">Transactor.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Node_8cpp_source.html#l01184">1184</a> of file <a class="el" href="Node_8cpp_source.html">Node.cpp</a>.</p>
 
 </div>
 </div>
@@ -4279,7 +4279,7 @@ template&lt;class T , class Buffers , class  = std::enable_if_t&lt;std::is_base_
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ProtocolMessage_8h_source.html#l00235">235</a> of file <a class="el" href="ProtocolMessage_8h_source.html">ProtocolMessage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProtocolMessage_8h_source.html#l00238">238</a> of file <a class="el" href="ProtocolMessage_8h_source.html">ProtocolMessage.h</a>.</p>
 
 </div>
 </div>
@@ -4317,7 +4317,7 @@ template&lt;class T , class Buffers , class Handler , class  = std::enable_if_t&
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ProtocolMessage_8h_source.html#l00265">265</a> of file <a class="el" href="ProtocolMessage_8h_source.html">ProtocolMessage.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ProtocolMessage_8h_source.html#l00272">272</a> of file <a class="el" href="ProtocolMessage_8h_source.html">ProtocolMessage.h</a>.</p>
 
 </div>
 </div>

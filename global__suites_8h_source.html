@@ -108,31 +108,36 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html">   23</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html">insert_suite</a></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>{</div>
 <div class="foldopen" id="foldopen00025" data-start="{" data-end="}">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html#a880316685a9fb63fca9f1f7b4fd3db7f">   25</a></span>    <a class="code hl_function" href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html#a880316685a9fb63fca9f1f7b4fd3db7f">insert_suite</a>(<span class="keywordtype">char</span> <span class="keyword">const</span>* name, <span class="keywordtype">char</span> <span class="keyword">const</span>* module, <span class="keywordtype">char</span> <span class="keyword">const</span>* library, <span class="keywordtype">bool</span> manual, <span class="keywordtype">int</span> priority)</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    {</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_function" href="namespacebeast_1_1unit__test_1_1detail.html#aee2cdbb01854ad7aa2b4ad76f30d4668">global_suites</a>().<a class="code hl_function" href="classbeast_1_1unit__test_1_1suite__list.html#a779c5a7a42a395fb3dda32d7626d12bc">insert</a>&lt;Suite&gt;(name, module, library, manual, priority);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html#a880316685a9fb63fca9f1f7b4fd3db7f">   25</a></span>    <a class="code hl_function" href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html#a880316685a9fb63fca9f1f7b4fd3db7f">insert_suite</a>(</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordtype">char</span> <span class="keyword">const</span>* name,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">char</span> <span class="keyword">const</span>* module,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordtype">char</span> <span class="keyword">const</span>* library,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keywordtype">bool</span> manual,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordtype">int</span> priority)</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <a class="code hl_function" href="namespacebeast_1_1unit__test_1_1detail.html#aee2cdbb01854ad7aa2b4ad76f30d4668">global_suites</a>().<a class="code hl_function" href="classbeast_1_1unit__test_1_1suite__list.html#a779c5a7a42a395fb3dda32d7626d12bc">insert</a>&lt;Suite&gt;(name, module, library, manual, priority);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
 </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>};</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
 </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>}  <span class="comment">// namespace detail</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">inline</span> suite_list <span class="keyword">const</span>&amp;</div>
-<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="namespacebeast_1_1unit__test.html#a7368b0362c32f64e2203feef1ed93e5b">   35</a></span><a class="code hl_function" href="namespacebeast_1_1unit__test.html#a7368b0362c32f64e2203feef1ed93e5b">global_suites</a>()</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>{</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacebeast_1_1unit__test_1_1detail.html#aee2cdbb01854ad7aa2b4ad76f30d4668">detail::global_suites</a>();</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>}</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}  <span class="comment">// namespace detail</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">inline</span> suite_list <span class="keyword">const</span>&amp;</div>
+<div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespacebeast_1_1unit__test.html#a7368b0362c32f64e2203feef1ed93e5b">   40</a></span><a class="code hl_function" href="namespacebeast_1_1unit__test.html#a7368b0362c32f64e2203feef1ed93e5b">global_suites</a>()</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>{</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespacebeast_1_1unit__test_1_1detail.html#aee2cdbb01854ad7aa2b4ad76f30d4668">detail::global_suites</a>();</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
 </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}  <span class="comment">// namespace unit_test</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>}  <span class="comment">// namespace beast</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}  <span class="comment">// namespace unit_test</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}  <span class="comment">// namespace beast</span></div>
 <div class="ttc" id="aclassbeast_1_1unit__test_1_1suite__list_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite__list.html">beast::unit_test::suite_list</a></div><div class="ttdoc">A container of test suites.</div><div class="ttdef"><b>Definition</b> <a href="suite__list_8h_source.html#l00020">suite_list.h:21</a></div></div>
 <div class="ttc" id="aclassbeast_1_1unit__test_1_1suite__list_html_a779c5a7a42a395fb3dda32d7626d12bc"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite__list.html#a779c5a7a42a395fb3dda32d7626d12bc">beast::unit_test::suite_list::insert</a></div><div class="ttdeci">void insert(char const *name, char const *module, char const *library, bool manual, int priority)</div><div class="ttdoc">Insert a suite into the set.</div><div class="ttdef"><b>Definition</b> <a href="suite__list_8h_source.html#l00042">suite_list.h:42</a></div></div>
 <div class="ttc" id="anamespacebeast_1_1unit__test_1_1detail_html_aee2cdbb01854ad7aa2b4ad76f30d4668"><div class="ttname"><a href="namespacebeast_1_1unit__test_1_1detail.html#aee2cdbb01854ad7aa2b4ad76f30d4668">beast::unit_test::detail::global_suites</a></div><div class="ttdeci">suite_list &amp; global_suites()</div><div class="ttdoc">Holds test suites registered during static initialization.</div><div class="ttdef"><b>Definition</b> <a href="global__suites_8h_source.html#l00016">global_suites.h:16</a></div></div>
-<div class="ttc" id="anamespacebeast_1_1unit__test_html_a7368b0362c32f64e2203feef1ed93e5b"><div class="ttname"><a href="namespacebeast_1_1unit__test.html#a7368b0362c32f64e2203feef1ed93e5b">beast::unit_test::global_suites</a></div><div class="ttdeci">suite_list const &amp; global_suites()</div><div class="ttdoc">Holds test suites registered during static initialization.</div><div class="ttdef"><b>Definition</b> <a href="global__suites_8h_source.html#l00035">global_suites.h:35</a></div></div>
-<div class="ttc" id="anamespacebeast_html"><div class="ttname"><a href="namespacebeast.html">beast</a></div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00637">base_uint.h:637</a></div></div>
+<div class="ttc" id="anamespacebeast_1_1unit__test_html_a7368b0362c32f64e2203feef1ed93e5b"><div class="ttname"><a href="namespacebeast_1_1unit__test.html#a7368b0362c32f64e2203feef1ed93e5b">beast::unit_test::global_suites</a></div><div class="ttdeci">suite_list const &amp; global_suites()</div><div class="ttdoc">Holds test suites registered during static initialization.</div><div class="ttdef"><b>Definition</b> <a href="global__suites_8h_source.html#l00040">global_suites.h:40</a></div></div>
+<div class="ttc" id="anamespacebeast_html"><div class="ttname"><a href="namespacebeast.html">beast</a></div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00640">base_uint.h:640</a></div></div>
 <div class="ttc" id="astructbeast_1_1unit__test_1_1detail_1_1insert__suite_html"><div class="ttname"><a href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html">beast::unit_test::detail::insert_suite</a></div><div class="ttdef"><b>Definition</b> <a href="global__suites_8h_source.html#l00023">global_suites.h:24</a></div></div>
 <div class="ttc" id="astructbeast_1_1unit__test_1_1detail_1_1insert__suite_html_a880316685a9fb63fca9f1f7b4fd3db7f"><div class="ttname"><a href="structbeast_1_1unit__test_1_1detail_1_1insert__suite.html#a880316685a9fb63fca9f1f7b4fd3db7f">beast::unit_test::detail::insert_suite::insert_suite</a></div><div class="ttdeci">insert_suite(char const *name, char const *module, char const *library, bool manual, int priority)</div><div class="ttdef"><b>Definition</b> <a href="global__suites_8h_source.html#l00025">global_suites.h:25</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

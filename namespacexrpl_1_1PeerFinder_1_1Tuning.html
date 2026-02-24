@@ -121,7 +121,7 @@ Variables</h2></td></tr>
 <tr class="separator:a8699bfa14decf9af89e3c3e759a6a121"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84e7e5bb19da25eea83dc34919e19191" id="r_a84e7e5bb19da25eea83dc34919e19191"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a84e7e5bb19da25eea83dc34919e19191">numberOfEndpoints</a> = 2 * <a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a8699bfa14decf9af89e3c3e759a6a121">maxHops</a></td></tr>
 <tr class="separator:a84e7e5bb19da25eea83dc34919e19191"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a68a203402847d73a105c285a4b91c4f9" id="r_a68a203402847d73a105c285a4b91c4f9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a68a203402847d73a105c285a4b91c4f9">numberOfEndpointsMax</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/algorithm/max.html">std::max</a>&lt;decltype(<a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a84e7e5bb19da25eea83dc34919e19191">numberOfEndpoints</a>)&gt;(<a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a84e7e5bb19da25eea83dc34919e19191">numberOfEndpoints</a> * 2, 64)</td></tr>
+<tr class="memitem:a68a203402847d73a105c285a4b91c4f9" id="r_a68a203402847d73a105c285a4b91c4f9"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a68a203402847d73a105c285a4b91c4f9">numberOfEndpointsMax</a></td></tr>
 <tr class="separator:a68a203402847d73a105c285a4b91c4f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a0a09aee0e6fe0ae26da6562d6a3ae7" id="r_a0a0a09aee0e6fe0ae26da6562d6a3ae7"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a0a0a09aee0e6fe0ae26da6562d6a3ae7">redirectEndpointCount</a> = 10</td></tr>
 <tr class="separator:a0a0a09aee0e6fe0ae26da6562d6a3ae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -362,7 +362,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> constexpr xrpl::PeerFinder::Tuning::numberOfEndpointsMax = <a class="elRef" href="http://en.cppreference.com/w/cpp/algorithm/max.html">std::max</a>&lt;decltype(<a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a84e7e5bb19da25eea83dc34919e19191">numberOfEndpoints</a>)&gt;(<a class="el" href="namespacexrpl_1_1PeerFinder_1_1Tuning.html#a84e7e5bb19da25eea83dc34919e19191">numberOfEndpoints</a> * 2, 64)</td>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> constexpr xrpl::PeerFinder::Tuning::numberOfEndpointsMax</td>
         </tr>
       </table>
   </td>
@@ -371,7 +371,10 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">    <a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::max&lt;decltype(numberOfEndpoints)&gt;</a>(numberOfEndpoints * 2, 64)</div>
+<div class="ttc" id="ais_same_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/is_same.html">std::is_same_v</a></div><div class="ttdeci">T is_same_v</div></div>
+</div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="src_2xrpld_2peerfinder_2detail_2Tuning_8h_source.html#l00095">95</a> of file <a class="el" href="src_2xrpld_2peerfinder_2detail_2Tuning_8h_source.html">src/xrpld/peerfinder/detail/Tuning.h</a>.</p>
 
 </div>
@@ -396,7 +399,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="src_2xrpld_2peerfinder_2detail_2Tuning_8h_source.html#l00098">98</a> of file <a class="el" href="src_2xrpld_2peerfinder_2detail_2Tuning_8h_source.html">src/xrpld/peerfinder/detail/Tuning.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="src_2xrpld_2peerfinder_2detail_2Tuning_8h_source.html#l00099">99</a> of file <a class="el" href="src_2xrpld_2peerfinder_2detail_2Tuning_8h_source.html">src/xrpld/peerfinder/detail/Tuning.h</a>.</p>
 
 </div>
 </div>

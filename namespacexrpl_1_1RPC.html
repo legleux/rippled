@@ -141,8 +141,8 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a3498260660f5591361c92bd931ce2915" id="r_a3498260660f5591361c92bd931ce2915"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; void(<a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="classxrpl_1_1Transaction.html">Transaction</a> &gt; &amp;transaction, bool bUnlimited, bool bLocal, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType)&gt;</td></tr>
-<tr class="separator:a3498260660f5591361c92bd931ce2915"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac60baa98268f6826b12881ba7cfb0fe7" id="r_ac60baa98268f6826b12881ba7cfb0fe7"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; void(<a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="classxrpl_1_1Transaction.html">Transaction</a> &gt; &amp;transaction, bool bUnlimited, bool bLocal, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType)&gt;</td></tr>
+<tr class="separator:ac60baa98268f6826b12881ba7cfb0fe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2572b00076b07d17becb4cd6ade36fda" id="r_a2572b00076b07d17becb4cd6ade36fda"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a2572b00076b07d17becb4cd6ade36fda">Output</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; void(boost::string_ref const  &amp;)&gt;</td></tr>
 <tr class="separator:a2572b00076b07d17becb4cd6ade36fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -298,16 +298,16 @@ Functions</h2></td></tr>
 <tr class="memitem:a4efaf22ac3f294be62fd6feebebbe036" id="r_a4efaf22ac3f294be62fd6feebebbe036"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJson_1_1Value.html">Json::Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a4efaf22ac3f294be62fd6feebebbe036">transactionSign</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> jvRequest, unsigned <a class="el" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType, <a class="el" href="namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7">Role</a> role, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a> validatedLedgerAge, <a class="el" href="classxrpl_1_1Application.html">Application</a> &amp;app)</td></tr>
 <tr class="memdesc:a4efaf22ac3f294be62fd6feebebbe036"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>.  <br /></td></tr>
 <tr class="separator:a4efaf22ac3f294be62fd6feebebbe036"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a343fce54e383218a3b769e3e6147ba65" id="r_a343fce54e383218a3b769e3e6147ba65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJson_1_1Value.html">Json::Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a343fce54e383218a3b769e3e6147ba65">transactionSubmit</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> jvRequest, unsigned <a class="el" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType, <a class="el" href="namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7">Role</a> role, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a> validatedLedgerAge, <a class="el" href="classxrpl_1_1Application.html">Application</a> &amp;app, <a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a> const &amp;processTransaction)</td></tr>
+<tr class="memitem:a343fce54e383218a3b769e3e6147ba65" id="r_a343fce54e383218a3b769e3e6147ba65"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJson_1_1Value.html">Json::Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a343fce54e383218a3b769e3e6147ba65">transactionSubmit</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> jvRequest, unsigned <a class="el" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType, <a class="el" href="namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7">Role</a> role, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a> validatedLedgerAge, <a class="el" href="classxrpl_1_1Application.html">Application</a> &amp;app, <a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a> const &amp;processTransaction)</td></tr>
 <tr class="memdesc:a343fce54e383218a3b769e3e6147ba65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>.  <br /></td></tr>
 <tr class="separator:a343fce54e383218a3b769e3e6147ba65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84ab11a51011275dd3fefd0b5bf551c5" id="r_a84ab11a51011275dd3fefd0b5bf551c5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJson_1_1Value.html">Json::Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a84ab11a51011275dd3fefd0b5bf551c5">transactionSignFor</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> jvRequest, unsigned <a class="el" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType, <a class="el" href="namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7">Role</a> role, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a> validatedLedgerAge, <a class="el" href="classxrpl_1_1Application.html">Application</a> &amp;app)</td></tr>
 <tr class="memdesc:a84ab11a51011275dd3fefd0b5bf551c5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>.  <br /></td></tr>
 <tr class="separator:a84ab11a51011275dd3fefd0b5bf551c5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa416164cf2a4df94ac47de1791c3a788" id="r_aa416164cf2a4df94ac47de1791c3a788"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJson_1_1Value.html">Json::Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#aa416164cf2a4df94ac47de1791c3a788">transactionSubmitMultiSigned</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> jvRequest, unsigned <a class="el" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType, <a class="el" href="namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7">Role</a> role, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a> validatedLedgerAge, <a class="el" href="classxrpl_1_1Application.html">Application</a> &amp;app, <a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a> const &amp;processTransaction)</td></tr>
+<tr class="memitem:aa416164cf2a4df94ac47de1791c3a788" id="r_aa416164cf2a4df94ac47de1791c3a788"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classJson_1_1Value.html">Json::Value</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#aa416164cf2a4df94ac47de1791c3a788">transactionSubmitMultiSigned</a> (<a class="el" href="classJson_1_1Value.html">Json::Value</a> jvRequest, unsigned <a class="el" href="namespacexrpl_1_1RPC.html#a973a1e287dd3a3aded8ee4fd96a4af34">apiVersion</a>, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType, <a class="el" href="namespacexrpl.html#a7fb64528931ecb2e6dd4bdb6741bd1a7">Role</a> role, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/duration.html">std::chrono::seconds</a> validatedLedgerAge, <a class="el" href="classxrpl_1_1Application.html">Application</a> &amp;app, <a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a> const &amp;processTransaction)</td></tr>
 <tr class="memdesc:aa416164cf2a4df94ac47de1791c3a788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>.  <br /></td></tr>
 <tr class="separator:aa416164cf2a4df94ac47de1791c3a788"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac301bfb5ee3a30a9df38081447c30efd" id="r_ac301bfb5ee3a30a9df38081447c30efd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#ac301bfb5ee3a30a9df38081447c30efd">getProcessTxnFn</a> (<a class="el" href="classxrpl_1_1NetworkOPs.html">NetworkOPs</a> &amp;netOPs)</td></tr>
+<tr class="memitem:ac301bfb5ee3a30a9df38081447c30efd" id="r_ac301bfb5ee3a30a9df38081447c30efd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#ac301bfb5ee3a30a9df38081447c30efd">getProcessTxnFn</a> (<a class="el" href="classxrpl_1_1NetworkOPs.html">NetworkOPs</a> &amp;netOPs)</td></tr>
 <tr class="separator:ac301bfb5ee3a30a9df38081447c30efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0a3940415f3392db90923b412ac47bd3" id="r_a0a3940415f3392db90923b412ac47bd3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl_1_1RPC.html#a2572b00076b07d17becb4cd6ade36fda">Output</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1RPC.html#a0a3940415f3392db90923b412ac47bd3">stringOutput</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> &amp;s)</td></tr>
 <tr class="separator:a0a3940415f3392db90923b412ac47bd3"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -419,14 +419,14 @@ Variables</h2></td></tr>
 <p>Network Requests without explicit version numbers use apiVersionIfUnspecified. apiVersionIfUnspecified is 1, because all the <a class="el" href="namespacexrpl_1_1RPC.html" title="API version numbers used in later API versions.">RPC</a> requests with a version &gt;= 2 must explicitly specify the version in the requests. Note that apiVersionIfUnspecified will be lower than apiMinimumSupportedVersion when we stop supporting API version 1.</p>
 <p>Command line Requests use apiCommandLineVersion. </p>
 </div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a3498260660f5591361c92bd931ce2915" name="a3498260660f5591361c92bd931ce2915"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3498260660f5591361c92bd931ce2915">&#9670;&#160;</a></span>ProcessTransactionFn</h2>
+<a id="ac60baa98268f6826b12881ba7cfb0fe7" name="ac60baa98268f6826b12881ba7cfb0fe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac60baa98268f6826b12881ba7cfb0fe7">&#9670;&#160;</a></span>ProcessTransactionFn</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">xrpl::RPC::ProcessTransactionFn</a> = typedef <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; void(<a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt;<a class="el" href="classxrpl_1_1Transaction.html">Transaction</a>&gt;&amp; transaction, bool bUnlimited, bool bLocal, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType)&gt;</td>
+          <td class="memname">using <a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">xrpl::RPC::ProcessTransactionFn</a> = typedef <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt;void( <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt;<a class="el" href="classxrpl_1_1Transaction.html">Transaction</a>&gt;&amp; transaction, bool bUnlimited, bool bLocal, <a class="el" href="classxrpl_1_1NetworkOPs.html#af20b0ec49007e940fac896257d3f1e05">NetworkOPs::FailHard</a> failType)&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -507,7 +507,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ApiVersion_8h_source.html#l00058">58</a> of file <a class="el" href="ApiVersion_8h_source.html">ApiVersion.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ApiVersion_8h_source.html#l00060">60</a> of file <a class="el" href="ApiVersion_8h_source.html">ApiVersion.h</a>.</p>
 
 </div>
 </div>
@@ -548,7 +548,7 @@ Variables</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the api version number </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="ApiVersion_8h_source.html#l00097">97</a> of file <a class="el" href="ApiVersion_8h_source.html">ApiVersion.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ApiVersion_8h_source.html#l00099">99</a> of file <a class="el" href="ApiVersion_8h_source.html">ApiVersion.h</a>.</p>
 
 </div>
 </div>
@@ -712,7 +712,7 @@ Variables</h2></td></tr>
 
 <p>Returns a new json object that indicates invalid parameters. </p>
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00214">214</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00219">219</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -732,7 +732,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00220">220</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00225">225</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -752,7 +752,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00226">226</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00231">231</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -772,7 +772,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00232">232</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00237">237</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -792,7 +792,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00238">238</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00243">243</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -812,7 +812,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00244">244</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00249">249</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -832,7 +832,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00250">250</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00255">255</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -852,7 +852,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00256">256</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00261">261</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -872,7 +872,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00262">262</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00267">267</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -892,7 +892,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00268">268</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00273">273</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -912,7 +912,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00274">274</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00279">279</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -942,7 +942,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00280">280</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00285">285</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -972,7 +972,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00286">286</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00291">291</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -1002,7 +1002,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00292">292</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00297">297</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -1032,7 +1032,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00298">298</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00303">303</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -1051,7 +1051,7 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00304">304</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ErrorCodes_8h_source.html#l00309">309</a> of file <a class="el" href="ErrorCodes_8h_source.html">ErrorCodes.h</a>.</p>
 
 </div>
 </div>
@@ -1544,7 +1544,7 @@ template&lt;typename T &gt; </div>
 <p>Add a <code>delivered_amount</code> field to the <code>meta</code> input/output parameter. </p>
 <p>The field is only added to successful payment and check cash transactions. If a delivered amount field is available in the <a class="el" href="classxrpl_1_1TxMeta.html">TxMeta</a> parameter, that value is used. Otherwise, the transaction's <code>Amount</code> field is used. If neither is available, then the delivered amount is set to "unavailable". </p>
 
-<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00081">81</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00084">84</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
 
 </div>
 </div>
@@ -1586,7 +1586,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00138">138</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00143">143</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
 
 </div>
 </div>
@@ -1628,7 +1628,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00148">148</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00153">153</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
 
 </div>
 </div>
@@ -1670,7 +1670,7 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00128">128</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00132">132</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
 
 </div>
 </div>
@@ -1744,7 +1744,7 @@ template&lt;class GetLedgerIndex , class GetCloseTime &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00063">63</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00064">64</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
 
 </div>
 </div>
@@ -1796,7 +1796,7 @@ template&lt;class GetLedgerIndex &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00110">110</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="DeliveredAmount_8cpp_source.html#l00113">113</a> of file <a class="el" href="DeliveredAmount_8cpp_source.html">DeliveredAmount.cpp</a>.</p>
 
 </div>
 </div>
@@ -1832,7 +1832,7 @@ template&lt;class GetLedgerIndex &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Handler_8cpp_source.html#l00236">236</a> of file <a class="el" href="Handler_8cpp_source.html">Handler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Handler_8cpp_source.html#l00246">246</a> of file <a class="el" href="Handler_8cpp_source.html">Handler.cpp</a>.</p>
 
 </div>
 </div>
@@ -1853,7 +1853,7 @@ template&lt;class GetLedgerIndex &gt; </div>
 
 <p>Return names of all methods. </p>
 
-<p class="definition">Definition at line <a class="el" href="Handler_8cpp_source.html#l00242">242</a> of file <a class="el" href="Handler_8cpp_source.html">Handler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Handler_8cpp_source.html#l00252">252</a> of file <a class="el" href="Handler_8cpp_source.html">Handler.cpp</a>.</p>
 
 </div>
 </div>
@@ -2006,7 +2006,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="MPTokenIssuanceID_8cpp_source.html#l00025">25</a> of file <a class="el" href="MPTokenIssuanceID_8cpp_source.html">MPTokenIssuanceID.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="MPTokenIssuanceID_8cpp_source.html#l00027">27</a> of file <a class="el" href="MPTokenIssuanceID_8cpp_source.html">MPTokenIssuanceID.cpp</a>.</p>
 
 </div>
 </div>
@@ -2042,7 +2042,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="MPTokenIssuanceID_8cpp_source.html#l00040">40</a> of file <a class="el" href="MPTokenIssuanceID_8cpp_source.html">MPTokenIssuanceID.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="MPTokenIssuanceID_8cpp_source.html#l00043">43</a> of file <a class="el" href="MPTokenIssuanceID_8cpp_source.html">MPTokenIssuanceID.cpp</a>.</p>
 
 </div>
 </div>
@@ -2074,7 +2074,7 @@ template&lt;class T &gt; </div>
 
 <p>Execute an <a class="el" href="namespacexrpl_1_1RPC.html" title="API version numbers used in later API versions.">RPC</a> command and store the results in a <a class="el" href="classJson_1_1Value.html" title="Represents a JSON value.">Json::Value</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="RPCHandler_8cpp_source.html#l00192">192</a> of file <a class="el" href="RPCHandler_8cpp_source.html">RPCHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHandler_8cpp_source.html#l00193">193</a> of file <a class="el" href="RPCHandler_8cpp_source.html">RPCHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -2110,7 +2110,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="RPCHandler_8cpp_source.html#l00226">226</a> of file <a class="el" href="RPCHandler_8cpp_source.html">RPCHandler.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHandler_8cpp_source.html#l00229">229</a> of file <a class="el" href="RPCHandler_8cpp_source.html">RPCHandler.cpp</a>.</p>
 
 </div>
 </div>
@@ -2229,7 +2229,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A hash_set containing the parsed AccountID objects. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00073">73</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00076">76</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2277,7 +2277,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An optional JSON value containing an error if one occurred, or <a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a> on success. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00089">89</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00092">92</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2307,7 +2307,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An optional <a class="el" href="classxrpl_1_1Seed.html" title="Seeds are used to generate deterministic secret keys.">Seed</a> if parsing is successful, or <a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a> otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00110">110</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00113">113</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2348,7 +2348,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An optional <a class="el" href="classxrpl_1_1Seed.html" title="Seeds are used to generate deterministic secret keys.">Seed</a> if parsing is successful, or <a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a> otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00128">128</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00131">131</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2396,7 +2396,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An optional pair containing the public and secret keys if successful, or <a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a> otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00183">183</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00186">186</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2426,7 +2426,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pair consisting of the <a class="el" href="namespacexrpl_1_1RPC.html" title="API version numbers used in later API versions.">RPC</a> status and the chosen LedgerEntryType. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00308">308</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00312">312</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2456,7 +2456,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the type is valid for account_objects filtering, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00357">357</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCHelpers_8cpp_source.html#l00362">362</a> of file <a class="el" href="RPCHelpers_8cpp_source.html">RPCHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2506,7 +2506,7 @@ template&lt;class T , class R &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structxrpl_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail.">Status</a> indicating success or failure of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00122">122</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00131">131</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2646,7 +2646,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structxrpl_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail.">Status</a> indicating success or failure of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00142">142</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00157">157</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2702,7 +2702,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structxrpl_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail.">Status</a> indicating success or failure of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00187">187</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00205">205</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2758,7 +2758,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structxrpl_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail.">Status</a> indicating success or failure of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00197">197</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00215">215</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2814,7 +2814,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structxrpl_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail.">Status</a> indicating success or failure of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00226">226</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00244">244</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -2964,7 +2964,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structxrpl_1_1RPC_1_1Status.html" title="Status represents the results of an operation that might fail.">Status</a> indicating success or failure of the operation. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00314">314</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00332">332</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -3005,7 +3005,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classJson_1_1Value.html" title="Represents a JSON value.">Json::Value</a> containing either the ledger data or an error description. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00336">336</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00357">357</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -3035,7 +3035,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="classxrpl_1_1Expected.html">Expected</a>&lt;<a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::shared_ptr&lt;Ledger const&gt;</a>, <a class="el" href="classJson_1_1Value.html" title="Represents a JSON value.">Json::Value</a>&gt; On success, contains a shared pointer to the requested <a class="el" href="classxrpl_1_1Ledger.html" title="Holds a ledger.">Ledger</a>. On failure, contains a <a class="el" href="classJson_1_1Value.html" title="Represents a JSON value.">Json::Value</a> describing the error. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00346">346</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="RPCLedgerHelpers_8cpp_source.html#l00367">367</a> of file <a class="el" href="RPCLedgerHelpers_8cpp_source.html">RPCLedgerHelpers.cpp</a>.</p>
 
 </div>
 </div>
@@ -3079,7 +3079,7 @@ template&lt;class T &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00716">716</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00748">748</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3145,7 +3145,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00789">789</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00821">821</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3220,7 +3220,7 @@ template&lt;class T &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A JSON object containing the error results, if any </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00827">827</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00859">859</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3276,7 +3276,7 @@ template&lt;class T &gt; </div>
 
 <p>Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00885">885</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00921">921</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3325,7 +3325,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a> const &amp;&#160;</td>
           <td class="paramname"><em>processTransaction</em>&#160;</td>
         </tr>
         <tr>
@@ -3338,7 +3338,7 @@ template&lt;class T &gt; </div>
 
 <p>Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00919">919</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l00955">955</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3394,7 +3394,7 @@ template&lt;class T &gt; </div>
 
 <p>Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l01037">1037</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l01078">1078</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3443,7 +3443,7 @@ template&lt;class T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a> const &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a> const &amp;&#160;</td>
           <td class="paramname"><em>processTransaction</em>&#160;</td>
         </tr>
         <tr>
@@ -3456,7 +3456,7 @@ template&lt;class T &gt; </div>
 
 <p>Returns a <a class="el" href="namespaceJson.html#a7d654b75c16a57007925868e38212b4eae8386dcfc36d1ae897745f7b4f77a1f6" title="object value (collection of name/value pairs).">Json::objectValue</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l01145">1145</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8cpp_source.html#l01189">1189</a> of file <a class="el" href="TransactionSign_8cpp_source.html">TransactionSign.cpp</a>.</p>
 
 </div>
 </div>
@@ -3467,7 +3467,7 @@ template&lt;class T &gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespacexrpl_1_1RPC.html#a3498260660f5591361c92bd931ce2915">ProcessTransactionFn</a> xrpl::RPC::getProcessTxnFn </td>
+          <td class="memname"><a class="el" href="namespacexrpl_1_1RPC.html#ac60baa98268f6826b12881ba7cfb0fe7">ProcessTransactionFn</a> xrpl::RPC::getProcessTxnFn </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classxrpl_1_1NetworkOPs.html">NetworkOPs</a> &amp;&#160;</td>
           <td class="paramname"><em>netOPs</em></td><td>)</td>
@@ -3476,7 +3476,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="TransactionSign_8h_source.html#l00072">72</a> of file <a class="el" href="TransactionSign_8h_source.html">TransactionSign.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TransactionSign_8h_source.html#l00075">75</a> of file <a class="el" href="TransactionSign_8h_source.html">TransactionSign.h</a>.</p>
 
 </div>
 </div>

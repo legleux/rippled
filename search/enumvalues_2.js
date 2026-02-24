@@ -16,7 +16,7 @@ var searchData=
   ['batchwritepreallocationsize_13',['batchWritePreallocationSize',['../namespacexrpl_1_1NodeStore.html#a5057e348c39a1f5562157f764c3f5f06aa166a52987a2e4ea7521a98e753abb37',1,'xrpl::NodeStore']]],
   ['binary_14',['binary',['../structxrpl_1_1LedgerFill.html#a2e913b311a230229e190e2d2338fdb2aa3b347be618c1e3e2224bcd7a7eb9af3f',1,'xrpl::LedgerFill']]],
   ['blobfield_15',['BlobField',['../namespacexrpl_1_1test.html#a04b3b5ab4e41a5be8a4c9e33e9fb051aa0f74255f45960a71eed96f283d91fb37',1,'xrpl::test']]],
-  ['blocker_16',['blocker',['../classxrpl_1_1Transactor.html#a9420945fd34d224b81b68fd3dcc9fed6a44800ba5c609a32325ee77bfdca04937',1,'xrpl::Transactor::Blocker'],['../classxrpl_1_1TxConsequences.html#a33f37210f363c069e6faa24cbdfd2231ac7856c799618606e237a4054c140a4a9',1,'xrpl::TxConsequences::blocker']]],
+  ['blocker_16',['blocker',['../classxrpl_1_1TxConsequences.html#a33f37210f363c069e6faa24cbdfd2231ac7856c799618606e237a4054c140a4a9',1,'xrpl::TxConsequences::blocker'],['../classxrpl_1_1Transactor.html#a9420945fd34d224b81b68fd3dcc9fed6a44800ba5c609a32325ee77bfdca04937',1,'xrpl::Transactor::Blocker']]],
   ['book_5fdir_17',['BOOK_DIR',['../namespacexrpl.html#aa040fac78e4975614b31771a1bc5f7adab6a8833f2e59902cc71ae3f8c0643edb',1,'xrpl']]],
   ['booleanvalue_18',['booleanValue',['../namespaceJson.html#a7d654b75c16a57007925868e38212b4ea14c30dbf4da86f7b809be299f671f7fd',1,'Json']]],
   ['bootcacheprunepercent_19',['bootcachePrunePercent',['../namespacexrpl_1_1PeerFinder_1_1Tuning.html#a5b69974e31f86cc967abeefd8bedb6e2a8883457175731a91fc169cc3a3241e17',1,'xrpl::PeerFinder::Tuning']]],

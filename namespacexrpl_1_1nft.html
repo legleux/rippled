@@ -118,57 +118,57 @@ Functions</h2></td></tr>
 <tr class="memitem:af7fff4194ca6c2345cf1e6a306f951d1" id="r_af7fff4194ca6c2345cf1e6a306f951d1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structxrpl_1_1Rate.html">Rate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#af7fff4194ca6c2345cf1e6a306f951d1">transferFeeAsRate</a> (<a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> fee)</td></tr>
 <tr class="memdesc:af7fff4194ca6c2345cf1e6a306f951d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a transfer fee (in basis points) convert it to a transfer rate.  <br /></td></tr>
 <tr class="separator:af7fff4194ca6c2345cf1e6a306f951d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8281c1c98a010f8d68797f6190fe1f69" id="r_a8281c1c98a010f8d68797f6190fe1f69"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a8281c1c98a010f8d68797f6190fe1f69">removeTokenOffersWithLimit</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="structxrpl_1_1Keylet.html">Keylet</a> const &amp;directory, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> maxDeletableOffers)</td></tr>
+<tr class="memdesc:a8281c1c98a010f8d68797f6190fe1f69"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete up to a specified number of offers from the specified token offer directory.  <br /></td></tr>
+<tr class="separator:a8281c1c98a010f8d68797f6190fe1f69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9519748ef324799665611804061c21d7" id="r_a9519748ef324799665611804061c21d7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a9519748ef324799665611804061c21d7">notTooManyOffers</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID)</td></tr>
+<tr class="memdesc:a9519748ef324799665611804061c21d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns tesSUCCESS if NFToken has few enough offers that it can be burned.  <br /></td></tr>
+<tr class="separator:a9519748ef324799665611804061c21d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a849027a168a363b5a7436692625e9285" id="r_a849027a168a363b5a7436692625e9285"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1STObject.html">STObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a849027a168a363b5a7436692625e9285">findToken</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID)</td></tr>
+<tr class="memdesc:a849027a168a363b5a7436692625e9285"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the specified token in the owner's token directory.  <br /></td></tr>
+<tr class="separator:a849027a168a363b5a7436692625e9285"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2f8d19f03fc753693d5493b49000b4f" id="r_ac2f8d19f03fc753693d5493b49000b4f"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="structxrpl_1_1nft_1_1TokenAndPage.html">TokenAndPage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ac2f8d19f03fc753693d5493b49000b4f">findTokenAndPage</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID)</td></tr>
+<tr class="separator:ac2f8d19f03fc753693d5493b49000b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0219390b8c07ff35c470b7532a91491d" id="r_a0219390b8c07ff35c470b7532a91491d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a0219390b8c07ff35c470b7532a91491d">insertToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> owner, <a class="el" href="classxrpl_1_1STObject.html">STObject</a> &amp;&amp;nft)</td></tr>
+<tr class="memdesc:a0219390b8c07ff35c470b7532a91491d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert the token in the owner's token directory.  <br /></td></tr>
+<tr class="separator:a0219390b8c07ff35c470b7532a91491d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a7aff46edc5db515b3eefda27e5f1e8" id="r_a5a7aff46edc5db515b3eefda27e5f1e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a5a7aff46edc5db515b3eefda27e5f1e8">removeToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID)</td></tr>
+<tr class="memdesc:a5a7aff46edc5db515b3eefda27e5f1e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the token from the owner's token directory.  <br /></td></tr>
+<tr class="separator:a5a7aff46edc5db515b3eefda27e5f1e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93ba8b1b40c82cf854dde9f363a588dd" id="r_a93ba8b1b40c82cf854dde9f363a588dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a93ba8b1b40c82cf854dde9f363a588dd">removeToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const  &amp;nftokenID, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; &amp;&amp;curr)</td></tr>
+<tr class="memdesc:a93ba8b1b40c82cf854dde9f363a588dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the token from the owner's token directory.  <br /></td></tr>
+<tr class="separator:a93ba8b1b40c82cf854dde9f363a588dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd03b0e4a35b77db6fe512bce8310f7c" id="r_afd03b0e4a35b77db6fe512bce8310f7c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#afd03b0e4a35b77db6fe512bce8310f7c">deleteTokenOffer</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; const &amp;offer)</td></tr>
+<tr class="memdesc:afd03b0e4a35b77db6fe512bce8310f7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the given token offer.  <br /></td></tr>
+<tr class="separator:afd03b0e4a35b77db6fe512bce8310f7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaada49ac2d656b7d7fe14d267cd1e574" id="r_aaada49ac2d656b7d7fe14d267cd1e574"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#aaada49ac2d656b7d7fe14d267cd1e574">repairNFTokenDirectoryLinks</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner)</td></tr>
+<tr class="memdesc:aaada49ac2d656b7d7fe14d267cd1e574"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repairs the links in an NFTokenPage directory.  <br /></td></tr>
+<tr class="separator:aaada49ac2d656b7d7fe14d267cd1e574"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91bcaa16ccc5e9a01aef36fff26b3106" id="r_a91bcaa16ccc5e9a01aef36fff26b3106"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a91bcaa16ccc5e9a01aef36fff26b3106">compareTokens</a> (<a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;a, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;b)</td></tr>
+<tr class="separator:a91bcaa16ccc5e9a01aef36fff26b3106"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321ce62f3971915a8a4f844ddb728443" id="r_a321ce62f3971915a8a4f844ddb728443"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a321ce62f3971915a8a4f844ddb728443">changeTokenURI</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1Slice.html">xrpl::Slice</a> &gt; const &amp;uri)</td></tr>
+<tr class="separator:a321ce62f3971915a8a4f844ddb728443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d664bfabc5792df9964c524c93ec34c" id="r_a2d664bfabc5792df9964c524c93ec34c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a2d664bfabc5792df9964c524c93ec34c">tokenOfferCreatePreflight</a> (<a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;acctID, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;dest, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const &amp;expiration, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> nftFlags, <a class="el" href="classxrpl_1_1Rules.html">Rules</a> const &amp;rules, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;owner=<a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> txFlags=<a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a>)</td></tr>
+<tr class="memdesc:a2d664bfabc5792df9964c524c93ec34c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preflight checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>.  <br /></td></tr>
+<tr class="separator:a2d664bfabc5792df9964c524c93ec34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48f675597c493738ed05146302a2d0fa" id="r_a48f675597c493738ed05146302a2d0fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a48f675597c493738ed05146302a2d0fa">tokenOfferCreatePreclaim</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;acctID, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;nftIssuer, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;dest, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> nftFlags, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> xferFee, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;owner=<a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> txFlags=<a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a>)</td></tr>
+<tr class="memdesc:a48f675597c493738ed05146302a2d0fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preclaim checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>.  <br /></td></tr>
+<tr class="separator:a48f675597c493738ed05146302a2d0fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51bc37f39b483914c6af224b03ca2624" id="r_a51bc37f39b483914c6af224b03ca2624"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a51bc37f39b483914c6af224b03ca2624">tokenOfferCreateApply</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;acctID, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;dest, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const &amp;expiration, <a class="el" href="classxrpl_1_1SeqProxy.html">SeqProxy</a> seqProxy, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID, <a class="el" href="classxrpl_1_1XRPAmount.html">XRPAmount</a> const &amp;priorBalance, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> txFlags=<a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a>)</td></tr>
+<tr class="memdesc:a51bc37f39b483914c6af224b03ca2624"><td class="mdescLeft">&#160;</td><td class="mdescRight">doApply implementation shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>  <br /></td></tr>
+<tr class="separator:a51bc37f39b483914c6af224b03ca2624"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a758d12dfd672766a9622db73d9e6d44a" id="r_a758d12dfd672766a9622db73d9e6d44a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a758d12dfd672766a9622db73d9e6d44a">checkTrustlineAuthorized</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const id, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const j, <a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;issue)</td></tr>
+<tr class="separator:a758d12dfd672766a9622db73d9e6d44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5df5a9bba0d507c6b26b03fb59526b5d" id="r_a5df5a9bba0d507c6b26b03fb59526b5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a5df5a9bba0d507c6b26b03fb59526b5d">checkTrustlineDeepFrozen</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const id, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const j, <a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;issue)</td></tr>
+<tr class="separator:a5df5a9bba0d507c6b26b03fb59526b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae2ad6cd490a334f56e08da727fea5338" id="r_ae2ad6cd490a334f56e08da727fea5338"><td class="memItemLeft" align="right" valign="top">static <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> const &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ae2ad6cd490a334f56e08da727fea5338">locatePage</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;id)</td></tr>
 <tr class="separator:ae2ad6cd490a334f56e08da727fea5338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8f0aadc5fefaedaa303f7637ae9fdb2f" id="r_a8f0aadc5fefaedaa303f7637ae9fdb2f"><td class="memItemLeft" align="right" valign="top">static <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a8f0aadc5fefaedaa303f7637ae9fdb2f">locatePage</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;id)</td></tr>
 <tr class="separator:a8f0aadc5fefaedaa303f7637ae9fdb2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab1f655cefc35197f885ba71e0900ad65" id="r_ab1f655cefc35197f885ba71e0900ad65"><td class="memItemLeft" align="right" valign="top">static <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ab1f655cefc35197f885ba71e0900ad65">getPageForToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;id, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; void(<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;)&gt; const &amp;createCallback)</td></tr>
 <tr class="separator:ab1f655cefc35197f885ba71e0900ad65"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a91bcaa16ccc5e9a01aef36fff26b3106" id="r_a91bcaa16ccc5e9a01aef36fff26b3106"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a91bcaa16ccc5e9a01aef36fff26b3106">compareTokens</a> (<a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;a, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;b)</td></tr>
-<tr class="separator:a91bcaa16ccc5e9a01aef36fff26b3106"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a321ce62f3971915a8a4f844ddb728443" id="r_a321ce62f3971915a8a4f844ddb728443"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a321ce62f3971915a8a4f844ddb728443">changeTokenURI</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1Slice.html">xrpl::Slice</a> &gt; const &amp;uri)</td></tr>
-<tr class="separator:a321ce62f3971915a8a4f844ddb728443"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0219390b8c07ff35c470b7532a91491d" id="r_a0219390b8c07ff35c470b7532a91491d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a0219390b8c07ff35c470b7532a91491d">insertToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> owner, <a class="el" href="classxrpl_1_1STObject.html">STObject</a> &amp;&amp;nft)</td></tr>
-<tr class="memdesc:a0219390b8c07ff35c470b7532a91491d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Insert the token in the owner's token directory.  <br /></td></tr>
-<tr class="separator:a0219390b8c07ff35c470b7532a91491d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab48770190f5ec7b0a30dd1ad491d78a2" id="r_ab48770190f5ec7b0a30dd1ad491d78a2"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ab48770190f5ec7b0a30dd1ad491d78a2">mergePages</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; const &amp;p1, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; const &amp;p2)</td></tr>
 <tr class="separator:ab48770190f5ec7b0a30dd1ad491d78a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5a7aff46edc5db515b3eefda27e5f1e8" id="r_a5a7aff46edc5db515b3eefda27e5f1e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a5a7aff46edc5db515b3eefda27e5f1e8">removeToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID)</td></tr>
-<tr class="memdesc:a5a7aff46edc5db515b3eefda27e5f1e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the token from the owner's token directory.  <br /></td></tr>
-<tr class="separator:a5a7aff46edc5db515b3eefda27e5f1e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ea890b71a680f3e6827c7936d895982" id="r_a0ea890b71a680f3e6827c7936d895982"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a0ea890b71a680f3e6827c7936d895982">removeToken</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; &amp;&amp;curr)</td></tr>
-<tr class="memdesc:a0ea890b71a680f3e6827c7936d895982"><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the token from the owner's token directory.  <br /></td></tr>
-<tr class="separator:a0ea890b71a680f3e6827c7936d895982"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a599578945afd4cc3486c480f5aaf4a33" id="r_a599578945afd4cc3486c480f5aaf4a33"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1STObject.html">STObject</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a599578945afd4cc3486c480f5aaf4a33">findToken</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const  &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const  &amp;nftokenID)</td></tr>
-<tr class="memdesc:a599578945afd4cc3486c480f5aaf4a33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Finds the specified token in the owner's token directory.  <br /></td></tr>
-<tr class="separator:a599578945afd4cc3486c480f5aaf4a33"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac2f8d19f03fc753693d5493b49000b4f" id="r_ac2f8d19f03fc753693d5493b49000b4f"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="structxrpl_1_1nft_1_1TokenAndPage.html">TokenAndPage</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ac2f8d19f03fc753693d5493b49000b4f">findTokenAndPage</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;owner, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;nftokenID)</td></tr>
-<tr class="separator:ac2f8d19f03fc753693d5493b49000b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8887d33db5d2134e1e3d6d9e4467437" id="r_aa8887d33db5d2134e1e3d6d9e4467437"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#aa8887d33db5d2134e1e3d6d9e4467437">removeTokenOffersWithLimit</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="structxrpl_1_1Keylet.html">Keylet</a> const  &amp;directory, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> maxDeletableOffers)</td></tr>
-<tr class="memdesc:aa8887d33db5d2134e1e3d6d9e4467437"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delete up to a specified number of offers from the specified token offer directory.  <br /></td></tr>
-<tr class="separator:aa8887d33db5d2134e1e3d6d9e4467437"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac631986cd58b255d68265f236d484585" id="r_ac631986cd58b255d68265f236d484585"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ac631986cd58b255d68265f236d484585">notTooManyOffers</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const  &amp;view, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const  &amp;nftokenID)</td></tr>
-<tr class="memdesc:ac631986cd58b255d68265f236d484585"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns tesSUCCESS if NFToken has few enough offers that it can be burned.  <br /></td></tr>
-<tr class="separator:ac631986cd58b255d68265f236d484585"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6034cb990afddcaf97e546bec15250dc" id="r_a6034cb990afddcaf97e546bec15250dc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a6034cb990afddcaf97e546bec15250dc">deleteTokenOffer</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; const  &amp;offer)</td></tr>
-<tr class="memdesc:a6034cb990afddcaf97e546bec15250dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes the given token offer.  <br /></td></tr>
-<tr class="separator:a6034cb990afddcaf97e546bec15250dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2d590f7115cb16902dc65b8e16c3402" id="r_af2d590f7115cb16902dc65b8e16c3402"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#af2d590f7115cb16902dc65b8e16c3402">repairNFTokenDirectoryLinks</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;owner)</td></tr>
-<tr class="memdesc:af2d590f7115cb16902dc65b8e16c3402"><td class="mdescLeft">&#160;</td><td class="mdescRight">Repairs the links in an NFTokenPage directory.  <br /></td></tr>
-<tr class="separator:af2d590f7115cb16902dc65b8e16c3402"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae12fc1520d7a0071c5caadbf3f7f7cbe" id="r_ae12fc1520d7a0071c5caadbf3f7f7cbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#ae12fc1520d7a0071c5caadbf3f7f7cbe">tokenOfferCreatePreflight</a> (<a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;acctID, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const  &amp;amount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const  &amp;dest, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const  &amp;expiration, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> nftFlags, <a class="el" href="classxrpl_1_1Rules.html">Rules</a> const  &amp;rules, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const  &amp;owner=<a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> txFlags=<a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a>)</td></tr>
-<tr class="memdesc:ae12fc1520d7a0071c5caadbf3f7f7cbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preflight checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>.  <br /></td></tr>
-<tr class="separator:ae12fc1520d7a0071c5caadbf3f7f7cbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0a6ed5efe33334b32ba3fe36eb87bae4" id="r_a0a6ed5efe33334b32ba3fe36eb87bae4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a0a6ed5efe33334b32ba3fe36eb87bae4">tokenOfferCreatePreclaim</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const  &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;acctID, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;nftIssuer, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const  &amp;amount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const  &amp;dest, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> nftFlags, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a> xferFee, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const  &amp;owner=<a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> txFlags=<a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a>)</td></tr>
-<tr class="memdesc:a0a6ed5efe33334b32ba3fe36eb87bae4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Preclaim checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>.  <br /></td></tr>
-<tr class="separator:a0a6ed5efe33334b32ba3fe36eb87bae4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2b0fd0b8afafcf4150f5bace7aa798e4" id="r_a2b0fd0b8afafcf4150f5bace7aa798e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a2b0fd0b8afafcf4150f5bace7aa798e4">tokenOfferCreateApply</a> (<a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const  &amp;acctID, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const  &amp;amount, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const  &amp;dest, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const  &amp;expiration, <a class="el" href="classxrpl_1_1SeqProxy.html">SeqProxy</a> seqProxy, <a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const  &amp;nftokenID, <a class="el" href="classxrpl_1_1XRPAmount.html">XRPAmount</a> const  &amp;priorBalance, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> j, <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> txFlags=<a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a>)</td></tr>
-<tr class="memdesc:a2b0fd0b8afafcf4150f5bace7aa798e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">doApply implementation shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>  <br /></td></tr>
-<tr class="separator:a2b0fd0b8afafcf4150f5bace7aa798e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a758d12dfd672766a9622db73d9e6d44a" id="r_a758d12dfd672766a9622db73d9e6d44a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a758d12dfd672766a9622db73d9e6d44a">checkTrustlineAuthorized</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const id, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const j, <a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;issue)</td></tr>
-<tr class="separator:a758d12dfd672766a9622db73d9e6d44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5df5a9bba0d507c6b26b03fb59526b5d" id="r_a5df5a9bba0d507c6b26b03fb59526b5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl_1_1nft.html#a5df5a9bba0d507c6b26b03fb59526b5d">checkTrustlineDeepFrozen</a> (<a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;view, <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const id, <a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const j, <a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;issue)</td></tr>
-<tr class="separator:a5df5a9bba0d507c6b26b03fb59526b5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -419,6 +419,725 @@ Variables</h2></td></tr>
 
 </div>
 </div>
+<a id="a8281c1c98a010f8d68797f6190fe1f69" name="a8281c1c98a010f8d68797f6190fe1f69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8281c1c98a010f8d68797f6190fe1f69">&#9670;&#160;</a></span>removeTokenOffersWithLimit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> xrpl::nft::removeTokenOffersWithLimit </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structxrpl_1_1Keylet.html">Keylet</a> const &amp;&#160;</td>
+          <td class="paramname"><em>directory</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&#160;</td>
+          <td class="paramname"><em>maxDeletableOffers</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Delete up to a specified number of offers from the specified token offer directory. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00536">536</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a9519748ef324799665611804061c21d7" name="a9519748ef324799665611804061c21d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9519748ef324799665611804061c21d7">&#9670;&#160;</a></span>notTooManyOffers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::notTooManyOffers </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Returns tesSUCCESS if NFToken has few enough offers that it can be burned. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00582">582</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a849027a168a363b5a7436692625e9285" name="a849027a168a363b5a7436692625e9285"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a849027a168a363b5a7436692625e9285">&#9670;&#160;</a></span>findToken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1STObject.html">STObject</a> &gt; xrpl::nft::findToken </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Finds the specified token in the owner's token directory. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00498">498</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="ac2f8d19f03fc753693d5493b49000b4f" name="ac2f8d19f03fc753693d5493b49000b4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2f8d19f03fc753693d5493b49000b4f">&#9670;&#160;</a></span>findTokenAndPage()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="structxrpl_1_1nft_1_1TokenAndPage.html">TokenAndPage</a> &gt; xrpl::nft::findTokenAndPage </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00517">517</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a0219390b8c07ff35c470b7532a91491d" name="a0219390b8c07ff35c470b7532a91491d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0219390b8c07ff35c470b7532a91491d">&#9670;&#160;</a></span>insertToken()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::insertToken </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a>&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STObject.html">STObject</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>nft</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Insert the token in the owner's token directory. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00231">231</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5a7aff46edc5db515b3eefda27e5f1e8" name="a5a7aff46edc5db515b3eefda27e5f1e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a7aff46edc5db515b3eefda27e5f1e8">&#9670;&#160;</a></span>removeToken() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::removeToken </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove the token from the owner's token directory. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00329">329</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a93ba8b1b40c82cf854dde9f363a588dd" name="a93ba8b1b40c82cf854dde9f363a588dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93ba8b1b40c82cf854dde9f363a588dd">&#9670;&#160;</a></span>removeToken() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::removeToken </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; &amp;&amp;&#160;</td>
+          <td class="paramname"><em>page</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Remove the token from the owner's token directory. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00342">342</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="afd03b0e4a35b77db6fe512bce8310f7c" name="afd03b0e4a35b77db6fe512bce8310f7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd03b0e4a35b77db6fe512bce8310f7c">&#9670;&#160;</a></span>deleteTokenOffer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xrpl::nft::deleteTokenOffer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>offer</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Deletes the given token offer. </p>
+<p>An offer is tracked in two separate places:</p><ul>
+<li>The token's 'buy' directory, if it's a buy offer; or</li>
+<li>The token's 'sell' directory, if it's a sell offer; and</li>
+<li>The owner directory of the account that placed the offer.</li>
+</ul>
+<p>The offer also consumes one incremental reserve. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00609">609</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="aaada49ac2d656b7d7fe14d267cd1e574" name="aaada49ac2d656b7d7fe14d267cd1e574"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaada49ac2d656b7d7fe14d267cd1e574">&#9670;&#160;</a></span>repairNFTokenDirectoryLinks()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xrpl::nft::repairNFTokenDirectoryLinks </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Repairs the links in an NFTokenPage directory. </p>
+<p>Returns true if a repair took place, otherwise false. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00637">637</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a91bcaa16ccc5e9a01aef36fff26b3106" name="a91bcaa16ccc5e9a01aef36fff26b3106"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91bcaa16ccc5e9a01aef36fff26b3106">&#9670;&#160;</a></span>compareTokens()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xrpl::nft::compareTokens </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00184">184</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a321ce62f3971915a8a4f844ddb728443" name="a321ce62f3971915a8a4f844ddb728443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a321ce62f3971915a8a4f844ddb728443">&#9670;&#160;</a></span>changeTokenURI()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::changeTokenURI </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1Slice.html">xrpl::Slice</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>uri</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00198">198</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2d664bfabc5792df9964c524c93ec34c" name="a2d664bfabc5792df9964c524c93ec34c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d664bfabc5792df9964c524c93ec34c">&#9670;&#160;</a></span>tokenOfferCreatePreflight()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> xrpl::nft::tokenOfferCreatePreflight </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>acctID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
+          <td class="paramname"><em>amount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>expiration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a>&#160;</td>
+          <td class="paramname"><em>nftFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Rules.html">Rules</a> const &amp;&#160;</td>
+          <td class="paramname"><em>rules</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em> = <code><a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>txFlags</em> = <code><a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Preflight checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00752">752</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a48f675597c493738ed05146302a2d0fa" name="a48f675597c493738ed05146302a2d0fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48f675597c493738ed05146302a2d0fa">&#9670;&#160;</a></span>tokenOfferCreatePreclaim()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::tokenOfferCreatePreclaim </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>acctID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftIssuer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
+          <td class="paramname"><em>amount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a>&#160;</td>
+          <td class="paramname"><em>nftFlags</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a>&#160;</td>
+          <td class="paramname"><em>xferFee</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>owner</em> = <code><a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::nullopt</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>txFlags</em> = <code><a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Preclaim checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00801">801</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a51bc37f39b483914c6af224b03ca2624" name="a51bc37f39b483914c6af224b03ca2624"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51bc37f39b483914c6af224b03ca2624">&#9670;&#160;</a></span>tokenOfferCreateApply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::tokenOfferCreateApply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
+          <td class="paramname"><em>acctID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
+          <td class="paramname"><em>amount</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>dest</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const &amp;&#160;</td>
+          <td class="paramname"><em>expiration</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1SeqProxy.html">SeqProxy</a>&#160;</td>
+          <td class="paramname"><em>seqProxy</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
+          <td class="paramname"><em>nftokenID</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1XRPAmount.html">XRPAmount</a> const &amp;&#160;</td>
+          <td class="paramname"><em>priorBalance</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
+          <td class="paramname"><em>txFlags</em> = <code><a class="el" href="namespacexrpl.html#ada4805619214865518ed8c0b54a71bc1a9148d80ca9d4d82bca370e5e7aceb03a">lsfSellNFToken</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>doApply implementation shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a> </p>
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00901">901</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a758d12dfd672766a9622db73d9e6d44a" name="a758d12dfd672766a9622db73d9e6d44a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a758d12dfd672766a9622db73d9e6d44a">&#9670;&#160;</a></span>checkTrustlineAuthorized()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::checkTrustlineAuthorized </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;&#160;</td>
+          <td class="paramname"><em>issue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00973">973</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a5df5a9bba0d507c6b26b03fb59526b5d" name="a5df5a9bba0d507c6b26b03fb59526b5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5df5a9bba0d507c6b26b03fb59526b5d">&#9670;&#160;</a></span>checkTrustlineDeepFrozen()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::checkTrustlineDeepFrozen </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
+          <td class="paramname"><em>view</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const&#160;</td>
+          <td class="paramname"><em>id</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;&#160;</td>
+          <td class="paramname"><em>issue</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l01025">1025</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+
+</div>
+</div>
 <a id="ae2ad6cd490a334f56e08da727fea5338" name="ae2ad6cd490a334f56e08da727fea5338"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae2ad6cd490a334f56e08da727fea5338">&#9670;&#160;</a></span>locatePage() <span class="overload">[1/2]</span></h2>
 
@@ -459,7 +1178,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00019">19</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00018">18</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -553,117 +1272,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00043">43</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a91bcaa16ccc5e9a01aef36fff26b3106" name="a91bcaa16ccc5e9a01aef36fff26b3106"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a91bcaa16ccc5e9a01aef36fff26b3106">&#9670;&#160;</a></span>compareTokens()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool xrpl::nft::compareTokens </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>a</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>b</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00181">181</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a321ce62f3971915a8a4f844ddb728443" name="a321ce62f3971915a8a4f844ddb728443"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a321ce62f3971915a8a4f844ddb728443">&#9670;&#160;</a></span>changeTokenURI()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::changeTokenURI </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1Slice.html">xrpl::Slice</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>uri</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00195">195</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a0219390b8c07ff35c470b7532a91491d" name="a0219390b8c07ff35c470b7532a91491d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0219390b8c07ff35c470b7532a91491d">&#9670;&#160;</a></span>insertToken()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::insertToken </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a>&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STObject.html">STObject</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>nft</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Insert the token in the owner's token directory. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00223">223</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00044">44</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -707,616 +1316,7 @@ Variables</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00255">255</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5a7aff46edc5db515b3eefda27e5f1e8" name="a5a7aff46edc5db515b3eefda27e5f1e8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a7aff46edc5db515b3eefda27e5f1e8">&#9670;&#160;</a></span>removeToken() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::removeToken </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remove the token from the owner's token directory. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00317">317</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a0ea890b71a680f3e6827c7936d895982" name="a0ea890b71a680f3e6827c7936d895982"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0ea890b71a680f3e6827c7936d895982">&#9670;&#160;</a></span>removeToken() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::removeToken </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; &amp;&amp;&#160;</td>
-          <td class="paramname"><em>curr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Remove the token from the owner's token directory. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00330">330</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a599578945afd4cc3486c480f5aaf4a33" name="a599578945afd4cc3486c480f5aaf4a33"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a599578945afd4cc3486c480f5aaf4a33">&#9670;&#160;</a></span>findToken()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="classxrpl_1_1STObject.html">STObject</a> &gt; xrpl::nft::findToken </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Finds the specified token in the owner's token directory. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00468">468</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="ac2f8d19f03fc753693d5493b49000b4f" name="ac2f8d19f03fc753693d5493b49000b4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2f8d19f03fc753693d5493b49000b4f">&#9670;&#160;</a></span>findTokenAndPage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="structxrpl_1_1nft_1_1TokenAndPage.html">TokenAndPage</a> &gt; xrpl::nft::findTokenAndPage </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00487">487</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="aa8887d33db5d2134e1e3d6d9e4467437" name="aa8887d33db5d2134e1e3d6d9e4467437"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa8887d33db5d2134e1e3d6d9e4467437">&#9670;&#160;</a></span>removeTokenOffersWithLimit()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> xrpl::nft::removeTokenOffersWithLimit </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="structxrpl_1_1Keylet.html">Keylet</a> const &amp;&#160;</td>
-          <td class="paramname"><em>directory</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a>&#160;</td>
-          <td class="paramname"><em>maxDeletableOffers</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Delete up to a specified number of offers from the specified token offer directory. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00506">506</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="ac631986cd58b255d68265f236d484585" name="ac631986cd58b255d68265f236d484585"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac631986cd58b255d68265f236d484585">&#9670;&#160;</a></span>notTooManyOffers()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::notTooManyOffers </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Returns tesSUCCESS if NFToken has few enough offers that it can be burned. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00551">551</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a6034cb990afddcaf97e546bec15250dc" name="a6034cb990afddcaf97e546bec15250dc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6034cb990afddcaf97e546bec15250dc">&#9670;&#160;</a></span>deleteTokenOffer()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool xrpl::nft::deleteTokenOffer </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/memory/shared_ptr.html">std::shared_ptr</a>&lt; <a class="el" href="namespacexrpl.html#a7dd44ba0950a623d378c3da99084fb28">SLE</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>offer</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Deletes the given token offer. </p>
-<p>An offer is tracked in two separate places:</p><ul>
-<li>The token's 'buy' directory, if it's a buy offer; or</li>
-<li>The token's 'sell' directory, if it's a sell offer; and</li>
-<li>The owner directory of the account that placed the offer.</li>
-</ul>
-<p>The offer also consumes one incremental reserve. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00578">578</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="af2d590f7115cb16902dc65b8e16c3402" name="af2d590f7115cb16902dc65b8e16c3402"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af2d590f7115cb16902dc65b8e16c3402">&#9670;&#160;</a></span>repairNFTokenDirectoryLinks()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool xrpl::nft::repairNFTokenDirectoryLinks </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Repairs the links in an NFTokenPage directory. </p>
-<p>Returns true if a repair took place, otherwise false. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00604">604</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="ae12fc1520d7a0071c5caadbf3f7f7cbe" name="ae12fc1520d7a0071c5caadbf3f7f7cbe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae12fc1520d7a0071c5caadbf3f7f7cbe">&#9670;&#160;</a></span>tokenOfferCreatePreflight()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#aec5bc721e24f63bb2c1a542f6f456b33">NotTEC</a> xrpl::nft::tokenOfferCreatePreflight </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>acctID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
-          <td class="paramname"><em>amount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>dest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>expiration</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a>&#160;</td>
-          <td class="paramname"><em>nftFlags</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Rules.html">Rules</a> const &amp;&#160;</td>
-          <td class="paramname"><em>rules</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>txFlags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Preflight checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00715">715</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a0a6ed5efe33334b32ba3fe36eb87bae4" name="a0a6ed5efe33334b32ba3fe36eb87bae4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0a6ed5efe33334b32ba3fe36eb87bae4">&#9670;&#160;</a></span>tokenOfferCreatePreclaim()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::tokenOfferCreatePreclaim </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>acctID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftIssuer</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
-          <td class="paramname"><em>amount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>dest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a>&#160;</td>
-          <td class="paramname"><em>nftFlags</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint16_t</a>&#160;</td>
-          <td class="paramname"><em>xferFee</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>owner</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>txFlags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Preclaim checks shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00764">764</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a2b0fd0b8afafcf4150f5bace7aa798e4" name="a2b0fd0b8afafcf4150f5bace7aa798e4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b0fd0b8afafcf4150f5bace7aa798e4">&#9670;&#160;</a></span>tokenOfferCreateApply()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::tokenOfferCreateApply </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ApplyView.html">ApplyView</a> &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const &amp;&#160;</td>
-          <td class="paramname"><em>acctID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;&#160;</td>
-          <td class="paramname"><em>amount</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>dest</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> &gt; const &amp;&#160;</td>
-          <td class="paramname"><em>expiration</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1SeqProxy.html">SeqProxy</a>&#160;</td>
-          <td class="paramname"><em>seqProxy</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a76c892803711595bd0d3cf6fbedf028a">uint256</a> const &amp;&#160;</td>
-          <td class="paramname"><em>nftokenID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1XRPAmount.html">XRPAmount</a> const &amp;&#160;</td>
-          <td class="paramname"><em>priorBalance</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td>
-          <td class="paramname"><em>j</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="elRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a>&#160;</td>
-          <td class="paramname"><em>txFlags</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>doApply implementation shared by <a class="el" href="classxrpl_1_1NFTokenCreateOffer.html">NFTokenCreateOffer</a> and <a class="el" href="classxrpl_1_1NFTokenMint.html">NFTokenMint</a> </p>
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00862">862</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a758d12dfd672766a9622db73d9e6d44a" name="a758d12dfd672766a9622db73d9e6d44a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a758d12dfd672766a9622db73d9e6d44a">&#9670;&#160;</a></span>checkTrustlineAuthorized()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::checkTrustlineAuthorized </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const&#160;</td>
-          <td class="paramname"><em>j</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;&#160;</td>
-          <td class="paramname"><em>issue</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00932">932</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a5df5a9bba0d507c6b26b03fb59526b5d" name="a5df5a9bba0d507c6b26b03fb59526b5d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5df5a9bba0d507c6b26b03fb59526b5d">&#9670;&#160;</a></span>checkTrustlineDeepFrozen()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> xrpl::nft::checkTrustlineDeepFrozen </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1ReadView.html">ReadView</a> const &amp;&#160;</td>
-          <td class="paramname"><em>view</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a645fcf7e35dc370816f6dd8e2fd7f146">AccountID</a> const&#160;</td>
-          <td class="paramname"><em>id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a> const&#160;</td>
-          <td class="paramname"><em>j</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1Issue.html">Issue</a> const &amp;&#160;</td>
-          <td class="paramname"><em>issue</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00980">980</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="NFTokenUtils_8cpp_source.html#l00267">267</a> of file <a class="el" href="NFTokenUtils_8cpp_source.html">NFTokenUtils.cpp</a>.</p>
 
 </div>
 </div>

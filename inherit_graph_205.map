@@ -1,3 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structxrpl_1_1Attestations_1_1CmpByClaimID.html" title=" " alt="" coords="5,5,140,45"/>
+<area shape="rect" id="Node000000" href="$structxrpl_1_1Attestations_1_1AttestationBase.html" title=" " alt="" coords="5,37,140,77"/>
+<area shape="rect" id="Node000001" href="$structxrpl_1_1Attestations_1_1AttestationClaim.html" title=" " alt="" coords="217,5,357,45"/>
+<area shape="poly" id="edge575_Node000000_Node000001" title=" " alt="" coords="153,43,216,33,217,38,154,48"/>
+<area shape="rect" id="Node000002" href="$structxrpl_1_1Attestations_1_1AttestationCreateAccount.html" title=" " alt="" coords="188,69,385,109"/>
+<area shape="poly" id="edge576_Node000000_Node000002" title=" " alt="" coords="154,67,188,72,188,77,153,72"/>
 </map>

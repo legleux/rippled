@@ -17,6 +17,6 @@ var searchData=
   ['quiet_14',['QUIET',['../classxrpl_1_1Config.html#a9e60e680ac67eae8b4e5405425e0a75d',1,'xrpl::Config']]],
   ['quiet_5f_15',['quiet_',['../classxrpl_1_1test_1_1multi__runner__child.html#ab7c04822d0fac2fcb03d88b5d36d9176',1,'xrpl::test::multi_runner_child']]],
   ['quorum_16',['quorum',['../structxrpl_1_1test_1_1BridgeDef.html#a278f27d955c510d16811c4f52df0bf15',1,'xrpl::test::BridgeDef::quorum'],['../structxrpl_1_1test_1_1csf_1_1Peer.html#acd235ab310d7391e30b0ad0151c7a742',1,'xrpl::test::csf::Peer::quorum'],['../structxrpl_1_1test_1_1jtx_1_1XChainBridgeObjects.html#a335578211b6b88bc821a807976e8050c',1,'xrpl::test::jtx::XChainBridgeObjects::quorum']]],
-  ['quorum_5f_17',['quorum_',['../classxrpl_1_1ValidatorList.html#a5893c37cf621c702ec4d2816dfa918ec',1,'xrpl::ValidatorList::quorum_'],['../classxrpl_1_1SetSignerList.html#a2f69c6f248313ec4105705289363c085',1,'xrpl::SetSignerList::quorum_']]],
+  ['quorum_5f_17',['quorum_',['../classxrpl_1_1SetSignerList.html#a2f69c6f248313ec4105705289363c085',1,'xrpl::SetSignerList::quorum_'],['../classxrpl_1_1ValidatorList.html#a5893c37cf621c702ec4d2816dfa918ec',1,'xrpl::ValidatorList::quorum_']]],
   ['quot_18',['quot',['http://en.cppreference.com/w/cpp/numeric/math/div.html',1,'std::div_t::quot'],['http://en.cppreference.com/w/cpp/numeric/math/div.html',1,'std::imaxdiv_t::quot'],['http://en.cppreference.com/w/cpp/numeric/math/div.html',1,'std::ldiv_t::quot'],['http://en.cppreference.com/w/cpp/numeric/math/div.html',1,'std::lldiv_t::quot']]]
 ];

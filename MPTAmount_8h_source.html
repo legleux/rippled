@@ -180,63 +180,64 @@ $(document).ready(function() { init_codefold(0); });
 </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="foldopen" id="foldopen00096" data-start="{" data-end="}">
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classxrpl_1_1MPTAmount.html#a55dfdfa1fe02ef95fc8891d47d7adb7d">   96</a></span><span class="keyword">constexpr</span> MPTAmount::operator bool() const noexcept</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>{</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a> != 0;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>}</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classxrpl_1_1MPTAmount.html#a55dfdfa1fe02ef95fc8891d47d7adb7d">   96</a></span><span class="keyword">constexpr</span> MPTAmount::</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>operator bool() const noexcept</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>{</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a> != 0;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}</div>
 </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword">constexpr</span> <span class="keywordtype">int</span></div>
-<div class="foldopen" id="foldopen00103" data-start="{" data-end="}">
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classxrpl_1_1MPTAmount.html#a8988ef9d8ce045bf9a3805da735e74f4">  103</a></span><a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8988ef9d8ce045bf9a3805da735e74f4">MPTAmount::signum</a>() const noexcept</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>{</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordflow">return</span> (<a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a> &lt; 0) ? -1 : (<a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a> ? 1 : 0);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>}</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">constexpr</span> <span class="keywordtype">int</span></div>
+<div class="foldopen" id="foldopen00104" data-start="{" data-end="}">
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="classxrpl_1_1MPTAmount.html#a8988ef9d8ce045bf9a3805da735e74f4">  104</a></span><a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8988ef9d8ce045bf9a3805da735e74f4">MPTAmount::signum</a>() const noexcept</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>{</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordflow">return</span> (<a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a> &lt; 0) ? -1 : (<a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a> ? 1 : 0);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>}</div>
 </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="keyword">constexpr</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">MPTAmount::value_type</a></div>
-<div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">  113</a></span><a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">MPTAmount::value</a>()<span class="keyword"> const</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword"></span>{</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a>;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="keyword">constexpr</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">MPTAmount::value_type</a></div>
+<div class="foldopen" id="foldopen00114" data-start="{" data-end="}">
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">  114</a></span><a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">MPTAmount::value</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="keyword"></span>{</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">return</span> <a class="code hl_variable" href="classxrpl_1_1MPTAmount.html#ab4fe222ebc673682b4ac302d9cf60efc">value_</a>;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>}</div>
 </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keyword">inline</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div>
-<div class="foldopen" id="foldopen00119" data-start="{" data-end="}">
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a8a4e163bd9aefe5d4f2091b76954623f">  119</a></span><a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(<a class="code hl_class" href="classxrpl_1_1MPTAmount.html">MPTAmount</a> <span class="keyword">const</span>&amp; amount)</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>{</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordflow">return</span> <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/string/basic_string/to_string.html">std::to_string</a>(amount.value());</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>}</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="keyword">inline</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="}">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a8a4e163bd9aefe5d4f2091b76954623f">  120</a></span><a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(<a class="code hl_class" href="classxrpl_1_1MPTAmount.html">MPTAmount</a> <span class="keyword">const</span>&amp; amount)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>{</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordflow">return</span> <a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/string/basic_string/to_string.html">std::to_string</a>(amount.value());</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
 </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">inline</span> <a class="code hl_function" href="classxrpl_1_1MPTAmount.html#ad7390de75279d5434b6fbe17df480b90">MPTAmount</a></div>
-<div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="namespacexrpl.html#ae467542e7d0ee063e172cf11b5c69718">  125</a></span><a class="code hl_function" href="namespacexrpl.html#a95cb9e673d3664d7921976d476b2479d">mulRatio</a>(<a class="code hl_class" href="classxrpl_1_1MPTAmount.html">MPTAmount</a> <span class="keyword">const</span>&amp; amt, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> num, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> den, <span class="keywordtype">bool</span> roundUp)</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>{</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keyword">using namespace </span>boost::multiprecision;</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordflow">if</span> (!den)</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        Throw&lt;std::runtime_error&gt;(<span class="stringliteral">&quot;division by zero&quot;</span>);</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    int128_t <span class="keyword">const</span> amt128(amt.<a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">value</a>());</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keyword">auto</span> <span class="keyword">const</span> neg = amt.<a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">value</a>() &lt; 0;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">auto</span> <span class="keyword">const</span> m = amt128 * num;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keyword">auto</span> r = m / den;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordflow">if</span> (m % den)</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    {</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">if</span> (!neg &amp;&amp; roundUp)</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            r += 1;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="keywordflow">if</span> (neg &amp;&amp; !roundUp)</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            r -= 1;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    }</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordflow">if</span> (r &gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/numeric_limits.html">std::numeric_limits&lt;MPTAmount::value_type&gt;::max</a>())</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        Throw&lt;std::overflow_error&gt;(<span class="stringliteral">&quot;MPT mulRatio overflow&quot;</span>);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classxrpl_1_1MPTAmount.html#ad7390de75279d5434b6fbe17df480b90">MPTAmount</a>(r.convert_to&lt;<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">MPTAmount::value_type</a>&gt;());</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>}</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="keyword">inline</span> <a class="code hl_function" href="classxrpl_1_1MPTAmount.html#ad7390de75279d5434b6fbe17df480b90">MPTAmount</a></div>
+<div class="foldopen" id="foldopen00126" data-start="{" data-end="}">
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="namespacexrpl.html#ae467542e7d0ee063e172cf11b5c69718">  126</a></span><a class="code hl_function" href="namespacexrpl.html#a95cb9e673d3664d7921976d476b2479d">mulRatio</a>(<a class="code hl_class" href="classxrpl_1_1MPTAmount.html">MPTAmount</a> <span class="keyword">const</span>&amp; amt, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> num, <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint32_t</a> den, <span class="keywordtype">bool</span> roundUp)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>{</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keyword">using namespace </span>boost::multiprecision;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordflow">if</span> (!den)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        Throw&lt;std::runtime_error&gt;(<span class="stringliteral">&quot;division by zero&quot;</span>);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    int128_t <span class="keyword">const</span> amt128(amt.<a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">value</a>());</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keyword">auto</span> <span class="keyword">const</span> neg = amt.<a class="code hl_function" href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">value</a>() &lt; 0;</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="keyword">auto</span> <span class="keyword">const</span> m = amt128 * num;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keyword">auto</span> r = m / den;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordflow">if</span> (m % den)</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    {</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="keywordflow">if</span> (!neg &amp;&amp; roundUp)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            r += 1;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <span class="keywordflow">if</span> (neg &amp;&amp; !roundUp)</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            r -= 1;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    }</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    <span class="keywordflow">if</span> (r &gt; <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/numeric_limits.html">std::numeric_limits&lt;MPTAmount::value_type&gt;::max</a>())</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        Throw&lt;std::overflow_error&gt;(<span class="stringliteral">&quot;MPT mulRatio overflow&quot;</span>);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="classxrpl_1_1MPTAmount.html#ad7390de75279d5434b6fbe17df480b90">MPTAmount</a>(r.convert_to&lt;<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/integer.html">MPTAmount::value_type</a>&gt;());</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>}</div>
 </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html">xrpl::MPTAmount</a></div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00016">MPTAmount.h:20</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a2593f6e97a001d6d375d2c64aefea70e"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a2593f6e97a001d6d375d2c64aefea70e">xrpl::MPTAmount::value_type</a></div><div class="ttdeci">std::int64_t value_type</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00022">MPTAmount.h:22</a></div></div>
@@ -244,8 +245,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a404e1348aaa097dbba423f2bda6ae28d"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a404e1348aaa097dbba423f2bda6ae28d">xrpl::MPTAmount::minPositiveAmount</a></div><div class="ttdeci">static MPTAmount minPositiveAmount()</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8cpp_source.html#l00044">MPTAmount.cpp:44</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a540ebbc1024afe7a49d804d2d7873eb5"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a540ebbc1024afe7a49d804d2d7873eb5">xrpl::MPTAmount::operator-=</a></div><div class="ttdeci">MPTAmount &amp; operator-=(MPTAmount const &amp;other)</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8cpp_source.html#l00013">MPTAmount.cpp:13</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a800f4f5f7d82e672e7ecd22bd4a02b03"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a800f4f5f7d82e672e7ecd22bd4a02b03">xrpl::MPTAmount::operator-</a></div><div class="ttdeci">MPTAmount operator-() const</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8cpp_source.html#l00020">MPTAmount.cpp:20</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a8988ef9d8ce045bf9a3805da735e74f4"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a8988ef9d8ce045bf9a3805da735e74f4">xrpl::MPTAmount::signum</a></div><div class="ttdeci">constexpr int signum() const noexcept</div><div class="ttdoc">Return the sign of the amount.</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00103">MPTAmount.h:103</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a8a6d845a85d77bf5492d21d66665d226"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">xrpl::MPTAmount::value</a></div><div class="ttdeci">constexpr value_type value() const</div><div class="ttdoc">Returns the underlying value.</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00113">MPTAmount.h:113</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a8988ef9d8ce045bf9a3805da735e74f4"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a8988ef9d8ce045bf9a3805da735e74f4">xrpl::MPTAmount::signum</a></div><div class="ttdeci">constexpr int signum() const noexcept</div><div class="ttdoc">Return the sign of the amount.</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00104">MPTAmount.h:104</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a8a6d845a85d77bf5492d21d66665d226"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a8a6d845a85d77bf5492d21d66665d226">xrpl::MPTAmount::value</a></div><div class="ttdeci">constexpr value_type value() const</div><div class="ttdoc">Returns the underlying value.</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00114">MPTAmount.h:114</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a93839a6e9dfac2d10edb892b9bea96f7"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a93839a6e9dfac2d10edb892b9bea96f7">xrpl::MPTAmount::MPTAmount</a></div><div class="ttdeci">MPTAmount(Number const &amp;x)</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8h_source.html#l00034">MPTAmount.h:34</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a96acbb03cf957e83423a4c728f334d2d"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a96acbb03cf957e83423a4c728f334d2d">xrpl::MPTAmount::operator&lt;</a></div><div class="ttdeci">bool operator&lt;(MPTAmount const &amp;other) const</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8cpp_source.html#l00037">MPTAmount.cpp:38</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1MPTAmount_html_a9a205e2f2ef14a524238396173ed8770"><div class="ttname"><a href="classxrpl_1_1MPTAmount.html#a9a205e2f2ef14a524238396173ed8770">xrpl::MPTAmount::operator+=</a></div><div class="ttdeci">MPTAmount &amp; operator+=(MPTAmount const &amp;other)</div><div class="ttdef"><b>Definition</b> <a href="MPTAmount_8cpp_source.html#l00006">MPTAmount.cpp:6</a></div></div>
@@ -257,8 +258,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="acstdint_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/cstdint.html">cstdint</a></div></div>
 <div class="ttc" id="ainteger_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/integer.html">std::int64_t</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
-<div class="ttc" id="anamespacexrpl_html_a35ce7572092b98720a52fa343c6f2fa9"><div class="ttname"><a href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">xrpl::to_string</a></div><div class="ttdeci">std::string to_string(base_uint&lt; Bits, Tag &gt; const &amp;a)</div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00597">base_uint.h:597</a></div></div>
-<div class="ttc" id="anamespacexrpl_html_a95cb9e673d3664d7921976d476b2479d"><div class="ttname"><a href="namespacexrpl.html#a95cb9e673d3664d7921976d476b2479d">xrpl::mulRatio</a></div><div class="ttdeci">IOUAmount mulRatio(IOUAmount const &amp;amt, std::uint32_t num, std::uint32_t den, bool roundUp)</div><div class="ttdef"><b>Definition</b> <a href="IOUAmount_8cpp_source.html#l00184">IOUAmount.cpp:184</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a35ce7572092b98720a52fa343c6f2fa9"><div class="ttname"><a href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">xrpl::to_string</a></div><div class="ttdeci">std::string to_string(base_uint&lt; Bits, Tag &gt; const &amp;a)</div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00600">base_uint.h:600</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a95cb9e673d3664d7921976d476b2479d"><div class="ttname"><a href="namespacexrpl.html#a95cb9e673d3664d7921976d476b2479d">xrpl::mulRatio</a></div><div class="ttdeci">IOUAmount mulRatio(IOUAmount const &amp;amt, std::uint32_t num, std::uint32_t den, bool roundUp)</div><div class="ttdef"><b>Definition</b> <a href="IOUAmount_8cpp_source.html#l00185">IOUAmount.cpp:185</a></div></div>
 <div class="ttc" id="anumeric_limits_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/numeric_limits.html">std::numeric_limits</a></div></div>
 <div class="ttc" id="astring_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/string.html">string</a></div></div>
 <div class="ttc" id="astructbeast_1_1Zero_html"><div class="ttname"><a href="structbeast_1_1Zero.html">beast::Zero</a></div><div class="ttdoc">Zero allows classes to offer efficient comparisons to zero.</div><div class="ttdef"><b>Definition</b> <a href="Zero_8h_source.html#l00024">Zero.h:25</a></div></div>

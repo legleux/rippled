@@ -229,7 +229,7 @@ Public Attributes</h2></td></tr>
 <tr class="memdesc:aab0f5e76a83053328461a66bc769e9a6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values.">Number</a> of times the transactor can return a retry / <code>ter</code> result when attempting to apply this transaction to the open ledger from the queue.  <br /></td></tr>
 <tr class="separator:aab0f5e76a83053328461a66bc769e9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08847470c57fb0b44b2bf09e9a640a44" id="r_a08847470c57fb0b44b2bf09e9a640a44"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1TxQ_1_1TxDetails.html#a08847470c57fb0b44b2bf09e9a640a44">preflightResult</a></td></tr>
-<tr class="memdesc:a08847470c57fb0b44b2bf09e9a640a44"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <em>intermediate</em> result returned by <a class="el" href="namespacexrpl.html#a4b9cd90d78d04b423badb0d09d7861d6">preflight</a> before this transaction was queued, or after it is queued, but before a failed attempt to <code>apply</code> it to the open ledger.  <br /></td></tr>
+<tr class="memdesc:a08847470c57fb0b44b2bf09e9a640a44"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <em>intermediate</em> result returned by <a class="el" href="namespacexrpl.html#a1d31b57cb134b0ca7fdc966dcdf5ca80">preflight</a> before this transaction was queued, or after it is queued, but before a failed attempt to <code>apply</code> it to the open ledger.  <br /></td></tr>
 <tr class="separator:a08847470c57fb0b44b2bf09e9a640a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9c5bf85c19da1aa18467308f7d2bec6c" id="r_a9c5bf85c19da1aa18467308f7d2bec6c"><td class="memItemLeft" align="right" valign="top"><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/optional.html">std::optional</a>&lt; <a class="el" href="namespacexrpl.html#a89ce254d202a943d2f5bad19d88787a5">TER</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1TxQ_1_1TxDetails.html#a9c5bf85c19da1aa18467308f7d2bec6c">lastResult</a></td></tr>
 <tr class="memdesc:a9c5bf85c19da1aa18467308f7d2bec6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">If the transactor attempted to apply the transaction to the open ledger from the queue and <em>failed</em>, then this is the transactor result from the last attempt.  <br /></td></tr>
@@ -239,7 +239,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>Structure that describes a transaction in the queue waiting to be applied to the current open ledger. </p>
 <p>A collection of these is returned by <a class="el" href="classxrpl_1_1TxQ.html#a8481562523f60a6651a1f076138519d4">TxQ::getTxs</a>. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00174">174</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00173">173</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ab520cb634fcc9bad88c2fad22f3ec14b" name="ab520cb634fcc9bad88c2fad22f3ec14b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab520cb634fcc9bad88c2fad22f3ec14b">&#9670;&#160;</a></span>TxDetails()</h2>
@@ -311,7 +311,7 @@ Public Attributes</h2></td></tr>
 
 <p>Full initialization. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00177">177</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00176">176</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -330,7 +330,7 @@ Public Attributes</h2></td></tr>
 
 <p>Fee level of the queued transaction. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00200">200</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00199">199</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -348,7 +348,7 @@ Public Attributes</h2></td></tr>
 
 <p>LastValidLedger field of the queued transaction, if any. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00202">202</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00201">201</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -366,7 +366,7 @@ Public Attributes</h2></td></tr>
 
 <p>Potential <a class="el" href="classxrpl_1_1TxConsequences.html">TxConsequences</a> of applying the queued transaction to the open ledger. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00206">206</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00205">205</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -384,7 +384,7 @@ Public Attributes</h2></td></tr>
 
 <p>The account the transaction is queued for. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00208">208</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00207">207</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -402,7 +402,7 @@ Public Attributes</h2></td></tr>
 
 <p><a class="el" href="classxrpl_1_1SeqProxy.html" title="A type that represents either a sequence value or a ticket value.">SeqProxy</a> of the transaction. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00210">210</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00209">209</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -420,7 +420,7 @@ Public Attributes</h2></td></tr>
 
 <p>The full transaction. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00212">212</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00211">211</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -439,7 +439,7 @@ Public Attributes</h2></td></tr>
 <p><a class="el" href="classxrpl_1_1Number.html" title="Number is a floating point type that can represent a wide range of values.">Number</a> of times the transactor can return a retry / <code>ter</code> result when attempting to apply this transaction to the open ledger from the queue. </p>
 <p>If the transactor returns <code>ter</code> and no retries are left, this transaction will be dropped. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00218">218</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00217">217</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -455,10 +455,10 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>The <em>intermediate</em> result returned by <a class="el" href="namespacexrpl.html#a4b9cd90d78d04b423badb0d09d7861d6">preflight</a> before this transaction was queued, or after it is queued, but before a failed attempt to <code>apply</code> it to the open ledger. </p>
+<p>The <em>intermediate</em> result returned by <a class="el" href="namespacexrpl.html#a1d31b57cb134b0ca7fdc966dcdf5ca80">preflight</a> before this transaction was queued, or after it is queued, but before a failed attempt to <code>apply</code> it to the open ledger. </p>
 <p>This will usually be <code>tesSUCCESS</code>, but there are some edge cases where it has another value. Those edge cases are interesting enough that this value is made available here. Specifically, if the <code>rules</code> change between attempts, <code>preflight</code> will be run again in <code><a class="el" href="classxrpl_1_1TxQ_1_1MaybeTx.html#a8a2fba81eb3c726ac26dbab143e127ef" title="Attempt to apply the queued transaction to the open ledger.">TxQ::MaybeTx::apply</a></code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00228">228</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00227">227</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>
@@ -477,7 +477,7 @@ Public Attributes</h2></td></tr>
 <p>If the transactor attempted to apply the transaction to the open ledger from the queue and <em>failed</em>, then this is the transactor result from the last attempt. </p>
 <p>Should never be a <code>tec</code>, <code>tef</code>, <code>tem</code>, or <code>tesSUCCESS</code>, because those results cause the transaction to be removed from the queue. </p>
 
-<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00235">235</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="TxQ_8h_source.html#l00234">234</a> of file <a class="el" href="TxQ_8h_source.html">TxQ.h</a>.</p>
 
 </div>
 </div>

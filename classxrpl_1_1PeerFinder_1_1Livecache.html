@@ -189,14 +189,14 @@ Static Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-types" name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:af60addd9c2bf7abed334303514d0b519" id="r_af60addd9c2bf7abed334303514d0b519"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#af60addd9c2bf7abed334303514d0b519">cache_type</a> = <a class="el" href="namespacebeast.html#a69f5bb1e8794b1a8348db2bf9f6b76b8">beast::aged_map</a>&lt; <a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a>, <a class="el" href="structxrpl_1_1PeerFinder_1_1detail_1_1LivecacheBase_1_1Element.html">Element</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/steady_clock.html">std::chrono::steady_clock</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/less.html">std::less</a>&lt; <a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a> &gt;, Allocator &gt;</td></tr>
-<tr class="separator:af60addd9c2bf7abed334303514d0b519"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d91895488ea8bc51d8e87003a2ff510" id="r_a7d91895488ea8bc51d8e87003a2ff510"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#a7d91895488ea8bc51d8e87003a2ff510">cache_type</a> = <a class="el" href="namespacebeast.html#a69f5bb1e8794b1a8348db2bf9f6b76b8">beast::aged_map</a>&lt; <a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a>, <a class="el" href="structxrpl_1_1PeerFinder_1_1detail_1_1LivecacheBase_1_1Element.html">Element</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/steady_clock.html">std::chrono::steady_clock</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/less.html">std::less</a>&lt; <a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a> &gt;, Allocator &gt;</td></tr>
+<tr class="separator:a7d91895488ea8bc51d8e87003a2ff510"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:af7b1664f1aa5c84bb34684fb58ab2141" id="r_af7b1664f1aa5c84bb34684fb58ab2141"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classbeast_1_1Journal.html">beast::Journal</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#af7b1664f1aa5c84bb34684fb58ab2141">m_journal</a></td></tr>
 <tr class="separator:af7b1664f1aa5c84bb34684fb58ab2141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a050f00f06947ce965ccfb13e10ddd26c" id="r_a050f00f06947ce965ccfb13e10ddd26c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#af60addd9c2bf7abed334303514d0b519">cache_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#a050f00f06947ce965ccfb13e10ddd26c">m_cache</a></td></tr>
+<tr class="memitem:a050f00f06947ce965ccfb13e10ddd26c" id="r_a050f00f06947ce965ccfb13e10ddd26c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#a7d91895488ea8bc51d8e87003a2ff510">cache_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#a050f00f06947ce965ccfb13e10ddd26c">m_cache</a></td></tr>
 <tr class="separator:a050f00f06947ce965ccfb13e10ddd26c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -205,10 +205,10 @@ class xrpl::PeerFinder::Livecache&lt; Allocator &gt;</div><p>The <a class="el" h
 <p>Since peers only advertise themselves when they have open slots, we want these messages to expire rather quickly after the peer becomes full.</p>
 <p>Addresses added to the cache are not connection-tested to see if they are connectable (with one small exception regarding neighbors). Therefore, these addresses are not suitable for persisting across launches or for bootstrapping, because they do not have verifiable and locally observed uptime and connectability information. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00169">169</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00171">171</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="af60addd9c2bf7abed334303514d0b519" name="af60addd9c2bf7abed334303514d0b519"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af60addd9c2bf7abed334303514d0b519">&#9670;&#160;</a></span>cache_type</h2>
+<a id="a7d91895488ea8bc51d8e87003a2ff510" name="a7d91895488ea8bc51d8e87003a2ff510"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d91895488ea8bc51d8e87003a2ff510">&#9670;&#160;</a></span>cache_type</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -219,7 +219,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html">xrpl::PeerFinder::Livecache</a>&lt; Allocator &gt;::cache_type =  beast:: aged_map&lt;<a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a>, <a class="el" href="structxrpl_1_1PeerFinder_1_1detail_1_1LivecacheBase_1_1Element.html">Element</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/steady_clock.html">std::chrono::steady_clock</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/less.html">std::less</a>&lt;<a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a>&gt;, Allocator&gt;</td>
+          <td class="memname">using <a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html">xrpl::PeerFinder::Livecache</a>&lt; Allocator &gt;::cache_type =  <a class="el" href="namespacebeast.html#a69f5bb1e8794b1a8348db2bf9f6b76b8">beast::aged_map</a>&lt; <a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a>, <a class="el" href="structxrpl_1_1PeerFinder_1_1detail_1_1LivecacheBase_1_1Element.html">Element</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/chrono/steady_clock.html">std::chrono::steady_clock</a>, <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/less.html">std::less</a>&lt;<a class="el" href="classbeast_1_1IP_1_1Endpoint.html">beast::IP::Endpoint</a>&gt;, Allocator&gt;</td>
         </tr>
       </table>
   </td>
@@ -229,7 +229,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00172">172</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00174">174</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -247,7 +247,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00179">179</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00185">185</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -312,7 +312,7 @@ template&lt;class Allocator &gt; </div>
 
 <p>Create the cache. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00354">354</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00363">363</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -336,7 +336,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
 
 <p>Returns <code>true</code> if the cache is empty. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00326">326</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00335">335</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -359,7 +359,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
 
 <p>Returns the number of entries in the cache. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00333">333</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00342">342</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -382,7 +382,7 @@ template&lt;class Allocator &gt; </div>
 
 <p>Erase entries whose time has expired. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00361">361</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00370">370</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -406,7 +406,7 @@ template&lt;class Allocator &gt; </div>
 
 <p>Creates or updates an existing Element based on a new message. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00380">380</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00392">392</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -430,7 +430,7 @@ template&lt;class Allocator &gt; </div>
 
 <p>Output statistics. </p>
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00421">421</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00439">439</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -460,7 +460,7 @@ template&lt;bool IsConst&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00146">146</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00148">148</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -487,7 +487,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00175">175</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00181">181</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>
@@ -503,7 +503,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#af60addd9c2bf7abed334303514d0b519">cache_type</a> <a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html">xrpl::PeerFinder::Livecache</a>&lt; Allocator &gt;::m_cache</td>
+          <td class="memname"><a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html#a7d91895488ea8bc51d8e87003a2ff510">cache_type</a> <a class="el" href="classxrpl_1_1PeerFinder_1_1Livecache.html">xrpl::PeerFinder::Livecache</a>&lt; Allocator &gt;::m_cache</td>
         </tr>
       </table>
   </td>
@@ -513,7 +513,7 @@ template&lt;class Allocator  = std::allocator&lt;char&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00176">176</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Livecache_8h_source.html#l00182">182</a> of file <a class="el" href="Livecache_8h_source.html">Livecache.h</a>.</p>
 
 </div>
 </div>

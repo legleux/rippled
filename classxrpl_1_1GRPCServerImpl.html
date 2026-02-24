@@ -172,9 +172,9 @@ Private Types</h2></td></tr>
 <tr class="memitem:a73dd560535675131eee847bfc249d5c8" id="r_a73dd560535675131eee847bfc249d5c8"><td class="memTemplParams" colspan="2">template&lt;class Request , class Response &gt; </td></tr>
 <tr class="memitem:a73dd560535675131eee847bfc249d5c8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classxrpl_1_1GRPCServerImpl.html#a73dd560535675131eee847bfc249d5c8">Handler</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/pair.html">std::pair</a>&lt; Response, grpc::Status &gt;(<a class="el" href="structxrpl_1_1RPC_1_1GRPCContext.html">RPC::GRPCContext</a>&lt; Request &gt; &amp;)&gt;</td></tr>
 <tr class="separator:a73dd560535675131eee847bfc249d5c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8add61475bfdcaaab3eafc4aeccdfce8" id="r_a8add61475bfdcaaab3eafc4aeccdfce8"><td class="memTemplParams" colspan="2">template&lt;class Request , class Response &gt; </td></tr>
-<tr class="memitem:a8add61475bfdcaaab3eafc4aeccdfce8"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classxrpl_1_1GRPCServerImpl.html#a8add61475bfdcaaab3eafc4aeccdfce8">Forward</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; grpc::Status(org::xrpl::rpc::v1::XRPLedgerAPIService::Stub *, grpc::ClientContext *, Request, Response *)&gt;</td></tr>
-<tr class="separator:a8add61475bfdcaaab3eafc4aeccdfce8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5446d30d85fad4189878ba72db83220" id="r_aa5446d30d85fad4189878ba72db83220"><td class="memTemplParams" colspan="2">template&lt;class Request , class Response &gt; </td></tr>
+<tr class="memitem:aa5446d30d85fad4189878ba72db83220"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classxrpl_1_1GRPCServerImpl.html#aa5446d30d85fad4189878ba72db83220">Forward</a> = <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; grpc::Status(org::xrpl::rpc::v1::XRPLedgerAPIService::Stub *, grpc::ClientContext *, Request, Response *)&gt;</td></tr>
+<tr class="separator:aa5446d30d85fad4189878ba72db83220"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -258,8 +258,8 @@ template&lt;class Request , class Response &gt; </div>
 
 </div>
 </div>
-<a id="a8add61475bfdcaaab3eafc4aeccdfce8" name="a8add61475bfdcaaab3eafc4aeccdfce8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8add61475bfdcaaab3eafc4aeccdfce8">&#9670;&#160;</a></span>Forward</h2>
+<a id="aa5446d30d85fad4189878ba72db83220" name="aa5446d30d85fad4189878ba72db83220"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5446d30d85fad4189878ba72db83220">&#9670;&#160;</a></span>Forward</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -270,7 +270,7 @@ template&lt;class Request , class Response &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="classxrpl_1_1GRPCServerImpl.html#a8add61475bfdcaaab3eafc4aeccdfce8">xrpl::GRPCServerImpl::Forward</a> =  <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt; grpc::Status(org::xrpl::rpc::v1::XRPLedgerAPIService::Stub*, grpc::ClientContext*, Request, Response*)&gt;</td>
+          <td class="memname">using <a class="el" href="classxrpl_1_1GRPCServerImpl.html#aa5446d30d85fad4189878ba72db83220">xrpl::GRPCServerImpl::Forward</a> =  <a class="elRef" href="http://en.cppreference.com/w/cpp/utility/functional/function.html">std::function</a>&lt;grpc::Status( org::xrpl::rpc::v1::XRPLedgerAPIService::Stub*, grpc::ClientContext*, Request, Response*)&gt;</td>
         </tr>
       </table>
   </td>
@@ -309,7 +309,7 @@ template&lt;class Request , class Response &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00275">275</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00286">286</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -381,7 +381,7 @@ template&lt;class Request , class Response &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00335">335</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00347">347</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -400,7 +400,7 @@ template&lt;class Request , class Response &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00490">490</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00515">515</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -419,7 +419,7 @@ template&lt;class Request , class Response &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00357">357</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00369">369</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -438,7 +438,7 @@ template&lt;class Request , class Response &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00424">424</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00438">438</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
 
 </div>
 </div>
@@ -457,7 +457,7 @@ template&lt;class Request , class Response &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00518">518</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="GRPCServer_8cpp_source.html#l00543">543</a> of file <a class="el" href="GRPCServer_8cpp_source.html">GRPCServer.cpp</a>.</p>
 
 </div>
 </div>

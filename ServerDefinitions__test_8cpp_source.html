@@ -127,107 +127,109 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                BEAST_EXPECT(firstField[1][jss::type].asString() == <span class="stringliteral">&quot;Unknown&quot;</span>);</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            }</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            BEAST_EXPECT(result[jss::result][jss::LEDGER_ENTRY_TYPES][<span class="stringliteral">&quot;AccountRoot&quot;</span>].asUInt() == 97);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            BEAST_EXPECT(result[jss::result][jss::TRANSACTION_RESULTS][<span class="stringliteral">&quot;tecDIR_FULL&quot;</span>].asUInt() == 121);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            BEAST_EXPECT(result[jss::result][jss::TRANSACTION_TYPES][<span class="stringliteral">&quot;Payment&quot;</span>].asUInt() == 0);</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            BEAST_EXPECT(result[jss::result][jss::TYPES][<span class="stringliteral">&quot;AccountID&quot;</span>].asUInt() == 8);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="comment">// check exception SFields</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            {</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                <span class="keyword">auto</span> <span class="keyword">const</span> fieldExists = [&amp;](<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> name) {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; field : result[jss::result][jss::FIELDS])</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                    {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                        <span class="keywordflow">if</span> (field[0u].asString() == name)</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                        {</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                        }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                    }</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                };</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;Generic&quot;</span>));</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;Invalid&quot;</span>));</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;ObjectEndMarker&quot;</span>));</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;ArrayEndMarker&quot;</span>));</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;taker_gets_funded&quot;</span>));</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;taker_pays_funded&quot;</span>));</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;hash&quot;</span>));</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;index&quot;</span>));</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="comment">// test that base_uint types are replaced with &quot;Hash&quot; prefix</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                <span class="keyword">auto</span> <span class="keyword">const</span> types = result[jss::result][jss::TYPES];</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash128&quot;</span>].asUInt() == 4);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash160&quot;</span>].asUInt() == 17);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash192&quot;</span>].asUInt() == 21);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash256&quot;</span>].asUInt() == 5);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash384&quot;</span>].asUInt() == 22);</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash512&quot;</span>].asUInt() == 23);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            }</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        }</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="comment">// test providing the same hash</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        {</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1Env.html">Env</a> env(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keyword">auto</span> <span class="keyword">const</span> firstResult = env.<a class="code hl_function" href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">rpc</a>(<span class="stringliteral">&quot;server_definitions&quot;</span>);</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keyword">auto</span> <span class="keyword">const</span> hash = firstResult[jss::result][jss::hash].<a class="code hl_function" href="classJson_1_1Value.html#ab0d86bf425efefd03513e8dbfaca317b">asString</a>();</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keyword">auto</span> <span class="keyword">const</span> hashParam = <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;{ &quot;</span>) + <span class="stringliteral">&quot;\&quot;hash\&quot;: \&quot;&quot;</span> + hash + <span class="stringliteral">&quot;\&quot;}&quot;</span>;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="keyword">auto</span> <span class="keyword">const</span> result = env.<a class="code hl_function" href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">rpc</a>(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;server_definitions&quot;</span>, hashParam);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::error));</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            BEAST_EXPECT(result[jss::result][jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::FIELDS));</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::LEDGER_ENTRY_TYPES));</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::TRANSACTION_RESULTS));</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::TRANSACTION_TYPES));</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::TYPES));</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            BEAST_EXPECT(result[jss::result].isMember(jss::hash));</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        }</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="comment">// test providing a different hash</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1Env.html">Env</a> env(*<span class="keyword">this</span>);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span> hash =</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="stringliteral">&quot;54296160385A27154BFA70A239DD8E8FD4CC2DB7BA32D970BA3A5B132CF749&quot;</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                <span class="stringliteral">&quot;D1&quot;</span>;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keyword">auto</span> <span class="keyword">const</span> hashParam = <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;{ &quot;</span>) + <span class="stringliteral">&quot;\&quot;hash\&quot;: \&quot;&quot;</span> + hash + <span class="stringliteral">&quot;\&quot;}&quot;</span>;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keyword">auto</span> <span class="keyword">const</span> result = env.<a class="code hl_function" href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">rpc</a>(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;server_definitions&quot;</span>, hashParam);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::error));</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            BEAST_EXPECT(result[jss::result][jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            BEAST_EXPECT(result[jss::result].isMember(jss::FIELDS));</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            BEAST_EXPECT(result[jss::result].isMember(jss::LEDGER_ENTRY_TYPES));</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            BEAST_EXPECT(result[jss::result].isMember(jss::TRANSACTION_RESULTS));</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            BEAST_EXPECT(result[jss::result].isMember(jss::TRANSACTION_TYPES));</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            BEAST_EXPECT(result[jss::result].isMember(jss::TYPES));</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            BEAST_EXPECT(result[jss::result].isMember(jss::hash));</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    }</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            BEAST_EXPECT(</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                result[jss::result][jss::LEDGER_ENTRY_TYPES][<span class="stringliteral">&quot;AccountRoot&quot;</span>].asUInt() == 97);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            BEAST_EXPECT(</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                result[jss::result][jss::TRANSACTION_RESULTS][<span class="stringliteral">&quot;tecDIR_FULL&quot;</span>].asUInt() == 121);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            BEAST_EXPECT(result[jss::result][jss::TRANSACTION_TYPES][<span class="stringliteral">&quot;Payment&quot;</span>].asUInt() == 0);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            BEAST_EXPECT(result[jss::result][jss::TYPES][<span class="stringliteral">&quot;AccountID&quot;</span>].asUInt() == 8);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="comment">// check exception SFields</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keyword">auto</span> <span class="keyword">const</span> fieldExists = [&amp;](<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> name) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                    <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; field : result[jss::result][jss::FIELDS])</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                    {</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                        <span class="keywordflow">if</span> (field[0u].asString() == name)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                        {</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                        }</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                    }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;Generic&quot;</span>));</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;Invalid&quot;</span>));</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;ObjectEndMarker&quot;</span>));</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;ArrayEndMarker&quot;</span>));</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;taker_gets_funded&quot;</span>));</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;taker_pays_funded&quot;</span>));</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;hash&quot;</span>));</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                BEAST_EXPECT(fieldExists(<span class="stringliteral">&quot;index&quot;</span>));</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="comment">// test that base_uint types are replaced with &quot;Hash&quot; prefix</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                <span class="keyword">auto</span> <span class="keyword">const</span> types = result[jss::result][jss::TYPES];</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash128&quot;</span>].asUInt() == 4);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash160&quot;</span>].asUInt() == 17);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash192&quot;</span>].asUInt() == 21);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash256&quot;</span>].asUInt() == 5);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash384&quot;</span>].asUInt() == 22);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                BEAST_EXPECT(types[<span class="stringliteral">&quot;Hash512&quot;</span>].asUInt() == 23);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment">// test providing the same hash</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        {</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1Env.html">Env</a> env(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keyword">auto</span> <span class="keyword">const</span> firstResult = env.<a class="code hl_function" href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">rpc</a>(<span class="stringliteral">&quot;server_definitions&quot;</span>);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="keyword">auto</span> <span class="keyword">const</span> hash = firstResult[jss::result][jss::hash].<a class="code hl_function" href="classJson_1_1Value.html#ab0d86bf425efefd03513e8dbfaca317b">asString</a>();</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="keyword">auto</span> <span class="keyword">const</span> hashParam = <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;{ &quot;</span>) + <span class="stringliteral">&quot;\&quot;hash\&quot;: \&quot;&quot;</span> + hash + <span class="stringliteral">&quot;\&quot;}&quot;</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="keyword">auto</span> <span class="keyword">const</span> result = env.<a class="code hl_function" href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">rpc</a>(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;server_definitions&quot;</span>, hashParam);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::error));</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            BEAST_EXPECT(result[jss::result][jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::FIELDS));</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::LEDGER_ENTRY_TYPES));</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::TRANSACTION_RESULTS));</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::TRANSACTION_TYPES));</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::TYPES));</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            BEAST_EXPECT(result[jss::result].isMember(jss::hash));</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="comment">// test providing a different hash</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1Env.html">Env</a> env(*<span class="keyword">this</span>);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span> hash =</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="stringliteral">&quot;54296160385A27154BFA70A239DD8E8FD4CC2DB7BA32D970BA3A5B132CF749&quot;</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <span class="stringliteral">&quot;D1&quot;</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keyword">auto</span> <span class="keyword">const</span> hashParam = <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;{ &quot;</span>) + <span class="stringliteral">&quot;\&quot;hash\&quot;: \&quot;&quot;</span> + hash + <span class="stringliteral">&quot;\&quot;}&quot;</span>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keyword">auto</span> <span class="keyword">const</span> result = env.<a class="code hl_function" href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">rpc</a>(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;server_definitions&quot;</span>, hashParam);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            BEAST_EXPECT(!result[jss::result].isMember(jss::error));</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            BEAST_EXPECT(result[jss::result][jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            BEAST_EXPECT(result[jss::result].isMember(jss::FIELDS));</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            BEAST_EXPECT(result[jss::result].isMember(jss::LEDGER_ENTRY_TYPES));</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            BEAST_EXPECT(result[jss::result].isMember(jss::TRANSACTION_RESULTS));</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            BEAST_EXPECT(result[jss::result].isMember(jss::TRANSACTION_TYPES));</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            BEAST_EXPECT(result[jss::result].isMember(jss::TYPES));</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            BEAST_EXPECT(result[jss::result].isMember(jss::hash));</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    }</div>
 </div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00123" data-start="{" data-end="}">
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classxrpl_1_1test_1_1ServerDefinitions__test.html#af48ef765f1a28172e34daee04a10de21">  123</a></span>    <a class="code hl_function" href="classxrpl_1_1test_1_1ServerDefinitions__test.html#af48ef765f1a28172e34daee04a10de21">run</a>()<span class="keyword"> override</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <a class="code hl_function" href="classxrpl_1_1test_1_1ServerDefinitions__test.html#ac3b57e23fa92e0ac74fc99c623585401">testServerDefinitions</a>();</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    }</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00125" data-start="{" data-end="}">
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="classxrpl_1_1test_1_1ServerDefinitions__test.html#af48ef765f1a28172e34daee04a10de21">  125</a></span>    <a class="code hl_function" href="classxrpl_1_1test_1_1ServerDefinitions__test.html#af48ef765f1a28172e34daee04a10de21">run</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <a class="code hl_function" href="classxrpl_1_1test_1_1ServerDefinitions__test.html#ac3b57e23fa92e0ac74fc99c623585401">testServerDefinitions</a>();</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
 </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>};</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>};</div>
 </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="namespacexrpl_1_1test.html#a42ad45a1435167c8a33e709a2ab653f8">  129</a></span>BEAST_DEFINE_TESTSUITE(ServerDefinitions, <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1rpc.html">rpc</a>, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>}  <span class="comment">// namespace test</span></div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="namespacexrpl_1_1test.html#a42ad45a1435167c8a33e709a2ab653f8">  131</a></span>BEAST_DEFINE_TESTSUITE(ServerDefinitions, <a class="code hl_class" href="classxrpl_1_1test_1_1jtx_1_1rpc.html">rpc</a>, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>}  <span class="comment">// namespace test</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
-<div class="ttc" id="aclassJson_1_1Value_html_ab0d86bf425efefd03513e8dbfaca317b"><div class="ttname"><a href="classJson_1_1Value.html#ab0d86bf425efefd03513e8dbfaca317b">Json::Value::asString</a></div><div class="ttdeci">std::string asString() const</div><div class="ttdoc">Returns the unquoted string value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00457">json_value.cpp:457</a></div></div>
+<div class="ttc" id="aclassJson_1_1Value_html_ab0d86bf425efefd03513e8dbfaca317b"><div class="ttname"><a href="classJson_1_1Value.html#ab0d86bf425efefd03513e8dbfaca317b">Json::Value::asString</a></div><div class="ttdeci">std::string asString() const</div><div class="ttdoc">Returns the unquoted string value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8cpp_source.html#l00464">json_value.cpp:464</a></div></div>
 <div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div><div class="ttdoc">A testsuite class.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00050">suite.h:51</a></div></div>
-<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html_aaa1237d9b85c69d35fe86645cee094b5"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">beast::unit_test::suite::testcase</a></div><div class="ttdeci">testcase_t testcase</div><div class="ttdoc">Memberspace for declaring test cases.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00147">suite.h:147</a></div></div>
+<div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html_aaa1237d9b85c69d35fe86645cee094b5"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html#aaa1237d9b85c69d35fe86645cee094b5">beast::unit_test::suite::testcase</a></div><div class="ttdeci">testcase_t testcase</div><div class="ttdoc">Memberspace for declaring test cases.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00150">suite.h:150</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1test_1_1ServerDefinitions__test_html"><div class="ttname"><a href="classxrpl_1_1test_1_1ServerDefinitions__test.html">xrpl::test::ServerDefinitions_test</a></div><div class="ttdef"><b>Definition</b> <a href="ServerDefinitions__test_8cpp_source.html#l00010">ServerDefinitions_test.cpp:11</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1test_1_1ServerDefinitions__test_html_ac3b57e23fa92e0ac74fc99c623585401"><div class="ttname"><a href="classxrpl_1_1test_1_1ServerDefinitions__test.html#ac3b57e23fa92e0ac74fc99c623585401">xrpl::test::ServerDefinitions_test::testServerDefinitions</a></div><div class="ttdeci">void testServerDefinitions()</div><div class="ttdef"><b>Definition</b> <a href="ServerDefinitions__test_8cpp_source.html#l00014">ServerDefinitions_test.cpp:14</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1test_1_1ServerDefinitions__test_html_af48ef765f1a28172e34daee04a10de21"><div class="ttname"><a href="classxrpl_1_1test_1_1ServerDefinitions__test.html#af48ef765f1a28172e34daee04a10de21">xrpl::test::ServerDefinitions_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="ServerDefinitions__test_8cpp_source.html#l00123">ServerDefinitions_test.cpp:123</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1Env_html"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1Env.html">xrpl::test::jtx::Env</a></div><div class="ttdoc">A transaction testing environment.</div><div class="ttdef"><b>Definition</b> <a href="Env_8h_source.html#l00118">Env.h:119</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1Env_html_ac6543a11afe1cfb9f631cd04c8d45764"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">xrpl::test::jtx::Env::rpc</a></div><div class="ttdeci">Json::Value rpc(unsigned apiVersion, std::unordered_map&lt; std::string, std::string &gt; const &amp;headers, std::string const &amp;cmd, Args &amp;&amp;... args)</div><div class="ttdoc">Execute an RPC command.</div><div class="ttdef"><b>Definition</b> <a href="Env_8h_source.html#l00792">Env.h:792</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1test_1_1ServerDefinitions__test_html_af48ef765f1a28172e34daee04a10de21"><div class="ttname"><a href="classxrpl_1_1test_1_1ServerDefinitions__test.html#af48ef765f1a28172e34daee04a10de21">xrpl::test::ServerDefinitions_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="ServerDefinitions__test_8cpp_source.html#l00125">ServerDefinitions_test.cpp:125</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1Env_html"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1Env.html">xrpl::test::jtx::Env</a></div><div class="ttdoc">A transaction testing environment.</div><div class="ttdef"><b>Definition</b> <a href="Env_8h_source.html#l00120">Env.h:121</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1Env_html_ac6543a11afe1cfb9f631cd04c8d45764"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1Env.html#ac6543a11afe1cfb9f631cd04c8d45764">xrpl::test::jtx::Env::rpc</a></div><div class="ttdeci">Json::Value rpc(unsigned apiVersion, std::unordered_map&lt; std::string, std::string &gt; const &amp;headers, std::string const &amp;cmd, Args &amp;&amp;... args)</div><div class="ttdoc">Execute an RPC command.</div><div class="ttdef"><b>Definition</b> <a href="Env_8h_source.html#l00803">Env.h:803</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1test_1_1jtx_1_1rpc_html"><div class="ttname"><a href="classxrpl_1_1test_1_1jtx_1_1rpc.html">xrpl::test::jtx::rpc</a></div><div class="ttdoc">Set the expected result code for a JTx The test will fail if the code doesn't match.</div><div class="ttdef"><b>Definition</b> <a href="rpc_8h_source.html#l00014">rpc.h:15</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 </div><!-- fragment --></div><!-- contents -->

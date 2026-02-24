@@ -120,27 +120,31 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>}</div>
 </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">template</span> &lt;<span class="keyword">class</span> Generator, std::<span class="keywordtype">size_t</span> N, <span class="keyword">class</span> = std::enable_if_t&lt;N % sizeof(<span class="keyword">typename</span> Generator::result_type) == 0&gt;&gt;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00040" data-start="{" data-end="}">
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespacebeast.html#a3c2683b0fd77fcae6b6ef91fb90e5cbc">   40</a></span><a class="code hl_function" href="namespacebeast.html#ad4d3145468ad564a92ac41b9812274a0">rngfill</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/array.html">std::array&lt;std::uint8_t, N&gt;</a>&amp; a, Generator&amp; g)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>{</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">using </span>result_type = <span class="keyword">typename</span> Generator::result_type;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">auto</span> i = N / <span class="keyword">sizeof</span>(result_type);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    result_type* p = <span class="keyword">reinterpret_cast&lt;</span>result_type*<span class="keyword">&gt;</span>(a.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/array/data.html">data</a>());</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">while</span> (i--)</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        *p++ = g();</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">template</span> &lt;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">class </span>Generator,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a> N,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">class </span>= <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/enable_if.html">std::enable_if_t</a>&lt;N % <span class="keyword">sizeof</span>(<span class="keyword">typename</span> Generator::result_type) == 0&gt;&gt;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="namespacebeast.html#a3c2683b0fd77fcae6b6ef91fb90e5cbc">   43</a></span><a class="code hl_function" href="namespacebeast.html#ad4d3145468ad564a92ac41b9812274a0">rngfill</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/container/array.html">std::array&lt;std::uint8_t, N&gt;</a>&amp; a, Generator&amp; g)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">using </span>result_type = <span class="keyword">typename</span> Generator::result_type;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">auto</span> i = N / <span class="keyword">sizeof</span>(result_type);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    result_type* p = <span class="keyword">reinterpret_cast&lt;</span>result_type*<span class="keyword">&gt;</span>(a.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/array/data.html">data</a>());</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">while</span> (i--)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        *p++ = g();</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>}</div>
 </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}  <span class="comment">// namespace beast</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}  <span class="comment">// namespace beast</span></div>
 <div class="ttc" id="aarray_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/array.html">array</a></div></div>
 <div class="ttc" id="acstdint_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/cstdint.html">cstdint</a></div></div>
 <div class="ttc" id="acstring_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/cstring.html">cstring</a></div></div>
 <div class="ttc" id="adata_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/container/array/data.html">std::array::data</a></div><div class="ttdeci">T data(T... args)</div></div>
+<div class="ttc" id="aenable_if_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/enable_if.html">std::enable_if_t</a></div></div>
 <div class="ttc" id="ainteger_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/integer.html">std::uint8_t</a></div></div>
 <div class="ttc" id="amemcpy_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/byte/memcpy.html">std::memcpy</a></div><div class="ttdeci">T memcpy(T... args)</div></div>
-<div class="ttc" id="anamespacebeast_html"><div class="ttname"><a href="namespacebeast.html">beast</a></div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00637">base_uint.h:637</a></div></div>
+<div class="ttc" id="anamespacebeast_html"><div class="ttname"><a href="namespacebeast.html">beast</a></div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00640">base_uint.h:640</a></div></div>
 <div class="ttc" id="anamespacebeast_html_ad4d3145468ad564a92ac41b9812274a0"><div class="ttname"><a href="namespacebeast.html#ad4d3145468ad564a92ac41b9812274a0">beast::rngfill</a></div><div class="ttdeci">void rngfill(void *const buffer, std::size_t const bytes, Generator &amp;g)</div><div class="ttdef"><b>Definition</b> <a href="rngfill_8h_source.html#l00014">rngfill.h:14</a></div></div>
 <div class="ttc" id="asize_t_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a></div></div>
 <div class="ttc" id="atype_traits_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/type_traits.html">type_traits</a></div></div>

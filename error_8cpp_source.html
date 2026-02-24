@@ -207,12 +207,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="namespacexrpl_1_1cryptoconditions.html#a28fedebdab73f0d8bd7e1051349b7aa8">  109</a></span><a class="code hl_function" href="namespacexrpl_1_1cryptoconditions.html#a28fedebdab73f0d8bd7e1051349b7aa8">make_error_code</a>(<a class="code hl_enumeration" href="namespacexrpl_1_1cryptoconditions.html#a815a250cf145bb52ab180501c18c2167">error</a> ev)</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>{</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/error/error_code.html">std::error_code</a>{</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        safe_cast&lt;std::underlying_type&lt;error&gt;::type&gt;(ev), <a class="code hl_function" href="namespacexrpl_1_1cryptoconditions_1_1detail.html#a6b6d50024311ee2088e0d7ce6ed77d2e">detail::get_cryptoconditions_error_category</a>()};</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>}</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        safe_cast&lt;std::underlying_type&lt;error&gt;::type&gt;(ev),</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <a class="code hl_function" href="namespacexrpl_1_1cryptoconditions_1_1detail.html#a6b6d50024311ee2088e0d7ce6ed77d2e">detail::get_cryptoconditions_error_category</a>()};</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>}</div>
 </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>}  <span class="comment">// namespace cryptoconditions</span></div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}  <span class="comment">// namespace cryptoconditions</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1cryptoconditions_1_1detail_1_1cryptoconditions__error__category_html"><div class="ttname"><a href="classxrpl_1_1cryptoconditions_1_1detail_1_1cryptoconditions__error__category.html">xrpl::cryptoconditions::detail::cryptoconditions_error_category</a></div><div class="ttdef"><b>Definition</b> <a href="error_8cpp_source.html#l00010">error.cpp:11</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1cryptoconditions_1_1detail_1_1cryptoconditions__error__category_html_a3354e546b97aedacf96b8e95c61e3b5c"><div class="ttname"><a href="classxrpl_1_1cryptoconditions_1_1detail_1_1cryptoconditions__error__category.html#a3354e546b97aedacf96b8e95c61e3b5c">xrpl::cryptoconditions::detail::cryptoconditions_error_category::cryptoconditions_error_category</a></div><div class="ttdeci">cryptoconditions_error_category()=default</div></div>

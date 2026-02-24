@@ -114,18 +114,20 @@ $(document).ready(function() { init_codefold(0); });
 <div class="foldopen" id="foldopen00036" data-start="{" data-end="}">
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="namespacexrpl.html#ac43648de4c4aa9448eb1fde5537b8917">   36</a></span><a class="code hl_function" href="namespacexrpl.html#ac43648de4c4aa9448eb1fde5537b8917">Throw</a>(Args&amp;&amp;... args)</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>{</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">static_assert</span>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/is_convertible.html">std::is_convertible&lt;E*, std::exception*&gt;::value</a>, <span class="stringliteral">&quot;Exception must derive from std::exception.&quot;</span>);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    E e(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::forward&lt;Args&gt;</a>(args)...);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_function" href="namespacexrpl.html#a70d4664e0fc734813f13d54af65d77d9">LogThrow</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;Throwing exception of type &quot;</span> + beast::type_name&lt;E&gt;() + <span class="stringliteral">&quot;: &quot;</span>) + e.what());</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">throw</span> e;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">static_assert</span>(</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/types/is_convertible.html">std::is_convertible&lt;E*, std::exception*&gt;::value</a>,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="stringliteral">&quot;Exception must derive from std::exception.&quot;</span>);</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    E e(<a class="code hl_variableRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::forward&lt;Args&gt;</a>(args)...);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_function" href="namespacexrpl.html#a70d4664e0fc734813f13d54af65d77d9">LogThrow</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a>(<span class="stringliteral">&quot;Throwing exception of type &quot;</span> + beast::type_name&lt;E&gt;() + <span class="stringliteral">&quot;: &quot;</span>) + e.what());</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">throw</span> e;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>}</div>
 </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>[[noreturn]] <span class="keywordtype">void</span></div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><a class="code hl_function" href="namespacexrpl.html#a16550239e117c441e0e17bd1c67beeba">LogicError</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span>&amp; how) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>[[noreturn]] <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><a class="code hl_function" href="namespacexrpl.html#a16550239e117c441e0e17bd1c67beeba">LogicError</a>(<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a> <span class="keyword">const</span>&amp; how) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="abasic_string_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/string/basic_string.html">std::string</a></div></div>
 <div class="ttc" id="aexception_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/exception.html">exception</a></div></div>
 <div class="ttc" id="ais_convertible_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/is_convertible.html">std::is_convertible</a></div></div>

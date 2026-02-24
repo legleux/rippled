@@ -72,7 +72,7 @@ $(function() {
   <div class="headertitle"><div class="title">Sanitizer Configuration for Rippled</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md149"></a> This document explains how to properly configure and run sanitizers (AddressSanitizer, undefinedbehaviorSanitizer, ThreadSanitizer) with the xrpld project. Corresponding suppression files are located in the <code>sanitizers/suppressions</code> directory.</p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md161"></a> This document explains how to properly configure and run sanitizers (AddressSanitizer, undefinedbehaviorSanitizer, ThreadSanitizer) with the xrpld project. Corresponding suppression files are located in the <code>sanitizers/suppressions</code> directory.</p>
 <ul>
 <li>Sanitizer Configuration for Rippled<ul>
 <li>Building with Sanitizers<ul>
@@ -109,9 +109,9 @@ $(function() {
 </ul>
 </li>
 </ul>
-<h1><a class="anchor" id="autotoc_md150"></a>
+<h1><a class="anchor" id="autotoc_md162"></a>
 Building with Sanitizers</h1>
-<h2><a class="anchor" id="autotoc_md151"></a>
+<h2><a class="anchor" id="autotoc_md163"></a>
 Summary</h2>
 <p>Follow the same instructions as mentioned in <a class="el" href="md__2____w_2rippled_2rippled_2BUILD.html">BUILD.md</a> but with the following changes:</p>
 <ol type="1">
@@ -121,13 +121,13 @@ Summary</h2>
 <li>Set <code>ASAN_OPTIONS</code>, <code>LSAN_OPTIONS</code>, <code>UBSAN_OPTIONS</code> and <code>TSAN_OPTIONS</code> environment variables to configure sanitizer behavior when running executables. More details below.</li>
 </ol>
 <hr  />
-<h2><a class="anchor" id="autotoc_md153"></a>
+<h2><a class="anchor" id="autotoc_md165"></a>
 Build steps:</h2>
 <div class="fragment"><div class="line">cd /path/to/rippled</div>
 <div class="line">rm -rf .build</div>
 <div class="line">mkdir .build</div>
 <div class="line">cd .build</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md154"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md166"></a>
 Install dependencies</h3>
 <p>The <code>SANITIZERS</code> environment variable is used by both Conan and CMake.</p>
 <div class="fragment"><div class="line">export SANITIZERS=address,undefinedbehavior</div>
@@ -138,18 +138,18 @@ Install dependencies</h3>
 <div class="line">conan install .. --output-folder . --profile:all sanitizers --build missing --settings build_type=Debug</div>
 </div><!-- fragment --><p>[!CAUTION] Do not mix Address and Thread sanitizers - they are incompatible.</p>
 <p>Since you already set the <code>SANITIZERS</code> environment variable when running Conan, same values will be read for the next part.</p>
-<h3><a class="anchor" id="autotoc_md155"></a>
+<h3><a class="anchor" id="autotoc_md167"></a>
 Call CMake</h3>
 <div class="fragment"><div class="line">cmake .. -G Ninja \</div>
 <div class="line">    -DCMAKE_TOOLCHAIN_FILE:FILEPATH=build/generators/conan_toolchain.cmake \</div>
 <div class="line">    -DCMAKE_BUILD_TYPE=Debug \</div>
 <div class="line">    -Dtests=ON -Dxrpld=ON</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md156"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md168"></a>
 Build</h3>
 <div class="fragment"><div class="line">cmake --build . --parallel 4</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md157"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md169"></a>
 Running Tests with Sanitizers</h1>
-<h2><a class="anchor" id="autotoc_md158"></a>
+<h2><a class="anchor" id="autotoc_md170"></a>
 AddressSanitizer (ASAN)</h2>
 <p><b>IMPORTANT</b>: ASAN with Boost produces many false positives. Use these options:</p>
 <div class="fragment"><div class="line">export ASAN_OPTIONS=&quot;print_stacktrace=1:detect_container_overflow=0:suppressions=path/to/asan.supp:halt_on_error=0:log_path=asan.log&quot;</div>
@@ -166,29 +166,29 @@ AddressSanitizer (ASAN)</h2>
 <li>See: <a href="https://github.com/google/sanitizers/wiki/AddressSanitizerContainerOverflow">https://github.com/google/sanitizers/wiki/AddressSanitizerContainerOverflow</a></li>
 <li>More such flags are detailed <a href="https://github.com/google/sanitizers/wiki/AddressSanitizerFlags">here</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md159"></a>
+<h2><a class="anchor" id="autotoc_md171"></a>
 ThreadSanitizer (TSan)</h2>
 <div class="fragment"><div class="line">export TSAN_OPTIONS=&quot;suppressions=path/to/tsan.supp halt_on_error=0 log_path=tsan.log&quot;</div>
 <div class="line"> </div>
 <div class="line"># Run tests</div>
 <div class="line">./xrpld --unittest --unittest-jobs=5</div>
 </div><!-- fragment --><p>More details <a href="https://github.com/google/sanitizers/wiki/ThreadSanitizerCppManual">here</a>.</p>
-<h2><a class="anchor" id="autotoc_md160"></a>
+<h2><a class="anchor" id="autotoc_md172"></a>
 LeakSanitizer (LSan)</h2>
 <p>LSan is automatically enabled with ASAN. To disable it:</p>
 <div class="fragment"><div class="line">export ASAN_OPTIONS=&quot;detect_leaks=0&quot;</div>
 </div><!-- fragment --><p>More details <a href="https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer">here</a>.</p>
-<h2><a class="anchor" id="autotoc_md161"></a>
+<h2><a class="anchor" id="autotoc_md173"></a>
 UndefinedBehaviorSanitizer (UBSan)</h2>
 <div class="fragment"><div class="line">export UBSAN_OPTIONS=&quot;suppressions=path/to/ubsan.supp:print_stacktrace=1:halt_on_error=0:log_path=ubsan.log&quot;</div>
 <div class="line"> </div>
 <div class="line"># Run tests</div>
 <div class="line">./xrpld --unittest --unittest-jobs=5</div>
 </div><!-- fragment --><p>More details <a href="https://clang.llvm.org/docs/undefinedbehaviorSanitizer.html">here</a>.</p>
-<h1><a class="anchor" id="autotoc_md162"></a>
+<h1><a class="anchor" id="autotoc_md174"></a>
 Suppression Files</h1>
 <p>[!NOTE] Attached files contain more details.</p>
-<h2><a class="anchor" id="autotoc_md163"></a>
+<h2><a class="anchor" id="autotoc_md175"></a>
 &lt;a href="../../sanitizers/suppressions/asan.supp" &gt;&lt;tt&gt;asan.supp&lt;/tt&gt;&lt;/a&gt;</h2>
 <ul>
 <li><b>Purpose</b>: Suppress AddressSanitizer (ASAN) errors only</li>
@@ -202,14 +202,14 @@ Suppression Files</h1>
 <li><b>More info</b>: <a href="https://github.com/google/sanitizers/wiki/AddressSanitizer">AddressSanitizer</a></li>
 <li><b>Note</b>: Cannot suppress stack-buffer-overflow, container-overflow, etc.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md164"></a>
+<h2><a class="anchor" id="autotoc_md176"></a>
 &lt;a href="../../sanitizers/suppressions/lsan.supp" &gt;&lt;tt&gt;lsan.supp&lt;/tt&gt;&lt;/a&gt;</h2>
 <ul>
 <li><b>Purpose</b>: Suppress LeakSanitizer (LSan) errors only</li>
 <li><b>Format</b>: <code>leak:&lt;pattern&gt;</code> where pattern matches function/file names</li>
 <li><b>More info</b>: <a href="https://github.com/google/sanitizers/wiki/AddressSanitizerLeakSanitizer">LeakSanitizer</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md165"></a>
+<h2><a class="anchor" id="autotoc_md177"></a>
 &lt;a href="../../sanitizers/suppressions/ubsan.supp" &gt;&lt;tt&gt;ubsan.supp&lt;/tt&gt;&lt;/a&gt;</h2>
 <ul>
 <li><b>Purpose</b>: Suppress undefinedbehaviorSanitizer errors</li>
@@ -217,26 +217,26 @@ Suppression Files</h1>
 <li><b>Covers</b>: Intentional overflows in sanitizers/suppressions libraries (protobuf, gRPC, stdlib)</li>
 <li>More info <a href="https://clang.llvm.org/docs/SanitizerSpecialCaseList.html">UBSan suppressions</a>.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md166"></a>
+<h2><a class="anchor" id="autotoc_md178"></a>
 &lt;a href="../../sanitizers/suppressions/tsan.supp" &gt;&lt;tt&gt;tsan.supp&lt;/tt&gt;&lt;/a&gt;</h2>
 <ul>
 <li><b>Purpose</b>: Suppress ThreadSanitizer data race warnings</li>
 <li><b>Format</b>: <code>race:&lt;pattern&gt;</code> where pattern matches function/file names</li>
 <li><b>More info</b>: <a href="https://github.com/google/sanitizers/wiki/ThreadSanitizerSuppressions">ThreadSanitizer suppressions</a></li>
 </ul>
-<h2><a class="anchor" id="autotoc_md167"></a>
+<h2><a class="anchor" id="autotoc_md179"></a>
 &lt;a href="../../sanitizers/suppressions/sanitizer-ignorelist.txt" &gt;&lt;tt&gt;sanitizer-ignorelist.txt&lt;/tt&gt;&lt;/a&gt;</h2>
 <ul>
 <li><b>Purpose</b>: Compile-time ignorelist for all sanitizers</li>
 <li><b>Usage</b>: Passed via <code>-fsanitize-ignorelist=absolute/path/to/sanitizer-ignorelist.txt</code></li>
 <li><b>Format</b>: <code>&lt;level&gt;:&lt;pattern&gt;</code> (e.g., <code>src:<a class="el" href="Workers_8cpp_source.html">Workers.cpp</a></code>)</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md168"></a>
+<h1><a class="anchor" id="autotoc_md180"></a>
 Troubleshooting</h1>
-<h2><a class="anchor" id="autotoc_md169"></a>
+<h2><a class="anchor" id="autotoc_md181"></a>
 "ASAN is ignoring requested \_\_asan_handle_no_return" warnings</h2>
 <p>These warnings appear when using Boost context switching and are harmless. They indicate potential false positives.</p>
-<h2><a class="anchor" id="autotoc_md170"></a>
+<h2><a class="anchor" id="autotoc_md182"></a>
 Sanitizer Mismatch Errors</h2>
 <p>If you see undefined symbols like <code>___tsan_atomic_load</code> when building with ASAN:</p>
 <p><b>Problem</b>: Dependencies were built with a different sanitizer than the main project.</p>
@@ -244,7 +244,7 @@ Sanitizer Mismatch Errors</h2>
 <div class="fragment"><div class="line">rm -rf .build</div>
 <div class="line"># Then follow the build instructions above</div>
 </div><!-- fragment --><p>Then review the log files: <code>asan.log.*</code>, <code>ubsan.log.*</code>, <code>tsan.log.*</code></p>
-<h1><a class="anchor" id="autotoc_md171"></a>
+<h1><a class="anchor" id="autotoc_md183"></a>
 References</h1>
 <ul>
 <li><a href="https://github.com/google/sanitizers/wiki/AddressSanitizer">AddressSanitizer Wiki</a></li>

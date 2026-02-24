@@ -1,21 +1,7 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="5,5,183,45"/>
-<area shape="rect" id="Node000001" href="$classxrpl_1_1detail_1_1WorkFile.html" title=" " alt="" coords="246,13,402,38"/>
-<area shape="poly" id="edge486_Node000000_Node000001" title=" " alt="" coords="197,23,246,23,246,28,197,28"/>
-<area shape="rect" id="Node000005" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="231,127,417,167"/>
-<area shape="rect" id="Node000004" href="$classxrpl_1_1detail_1_1WorkPlain.html" title=" " alt="" coords="465,102,631,127"/>
-<area shape="poly" id="edge487_Node000005_Node000004" title=" " alt="" coords="431,129,465,124,465,129,432,134"/>
-<area shape="rect" id="Node000008" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/memory/enable_shared_from_this.html" title=" " alt="" coords="235,255,413,295"/>
-<area shape="rect" id="Node000007" href="$classxrpl_1_1detail_1_1WorkSSL.html" title=" " alt="" coords="470,294,626,319"/>
-<area shape="poly" id="edge488_Node000008_Node000007" title=" " alt="" coords="427,287,470,293,469,298,426,292"/>
-<area shape="rect" id="Node000002" href="$classxrpl_1_1detail_1_1Work.html" title=" " alt="" coords="27,134,161,159"/>
-<area shape="poly" id="edge494_Node000002_Node000001" title=" " alt="" coords="118,123,168,85,230,48,264,36,266,41,232,53,171,89,122,127"/>
-<area shape="rect" id="Node000003" href="$classxrpl_1_1detail_1_1WorkBase.html" title=" " alt="" coords="241,63,407,103"/>
-<area shape="poly" id="edge489_Node000002_Node000003" title=" " alt="" coords="153,128,251,100,252,105,155,133"/>
-<area shape="rect" id="Node000006" href="$classxrpl_1_1detail_1_1WorkBase.html" title=" " alt="" coords="241,319,407,359"/>
-<area shape="poly" id="edge491_Node000002_Node000006" title=" " alt="" coords="112,169,160,236,194,273,232,304,253,316,251,321,229,309,190,277,156,240,108,172"/>
-<area shape="rect" id="Node000009" href="$classxrpl_1_1detail_1_1WorkBase.html" title=" " alt="" coords="241,191,407,231"/>
-<area shape="poly" id="edge493_Node000002_Node000009" title=" " alt="" coords="155,161,252,188,251,193,153,166"/>
-<area shape="poly" id="edge490_Node000003_Node000004" title=" " alt="" coords="421,94,466,100,465,106,420,99"/>
-<area shape="poly" id="edge492_Node000006_Node000007" title=" " alt="" coords="420,322,470,315,470,320,421,328"/>
+<area shape="rect" id="Node000000" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/error/error_category.html" title=" " alt="" coords="5,56,151,81"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1cryptoconditions_1_1detail_1_1cryptoconditions__error__category.html" title=" " alt="" coords="199,5,381,60"/>
+<area shape="poly" id="edge489_Node000000_Node000001" title=" " alt="" coords="164,51,198,46,199,51,164,57"/>
+<area shape="rect" id="Node000002" href="$classxrpl_1_1detail_1_1TokenCodecErrcCategory.html" title=" " alt="" coords="201,85,379,125"/>
+<area shape="poly" id="edge490_Node000000_Node000002" title=" " alt="" coords="164,81,202,87,201,92,163,86"/>
 </map>

@@ -122,9 +122,9 @@ Public Attributes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a1ffe1a58d53d4a542b1b659e748356ac" id="r_a1ffe1a58d53d4a542b1b659e748356ac"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1IntrusiveRefCounts_1_1RefCountPair.html#a1ffe1a58d53d4a542b1b659e748356ac">maxStrongValue</a> = static_cast&lt;<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&gt;((<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">one</a> &lt;&lt; <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a455b9a5de2749f2adc8b9ba413be7a04">StrongCountNumBits</a>) - 1)</td></tr>
+<tr class="memitem:a1ffe1a58d53d4a542b1b659e748356ac" id="r_a1ffe1a58d53d4a542b1b659e748356ac"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1IntrusiveRefCounts_1_1RefCountPair.html#a1ffe1a58d53d4a542b1b659e748356ac">maxStrongValue</a></td></tr>
 <tr class="separator:a1ffe1a58d53d4a542b1b659e748356ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abae15e064d6ba0772060b702080623d5" id="r_abae15e064d6ba0772060b702080623d5"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1IntrusiveRefCounts_1_1RefCountPair.html#abae15e064d6ba0772060b702080623d5">maxWeakValue</a> = static_cast&lt;<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&gt;((<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">one</a> &lt;&lt; <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#adb82daafd5de18a4c00c9def5d278297">WeakCountNumBits</a>) - 1)</td></tr>
+<tr class="memitem:abae15e064d6ba0772060b702080623d5" id="r_abae15e064d6ba0772060b702080623d5"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1IntrusiveRefCounts_1_1RefCountPair.html#abae15e064d6ba0772060b702080623d5">maxWeakValue</a></td></tr>
 <tr class="separator:abae15e064d6ba0772060b702080623d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a901f64978b14c5a23ea49c6467002fb7" id="r_a901f64978b14c5a23ea49c6467002fb7"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structxrpl_1_1IntrusiveRefCounts_1_1RefCountPair.html#a901f64978b14c5a23ea49c6467002fb7">checkStrongMaxValue</a> = <a class="el" href="structxrpl_1_1IntrusiveRefCounts_1_1RefCountPair.html#a1ffe1a58d53d4a542b1b659e748356ac">maxStrongValue</a> - 32</td></tr>
 <tr class="memdesc:a901f64978b14c5a23ea49c6467002fb7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Put an extra margin to detect when running up against limits.  <br /></td></tr>
@@ -135,7 +135,7 @@ Static Public Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Unpack the count and tag fields from the packed atomic integer form. </p>
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00190">190</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00191">191</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a36168293e72715d63707278ffdd13f8f" name="a36168293e72715d63707278ffdd13f8f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a36168293e72715d63707278ffdd13f8f">&#9670;&#160;</a></span>RefCountPair() <span class="overload">[1/2]</span></h2>
@@ -161,7 +161,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00406">406</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00410">410</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -199,7 +199,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00418">418</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00422">422</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -229,7 +229,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Convert back to the packed integer form. </p>
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00430">430</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00434">434</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -246,7 +246,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00192">192</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00193">193</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -262,7 +262,7 @@ Static Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00193">193</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00194">194</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -281,7 +281,7 @@ Static Public Attributes</h2></td></tr>
 <p>The <code>partialDestroyStartedBit</code> is set to on when the partial destroy function is started. </p>
 <p>It is not a boolean; it is a uint32 with all bits zero with the possible exception of the <code>partialDestroyStartedMask</code> bit. This is done so it can be directly masked into the <code>combinedValue</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00200">200</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00201">201</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -299,7 +299,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>The <code>partialDestroyFinishedBit</code> is set to on when the partial destroy function has finished. </p>
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00204">204</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00205">205</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -313,7 +313,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a> xrpl::IntrusiveRefCounts::RefCountPair::maxStrongValue = static_cast&lt;<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&gt;((<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">one</a> &lt;&lt; <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a455b9a5de2749f2adc8b9ba413be7a04">StrongCountNumBits</a>) - 1)</td>
+          <td class="memname">constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a> xrpl::IntrusiveRefCounts::RefCountPair::maxStrongValue</td>
         </tr>
       </table>
   </td>
@@ -322,8 +322,13 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00212">212</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">            <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a><span class="keyword">&gt;</span>((<a class="code hl_variable" href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">one</a> &lt;&lt; <a class="code hl_variable" href="structxrpl_1_1IntrusiveRefCounts.html#a455b9a5de2749f2adc8b9ba413be7a04">StrongCountNumBits</a>) - 1)</div>
+<div class="ttc" id="astructxrpl_1_1IntrusiveRefCounts_html_a3fa6f10bf948c745a3e099b4538e78d8"><div class="ttname"><a href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">xrpl::IntrusiveRefCounts::one</a></div><div class="ttdeci">static constexpr FieldType one</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveRefCounts_8h_source.html#l00105">IntrusiveRefCounts.h:105</a></div></div>
+<div class="ttc" id="astructxrpl_1_1IntrusiveRefCounts_html_a455b9a5de2749f2adc8b9ba413be7a04"><div class="ttname"><a href="structxrpl_1_1IntrusiveRefCounts.html#a455b9a5de2749f2adc8b9ba413be7a04">xrpl::IntrusiveRefCounts::StrongCountNumBits</a></div><div class="ttdeci">static constexpr size_t StrongCountNumBits</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveRefCounts_8h_source.html#l00101">IntrusiveRefCounts.h:101</a></div></div>
+<div class="ttc" id="astructxrpl_1_1IntrusiveRefCounts_html_a5531e5f1932aa8451efb0e80d22cdeb7"><div class="ttname"><a href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">xrpl::IntrusiveRefCounts::CountType</a></div><div class="ttdeci">std::uint16_t CountType</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveRefCounts_8h_source.html#l00100">IntrusiveRefCounts.h:100</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00213">213</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -337,7 +342,7 @@ Static Public Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a> xrpl::IntrusiveRefCounts::RefCountPair::maxWeakValue = static_cast&lt;<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a>&gt;((<a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">one</a> &lt;&lt; <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#adb82daafd5de18a4c00c9def5d278297">WeakCountNumBits</a>) - 1)</td>
+          <td class="memname">constexpr <a class="el" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a> xrpl::IntrusiveRefCounts::RefCountPair::maxWeakValue</td>
         </tr>
       </table>
   </td>
@@ -346,8 +351,11 @@ Static Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00213">213</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<b>Initial value:</b><div class="fragment"><div class="line">=</div>
+<div class="line">            <span class="keyword">static_cast&lt;</span><a class="code hl_typedef" href="structxrpl_1_1IntrusiveRefCounts.html#a5531e5f1932aa8451efb0e80d22cdeb7">CountType</a><span class="keyword">&gt;</span>((<a class="code hl_variable" href="structxrpl_1_1IntrusiveRefCounts.html#a3fa6f10bf948c745a3e099b4538e78d8">one</a> &lt;&lt; <a class="code hl_variable" href="structxrpl_1_1IntrusiveRefCounts.html#adb82daafd5de18a4c00c9def5d278297">WeakCountNumBits</a>) - 1)</div>
+<div class="ttc" id="astructxrpl_1_1IntrusiveRefCounts_html_adb82daafd5de18a4c00c9def5d278297"><div class="ttname"><a href="structxrpl_1_1IntrusiveRefCounts.html#adb82daafd5de18a4c00c9def5d278297">xrpl::IntrusiveRefCounts::WeakCountNumBits</a></div><div class="ttdeci">static constexpr size_t WeakCountNumBits</div><div class="ttdef"><b>Definition</b> <a href="IntrusiveRefCounts_8h_source.html#l00102">IntrusiveRefCounts.h:102</a></div></div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00215">215</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -374,7 +382,7 @@ Static Public Attributes</h2></td></tr>
 <p>Put an extra margin to detect when running up against limits. </p>
 <p>This is only used in debug code, and is useful if we reduce the number of bits in the strong and weak counts (to 16 and 14 bits). </p>
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00218">218</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00221">221</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>
@@ -398,7 +406,7 @@ Static Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00219">219</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="IntrusiveRefCounts_8h_source.html#l00222">222</a> of file <a class="el" href="IntrusiveRefCounts_8h_source.html">IntrusiveRefCounts.h</a>.</p>
 
 </div>
 </div>

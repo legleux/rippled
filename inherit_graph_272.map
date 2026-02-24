@@ -1,23 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="455,5,709,45"/>
-<area shape="rect" id="Node000001" href="$classxrpl_1_1SHAMapAccountStateLeafNode.html" title="A leaf node for a state object." alt="" coords="783,21,979,61"/>
-<area shape="poly" id="edge634_Node000000_Node000001" title=" " alt="" coords="723,30,783,33,783,39,723,36"/>
-<area shape="rect" id="Node000009" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="232,241,407,281"/>
-<area shape="rect" id="Node000008" href="$classxrpl_1_1SHAMapInnerNode.html" title=" " alt="" coords="493,249,671,274"/>
-<area shape="poly" id="edge635_Node000009_Node000008" title=" " alt="" coords="420,259,493,259,493,264,420,264"/>
-<area shape="rect" id="Node000004" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="489,69,675,109"/>
-<area shape="rect" id="Node000003" href="$classxrpl_1_1SHAMapTxLeafNode.html" title="A leaf node for a transaction." alt="" coords="787,118,975,143"/>
-<area shape="poly" id="edge636_Node000004_Node000003" title=" " alt="" coords="689,101,789,115,789,121,688,107"/>
-<area shape="rect" id="Node000006" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="459,184,705,224"/>
-<area shape="rect" id="Node000005" href="$classxrpl_1_1SHAMapTxPlusMetaLeafNode.html" title="A leaf node for a transaction and its associated metadata." alt="" coords="757,171,1005,197"/>
-<area shape="poly" id="edge637_Node000006_Node000005" title=" " alt="" coords="718,192,757,190,757,195,718,198"/>
-<area shape="rect" id="Node000010" href="$structxrpl_1_1IntrusiveRefCounts.html" title="Implement the strong count, weak count, and bit flags for an intrusive pointer." alt="" coords="5,163,184,189"/>
-<area shape="rect" id="Node000007" href="$classxrpl_1_1SHAMapTreeNode.html" title=" " alt="" coords="234,163,405,189"/>
-<area shape="poly" id="edge638_Node000010_Node000007" title=" " alt="" coords="198,173,234,173,234,179,198,179"/>
-<area shape="poly" id="edge639_Node000007_Node000008" title=" " alt="" coords="358,192,404,214,455,233,504,246,503,251,454,239,402,219,356,197"/>
-<area shape="rect" id="Node000002" href="$classxrpl_1_1SHAMapLeafNode.html" title=" " alt="" coords="496,134,668,159"/>
-<area shape="poly" id="edge640_Node000007_Node000002" title=" " alt="" coords="418,162,495,154,496,159,419,168"/>
-<area shape="poly" id="edge641_Node000002_Node000001" title=" " alt="" coords="674,128,708,119,781,90,843,59,845,64,783,95,710,124,676,134"/>
-<area shape="poly" id="edge642_Node000002_Node000003" title=" " alt="" coords="682,139,787,133,787,138,682,144"/>
-<area shape="poly" id="edge643_Node000002_Node000005" title=" " alt="" coords="682,156,780,169,779,174,682,162"/>
+<area shape="rect" id="Node000000" href="$classxrpl_1_1CountedObject.html" title=" " alt="" coords="5,5,165,45"/>
+<area shape="rect" id="Node000001" href="$classxrpl_1_1RippleLineCache.html" title=" " alt="" coords="213,13,376,38"/>
+<area shape="poly" id="edge633_Node000000_Node000001" title=" " alt="" coords="179,23,213,23,213,28,179,28"/>
 </map>

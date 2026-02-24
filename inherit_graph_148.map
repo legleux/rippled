@@ -1,15 +1,11 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" title=" " alt="" coords="5,157,172,182"/>
-<area shape="rect" id="Node000001" href="$structbeast_1_1is__uniquely__represented.html" title=" " alt="" coords="239,113,385,153"/>
-<area shape="poly" id="edge419_Node000000_Node000001" title=" " alt="" coords="181,152,239,142,240,148,181,157"/>
-<area shape="rect" id="Node000006" href="$structbeast_1_1is__uniquely__represented_3_01std_1_1array_3_01T_00_01N_01_4_01_4.html" title=" " alt="" coords="220,178,404,233"/>
-<area shape="poly" id="edge424_Node000000_Node000006" title=" " alt="" coords="181,182,220,188,220,193,181,187"/>
-<area shape="rect" id="Node000002" href="$structbeast_1_1is__uniquely__represented_3_01T_01const_01_4.html" title=" " alt="" coords="459,5,643,45"/>
-<area shape="poly" id="edge420_Node000001_Node000002" title=" " alt="" coords="356,104,451,55,482,43,484,48,453,60,359,109"/>
-<area shape="rect" id="Node000003" href="$structbeast_1_1is__uniquely__represented_3_01T_01const_01volatile_01_4.html" title=" " alt="" coords="467,70,636,125"/>
-<area shape="poly" id="edge421_Node000001_Node000003" title=" " alt="" coords="398,118,466,107,467,113,399,123"/>
-<area shape="rect" id="Node000004" href="$structbeast_1_1is__uniquely__represented_3_01T_01volatile_01_4.html" title=" " alt="" coords="452,149,651,189"/>
-<area shape="poly" id="edge422_Node000001_Node000004" title=" " alt="" coords="399,144,452,152,452,157,398,149"/>
-<area shape="rect" id="Node000005" href="$structbeast_1_1is__uniquely__represented_3_01T_0fN_0e_4.html" title=" " alt="" coords="471,213,632,253"/>
-<area shape="poly" id="edge423_Node000001_Node000005" title=" " alt="" coords="392,156,405,163,430,181,453,199,480,211,478,216,451,204,426,186,403,168,389,161"/>
+<area shape="rect" id="Node000000" href="/__w/rippled/rippled/build/docs/cppreference-doxygen-web.tag.xml$cpp/io/basic_stringbuf.html" title=" " alt="" coords="5,153,155,179"/>
+<area shape="rect" id="Node000001" href="$classbeast_1_1detail_1_1logstream__buf.html" title=" " alt="" coords="211,5,389,60"/>
+<area shape="poly" id="edge419_Node000000_Node000001" title=" " alt="" coords="104,142,148,106,201,70,226,58,228,62,204,75,151,111,107,146"/>
+<area shape="rect" id="Node000002" href="$classbeast_1_1unit__test_1_1suite_1_1log__buf.html" title=" " alt="" coords="211,85,389,154"/>
+<area shape="poly" id="edge420_Node000000_Node000002" title=" " alt="" coords="153,148,211,136,212,141,154,153"/>
+<area shape="rect" id="Node000003" href="$classbeast_1_1unit__test_1_1suite_1_1log__buf.html" title=" " alt="" coords="203,178,397,247"/>
+<area shape="poly" id="edge421_Node000000_Node000003" title=" " alt="" coords="155,179,203,189,202,195,154,184"/>
+<area shape="rect" id="Node000004" href="$classbeast_1_1detail_1_1logstream__buf.html" title=" " alt="" coords="211,271,389,311"/>
+<area shape="poly" id="edge422_Node000000_Node000004" title=" " alt="" coords="107,186,150,222,204,257,230,269,228,274,201,262,147,226,103,190"/>
 </map>

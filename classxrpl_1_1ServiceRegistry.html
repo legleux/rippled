@@ -115,6 +115,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a04e806aa36376adf9e923f4d148f7266"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abba4d947c2fa94de553f59346ba86c2a" id="r_abba4d947c2fa94de553f59346ba86c2a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacexrpl.html#a09923a111781399c32385ba65761e9e8">CachedSLEs</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ServiceRegistry.html#abba4d947c2fa94de553f59346ba86c2a">cachedSLEs</a> ()=0</td></tr>
 <tr class="separator:abba4d947c2fa94de553f59346ba86c2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44f83f92a0b9b4be6f5a8406f9e43678" id="r_a44f83f92a0b9b4be6f5a8406f9e43678"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxrpl_1_1NetworkIDService.html">NetworkIDService</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ServiceRegistry.html#a44f83f92a0b9b4be6f5a8406f9e43678">getNetworkIDService</a> ()=0</td></tr>
+<tr class="separator:a44f83f92a0b9b4be6f5a8406f9e43678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1947c531d5b08e75bd6e36d48d41f0b5" id="r_a1947c531d5b08e75bd6e36d48d41f0b5"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxrpl_1_1AmendmentTable.html">AmendmentTable</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ServiceRegistry.html#a1947c531d5b08e75bd6e36d48d41f0b5">getAmendmentTable</a> ()=0</td></tr>
 <tr class="separator:a1947c531d5b08e75bd6e36d48d41f0b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8343c9406f895fb63fae6386fb878b43" id="r_a8343c9406f895fb63fae6386fb878b43"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxrpl_1_1HashRouter.html">HashRouter</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ServiceRegistry.html#a8343c9406f895fb63fae6386fb878b43">getHashRouter</a> ()=0</td></tr>
@@ -200,7 +202,7 @@ Public Member Functions</h2></td></tr>
 <p>This abstract interface provides access to various services and components used throughout the application. It separates the service locator pattern from the <a class="el" href="classxrpl_1_1Application.html">Application</a> lifecycle management.</p>
 <p>Components that need access to services can hold a reference to <a class="el" href="classxrpl_1_1ServiceRegistry.html" title="Service registry for dependency injection.">ServiceRegistry</a> rather than <a class="el" href="classxrpl_1_1Application.html">Application</a> when they only need service access and not lifecycle management. </p>
 
-<p class="definition">Definition at line <a class="el" href="ServiceRegistry_8h_source.html#l00077">77</a> of file <a class="el" href="ServiceRegistry_8h_source.html">ServiceRegistry.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ServiceRegistry_8h_source.html#l00078">78</a> of file <a class="el" href="ServiceRegistry_8h_source.html">ServiceRegistry.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a017f0907dd1ad5d7aad3df75a3d0bf17" name="a017f0907dd1ad5d7aad3df75a3d0bf17"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a017f0907dd1ad5d7aad3df75a3d0bf17">&#9670;&#160;</a></span>ServiceRegistry()</h2>
@@ -412,6 +414,33 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Implemented in <a class="el" href="classxrpl_1_1ApplicationImp.html#a8d5ae620d9c4cfe5f53dd0719f097005">xrpl::ApplicationImp</a>.</p>
+
+</div>
+</div>
+<a id="a44f83f92a0b9b4be6f5a8406f9e43678" name="a44f83f92a0b9b4be6f5a8406f9e43678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a44f83f92a0b9b4be6f5a8406f9e43678">&#9670;&#160;</a></span>getNetworkIDService()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual <a class="el" href="classxrpl_1_1NetworkIDService.html">NetworkIDService</a> &amp; xrpl::ServiceRegistry::getNetworkIDService </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Implemented in <a class="el" href="classxrpl_1_1ApplicationImp.html#a8f657416542a3c84a50cce0956aad27d">xrpl::ApplicationImp</a>.</p>
 
 </div>
 </div>

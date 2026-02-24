@@ -148,177 +148,179 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        pf_req[jss::destination_amount] = bob[<span class="stringliteral">&quot;USD&quot;</span>](20).value().getJson(<a class="code hl_enumvalue" href="structxrpl_1_1JsonOptions.html#a248f4c1cb1b2fe05b58678f32307570ba1a97822ca421424f4fc466f09db227a6">JsonOptions::none</a>);</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        jr = wsc-&gt;invoke(<span class="stringliteral">&quot;path_find&quot;</span>, pf_req)[jss::result];</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        BEAST_EXPECT(</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            jr.isMember(jss::alternatives) &amp;&amp; jr[jss::alternatives].isArray() &amp;&amp; jr[jss::alternatives].size() == 1);</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="comment">// submit</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keyword">auto</span> jt = env.jt(<a class="code hl_enumvalue" href="namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3a5483bf26dec486ec0175e2a3ca816a0a">noop</a>(alice));</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <a class="code hl_class" href="classxrpl_1_1Serializer.html">Serializer</a> s;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        jt.stx-&gt;add(s);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        jr = env.rpc(<span class="stringliteral">&quot;submit&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">slice</a>()))[jss::result];</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">// submit_multisigned</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        env(signers(bob, 1, {{alice, 1}}), sig(bob));</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        env(regkey(alice, ali));</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        env.close();</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> set_tx;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        set_tx[jss::Account] = bob.human();</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        set_tx[jss::TransactionType] = jss::AccountSet;</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        set_tx[jss::Fee] = (8 * env.current()-&gt;fees().base).jsonClipped();</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        set_tx[jss::Sequence] = env.seq(bob);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        set_tx[jss::SigningPubKey] = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> sign_for;</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        sign_for[jss::tx_json] = set_tx;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        sign_for[jss::account] = alice.human();</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        sign_for[jss::secret] = ali.name();</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;sign_for&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(sign_for))[jss::result];</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> ms_req;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        ms_req[jss::tx_json] = jr[jss::tx_json];</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;submit_multisigned&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(ms_req))[jss::result];</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="comment">// set up an amendment warning. Nothing changes</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        env.app().getOPs().setAmendmentWarned();</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <a class="code hl_enumvalue" href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">current</a> = env.current();</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="comment">// ledger_accept</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_accept&quot;</span>)[jss::result];</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        BEAST_EXPECT(jr[jss::ledger_current_index] == <a class="code hl_enumvalue" href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">current</a>-&gt;seq() + 1);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="comment">// ledger_current</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_current&quot;</span>)[jss::result];</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        BEAST_EXPECT(jr[jss::ledger_current_index] == <a class="code hl_enumvalue" href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">current</a>-&gt;seq() + 1);</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="comment">// owner_info</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        jr = env.rpc(<span class="stringliteral">&quot;owner_info&quot;</span>, alice.human())[jss::result];</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        BEAST_EXPECT(jr.isMember(jss::accepted) &amp;&amp; jr.isMember(jss::current));</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="comment">// path_find</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        pf_req[jss::subcommand] = <span class="stringliteral">&quot;create&quot;</span>;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        pf_req[jss::source_account] = alice.human();</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        pf_req[jss::destination_account] = bob.human();</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        pf_req[jss::destination_amount] = bob[<span class="stringliteral">&quot;USD&quot;</span>](20).value().getJson(<a class="code hl_enumvalue" href="structxrpl_1_1JsonOptions.html#a248f4c1cb1b2fe05b58678f32307570ba1a97822ca421424f4fc466f09db227a6">JsonOptions::none</a>);</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        jr = wsc-&gt;invoke(<span class="stringliteral">&quot;path_find&quot;</span>, pf_req)[jss::result];</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        BEAST_EXPECT(</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            jr.isMember(jss::alternatives) &amp;&amp; jr[jss::alternatives].isArray() &amp;&amp; jr[jss::alternatives].size() == 1);</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="comment">// submit</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        jt = env.jt(<a class="code hl_enumvalue" href="namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3a5483bf26dec486ec0175e2a3ca816a0a">noop</a>(alice));</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a3b7908f846865ee59a2264243b478621">erase</a>();</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        jt.stx-&gt;add(s);</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        jr = env.rpc(<span class="stringliteral">&quot;submit&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">slice</a>()))[jss::result];</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <span class="comment">// submit_multisigned</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        env(signers(bob, 1, {{alice, 1}}), sig(bob));</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        env(regkey(alice, ali));</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        env.close();</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        set_tx[jss::Account] = bob.human();</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        set_tx[jss::TransactionType] = jss::AccountSet;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        set_tx[jss::Fee] = (8 * env.current()-&gt;fees().base).jsonClipped();</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        set_tx[jss::Sequence] = env.seq(bob);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        set_tx[jss::SigningPubKey] = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        sign_for[jss::tx_json] = set_tx;</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        sign_for[jss::account] = alice.human();</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        sign_for[jss::secret] = ali.name();</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;sign_for&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(sign_for))[jss::result];</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        ms_req[jss::tx_json] = jr[jss::tx_json];</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;submit_multisigned&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(ms_req))[jss::result];</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="comment">// make the network amendment blocked...now all the same</span></div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="comment">// requests should fail</span></div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        env.app().getOPs().setAmendmentBlocked();</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            jr.isMember(jss::alternatives) &amp;&amp; jr[jss::alternatives].isArray() &amp;&amp;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            jr[jss::alternatives].size() == 1);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="comment">// submit</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">auto</span> jt = env.jt(<a class="code hl_enumvalue" href="namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3a5483bf26dec486ec0175e2a3ca816a0a">noop</a>(alice));</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <a class="code hl_class" href="classxrpl_1_1Serializer.html">Serializer</a> s;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        jt.stx-&gt;add(s);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        jr = env.rpc(<span class="stringliteral">&quot;submit&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">slice</a>()))[jss::result];</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="comment">// submit_multisigned</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        env(signers(bob, 1, {{alice, 1}}), sig(bob));</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        env(regkey(alice, ali));</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        env.close();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> set_tx;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        set_tx[jss::Account] = bob.human();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        set_tx[jss::TransactionType] = jss::AccountSet;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        set_tx[jss::Fee] = (8 * env.current()-&gt;fees().base).jsonClipped();</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        set_tx[jss::Sequence] = env.seq(bob);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        set_tx[jss::SigningPubKey] = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> sign_for;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        sign_for[jss::tx_json] = set_tx;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        sign_for[jss::account] = alice.human();</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        sign_for[jss::secret] = ali.name();</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;sign_for&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(sign_for))[jss::result];</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <a class="code hl_class" href="classJson_1_1Value.html">Json::Value</a> ms_req;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        ms_req[jss::tx_json] = jr[jss::tx_json];</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;submit_multisigned&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(ms_req))[jss::result];</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="comment">// set up an amendment warning. Nothing changes</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        env.app().getOPs().setAmendmentWarned();</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <a class="code hl_enumvalue" href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">current</a> = env.current();</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="comment">// ledger_accept</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_accept&quot;</span>)[jss::result];</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        BEAST_EXPECT(jr[jss::ledger_current_index] == <a class="code hl_enumvalue" href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">current</a>-&gt;seq() + 1);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="comment">// ledger_current</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_current&quot;</span>)[jss::result];</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        BEAST_EXPECT(jr[jss::ledger_current_index] == <a class="code hl_enumvalue" href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">current</a>-&gt;seq() + 1);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="comment">// owner_info</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        jr = env.rpc(<span class="stringliteral">&quot;owner_info&quot;</span>, alice.human())[jss::result];</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        BEAST_EXPECT(jr.isMember(jss::accepted) &amp;&amp; jr.isMember(jss::current));</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="comment">// path_find</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        pf_req[jss::subcommand] = <span class="stringliteral">&quot;create&quot;</span>;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        pf_req[jss::source_account] = alice.human();</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        pf_req[jss::destination_account] = bob.human();</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        pf_req[jss::destination_amount] = bob[<span class="stringliteral">&quot;USD&quot;</span>](20).value().getJson(<a class="code hl_enumvalue" href="structxrpl_1_1JsonOptions.html#a248f4c1cb1b2fe05b58678f32307570ba1a97822ca421424f4fc466f09db227a6">JsonOptions::none</a>);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        jr = wsc-&gt;invoke(<span class="stringliteral">&quot;path_find&quot;</span>, pf_req)[jss::result];</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        BEAST_EXPECT(</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            jr.isMember(jss::alternatives) &amp;&amp; jr[jss::alternatives].isArray() &amp;&amp;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            jr[jss::alternatives].size() == 1);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="comment">// submit</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        jt = env.jt(<a class="code hl_enumvalue" href="namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3a5483bf26dec486ec0175e2a3ca816a0a">noop</a>(alice));</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a3b7908f846865ee59a2264243b478621">erase</a>();</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        jt.stx-&gt;add(s);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        jr = env.rpc(<span class="stringliteral">&quot;submit&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">slice</a>()))[jss::result];</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="comment">// submit_multisigned</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        env(signers(bob, 1, {{alice, 1}}), sig(bob));</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        env(regkey(alice, ali));</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        env.close();</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        set_tx[jss::Account] = bob.human();</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        set_tx[jss::TransactionType] = jss::AccountSet;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        set_tx[jss::Fee] = (8 * env.current()-&gt;fees().base).jsonClipped();</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        set_tx[jss::Sequence] = env.seq(bob);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        set_tx[jss::SigningPubKey] = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        sign_for[jss::tx_json] = set_tx;</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        sign_for[jss::account] = alice.human();</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        sign_for[jss::secret] = ali.name();</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;sign_for&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(sign_for))[jss::result];</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        ms_req[jss::tx_json] = jr[jss::tx_json];</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;submit_multisigned&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(ms_req))[jss::result];</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        BEAST_EXPECT(jr.isMember(jss::engine_result) &amp;&amp; jr[jss::engine_result] == <span class="stringliteral">&quot;tesSUCCESS&quot;</span>);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="comment">// make the network amendment blocked...now all the same</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="comment">// requests should fail</span></div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        <span class="comment">// ledger_accept</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_accept&quot;</span>)[jss::result];</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="comment">// ledger_current</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_current&quot;</span>)[jss::result];</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="comment">// owner_info</span></div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        jr = env.rpc(<span class="stringliteral">&quot;owner_info&quot;</span>, alice.human())[jss::result];</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="comment">// path_find</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        jr = wsc-&gt;invoke(<span class="stringliteral">&quot;path_find&quot;</span>, pf_req)[jss::result];</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="comment">// submit</span></div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        jr = env.rpc(<span class="stringliteral">&quot;submit&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">slice</a>()))[jss::result];</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="comment">// submit_multisigned</span></div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        set_tx[jss::Sequence] = env.seq(bob);</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        sign_for[jss::tx_json] = set_tx;</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;sign_for&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(sign_for))[jss::result];</div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        ms_req[jss::tx_json] = jr[jss::tx_json];</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;submit_multisigned&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(ms_req))[jss::result];</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    }</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        env.app().getOPs().setAmendmentBlocked();</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="comment">// ledger_accept</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_accept&quot;</span>)[jss::result];</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="comment">// ledger_current</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        jr = env.rpc(<span class="stringliteral">&quot;ledger_current&quot;</span>)[jss::result];</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span> </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="comment">// owner_info</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        jr = env.rpc(<span class="stringliteral">&quot;owner_info&quot;</span>, alice.human())[jss::result];</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span> </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="comment">// path_find</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        jr = wsc-&gt;invoke(<span class="stringliteral">&quot;path_find&quot;</span>, pf_req)[jss::result];</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="comment">// submit</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        jr = env.rpc(<span class="stringliteral">&quot;submit&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">strHex</a>(s.<a class="code hl_function" href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">slice</a>()))[jss::result];</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;error&quot;</span>);</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <span class="comment">// submit_multisigned</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        set_tx[jss::Sequence] = env.seq(bob);</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        sign_for[jss::tx_json] = set_tx;</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;sign_for&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(sign_for))[jss::result];</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        BEAST_EXPECT(jr[jss::status] == <span class="stringliteral">&quot;success&quot;</span>);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        ms_req[jss::tx_json] = jr[jss::tx_json];</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        jr = env.rpc(<span class="stringliteral">&quot;json&quot;</span>, <span class="stringliteral">&quot;submit_multisigned&quot;</span>, <a class="code hl_function" href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">to_string</a>(ms_req))[jss::result];</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        BEAST_EXPECT(jr.isMember(jss::error) &amp;&amp; jr[jss::error] == <span class="stringliteral">&quot;amendmentBlocked&quot;</span>);</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        BEAST_EXPECT(!jr.isMember(jss::warnings));</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    }</div>
 </div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keywordtype">void</span></div>
-<div class="foldopen" id="foldopen00212" data-start="{" data-end="}">
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classxrpl_1_1AmendmentBlocked__test.html#af87ce26f9d09cee3a1aad383315bfe58">  212</a></span>    <a class="code hl_function" href="classxrpl_1_1AmendmentBlocked__test.html#af87ce26f9d09cee3a1aad383315bfe58">run</a>()<span class="keyword"> override</span></div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span><span class="keyword">    </span>{</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        <a class="code hl_function" href="classxrpl_1_1AmendmentBlocked__test.html#aca544d860da989f939f0cf977d1c0c77">testBlockedMethods</a>();</div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    }</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00214" data-start="{" data-end="}">
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno"><a class="line" href="classxrpl_1_1AmendmentBlocked__test.html#af87ce26f9d09cee3a1aad383315bfe58">  214</a></span>    <a class="code hl_function" href="classxrpl_1_1AmendmentBlocked__test.html#af87ce26f9d09cee3a1aad383315bfe58">run</a>()<span class="keyword"> override</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <a class="code hl_function" href="classxrpl_1_1AmendmentBlocked__test.html#aca544d860da989f939f0cf977d1c0c77">testBlockedMethods</a>();</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    }</div>
 </div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>};</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>};</div>
 </div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a8eec702224f356ec420041e297d01bcf">  218</a></span>BEAST_DEFINE_TESTSUITE(AmendmentBlocked, rpc, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>}  <span class="comment">// namespace xrpl</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno"><a class="line" href="namespacexrpl.html#a8eec702224f356ec420041e297d01bcf">  220</a></span>BEAST_DEFINE_TESTSUITE(AmendmentBlocked, rpc, <a class="code hl_namespace" href="namespacexrpl.html">xrpl</a>);</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>}  <span class="comment">// namespace xrpl</span></div>
 <div class="ttc" id="aclassJson_1_1Value_html"><div class="ttname"><a href="classJson_1_1Value.html">Json::Value</a></div><div class="ttdoc">Represents a JSON value.</div><div class="ttdef"><b>Definition</b> <a href="json__value_8h_source.html#l00129">json_value.h:130</a></div></div>
 <div class="ttc" id="aclassbeast_1_1unit__test_1_1suite_html"><div class="ttname"><a href="classbeast_1_1unit__test_1_1suite.html">beast::unit_test::suite</a></div><div class="ttdoc">A testsuite class.</div><div class="ttdef"><b>Definition</b> <a href="suite_8h_source.html#l00050">suite.h:51</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1AmendmentBlocked__test_html"><div class="ttname"><a href="classxrpl_1_1AmendmentBlocked__test.html">xrpl::AmendmentBlocked_test</a></div><div class="ttdef"><b>Definition</b> <a href="AmendmentBlocked__test_8cpp_source.html#l00011">AmendmentBlocked_test.cpp:12</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1AmendmentBlocked__test_html_aca544d860da989f939f0cf977d1c0c77"><div class="ttname"><a href="classxrpl_1_1AmendmentBlocked__test.html#aca544d860da989f939f0cf977d1c0c77">xrpl::AmendmentBlocked_test::testBlockedMethods</a></div><div class="ttdeci">void testBlockedMethods()</div><div class="ttdef"><b>Definition</b> <a href="AmendmentBlocked__test_8cpp_source.html#l00014">AmendmentBlocked_test.cpp:14</a></div></div>
-<div class="ttc" id="aclassxrpl_1_1AmendmentBlocked__test_html_af87ce26f9d09cee3a1aad383315bfe58"><div class="ttname"><a href="classxrpl_1_1AmendmentBlocked__test.html#af87ce26f9d09cee3a1aad383315bfe58">xrpl::AmendmentBlocked_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="AmendmentBlocked__test_8cpp_source.html#l00212">AmendmentBlocked_test.cpp:212</a></div></div>
+<div class="ttc" id="aclassxrpl_1_1AmendmentBlocked__test_html_af87ce26f9d09cee3a1aad383315bfe58"><div class="ttname"><a href="classxrpl_1_1AmendmentBlocked__test.html#af87ce26f9d09cee3a1aad383315bfe58">xrpl::AmendmentBlocked_test::run</a></div><div class="ttdeci">void run() override</div><div class="ttdoc">Runs the suite.</div><div class="ttdef"><b>Definition</b> <a href="AmendmentBlocked__test_8cpp_source.html#l00214">AmendmentBlocked_test.cpp:214</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Serializer_html"><div class="ttname"><a href="classxrpl_1_1Serializer.html">xrpl::Serializer</a></div><div class="ttdef"><b>Definition</b> <a href="Serializer_8h_source.html#l00020">Serializer.h:21</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Serializer_html_a3b7908f846865ee59a2264243b478621"><div class="ttname"><a href="classxrpl_1_1Serializer.html#a3b7908f846865ee59a2264243b478621">xrpl::Serializer::erase</a></div><div class="ttdeci">void erase()</div><div class="ttdef"><b>Definition</b> <a href="Serializer_8h_source.html#l00217">Serializer.h:217</a></div></div>
 <div class="ttc" id="aclassxrpl_1_1Serializer_html_a9fdb78b3d7b575806292496989bd138a"><div class="ttname"><a href="classxrpl_1_1Serializer.html#a9fdb78b3d7b575806292496989bd138a">xrpl::Serializer::slice</a></div><div class="ttdeci">Slice slice() const noexcept</div><div class="ttdef"><b>Definition</b> <a href="Serializer_8h_source.html#l00044">Serializer.h:44</a></div></div>
-<div class="ttc" id="anamespacexrpl_1_1test_html_ae0e9aadbd1c258af0ad925bd4f9740fa"><div class="ttname"><a href="namespacexrpl_1_1test.html#ae0e9aadbd1c258af0ad925bd4f9740fa">xrpl::test::makeWSClient</a></div><div class="ttdeci">std::unique_ptr&lt; WSClient &gt; makeWSClient(Config const &amp;cfg, bool v2, unsigned rpc_version, std::unordered_map&lt; std::string, std::string &gt; const &amp;headers)</div><div class="ttdoc">Returns a client operating through WebSockets/S.</div><div class="ttdef"><b>Definition</b> <a href="WSClient_8cpp_source.html#l00285">WSClient.cpp:285</a></div></div>
+<div class="ttc" id="anamespacexrpl_1_1test_html_ae0e9aadbd1c258af0ad925bd4f9740fa"><div class="ttname"><a href="namespacexrpl_1_1test.html#ae0e9aadbd1c258af0ad925bd4f9740fa">xrpl::test::makeWSClient</a></div><div class="ttdeci">std::unique_ptr&lt; WSClient &gt; makeWSClient(Config const &amp;cfg, bool v2, unsigned rpc_version, std::unordered_map&lt; std::string, std::string &gt; const &amp;headers)</div><div class="ttdoc">Returns a client operating through WebSockets/S.</div><div class="ttdef"><b>Definition</b> <a href="WSClient_8cpp_source.html#l00291">WSClient.cpp:291</a></div></div>
 <div class="ttc" id="anamespacexrpl_html"><div class="ttname"><a href="namespacexrpl.html">xrpl</a></div><div class="ttdoc">Use hash_* containers for keys that do not need a cryptographically secure hashing algorithm.</div><div class="ttdef"><b>Definition</b> <a href="algorithm_8h_source.html#l00005">algorithm.h:5</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a0b0d50fcc4520f33b4417f1b74eee591a82c2b7829b8129e5a2d53665ba4b4757"><div class="ttname"><a href="namespacexrpl.html#a0b0d50fcc4520f33b4417f1b74eee591a82c2b7829b8129e5a2d53665ba4b4757">xrpl::KeyType::secp256k1</a></div><div class="ttdeci">@ secp256k1</div></div>
-<div class="ttc" id="anamespacexrpl_html_a35ce7572092b98720a52fa343c6f2fa9"><div class="ttname"><a href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">xrpl::to_string</a></div><div class="ttdeci">std::string to_string(base_uint&lt; Bits, Tag &gt; const &amp;a)</div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00597">base_uint.h:597</a></div></div>
+<div class="ttc" id="anamespacexrpl_html_a35ce7572092b98720a52fa343c6f2fa9"><div class="ttname"><a href="namespacexrpl.html#a35ce7572092b98720a52fa343c6f2fa9">xrpl::to_string</a></div><div class="ttdeci">std::string to_string(base_uint&lt; Bits, Tag &gt; const &amp;a)</div><div class="ttdef"><b>Definition</b> <a href="base__uint_8h_source.html#l00600">base_uint.h:600</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a36b95700599f590017b5912e220baf5b"><div class="ttname"><a href="namespacexrpl.html#a36b95700599f590017b5912e220baf5b">xrpl::strHex</a></div><div class="ttdeci">std::string strHex(FwdIt begin, FwdIt end)</div><div class="ttdef"><b>Definition</b> <a href="strHex_8h_source.html#l00010">strHex.h:10</a></div></div>
 <div class="ttc" id="anamespacexrpl_html_a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000"><div class="ttname"><a href="namespacexrpl.html#a75da7d88563def930b866cd64dd96f06a43b5c9175984c071f30b873fdce0a000">xrpl::ValStatus::current</a></div><div class="ttdeci">@ current</div><div class="ttdoc">This was a new validation and was added.</div></div>
 <div class="ttc" id="anamespacexrpl_html_adfcfa25ccc459fa509f891e4009ac1e3a5483bf26dec486ec0175e2a3ca816a0a"><div class="ttname"><a href="namespacexrpl.html#adfcfa25ccc459fa509f891e4009ac1e3a5483bf26dec486ec0175e2a3ca816a0a">xrpl::ReleaseStrongRefAction::noop</a></div><div class="ttdeci">@ noop</div></div>
