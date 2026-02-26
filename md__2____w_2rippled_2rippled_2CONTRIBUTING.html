@@ -210,6 +210,21 @@ Formatting</h2>
 <div class="fragment"><div class="line">pip3 install pre-commit</div>
 <div class="line">pre-commit install</div>
 </div><!-- fragment --><h2><a class="anchor" id="autotoc_md86"></a>
+Clang-tidy</h2>
+<p>All code must pass <code>clang-tidy</code> checks according to the settings in <a href="./.clang-tidy"><code>.clang-tidy</code></a>.</p>
+<p>There is a Continuous Integration job that runs clang-tidy on pull requests. The CI will check:</p>
+<ul>
+<li>All changed C++ files (<code>.cpp</code>, <code>.h</code>, <code>.ipp</code>) when only code files are modified</li>
+<li><b>All files in the repository</b> when the <code>.clang-tidy</code> configuration file is changed</li>
+</ul>
+<p>This ensures that configuration changes don't introduce new warnings across the codebase.</p>
+<h3><a class="anchor" id="autotoc_md87"></a>
+Running clang-tidy locally</h3>
+<p>Before running clang-tidy, you must build the project to generate required files (particularly protobuf headers). Refer to <a class="el" href="md__2____w_2rippled_2rippled_2BUILD.html">`BUILD.md`</a> for build instructions.</p>
+<p>Then run clang-tidy on your local changes:</p>
+<div class="fragment"><div class="line">run-clang-tidy -p build src tests</div>
+</div><!-- fragment --><p>This will check all source files in the <code>src</code> and <code>tests</code> directories using the compile commands from your <code>build</code> directory.</p>
+<h2><a class="anchor" id="autotoc_md88"></a>
 Contracts and instrumentation</h2>
 <p>We are using <a href="https://antithesis.com/">Antithesis</a> for continuous fuzzing, and keep a copy of <a href="https://github.com/antithesishq/antithesis-sdk-cpp/">Antithesis C++ SDK</a> in <code>external/antithesis-sdk</code>. One of the aims of fuzzing is to identify bugs by finding external conditions which cause contracts violations inside <code>xrpld</code>. The contracts are expressed as <code>XRPL_ASSERT</code> or <code>UNREACHABLE</code> (defined in <code><a class="el" href="instrumentation_8h_source.html">include/xrpl/beast/utility/instrumentation.h</a></code>), which are effectively (outside of Antithesis) wrappers for <code>assert(...)</code> with added name. The purpose of name is to provide contracts with stable identity which does not rely on line numbers.</p>
 <p>When <code>xrpld</code> is built with the Antithesis instrumentation enabled (using <code>voidstar</code> CMake option) and ran on the Antithesis platform, the contracts become <a href="https://antithesis.com/docs/using_antithesis/properties.html">test properties</a>; otherwise they are just like a regular <code>assert</code>. To learn more about Antithesis, see <a href="https://antithesis.com/docs/introduction/how_antithesis_works.html">How Antithesis Works</a> and <a href="https://antithesis.com/docs/using_antithesis/sdk/cpp/overview.html#">C++ SDK</a></p>
@@ -234,7 +249,7 @@ Contracts and instrumentation</h2>
 <li>Do not use <code><a class="elRef" href="http://en.cppreference.com/w/cpp/types/is_same.html">std::unreachable</a></code></li>
 <li>Do not put contracts where they can be violated by an external condition (e.g. timing, data payload before mandatory validation etc.) as this creates bogus bug reports (and causes crashes of Debug builds)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md87"></a>
+<h2><a class="anchor" id="autotoc_md89"></a>
 Unit Tests</h2>
 <p>To execute all unit tests:</p>
 <p><code>xrpld --unittest --unittest-jobs=&lt;number of cores&gt;</code></p>
@@ -242,7 +257,7 @@ Unit Tests</h2>
 <p>To run a specific set of test suites:</p>
 <div class="fragment"><div class="line">xrpld --unittest TestSuiteName</div>
 </div><!-- fragment --><p>Note: In this example, all tests with prefix <code>TestSuiteName</code> will be run, so if <code>TestSuiteName1</code> and <code>TestSuiteName2</code> both exist, then both tests will run. Alternatively, if the unit test name finds an exact match, it will stop doing partial matches, i.e. if a unit test with a title of <code>TestSuiteName</code> exists, then no other unit test will be executed, apart from <code>TestSuiteName</code>.</p>
-<h2><a class="anchor" id="autotoc_md88"></a>
+<h2><a class="anchor" id="autotoc_md90"></a>
 Avoid</h2>
 <ol type="1">
 <li>Proliferation of nearly identical code.</li>
@@ -254,7 +269,7 @@ Avoid</h2>
 <li>CPU or architecture-specific code unless there is a good reason to include it, and where it is used, guard it with macros and provide explanatory comments.</li>
 <li>Importing new libraries unless there is a very good reason to do so.</li>
 </ol>
-<h2><a class="anchor" id="autotoc_md89"></a>
+<h2><a class="anchor" id="autotoc_md91"></a>
 Seek to</h2>
 <ol type="1">
 <li>Extend functionality of existing code rather than creating new code.</li>
@@ -264,14 +279,14 @@ Seek to</h2>
 <li>Use TitleCase for classes, structs and filenames, camelCase for function and variable names, lower case for namespaces and folders.</li>
 <li>Provide as many comments as you feel that a competent programmer would need to understand what your code does.</li>
 </ol>
-<h1><a class="anchor" id="autotoc_md90"></a>
+<h1><a class="anchor" id="autotoc_md92"></a>
 Maintainers</h1>
 <p>Maintainers are ecosystem participants with elevated access to the repository. They are able to push new code, make decisions on when a release should be made, etc.</p>
-<h2><a class="anchor" id="autotoc_md91"></a>
+<h2><a class="anchor" id="autotoc_md93"></a>
 Adding and removing</h2>
 <p>New maintainers can be proposed by two existing maintainers, subject to a vote by a quorum of the existing maintainers. A minimum of 50% support and a 50% participation is required. In the event of a tie vote, the addition of the new maintainer will be rejected.</p>
 <p>Existing maintainers can resign, or be subject to a vote for removal at the behest of two existing maintainers. A minimum of 60% agreement and 50% participation are required. The XRP Ledger Foundation will have the ability, for cause, to remove an existing maintainer without a vote.</p>
-<h2><a class="anchor" id="autotoc_md92"></a>
+<h2><a class="anchor" id="autotoc_md94"></a>
 Current Maintainers</h2>
 <p>Maintainers are users with maintain or admin access to the repo.</p>
 <ul>
@@ -283,7 +298,7 @@ Current Maintainers</h2>
 <li><a href="https://github.com/WietseWind">WietseWind</a> (XRPL Labs + XRP Ledger Foundation)</li>
 <li><a href="https://github.com/ximinez">ximinez</a> (Ripple)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md93"></a>
+<h2><a class="anchor" id="autotoc_md95"></a>
 Current Code Reviewers</h2>
 <p>Code Reviewers are developers who have the ability to review, approve, and in some cases merge source code changes.</p>
 <ul>
@@ -307,7 +322,7 @@ Current Code Reviewers</h2>
 <li><a href="https://github.com/ximinez">ximinez</a> (Ripple)</li>
 </ul>
 <p>Developers not on this list are able and encouraged to submit feedback on pending code changes (open pull requests).</p>
-<h2><a class="anchor" id="autotoc_md94"></a>
+<h2><a class="anchor" id="autotoc_md96"></a>
 Instructions for maintainers</h2>
 <p>These instructions assume you have your git upstream remotes configured to avoid accidental pushes to the main repo, and a remote group specifying both of them. e.g.</p>
 <div class="fragment"><div class="line">$ git remote -v | grep upstream</div>
@@ -323,13 +338,13 @@ Instructions for maintainers</h2>
 <div class="fragment"><div class="line">$ git config user.signingkey</div>
 <div class="line">968479A1AFF927E37D1A566BB5690EEEBB952194</div>
 <div class="line"># (This is github&#39;s key. Use your own.)</div>
-</div><!-- fragment --><h3><a class="anchor" id="autotoc_md95"></a>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md97"></a>
 When and how to merge pull requests</h3>
 <p>The maintainer should double-check that the PR has met all the necessary criteria, and can request additional information from the owner, or additional reviews, and can always feel free to remove the "Ready to merge" label if appropriate. The maintainer has final say on whether a PR gets merged, and are encouraged to communicate and issues or concerns to other maintainers.</p>
-<h4><a class="anchor" id="autotoc_md96"></a>
+<h4><a class="anchor" id="autotoc_md98"></a>
 Most pull requests: "Squash and merge"</h4>
 <p>Most pull requests don't need special handling, and can simply be merged using the "Squash and merge" button on the Github UI. Update the suggested commit message, or modify it as needed.</p>
-<h4><a class="anchor" id="autotoc_md97"></a>
+<h4><a class="anchor" id="autotoc_md99"></a>
 Slightly more complicated pull requests</h4>
 <p>Some pull requests need to be pushed to <code>develop</code> as more than one commit. A PR author may <em>request</em> to merge as separate commits. They must <em>justify</em> why separate commits are needed, and <em>specify</em> how they would like the commits to be merged. If you disagree with the author, discuss it with them directly.</p>
 <p>If the process is reasonable, follow it. The simplest option is to do a fast forward only merge (<code>--ff-only</code>) on the command line and push to <code>develop</code>.</p>
@@ -347,7 +362,7 @@ Slightly more complicated pull requests</h4>
 <li>At least one (but preferably all) of the commits has the PR number in the commit message.</li>
 </ul>
 <p>The "Create a merge commit" and "Rebase and merge" options should be disabled in the Github UI, but if you ever find them available <b>Do not use them!</b></p>
-<h3><a class="anchor" id="autotoc_md98"></a>
+<h3><a class="anchor" id="autotoc_md100"></a>
 Releases</h3>
 <p>All releases, including release candidates and betas, are handled differently from typical PRs. Most importantly, never use the Github UI to merge a release.</p>
 <p>Rippled uses a linear workflow model that can be summarized as:</p>
@@ -364,9 +379,9 @@ Releases</h3>
 <li>When the candidate has passed testing and is ready for release, the final release is merged to <code>master</code>.</li>
 <li>If any issues are found post-release, a hotfix / point release may be created, which is merged to <code>master</code>, and then reverse merged to <code>develop</code>.</li>
 </ol>
-<h4><a class="anchor" id="autotoc_md99"></a>
+<h4><a class="anchor" id="autotoc_md101"></a>
 Betas, and the first release candidate</h4>
-<p><a class="anchor" id="autotoc_md100"></a> </p><h5>Preparing the <code>develop</code> branch</h5>
+<p><a class="anchor" id="autotoc_md102"></a> </p><h5>Preparing the <code>develop</code> branch</h5>
 <ol type="1">
 <li>Optimally, the <code>develop</code> branch will be ready to go, with all relevant PRs already merged.</li>
 <li>If there are any PRs pending, merge them <b>BEFORE</b> preparing the beta.<ol type="a">
@@ -407,7 +422,7 @@ Betas, and the first release candidate</h4>
 <div class="line"># everything can be done in one PR.</div>
 </div><!-- fragment --><p>You can also use the <a href="./bin/git/squash-branches.sh">squash-branches</a> script.</p>
 <p>You may also need to manually close the open PRs after the changes are merged to <code>develop</code>. Be sure to include the commit ID.</p>
-<p><a class="anchor" id="autotoc_md101"></a> </p><h5>Making the release</h5>
+<p><a class="anchor" id="autotoc_md103"></a> </p><h5>Making the release</h5>
 <p>This includes, betas, and the first release candidate (RC).</p>
 <ol type="1">
 <li>If you didn't create one preparing the `develop` branch, Ensure there is no old <code>release-next</code> branch hanging around. Then make a <code>release-next</code> branch that only changes the version number. e.g.</li>
@@ -491,7 +506,7 @@ Betas, and the first release candidate</h4>
 </div><!-- fragment --><ol type="1">
 <li>Finally <a href="https://github.com/XRPLF/rippled/releases">create a new release on Github</a>.</li>
 </ol>
-<h4><a class="anchor" id="autotoc_md102"></a>
+<h4><a class="anchor" id="autotoc_md104"></a>
 Release candidates after the first</h4>
 <p>Once the first release candidate is merged into release, then <code>release</code> and <code>develop</code> <em>are allowed to diverge</em>.</p>
 <p>If a bug or issue is discovered in a version that has a release candidate being tested, any fix and new version will need to be applied against <code>release</code>, then reverse-merged to <code>develop</code>. This helps keep git history as linear as possible.</p>
@@ -502,7 +517,7 @@ Release candidates after the first</h4>
 <li>Jump to step 8 ("Now create a Pull Request for `release-next` with
    **`release`** as the base") from the process above to merge <code>release-next</code> into <code>release</code>.</li>
 </ol>
-<p><a class="anchor" id="autotoc_md103"></a> </p><h5>Follow up: reverse merge</h5>
+<p><a class="anchor" id="autotoc_md105"></a> </p><h5>Follow up: reverse merge</h5>
 <p>Once the RC is merged and tagged, it needs to be reverse merged into <code>develop</code> as soon as possible.</p>
 <ol type="1">
 <li>Create a branch, based on <code>upstream/develop</code>. The branch name is not important, but could include "mergeNNNrcN". E.g. For release A.B.C-rcD, use <code>mergeABCrcD</code>.</li>
@@ -541,7 +556,7 @@ Release candidates after the first</h4>
 <div class="line"> </div>
 <div class="line">git fetch upstreams</div>
 </div><!-- fragment --><p>Development on <code>develop</code> can proceed as normal.</p>
-<h4><a class="anchor" id="autotoc_md104"></a>
+<h4><a class="anchor" id="autotoc_md106"></a>
 Final releases</h4>
 <p>A final release is any release that is not a beta or RC, such as 2.2.0.</p>
 <p>Only code that has already been tested and vetted across all three platforms should be included in a final release. Most of the time, that means that the commit immediately preceding the commit setting the version number will be an RC. Occasionally, there may be last-minute bug fixes included as well. If so, those bug fixes must have been tested internally as if they were RCs (at minimum, ensuring unit tests pass, and the app starts, syncs, and stops cleanly across all three platforms.)</p>
@@ -595,7 +610,7 @@ Final releases</h4>
 <li>Open a PR to update the <a class="el" href="md__2____w_2rippled_2rippled_2API-CHANGELOG.html">API-CHANGELOG</a> and <code>API-VERSION-[n].md</code> with the changes for this release (if any are missing).</li>
 <li>Finally, reverse merge the release into `develop`.</li>
 </ol>
-<h4><a class="anchor" id="autotoc_md105"></a>
+<h4><a class="anchor" id="autotoc_md107"></a>
 Special cases: point releases, hotfixes, etc.</h4>
 <p>On occasion, a bug or issue is discovered in a version that already had a final release. Most of the time, development will have started on the next version, and will usually have changes in <code>develop</code> and often in <code>release</code>.</p>
 <p>Because git history is kept as linear as possible, any fix and new version will need to be applied against <code>master</code>.</p>
@@ -687,7 +702,7 @@ Special cases: point releases, hotfixes, etc.</h4>
 <div class="line"> </div>
 <div class="line">git push upstream-push HEAD:develop</div>
 </div><!-- fragment --><p>Development on <code>develop</code> can proceed as normal. It is recommended to create a beta (or RC) immediately to ensure that everything worked as expected.</p>
-<p><a class="anchor" id="autotoc_md106"></a> </p><h5>An even rarer scenario: A hotfix on an old release</h5>
+<p><a class="anchor" id="autotoc_md108"></a> </p><h5>An even rarer scenario: A hotfix on an old release</h5>
 <p>Historically, once a final release is tagged and packages are released, versions older than the latest final release are no longer supported. However, there is a possibility that a very high severity bug may occur in a non-amendment blocked version that is still being run by a significant fraction of users, which would necessitate a hotfix / point release to that version as well as any later versions.</p>
 <p>This scenario would follow the same basic procedure as above, except that <em>none</em> of <code>develop</code>, <code>release</code>, or <code>master</code> would be touched during the release process.</p>
 <p>In this example, consider if version 2.1.1 needed to be patched.</p>

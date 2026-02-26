@@ -72,8 +72,8 @@ $(function() {
   <div class="headertitle"><div class="title">Using Nix Development Shell for xrpld Development</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md149"></a> This guide explains how to use Nix to set up a reproducible development environment for xrpld. Using Nix eliminates the need to manually install utilities and ensures consistent tooling across different machines.</p>
-<h1><a class="anchor" id="autotoc_md150"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md151"></a> This guide explains how to use Nix to set up a reproducible development environment for xrpld. Using Nix eliminates the need to manually install utilities and ensures consistent tooling across different machines.</p>
+<h1><a class="anchor" id="autotoc_md152"></a>
 Benefits of Using Nix</h1>
 <ul>
 <li><b>Reproducible environment</b>: Everyone gets the same versions of tools and compilers</li>
@@ -82,12 +82,12 @@ Benefits of Using Nix</h1>
 <li><b>Quick setup</b>: Get started with a single command</li>
 <li><b>Works on Linux and macOS</b>: Consistent experience across platforms</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md151"></a>
+<h1><a class="anchor" id="autotoc_md153"></a>
 Install Nix</h1>
 <p>Please follow <a href="https://nixos.org/download/">the official installation instructions of nix package manager</a> for your system.</p>
-<h1><a class="anchor" id="autotoc_md152"></a>
+<h1><a class="anchor" id="autotoc_md154"></a>
 Entering the Development Shell</h1>
-<h2><a class="anchor" id="autotoc_md153"></a>
+<h2><a class="anchor" id="autotoc_md155"></a>
 Basic Usage</h2>
 <p>From the root of the xrpld repository, enter the default development shell:</p>
 <div class="fragment"><div class="line">nix --experimental-features &#39;nix-command flakes&#39; develop</div>
@@ -110,11 +110,11 @@ Basic Usage</h2>
 <blockquote class="doxtable">
 <p>&zwj;[!NOTE] The examples below assume you've enabled flakes in your config. If you haven't, add &lsquo;--experimental-features 'nix-command flakes&rsquo;<code>after each</code>nix` command. </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md154"></a>
+<h2><a class="anchor" id="autotoc_md156"></a>
 Choosing a different compiler</h2>
 <p>A compiler can be chosen by providing its name with the <code>.#</code> prefix, e.g. <code>nix develop .#gcc15</code>. Use <code>nix flake show</code> to see all the available development shells.</p>
 <p>Use <code>nix develop .#no_compiler</code> to use the compiler from your system.</p>
-<h2><a class="anchor" id="autotoc_md155"></a>
+<h2><a class="anchor" id="autotoc_md157"></a>
 Example Usage</h2>
 <div class="fragment"><div class="line"># Use GCC 14</div>
 <div class="line">nix develop .#gcc14</div>
@@ -124,21 +124,21 @@ Example Usage</h2>
 <div class="line"> </div>
 <div class="line"># Use default for your platform</div>
 <div class="line">nix develop</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md156"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md158"></a>
 Using a different shell</h2>
 <p><code>nix develop</code> opens bash by default. If you want to use another shell this could be done by adding <code>-c</code> flag. For example:</p>
 <div class="fragment"><div class="line">nix develop -c zsh</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md157"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md159"></a>
 Building xrpld with Nix</h1>
 <p>Once inside the Nix development shell, follow the standard <a href="../../BUILD.md#steps">build instructions</a>. The Nix shell provides all necessary tools (CMake, Ninja, Conan, etc.).</p>
-<h1><a class="anchor" id="autotoc_md158"></a>
+<h1><a class="anchor" id="autotoc_md160"></a>
 Automatic Activation with direnv</h1>
 <p><a href="https://direnv.net/">direnv</a> or <a href="https://github.com/nix-community/nix-direnv">nix-direnv</a> can automatically activate the Nix development shell when you enter the repository directory.</p>
-<h1><a class="anchor" id="autotoc_md159"></a>
+<h1><a class="anchor" id="autotoc_md161"></a>
 Conan and Prebuilt Packages</h1>
 <p>Please note that there is no guarantee that binaries from conan cache will work when using nix. If you encounter any errors, please use &lsquo;--build &rsquo;*'` to force conan to compile everything from source:</p>
 <div class="fragment"><div class="line">conan install .. --output-folder . --build &#39;*&#39; --settings build_type=Release</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md160"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md162"></a>
 Updating &lt;tt&gt;flake.lock&lt;/tt&gt; file</h1>
 <p>To update <code>flake.lock</code> to the latest revision use <code>nix flake update</code> command. </p>
 </div></div><!-- contents -->
