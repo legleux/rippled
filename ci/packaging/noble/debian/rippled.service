@@ -4,15 +4,11 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-Type=notify
-
 User=rippled
 Group=rippled
 
-# Canonical config location (as you described)
 ExecStart=/opt/ripple/bin/rippled --conf /etc/opt/ripple/rippled.cfg
 
-# Reasonable hardening defaults (trim if they break your runtime)
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=strict
@@ -26,7 +22,6 @@ RestrictSUIDSGID=true
 MemoryDenyWriteExecute=true
 SystemCallArchitectures=native
 
-# Allow writes only where you actually need them
 ReadWritePaths=/var/lib/rippled /var/log/rippled
 
 StateDirectory=rippled
@@ -34,7 +29,7 @@ LogsDirectory=rippled
 
 Restart=on-failure
 RestartSec=2s
-TimeoutStopSec=30s
+TimeoutStopSec=420s
 
 [Install]
 WantedBy=multi-user.target
