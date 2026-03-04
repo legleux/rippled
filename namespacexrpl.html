@@ -2683,6 +2683,27 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a4cbb7567b1f1ba856f834eb7657cf049"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enum class for return value from <code>applyTransaction</code>  <a href="namespacexrpl.html#a4cbb7567b1f1ba856f834eb7657cf049">More...</a><br /></td></tr>
 <tr class="separator:a4cbb7567b1f1ba856f834eb7657cf049"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7de456270a44ded0681909046c567f9f" id="r_a7de456270a44ded0681909046c567f9f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> { <br />
+&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fad5e14927b568044b5496d5a1a9ecb1e9">noPriv</a> = 0x0000
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa348b051971b6c13dcfb36668455b6e9d">createAcct</a> = 0x0001
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa764fbcc3919bed1b280b85751807b7a3">createPseudoAcct</a> = 0x0002
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa4bec2110bc878470a152408aac3bcb7c">mustDeleteAcct</a> = 0x0004
+, <br />
+&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa2fc53fc6cb2be29b1d59f795d3bc956d">mayDeleteAcct</a> = 0x0008
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fae0992fa46fa293cfe399127b3db8909e">overrideFreeze</a> = 0x0010
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa4478ed030890cee6593e8e132bab0dea">changeNFTCounts</a> = 0x0020
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa8b22a2578f086c750b0fe42492b422ba">createMPTIssuance</a> = 0x0040
+, <br />
+&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa3307cca33087210ee928b7350bd6d151">destroyMPTIssuance</a> = 0x0080
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fad0ef7e6249af5b5741efe8b091321b53">mustAuthorizeMPT</a> = 0x0100
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9faf7f0340b26b4e332d4550c9eef0c5e7a">mayAuthorizeMPT</a> = 0x0200
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa854619b338dcb6def18ad7118a327eb6">mayDeleteMPT</a> = 0x0400
+, <br />
+&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa2f8f9e87fa6b322fcff695a50def48d9">mustModifyVault</a> = 0x0800
+, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa2e2ea3bcf3a146bcff4724efa9857e9e">mayModifyVault</a> = 0x1000
+<br />
+ }</td></tr>
+<tr class="separator:a7de456270a44ded0681909046c567f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a68545644b747368471f97d17192a054d" id="r_a68545644b747368471f97d17192a054d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a68545644b747368471f97d17192a054d">DebtDirection</a> { <a class="el" href="namespacexrpl.html#a68545644b747368471f97d17192a054dafe5fe0415fc3e0ff4942d8454f363d2c">issues</a>
 , <a class="el" href="namespacexrpl.html#a68545644b747368471f97d17192a054da7e611dd9f79193db43a5e9983752239e">redeems</a>
  }</td></tr>
@@ -2766,27 +2787,6 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:aa040fac78e4975614b31771a1bc5f7ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Type-specific prefix for calculating ledger indices.  <a href="namespacexrpl.html#aa040fac78e4975614b31771a1bc5f7ad">More...</a><br /></td></tr>
 <tr class="separator:aa040fac78e4975614b31771a1bc5f7ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7de456270a44ded0681909046c567f9f" id="r_a7de456270a44ded0681909046c567f9f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> { <br />
-&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fad5e14927b568044b5496d5a1a9ecb1e9">noPriv</a> = 0x0000
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa348b051971b6c13dcfb36668455b6e9d">createAcct</a> = 0x0001
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa764fbcc3919bed1b280b85751807b7a3">createPseudoAcct</a> = 0x0002
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa4bec2110bc878470a152408aac3bcb7c">mustDeleteAcct</a> = 0x0004
-, <br />
-&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa2fc53fc6cb2be29b1d59f795d3bc956d">mayDeleteAcct</a> = 0x0008
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fae0992fa46fa293cfe399127b3db8909e">overrideFreeze</a> = 0x0010
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa4478ed030890cee6593e8e132bab0dea">changeNFTCounts</a> = 0x0020
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa8b22a2578f086c750b0fe42492b422ba">createMPTIssuance</a> = 0x0040
-, <br />
-&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa3307cca33087210ee928b7350bd6d151">destroyMPTIssuance</a> = 0x0080
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fad0ef7e6249af5b5741efe8b091321b53">mustAuthorizeMPT</a> = 0x0100
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9faf7f0340b26b4e332d4550c9eef0c5e7a">mayAuthorizeMPT</a> = 0x0200
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa854619b338dcb6def18ad7118a327eb6">mayDeleteMPT</a> = 0x0400
-, <br />
-&#160;&#160;<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa2f8f9e87fa6b322fcff695a50def48d9">mustModifyVault</a> = 0x0800
-, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9fa2e2ea3bcf3a146bcff4724efa9857e9e">mayModifyVault</a> = 0x1000
-<br />
- }</td></tr>
-<tr class="separator:a7de456270a44ded0681909046c567f9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8109828aee0f1bf0d066aa2fb52be45f" id="r_a8109828aee0f1bf0d066aa2fb52be45f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a8109828aee0f1bf0d066aa2fb52be45f">BypassAccept</a> : bool { <a class="el" href="namespacexrpl.html#a8109828aee0f1bf0d066aa2fb52be45fa7fa3b767c460b54a2be4d49030b349c7">no</a> = false
 , <a class="el" href="namespacexrpl.html#a8109828aee0f1bf0d066aa2fb52be45faa6105c0a611b41b08f1209506350279e">yes</a>
  }</td></tr>
@@ -4306,6 +4306,10 @@ requires requires(T const&amp; t) { { t.getJson(<a class="el" href="structxrpl_1
 <tr class="memitem:a32c84bd2b2684b6390581025674c35f6" id="r_a32c84bd2b2684b6390581025674c35f6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacexrpl.html#a932418a0b25f7d9fbc1b080c71b8fe6a">InvariantChecks</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a32c84bd2b2684b6390581025674c35f6">getInvariantChecks</a> ()</td></tr>
 <tr class="memdesc:a32c84bd2b2684b6390581025674c35f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">get a tuple of all invariant checks  <br /></td></tr>
 <tr class="separator:a32c84bd2b2684b6390581025674c35f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad73b3e295464249bdeb9d3c34e658234" id="r_ad73b3e295464249bdeb9d3c34e658234"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#ad73b3e295464249bdeb9d3c34e658234">operator|</a> (<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> lhs, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> rhs)</td></tr>
+<tr class="separator:ad73b3e295464249bdeb9d3c34e658234"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a888ff3140efbc0ea0e09ef1d933b1fe0" id="r_a888ff3140efbc0ea0e09ef1d933b1fe0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a888ff3140efbc0ea0e09ef1d933b1fe0">hasPrivilege</a> (<a class="el" href="classxrpl_1_1STTx.html">STTx</a> const &amp;tx, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> priv)</td></tr>
+<tr class="separator:a888ff3140efbc0ea0e09ef1d933b1fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4062be5a5e80da97ff6447947ccdb757" id="r_a4062be5a5e80da97ff6447947ccdb757"><td class="memTemplParams" colspan="2">template&lt;class T &gt; </td></tr>
 <tr class="memitem:a4062be5a5e80da97ff6447947ccdb757"><td class="memTemplItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a4062be5a5e80da97ff6447947ccdb757">get</a> (<a class="el" href="structxrpl_1_1EitherAmount.html">EitherAmount</a> &amp;amt)</td></tr>
 <tr class="separator:a4062be5a5e80da97ff6447947ccdb757"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -4707,10 +4711,6 @@ requires (T::ConsequencesFactory == <a class="el" href="classxrpl_1_1Transactor.
 <tr class="separator:a1a6d0409b60040042410ba3d34eef8b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a232b257f91e3c0a48429d4d542a3bc80" id="r_a232b257f91e3c0a48429d4d542a3bc80"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structxrpl_1_1ApplyResult.html">ApplyResult</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a232b257f91e3c0a48429d4d542a3bc80">invoke_apply</a> (<a class="el" href="classxrpl_1_1ApplyContext.html">ApplyContext</a> &amp;ctx)</td></tr>
 <tr class="separator:a232b257f91e3c0a48429d4d542a3bc80"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad73b3e295464249bdeb9d3c34e658234" id="r_ad73b3e295464249bdeb9d3c34e658234"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#ad73b3e295464249bdeb9d3c34e658234">operator|</a> (<a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> lhs, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> rhs)</td></tr>
-<tr class="separator:ad73b3e295464249bdeb9d3c34e658234"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a888ff3140efbc0ea0e09ef1d933b1fe0" id="r_a888ff3140efbc0ea0e09ef1d933b1fe0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a888ff3140efbc0ea0e09ef1d933b1fe0">hasPrivilege</a> (<a class="el" href="classxrpl_1_1STTx.html">STTx</a> const &amp;tx, <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> priv)</td></tr>
-<tr class="separator:a888ff3140efbc0ea0e09ef1d933b1fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7efe90989d0b8581252bb0b0fd309eb4" id="r_a7efe90989d0b8581252bb0b0fd309eb4"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacexrpl.html#a7efe90989d0b8581252bb0b0fd309eb4">validBalances</a> (<a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;amount2, <a class="el" href="classxrpl_1_1STAmount.html">STAmount</a> const &amp;lptAMMBalance, <a class="el" href="classxrpl_1_1ValidAMM.html#af39845f517f8231ce0c07465e829ed34">ValidAMM::ZeroAllowed</a> zeroAllowed)</td></tr>
 <tr class="separator:a7efe90989d0b8581252bb0b0fd309eb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a49ed91ec73aef735ae76d77f304d7c6e" id="r_a49ed91ec73aef735ae76d77f304d7c6e"><td class="memTemplParams" colspan="2">template&lt;class FlowResult &gt; </td></tr>
@@ -8197,7 +8197,7 @@ template&lt;class T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InvariantCheck_8h_source.html#l00692">692</a> of file <a class="el" href="InvariantCheck_8h_source.html">InvariantCheck.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="InvariantCheck_8h_source.html#l00345">345</a> of file <a class="el" href="InvariantCheck_8h_source.html">InvariantCheck.h</a>.</p>
 
 </div>
 </div>
@@ -10566,6 +10566,38 @@ ledger.
 
 </div>
 </div>
+<a id="a7de456270a44ded0681909046c567f9f" name="a7de456270a44ded0681909046c567f9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7de456270a44ded0681909046c567f9f">&#9670;&#160;</a></span>Privilege</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">xrpl::Privilege</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fad5e14927b568044b5496d5a1a9ecb1e9" name="a7de456270a44ded0681909046c567f9fad5e14927b568044b5496d5a1a9ecb1e9"></a>noPriv&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa348b051971b6c13dcfb36668455b6e9d" name="a7de456270a44ded0681909046c567f9fa348b051971b6c13dcfb36668455b6e9d"></a>createAcct&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa764fbcc3919bed1b280b85751807b7a3" name="a7de456270a44ded0681909046c567f9fa764fbcc3919bed1b280b85751807b7a3"></a>createPseudoAcct&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa4bec2110bc878470a152408aac3bcb7c" name="a7de456270a44ded0681909046c567f9fa4bec2110bc878470a152408aac3bcb7c"></a>mustDeleteAcct&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa2fc53fc6cb2be29b1d59f795d3bc956d" name="a7de456270a44ded0681909046c567f9fa2fc53fc6cb2be29b1d59f795d3bc956d"></a>mayDeleteAcct&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fae0992fa46fa293cfe399127b3db8909e" name="a7de456270a44ded0681909046c567f9fae0992fa46fa293cfe399127b3db8909e"></a>overrideFreeze&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa4478ed030890cee6593e8e132bab0dea" name="a7de456270a44ded0681909046c567f9fa4478ed030890cee6593e8e132bab0dea"></a>changeNFTCounts&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa8b22a2578f086c750b0fe42492b422ba" name="a7de456270a44ded0681909046c567f9fa8b22a2578f086c750b0fe42492b422ba"></a>createMPTIssuance&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa3307cca33087210ee928b7350bd6d151" name="a7de456270a44ded0681909046c567f9fa3307cca33087210ee928b7350bd6d151"></a>destroyMPTIssuance&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fad0ef7e6249af5b5741efe8b091321b53" name="a7de456270a44ded0681909046c567f9fad0ef7e6249af5b5741efe8b091321b53"></a>mustAuthorizeMPT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9faf7f0340b26b4e332d4550c9eef0c5e7a" name="a7de456270a44ded0681909046c567f9faf7f0340b26b4e332d4550c9eef0c5e7a"></a>mayAuthorizeMPT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa854619b338dcb6def18ad7118a327eb6" name="a7de456270a44ded0681909046c567f9fa854619b338dcb6def18ad7118a327eb6"></a>mayDeleteMPT&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa2f8f9e87fa6b322fcff695a50def48d9" name="a7de456270a44ded0681909046c567f9fa2f8f9e87fa6b322fcff695a50def48d9"></a>mustModifyVault&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa2e2ea3bcf3a146bcff4724efa9857e9e" name="a7de456270a44ded0681909046c567f9fa2e2ea3bcf3a146bcff4724efa9857e9e"></a>mayModifyVault&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="InvariantCheckPrivilege_8h_source.html#l00028">28</a> of file <a class="el" href="InvariantCheckPrivilege_8h_source.html">InvariantCheckPrivilege.h</a>.</p>
+
+</div>
+</div>
 <a id="a68545644b747368471f97d17192a054d" name="a68545644b747368471f97d17192a054d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a68545644b747368471f97d17192a054d">&#9670;&#160;</a></span>DebtDirection</h2>
 
@@ -10826,38 +10858,6 @@ ledger.
 </table>
 
 <p class="definition">Definition at line <a class="el" href="Indexes_8cpp_source.html#l00047">47</a> of file <a class="el" href="Indexes_8cpp_source.html">Indexes.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a7de456270a44ded0681909046c567f9f" name="a7de456270a44ded0681909046c567f9f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7de456270a44ded0681909046c567f9f">&#9670;&#160;</a></span>Privilege</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">xrpl::Privilege</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fad5e14927b568044b5496d5a1a9ecb1e9" name="a7de456270a44ded0681909046c567f9fad5e14927b568044b5496d5a1a9ecb1e9"></a>noPriv&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa348b051971b6c13dcfb36668455b6e9d" name="a7de456270a44ded0681909046c567f9fa348b051971b6c13dcfb36668455b6e9d"></a>createAcct&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa764fbcc3919bed1b280b85751807b7a3" name="a7de456270a44ded0681909046c567f9fa764fbcc3919bed1b280b85751807b7a3"></a>createPseudoAcct&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa4bec2110bc878470a152408aac3bcb7c" name="a7de456270a44ded0681909046c567f9fa4bec2110bc878470a152408aac3bcb7c"></a>mustDeleteAcct&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa2fc53fc6cb2be29b1d59f795d3bc956d" name="a7de456270a44ded0681909046c567f9fa2fc53fc6cb2be29b1d59f795d3bc956d"></a>mayDeleteAcct&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fae0992fa46fa293cfe399127b3db8909e" name="a7de456270a44ded0681909046c567f9fae0992fa46fa293cfe399127b3db8909e"></a>overrideFreeze&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa4478ed030890cee6593e8e132bab0dea" name="a7de456270a44ded0681909046c567f9fa4478ed030890cee6593e8e132bab0dea"></a>changeNFTCounts&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa8b22a2578f086c750b0fe42492b422ba" name="a7de456270a44ded0681909046c567f9fa8b22a2578f086c750b0fe42492b422ba"></a>createMPTIssuance&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa3307cca33087210ee928b7350bd6d151" name="a7de456270a44ded0681909046c567f9fa3307cca33087210ee928b7350bd6d151"></a>destroyMPTIssuance&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fad0ef7e6249af5b5741efe8b091321b53" name="a7de456270a44ded0681909046c567f9fad0ef7e6249af5b5741efe8b091321b53"></a>mustAuthorizeMPT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9faf7f0340b26b4e332d4550c9eef0c5e7a" name="a7de456270a44ded0681909046c567f9faf7f0340b26b4e332d4550c9eef0c5e7a"></a>mayAuthorizeMPT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa854619b338dcb6def18ad7118a327eb6" name="a7de456270a44ded0681909046c567f9fa854619b338dcb6def18ad7118a327eb6"></a>mayDeleteMPT&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa2f8f9e87fa6b322fcff695a50def48d9" name="a7de456270a44ded0681909046c567f9fa2f8f9e87fa6b322fcff695a50def48d9"></a>mustModifyVault&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a7de456270a44ded0681909046c567f9fa2e2ea3bcf3a146bcff4724efa9857e9e" name="a7de456270a44ded0681909046c567f9fa2e2ea3bcf3a146bcff4724efa9857e9e"></a>mayModifyVault&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-<p class="definition">Definition at line <a class="el" href="InvariantCheck_8cpp_source.html#l00048">48</a> of file <a class="el" href="InvariantCheck_8cpp_source.html">InvariantCheck.cpp</a>.</p>
 
 </div>
 </div>
@@ -30907,7 +30907,75 @@ template&lt;class Handler &gt; </div>
 <dl class="section return"><dt>Returns</dt><dd><a class="elRef" href="http://en.cppreference.com/w/cpp/utility/tuple.html">std::tuple</a> of instances that implement the required invariant check methods</dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classxrpl_1_1InvariantChecker__PROTOTYPE.html" title="Prototype for invariant check implementations.">xrpl::InvariantChecker_PROTOTYPE</a> </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="InvariantCheck_8h_source.html#l00727">727</a> of file <a class="el" href="InvariantCheck_8h_source.html">InvariantCheck.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="InvariantCheck_8h_source.html#l00380">380</a> of file <a class="el" href="InvariantCheck_8h_source.html">InvariantCheck.h</a>.</p>
+
+</div>
+</div>
+<a id="ad73b3e295464249bdeb9d3c34e658234" name="ad73b3e295464249bdeb9d3c34e658234"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad73b3e295464249bdeb9d3c34e658234">&#9670;&#160;</a></span>operator|() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> xrpl::operator| </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td>
+          <td class="paramname"><em>lhs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td>
+          <td class="paramname"><em>rhs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="InvariantCheckPrivilege_8h_source.html#l00050">50</a> of file <a class="el" href="InvariantCheckPrivilege_8h_source.html">InvariantCheckPrivilege.h</a>.</p>
+
+</div>
+</div>
+<a id="a888ff3140efbc0ea0e09ef1d933b1fe0" name="a888ff3140efbc0ea0e09ef1d933b1fe0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a888ff3140efbc0ea0e09ef1d933b1fe0">&#9670;&#160;</a></span>hasPrivilege()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool xrpl::hasPrivilege </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classxrpl_1_1STTx.html">STTx</a> const &amp;&#160;</td>
+          <td class="paramname"><em>tx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td>
+          <td class="paramname"><em>priv</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="InvariantCheck_8cpp_source.html#l00030">30</a> of file <a class="el" href="InvariantCheck_8cpp_source.html">InvariantCheck.cpp</a>.</p>
 
 </div>
 </div>
@@ -33355,7 +33423,7 @@ template&lt;typename A &gt; </div>
 <p>Delete trustlines to AMM. </p>
 <p>If all trustlines are deleted then AMM object and account are deleted. Otherwise tecIMPCOMPLETE is returned. </p>
 
-<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00238">238</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00239">239</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -33405,7 +33473,7 @@ template&lt;typename A &gt; </div>
 
 <p>Initialize Auction and Voting slots and set the trading/discounted fee. </p>
 
-<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00288">288</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00289">289</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -33444,7 +33512,7 @@ template&lt;typename A &gt; </div>
 <p>Return true if the Liquidity Provider is the only AMM provider, false otherwise. </p>
 <p>Return tecINTERNAL if encountered an unexpected condition, for instance Liquidity Provider has more than one LPToken trustline. </p>
 
-<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00334">334</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00335">335</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -33489,7 +33557,7 @@ template&lt;typename A &gt; </div>
 <p>Due to rounding, the LPTokenBalance of the last LP might not match the LP's trustline balance. </p>
 <p>If it's within the tolerance, update LPTokenBalance to match the LP's trustline balance. </p>
 
-<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00412">412</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00413">413</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -37558,74 +37626,6 @@ requires (T::ConsequencesFactory == <a class="el" href="classxrpl_1_1Transactor.
 
 </div>
 </div>
-<a id="ad73b3e295464249bdeb9d3c34e658234" name="ad73b3e295464249bdeb9d3c34e658234"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad73b3e295464249bdeb9d3c34e658234">&#9670;&#160;</a></span>operator|() <span class="overload">[4/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr <a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a> xrpl::operator| </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td>
-          <td class="paramname"><em>lhs</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td>
-          <td class="paramname"><em>rhs</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="InvariantCheck_8cpp_source.html#l00069">69</a> of file <a class="el" href="InvariantCheck_8cpp_source.html">InvariantCheck.cpp</a>.</p>
-
-</div>
-</div>
-<a id="a888ff3140efbc0ea0e09ef1d933b1fe0" name="a888ff3140efbc0ea0e09ef1d933b1fe0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a888ff3140efbc0ea0e09ef1d933b1fe0">&#9670;&#160;</a></span>hasPrivilege()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool xrpl::hasPrivilege </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classxrpl_1_1STTx.html">STTx</a> const &amp;&#160;</td>
-          <td class="paramname"><em>tx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="namespacexrpl.html#a7de456270a44ded0681909046c567f9f">Privilege</a>&#160;</td>
-          <td class="paramname"><em>priv</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="InvariantCheck_8cpp_source.html#l00085">85</a> of file <a class="el" href="InvariantCheck_8cpp_source.html">InvariantCheck.cpp</a>.</p>
-
-</div>
-</div>
 <a id="a7efe90989d0b8581252bb0b0fd309eb4" name="a7efe90989d0b8581252bb0b0fd309eb4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7efe90989d0b8581252bb0b0fd309eb4">&#9670;&#160;</a></span>validBalances()</h2>
 
@@ -37672,7 +37672,7 @@ requires (T::ConsequencesFactory == <a class="el" href="classxrpl_1_1Transactor.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="InvariantCheck_8cpp_source.html#l01938">1938</a> of file <a class="el" href="InvariantCheck_8cpp_source.html">InvariantCheck.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMInvariant_8cpp_source.html#l00049">49</a> of file <a class="el" href="AMMInvariant_8cpp_source.html">AMMInvariant.cpp</a>.</p>
 
 </div>
 </div>
@@ -38280,7 +38280,7 @@ template&lt;class FlowResult &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00197">197</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMUtils_8cpp_source.html#l00198">198</a> of file <a class="el" href="AMMUtils_8cpp_source.html">AMMUtils.cpp</a>.</p>
 
 </div>
 </div>
@@ -38330,7 +38330,7 @@ template&lt;class FlowResult &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="AMMVote_8cpp_source.html#l00056">56</a> of file <a class="el" href="AMMVote_8cpp_source.html">AMMVote.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="AMMVote_8cpp_source.html#l00057">57</a> of file <a class="el" href="AMMVote_8cpp_source.html">AMMVote.cpp</a>.</p>
 
 </div>
 </div>
@@ -39934,7 +39934,7 @@ template&lt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="LoanSet_8cpp_source.html#l00179">179</a> of file <a class="el" href="LoanSet_8cpp_source.html">LoanSet.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="LoanSet_8cpp_source.html#l00180">180</a> of file <a class="el" href="LoanSet_8cpp_source.html">LoanSet.cpp</a>.</p>
 
 </div>
 </div>
@@ -44899,7 +44899,7 @@ template&lt;class ApplyTxs &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02103">2103</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02109">2109</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -44935,7 +44935,7 @@ template&lt;class ApplyTxs &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02093">2093</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02099">2099</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>

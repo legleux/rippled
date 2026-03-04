@@ -360,10 +360,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordflow">return</span> signingPubKey.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/empty.html">empty</a>() ? <a class="code hl_function" href="classxrpl_1_1STTx.html#a1bead6be8a6687a8ba8410d08282337b">checkMultiSign</a>(rules, sigObject)</div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>                                     : <a class="code hl_function" href="classxrpl_1_1STTx.html#ac72b70981e66f276be59befa3e61ae1e">checkSingleSign</a>(sigObject);</div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    }</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">catch</span> (<a class="code hl_classRef" href="http://en.cppreference.com/w/cpp/error/exception.html">std::exception</a> <span class="keyword">const</span>&amp;)</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <span class="keywordflow">catch</span> (...)</div>
 <div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    {</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    }</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classxrpl_1_1Unexpected.html">Unexpected</a>(<span class="stringliteral">&quot;Internal signature check failure.&quot;</span>);</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classxrpl_1_1Unexpected.html">Unexpected</a>(<span class="stringliteral">&quot;Internal signature check failure.&quot;</span>);</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    }</div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>}</div>
 </div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>

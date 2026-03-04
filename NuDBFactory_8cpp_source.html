@@ -172,7 +172,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="comment">// close can throw and we don&#39;t want the destructor to throw.</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <a class="code hl_function" href="classxrpl_1_1NodeStore_1_1NuDBBackend.html#aa86249aeec5e426bea637be630274122">close</a>();</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">catch</span> (nudb::system_error <span class="keyword">const</span>&amp;)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">catch</span> (nudb::system_error <span class="keyword">const</span>&amp;)  <span class="comment">// NOLINT(bugprone-empty-catch)</span></div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        {</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="comment">// Don&#39;t allow exceptions to propagate out of destructors.</span></div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="comment">// close() has already logged the error.</span></div>

@@ -5459,20 +5459,20 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l05340" name="l05340"></a><span class="lineno"> 5340</span>            env.close();</div>
 <div class="line"><a id="l05341" name="l05341"></a><span class="lineno"> 5341</span> </div>
 <div class="line"><a id="l05342" name="l05342"></a><span class="lineno"> 5342</span>            <span class="comment">// 2. Mantissa larger than uint64 max</span></div>
-<div class="line"><a id="l05343" name="l05343"></a><span class="lineno"> 5343</span>            <span class="keywordflow">try</span></div>
-<div class="line"><a id="l05344" name="l05344"></a><span class="lineno"> 5344</span>            {</div>
-<div class="line"><a id="l05345" name="l05345"></a><span class="lineno"> 5345</span>                tx[sfAssetsMaximum] = <span class="stringliteral">&quot;18446744073709551617e5&quot;</span>;  <span class="comment">// uint64 max + 1</span></div>
-<div class="line"><a id="l05346" name="l05346"></a><span class="lineno"> 5346</span>                env(tx, THISLINE);</div>
-<div class="line"><a id="l05347" name="l05347"></a><span class="lineno"> 5347</span>                BEAST_EXPECT(<span class="keyword">false</span>);</div>
-<div class="line"><a id="l05348" name="l05348"></a><span class="lineno"> 5348</span>            }</div>
-<div class="line"><a id="l05349" name="l05349"></a><span class="lineno"> 5349</span>            <span class="keywordflow">catch</span> (parse_error <span class="keyword">const</span>&amp; e)</div>
-<div class="line"><a id="l05350" name="l05350"></a><span class="lineno"> 5350</span>            {</div>
-<div class="line"><a id="l05351" name="l05351"></a><span class="lineno"> 5351</span>                <span class="keyword">using namespace </span>std::string_literals;</div>
-<div class="line"><a id="l05352" name="l05352"></a><span class="lineno"> 5352</span>                BEAST_EXPECT(</div>
-<div class="line"><a id="l05353" name="l05353"></a><span class="lineno"> 5353</span>                    e.what() ==</div>
-<div class="line"><a id="l05354" name="l05354"></a><span class="lineno"> 5354</span>                    <span class="stringliteral">&quot;invalidParamsField &#39;tx_json.AssetsMaximum&#39; has invalid &quot;</span></div>
-<div class="line"><a id="l05355" name="l05355"></a><span class="lineno"> 5355</span>                    <span class="stringliteral">&quot;data.&quot;</span>s);</div>
-<div class="line"><a id="l05356" name="l05356"></a><span class="lineno"> 5356</span>            }</div>
+<div class="line"><a id="l05343" name="l05343"></a><span class="lineno"> 5343</span>            env.set_parse_failure_expected(<span class="keyword">true</span>);</div>
+<div class="line"><a id="l05344" name="l05344"></a><span class="lineno"> 5344</span>            <span class="keywordflow">try</span></div>
+<div class="line"><a id="l05345" name="l05345"></a><span class="lineno"> 5345</span>            {</div>
+<div class="line"><a id="l05346" name="l05346"></a><span class="lineno"> 5346</span>                tx[sfAssetsMaximum] = <span class="stringliteral">&quot;18446744073709551617e5&quot;</span>;  <span class="comment">// uint64 max + 1</span></div>
+<div class="line"><a id="l05347" name="l05347"></a><span class="lineno"> 5347</span>                env(tx, THISLINE);</div>
+<div class="line"><a id="l05348" name="l05348"></a><span class="lineno"> 5348</span>                BEAST_EXPECTS(<span class="keyword">false</span>, <span class="stringliteral">&quot;Expected parse_error for mantissa larger than uint64 max&quot;</span>);</div>
+<div class="line"><a id="l05349" name="l05349"></a><span class="lineno"> 5349</span>            }</div>
+<div class="line"><a id="l05350" name="l05350"></a><span class="lineno"> 5350</span>            <span class="keywordflow">catch</span> (parse_error <span class="keyword">const</span>&amp; e)</div>
+<div class="line"><a id="l05351" name="l05351"></a><span class="lineno"> 5351</span>            {</div>
+<div class="line"><a id="l05352" name="l05352"></a><span class="lineno"> 5352</span>                <span class="keyword">using namespace </span>std::string_literals;</div>
+<div class="line"><a id="l05353" name="l05353"></a><span class="lineno"> 5353</span>                BEAST_EXPECT(</div>
+<div class="line"><a id="l05354" name="l05354"></a><span class="lineno"> 5354</span>                    e.what() == <span class="stringliteral">&quot;invalidParamsField &#39;tx_json.AssetsMaximum&#39; has invalid data.&quot;</span>s);</div>
+<div class="line"><a id="l05355" name="l05355"></a><span class="lineno"> 5355</span>            }</div>
+<div class="line"><a id="l05356" name="l05356"></a><span class="lineno"> 5356</span>            env.set_parse_failure_expected(<span class="keyword">false</span>);</div>
 <div class="line"><a id="l05357" name="l05357"></a><span class="lineno"> 5357</span>        }</div>
 <div class="line"><a id="l05358" name="l05358"></a><span class="lineno"> 5358</span>    }</div>
 </div>

@@ -1,6 +1,7 @@
 <map id="tx" name="tx">
-<area shape="rect" id="node2" href="dir_724a128b564ad3d36c6292930c9ec5dd.html" title="paths" alt="" coords="157,63,216,88"/>
-<area shape="rect" id="node3" href="dir_8eb331bf1b26d714499b71819116af36.html" title="transactors" alt="" coords="38,63,133,88"/>
-<area shape="rect" id="clust2" href="dir_339ffb80f751afefa6bcec8d02d2c690.html" alt="" coords="27,52,291,99"/>
-<area shape="rect" id="clust1" href="dir_0103a8ad82dcc2c51f5cde661b4b5cb7.html" title="xrpl" alt="" coords="16,16,301,109"/>
+<area shape="rect" id="node2" href="dir_223674d603e934183c4b29cb4c6b573f.html" title="invariants" alt="" coords="241,63,327,88"/>
+<area shape="rect" id="node3" href="dir_724a128b564ad3d36c6292930c9ec5dd.html" title="paths" alt="" coords="157,63,216,88"/>
+<area shape="rect" id="node4" href="dir_8eb331bf1b26d714499b71819116af36.html" title="transactors" alt="" coords="38,63,133,88"/>
+<area shape="rect" id="clust2" href="dir_339ffb80f751afefa6bcec8d02d2c690.html" alt="" coords="27,52,401,99"/>
+<area shape="rect" id="clust1" href="dir_0103a8ad82dcc2c51f5cde661b4b5cb7.html" title="xrpl" alt="" coords="16,16,412,109"/>
 </map>

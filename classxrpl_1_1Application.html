@@ -173,6 +173,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6883b7d24b4c19a6d62e3708606834bd" id="r_a6883b7d24b4c19a6d62e3708606834bd"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="namespacexrpl.html#a93f5d90cfd55a948d64156c16029ad9b">LedgerIndex</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1Application.html#a6883b7d24b4c19a6d62e3708606834bd">getMaxDisallowedLedger</a> ()=0</td></tr>
 <tr class="memdesc:a6883b7d24b4c19a6d62e3708606834bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Ensure that a newly-started validator does not sign proposals older than the last ledger it persisted.  <br /></td></tr>
 <tr class="separator:a6883b7d24b4c19a6d62e3708606834bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03e7849b05a9bf69d4f81ac634a83103" id="r_a03e7849b05a9bf69d4f81ac634a83103"><td class="memItemLeft" align="right" valign="top">virtual size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1Application.html#a03e7849b05a9bf69d4f81ac634a83103">getNumberOfThreads</a> () const =0</td></tr>
+<tr class="memdesc:a03e7849b05a9bf69d4f81ac634a83103"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the number of io_context (I/O worker) threads used by the application.  <br /></td></tr>
+<tr class="separator:a03e7849b05a9bf69d4f81ac634a83103"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1ea1dcb92482650a821a48a7441b57e9" id="r_a1ea1dcb92482650a821a48a7441b57e9"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxrpl_1_1CollectorManager.html">CollectorManager</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ServiceRegistry.html#a1ea1dcb92482650a821a48a7441b57e9">getCollectorManager</a> ()=0</td></tr>
 <tr class="separator:a1ea1dcb92482650a821a48a7441b57e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8fde3deb366d577952b5f52decfb720a" id="r_a8fde3deb366d577952b5f52decfb720a"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classxrpl_1_1Family.html">Family</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classxrpl_1_1ServiceRegistry.html#a8fde3deb366d577952b5f52decfb720a">getNodeFamily</a> ()=0</td></tr>
@@ -362,7 +365,7 @@ Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02086">2086</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="Application_8cpp_source.html#l02092">2092</a> of file <a class="el" href="Application_8cpp_source.html">Application.cpp</a>.</p>
 
 </div>
 </div>
@@ -778,6 +781,35 @@ Private Attributes</h2></td></tr>
 <p>Ensure that a newly-started validator does not sign proposals older than the last ledger it persisted. </p>
 
 <p>Implemented in <a class="el" href="classxrpl_1_1ApplicationImp.html#a7ba6a0744af5c311c44cb40071a28266">xrpl::ApplicationImp</a>.</p>
+
+</div>
+</div>
+<a id="a03e7849b05a9bf69d4f81ac634a83103" name="a03e7849b05a9bf69d4f81ac634a83103"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03e7849b05a9bf69d4f81ac634a83103">&#9670;&#160;</a></span>getNumberOfThreads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual size_t xrpl::Application::getNumberOfThreads </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">pure virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns the number of io_context (I/O worker) threads used by the application. </p>
+
+<p>Implemented in <a class="el" href="classxrpl_1_1ApplicationImp.html#a319dd1287cf32ae5a1fbd9727b39166e">xrpl::ApplicationImp</a>.</p>
 
 </div>
 </div>

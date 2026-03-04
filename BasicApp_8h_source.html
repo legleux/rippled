@@ -109,15 +109,25 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classBasicApp.html#a2b2b86b1db70fb2369c472d2477e0061">io_context_</a>;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    }</div>
 </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>};</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keywordtype">size_t</span></div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="}">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classBasicApp.html#a4d775b32188f4dfecf2e55b2d970c262">   28</a></span>    <a class="code hl_function" href="classBasicApp.html#a4d775b32188f4dfecf2e55b2d970c262">get_number_of_threads</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="classBasicApp.html#a53ed855cfab7fb18f9a20854051f5592">threads_</a>.<a class="code hl_functionRef" href="http://en.cppreference.com/w/cpp/container/vector/size.html">size</a>();</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    }</div>
+</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
 </div>
 <div class="ttc" id="aclassBasicApp_html"><div class="ttname"><a href="classBasicApp.html">BasicApp</a></div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8h_source.html#l00010">BasicApp.h:11</a></div></div>
 <div class="ttc" id="aclassBasicApp_html_a2b2b86b1db70fb2369c472d2477e0061"><div class="ttname"><a href="classBasicApp.html#a2b2b86b1db70fb2369c472d2477e0061">BasicApp::io_context_</a></div><div class="ttdeci">boost::asio::io_context io_context_</div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8h_source.html#l00015">BasicApp.h:15</a></div></div>
+<div class="ttc" id="aclassBasicApp_html_a4d775b32188f4dfecf2e55b2d970c262"><div class="ttname"><a href="classBasicApp.html#a4d775b32188f4dfecf2e55b2d970c262">BasicApp::get_number_of_threads</a></div><div class="ttdeci">size_t get_number_of_threads() const</div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8h_source.html#l00028">BasicApp.h:28</a></div></div>
 <div class="ttc" id="aclassBasicApp_html_a53ed855cfab7fb18f9a20854051f5592"><div class="ttname"><a href="classBasicApp.html#a53ed855cfab7fb18f9a20854051f5592">BasicApp::threads_</a></div><div class="ttdeci">std::vector&lt; std::thread &gt; threads_</div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8h_source.html#l00014">BasicApp.h:14</a></div></div>
 <div class="ttc" id="aclassBasicApp_html_a54b860eec04d8478bf684abe09ba03fd"><div class="ttname"><a href="classBasicApp.html#a54b860eec04d8478bf684abe09ba03fd">BasicApp::~BasicApp</a></div><div class="ttdeci">~BasicApp()</div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8cpp_source.html#l00021">BasicApp.cpp:21</a></div></div>
 <div class="ttc" id="aclassBasicApp_html_a73d38616d9fdb7e4875f046a732713c2"><div class="ttname"><a href="classBasicApp.html#a73d38616d9fdb7e4875f046a732713c2">BasicApp::work_</a></div><div class="ttdeci">std::optional&lt; boost::asio::executor_work_guard&lt; boost::asio::io_context::executor_type &gt; &gt; work_</div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8h_source.html#l00013">BasicApp.h:13</a></div></div>
 <div class="ttc" id="aclassBasicApp_html_aaa69bd0d77ffef925f10bd6876dee00b"><div class="ttname"><a href="classBasicApp.html#aaa69bd0d77ffef925f10bd6876dee00b">BasicApp::get_io_context</a></div><div class="ttdeci">boost::asio::io_context &amp; get_io_context()</div><div class="ttdef"><b>Definition</b> <a href="BasicApp_8h_source.html#l00022">BasicApp.h:22</a></div></div>
 <div class="ttc" id="aoptional_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/optional.html">optional</a></div></div>
+<div class="ttc" id="asize_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/container/vector/size.html">std::vector::size</a></div><div class="ttdeci">T size(T... args)</div></div>
 <div class="ttc" id="asize_t_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/types/size_t.html">std::size_t</a></div></div>
 <div class="ttc" id="athread_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/thread.html">thread</a></div></div>
 <div class="ttc" id="avector_html"><div class="ttname"><a href="http://en.cppreference.com/w/cpp/header/vector.html">vector</a></div></div>

@@ -24,7 +24,7 @@ var searchData=
   ['multiapijson_21',['MultiApiJson',['../namespacexrpl.html#a4a56e14353125c706c7c14dc1c1ee60a',1,'xrpl']]],
   ['multiplepaymentdestinations_22',['MultiplePaymentDestinations',['../namespacexrpl.html#af7a53b8ccd7cfa995998da80891b76b9',1,'xrpl']]],
   ['mutable_5fbuffer_23',['mutable_buffer',['../classxrpl_1_1ZeroCopyOutputStream.html#a5c811804081daef9af71b1db5507fff2',1,'xrpl::ZeroCopyOutputStream']]],
-  ['mutex_24',['mutex',['../classxrpl_1_1Validations.html#a169d104b9e5c0f2262b58dcb48637fe6',1,'xrpl::Validations::Mutex'],['../classxrpl_1_1RCLValidationsAdaptor.html#a707742b9e5016bf843e12df67e393030',1,'xrpl::RCLValidationsAdaptor::Mutex'],['../classxrpl_1_1LockedSociSession.html#a326b4e2dec374aead3a6ec7bf99964bb',1,'xrpl::LockedSociSession::mutex']]],
+  ['mutex_24',['mutex',['../classxrpl_1_1LockedSociSession.html#a326b4e2dec374aead3a6ec7bf99964bb',1,'xrpl::LockedSociSession::mutex'],['../classxrpl_1_1Validations.html#a169d104b9e5c0f2262b58dcb48637fe6',1,'xrpl::Validations::Mutex'],['../classxrpl_1_1RCLValidationsAdaptor.html#a707742b9e5016bf843e12df67e393030',1,'xrpl::RCLValidationsAdaptor::Mutex']]],
   ['mutex_5ftype_25',['mutex_type',['../classxrpl_1_1TaggedCache.html#a6ade27dfec2c7316f386a7a398f2205a',1,'xrpl::TaggedCache']]],
   ['mutextype_26',['MutexType',['../classxrpl_1_1Application.html#a14aad0a48665832ab026bde9ca64230e',1,'xrpl::Application']]],
   ['myalloc_27',['MyAlloc',['../structbeast_1_1aged__associative__container__test__base_1_1TestTraitsHelper.html#a2de5ded9414831b304305fb452b9261f',1,'beast::aged_associative_container_test_base::TestTraitsHelper']]],
