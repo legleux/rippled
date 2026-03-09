@@ -1,0 +1,62 @@
+name: Package DEB
+
+on:
+  push:
+    branches: [pkg]
+  workflow_dispatch:
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends \
+            debhelper \
+            ninja-build \
+            python3-pip
+
+      - name: Install Conan
+        run: pip3 install conan
+
+      - name: Setup Conan
+        run: |
+          conan remote add --index 0 xrplf https://conan.ripplex.io
+          conan profile detect
+
+      - name: Install Conan dependencies
+        run: |
+          conan install . \
+            --build missing \
+            --settings:all build_type=Debug \
+            --options:host "&:xrpld=True" \
+            --output-folder tc
+
+      - name: Configure CMake
+        run: |
+          cmake -B build -G Ninja \
+            -DCMAKE_TOOLCHAIN_FILE=tc/build/generators/conan_toolchain.cmake \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_INSTALL_PREFIX=/opt/xrpld \
+            -Dvoidstar=ON \
+            -Dxrpld=ON \
+            -Dtests=OFF
+
+      - name: Build xrpld
+        run: cmake --build build --target xrpld --parallel $(nproc --ignore 3)
+
+      - name: Build DEB package
+        run: cmake --build build --target package-deb
+
+      - name: Run install smoke test
+        run: ctest --test-dir build -R install-deb -V
+
+      - name: Upload DEB artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: xrpld-deb
+          path: build/debbuild/*.deb
+          if-no-files-found: error
