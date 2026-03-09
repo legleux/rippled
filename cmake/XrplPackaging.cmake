@@ -32,6 +32,15 @@ if (DPKG_BUILDPACKAGE_EXECUTABLE)
                       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
                       COMMENT "Building Debian package"
                       VERBATIM)
+
+    find_program(DOCKER_EXECUTABLE docker)
+    if (DOCKER_EXECUTABLE)
+        add_test(NAME install-deb COMMAND ${CMAKE_SOURCE_DIR}/package/test-deb-install.sh
+                                          ${CMAKE_BINARY_DIR} WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+        set_tests_properties(install-deb PROPERTIES TIMEOUT 120 LABELS "packaging")
+    else ()
+        message(STATUS "docker not found; 'install-deb' test not available")
+    endif ()
 else ()
     message(STATUS "dpkg-buildpackage not found; 'package-deb' target not available")
 endif ()
