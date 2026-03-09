@@ -70,9 +70,12 @@ xrpld (${DEB_VERSION}-1) unstable; urgency=medium
  -- XRPL Foundation <contact@xrpl.org>  $(LC_ALL=C date -u -R)
 EOF
 
+    chmod +x "${STAGING}/debian/rules"
+
     set -x
     cd "${STAGING}"
-    CMAKE_BUILD_DIR="${BUILD_DIR}" dpkg-buildpackage -b --no-sign
+    # -d skips build-dep checks — we're packaging a pre-built binary, not building from source.
+    CMAKE_BUILD_DIR="${BUILD_DIR}" dpkg-buildpackage -b --no-sign -d
     ;;
 
 *)
