@@ -1,0 +1,5 @@
+# Development artifacts — headers, static libs, cmake config — are not
+# included in the runtime package.
+opt/xrpld/include/*
+opt/xrpld/lib/*
+opt/xrpld/bin/rippled
