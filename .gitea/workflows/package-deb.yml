@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-package:
-    runs-on: ghcr.io/xrplf/ci/ubuntu-noble:clang-17
+    runs-on: legleux/clang17_node
     steps:
       - uses: actions/checkout@v4
 
