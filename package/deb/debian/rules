@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_configure override_dh_auto_build override_dh_auto_test:
+	@:
+
+override_dh_auto_install:
+	DESTDIR=debian/xrpld cmake --install $(CMAKE_BUILD_DIR)
+	install -Dm0644 README.md debian/xrpld/usr/share/doc/xrpld/README.md
+	install -Dm0644 LICENSE.md debian/xrpld/usr/share/doc/xrpld/LICENSE.md
+
+override_dh_installsystemd:
+	dh_installsystemd
+
+override_dh_installsysusers:
+	dh_installsysusers
+
+override_dh_installtmpfiles:
+	dh_installtmpfiles
+
+override_dh_install:
+	dh_install
+
+override_dh_dwz:
+	@:
+
+override_dh_strip:
+	dh_strip --no-automatic-dbgsym

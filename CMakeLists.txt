@@ -133,6 +133,7 @@ endif()
 
 include(XrplCore)
 include(XrplInstall)
+include(XrplPackaging)
 include(XrplValidatorKeys)
 
 if(tests)

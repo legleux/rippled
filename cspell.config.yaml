@@ -75,6 +75,12 @@ words:
   - confs
   - connectability
   - coro
+  - missingok
+  - noreplace
+  - notifempty
+  - preun
+  - shlibs
+  - SRPMS
   - coros
   - cowid
   - cryptocondition

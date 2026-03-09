@@ -1,0 +1,73 @@
+%global xrpld_version  @xrpld_version@
+%global _opt_prefix    /opt/xrpld
+%global ver_base       %(v=%{xrpld_version}; echo ${v%%-*})
+%global _has_dash      %(v=%{xrpld_version}; [ "${v#*-}" != "$v" ] && echo 1 || echo 0)
+%if 0%{?_has_dash}
+  %global ver_suffix   %(v=%{xrpld_version}; printf %s "${v#*-}")
+%endif
+
+Name:     xrpld
+Version:  %{ver_base}
+Release:  %{?ver_suffix:0.%{ver_suffix}}%{!?ver_suffix:1}%{?dist}
+Summary:  XRP Ledger daemon
+
+License:  ISC
+URL:      https://github.com/XRPLF/rippled
+
+Source0:  xrpld.service
+Source1:  xrpld.sysusers
+Source2:  xrpld.tmpfiles
+
+BuildArch:     x86_64
+BuildRequires: systemd-rpm-macros
+
+%{?systemd_requires}
+%{?sysusers_requires_compat}
+
+%description
+xrpld is the reference implementation of the XRP Ledger protocol. It
+participates in the peer-to-peer XRP Ledger network, processes
+transactions, and maintains the ledger database.
+
+%install
+rm -rf %{buildroot}
+
+# Install binary and config files via CMake component install.
+# Requires cmake was configured with -DCMAKE_INSTALL_PREFIX=/opt/xrpld.
+DESTDIR=%{buildroot} cmake --install %{cmake_build_dir} --component runtime
+
+# Create the rippled compatibility symlink alongside the binary.
+ln -s xrpld %{buildroot}%{_opt_prefix}/bin/rippled
+
+# Install systemd/sysusers/tmpfiles support files.
+install -Dm0644 %{SOURCE0} %{buildroot}%{_unitdir}/xrpld.service
+install -Dm0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/xrpld.conf
+install -Dm0644 %{SOURCE2} %{buildroot}%{_tmpfilesdir}/xrpld.conf
+
+%pre
+%sysusers_create_compat %{SOURCE1}
+
+%post
+%systemd_post xrpld.service
+
+%preun
+%systemd_preun xrpld.service
+
+%postun
+%systemd_postun_with_restart xrpld.service
+
+%files
+%dir %{_opt_prefix}
+%dir %{_opt_prefix}/bin
+%{_opt_prefix}/bin/xrpld
+%{_opt_prefix}/bin/rippled
+%dir %{_opt_prefix}/etc
+%dir %{_opt_prefix}/etc/xrpld
+%config(noreplace) %{_opt_prefix}/etc/xrpld/xrpld.cfg
+%config(noreplace) %{_opt_prefix}/etc/xrpld/validators.txt
+%{_unitdir}/xrpld.service
+%{_sysusersdir}/xrpld.conf
+%{_tmpfilesdir}/xrpld.conf
+%ghost %dir /var/opt/ripple
+%ghost %dir /var/opt/ripple/lib
+%ghost %dir /var/opt/ripple/log
