@@ -7,20 +7,20 @@ on:
 
 jobs:
   build-and-package:
-    runs-on: ubuntu:latest
+    runs-on: ghcr.io/xrplf/ci/ubuntu-noble:clang-17
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y --no-install-recommends \
-            debhelper \
-            ninja-build \
-            python3-pip
+      # - name: Install system dependencies
+      #   run: |
+      #     sudo apt-get update -qq
+      #     sudo apt-get install -y --no-install-recommends \
+      #       debhelper \
+      #       ninja-build \
+      #       python3-pip
 
-      - name: Install Conan
-        run: pip3 install conan
+      # - name: Install Conan
+      #   run: pip3 install conan
 
       - name: Setup Conan
         run: |
