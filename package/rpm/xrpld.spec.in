@@ -17,6 +17,7 @@ URL:      https://github.com/XRPLF/rippled
 Source0:  xrpld.service
 Source1:  xrpld.sysusers
 Source2:  xrpld.tmpfiles
+Source3:  xrpld.logrotate
 
 BuildArch:     x86_64
 BuildRequires: systemd-rpm-macros
@@ -43,6 +44,7 @@ ln -s xrpld %{buildroot}%{_opt_prefix}/bin/rippled
 install -Dm0644 %{SOURCE0} %{buildroot}%{_unitdir}/xrpld.service
 install -Dm0644 %{SOURCE1} %{buildroot}%{_sysusersdir}/xrpld.conf
 install -Dm0644 %{SOURCE2} %{buildroot}%{_tmpfilesdir}/xrpld.conf
+install -Dm0644 %{SOURCE3} %{buildroot}%{_opt_prefix}/bin/xrpld.logrotate
 
 %pre
 %sysusers_create_compat %{SOURCE1}
@@ -60,6 +62,7 @@ install -Dm0644 %{SOURCE2} %{buildroot}%{_tmpfilesdir}/xrpld.conf
 %dir %{_opt_prefix}
 %dir %{_opt_prefix}/bin
 %{_opt_prefix}/bin/xrpld
+%{_opt_prefix}/bin/xrpld.logrotate
 %{_opt_prefix}/bin/rippled
 %dir %{_opt_prefix}/etc
 %dir %{_opt_prefix}/etc/xrpld

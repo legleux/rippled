@@ -1,7 +1,8 @@
 opt/xrpld/bin/xrpld
+opt/xrpld/bin/xrpld.logrotate
 
-opt/xrpld/etc/xrpld.cfg
-opt/xrpld/etc/validators.txt
+opt/xrpld/etc/xrpld/xrpld.cfg
+opt/xrpld/etc/xrpld/validators.txt
 
 usr/share/doc/xrpld/README.md
 usr/share/doc/xrpld/LICENSE.md

@@ -9,7 +9,8 @@ override_dh_auto_configure override_dh_auto_build override_dh_auto_test:
 	@:
 
 override_dh_auto_install:
-	DESTDIR=debian/tmp cmake --install $(CMAKE_BUILD_DIR)
+	DESTDIR=debian/tmp cmake --install $(CMAKE_BUILD_DIR) --component runtime
+	install -Dm0644 xrpld.logrotate debian/tmp/opt/xrpld/bin/xrpld.logrotate
 	install -Dm0644 README.md debian/tmp/usr/share/doc/xrpld/README.md
 	install -Dm0644 LICENSE.md debian/tmp/usr/share/doc/xrpld/LICENSE.md
 
@@ -28,5 +29,5 @@ override_dh_install:
 override_dh_dwz:
 	@:
 
-override_dh_strip:
-	dh_strip --no-automatic-dbgsym
+override_dh_builddeb:
+	dh_builddeb -- -Zgzip -z1

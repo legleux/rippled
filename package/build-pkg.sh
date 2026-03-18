@@ -33,6 +33,8 @@ rpm)
         "${BUILD_DIR}/rpmbuild/SOURCES/xrpld.sysusers"
     cp "${SRC_DIR}/package/shared/xrpld.tmpfiles" \
         "${BUILD_DIR}/rpmbuild/SOURCES/xrpld.tmpfiles"
+    cp "${SRC_DIR}/package/shared/xrpld.logrotate" \
+        "${BUILD_DIR}/rpmbuild/SOURCES/xrpld.logrotate"
 
     rpmbuild -bb \
         --define "_topdir ${BUILD_DIR}/rpmbuild" \
@@ -55,9 +57,10 @@ deb)
     cp -r "${SRC_DIR}/package/deb/debian" "${STAGING}/debian"
 
     # Shared support files for dh_installsystemd/sysusers/tmpfiles
-    cp "${SRC_DIR}/package/shared/xrpld.service"  "${STAGING}/debian/xrpld.service"
-    cp "${SRC_DIR}/package/shared/xrpld.sysusers" "${STAGING}/debian/xrpld.sysusers"
+    cp "${SRC_DIR}/package/shared/xrpld.service"   "${STAGING}/debian/xrpld.service"
+    cp "${SRC_DIR}/package/shared/xrpld.sysusers"  "${STAGING}/debian/xrpld.sysusers"
     cp "${SRC_DIR}/package/shared/xrpld.tmpfiles"  "${STAGING}/debian/xrpld.tmpfiles"
+    cp "${SRC_DIR}/package/shared/xrpld.logrotate" "${STAGING}/xrpld.logrotate"
 
     # debian/changelog is required by dpkg-buildpackage; generate a minimal one.
     # Pre-release versions use ~ instead of - (e.g. 2.4.0-b1 → 2.4.0~b1).
