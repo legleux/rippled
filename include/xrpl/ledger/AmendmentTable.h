@@ -89,9 +89,7 @@ public:
     syncWithLedger(std::shared_ptr<ReadView const> const& ledger)
     {
         doValidatedLedger(
-            ledger->seq(),
-            getEnabledAmendments(*ledger),
-            getMajorityAmendments(*ledger));
+            ledger->seq(), getEnabledAmendments(*ledger), getMajorityAmendments(*ledger));
     }
 
     /** Called to determine whether the amendment logic needs to process
@@ -125,10 +123,8 @@ public:
     virtual std::vector<uint256>
     doValidation(std::set<uint256> const& enabled) const = 0;
 
-    // The set of amendments to enable in the genesis ledger
-    // This will return all known, non-vetoed amendments.
-    // If we ever have two amendments that should not both be
-    // enabled at the same time, we should ensure one is vetoed.
+    // The set of amendments we support and do not veto.
+    // Used during validation voting to express preferences.
     virtual std::vector<uint256>
     getDesired() const = 0;
 

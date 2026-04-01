@@ -1209,9 +1209,8 @@ public:
         std::vector<uint256> const desired = table->getDesired();
         BEAST_EXPECT(allSupported.size() >= desired.size());
 
-        // Verify that all entries from allSupported_ are in getAllSupported()
-        std::set<uint256> allSupportedSet(
-            allSupported.begin(), allSupported.end());
+        // Verify that all supported amendment categories are in getAllSupported()
+        std::set<uint256> allSupportedSet(allSupported.begin(), allSupported.end());
 
         for (auto const& a : yes_)
             BEAST_EXPECT(allSupportedSet.count(amendmentId(a)) == 1);
