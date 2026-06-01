@@ -15,6 +15,9 @@ Options (each can also be set via the env var shown):
   --build-dir DIR           directory holding xrpld    [BUILD_DIR;         default: $PWD/build]
   --pkg-version STR         version, e.g. 3.2.0-b1     [PKG_VERSION;       default: parsed from xrpld --version]
   --pkg-release N           package release number     [PKG_RELEASE;       default: 1]
+  --pkg-name NAME           binary package name        [PKG_NAME;          default: xrpld]
+                            (e.g. xrpld-asserts for an assertions-enabled
+                             build; built as a drop-in alternative to xrpld)
   --source-date-epoch SECS  reproducibility timestamp  [SOURCE_DATE_EPOCH; default: latest git commit ctime]
   -h, --help                show this help and exit
 EOF
@@ -32,6 +35,7 @@ SRC_DIR="${SRC_DIR:-}"
 BUILD_DIR="${BUILD_DIR:-}"
 PKG_VERSION="${PKG_VERSION:-}"
 PKG_RELEASE="${PKG_RELEASE:-}"
+PKG_NAME="${PKG_NAME:-}"
 SOURCE_DATE_EPOCH="${SOURCE_DATE_EPOCH:-}"
 
 while [[ $# -gt 0 ]]; do
@@ -56,6 +60,11 @@ while [[ $# -gt 0 ]]; do
             PKG_RELEASE="$2"
             shift 2
             ;;
+        --pkg-name)
+            need_arg "$@"
+            PKG_NAME="$2"
+            shift 2
+            ;;
         --source-date-epoch)
             need_arg "$@"
             SOURCE_DATE_EPOCH="$2"
@@ -76,6 +85,7 @@ done
 SRC_DIR="$(cd "${SRC_DIR:-${PWD}}" && pwd)"
 BUILD_DIR="$(cd "${BUILD_DIR:-${PWD}/build}" && pwd)"
 PKG_RELEASE="${PKG_RELEASE:-1}"
+PKG_NAME="${PKG_NAME:-xrpld}"
 
 if [[ -z "${PKG_VERSION}" ]]; then
     PKG_VERSION="$("${BUILD_DIR}/xrpld" --version | awk 'NR==1 {print $3; exit}')"
@@ -114,10 +124,11 @@ VER_BASE="${VERSION%%-*}"
 VER_SUFFIX="${VERSION#*-}"
 [[ "${VER_SUFFIX}" == "${VERSION}" ]] && VER_SUFFIX=""
 
-# Reject multi-segment suffixes (e.g. "beta-1", "rc1-15-gabc123"). The RPM
-# Release field forbids '-', and the convention here is single-token suffixes
-# like b1 or rc2. Fail early with a clear message rather than letting either
-# rpmbuild blow up or silently mangling dashes into dots.
+# Reject multi-segment suffixes (e.g. "beta-1", "rc1-15-gabc123"). Neither an
+# RPM Version nor a Debian upstream version may contain '-' (it's the NVR /
+# version-revision separator), and the convention here is single-token
+# suffixes like b1 or rc2. Fail early with a clear message rather than letting
+# the package tooling blow up or silently mangle dashes.
 if [[ "${VER_SUFFIX}" == *-* ]]; then
     echo "build_pkg.sh: multi-segment pre-release in VERSION='${VERSION}' (suffix '${VER_SUFFIX}')." >&2
     echo "Use single-token suffixes like 3.2.0-b1 or 3.2.0-rc2." >&2
@@ -142,9 +153,6 @@ stage_common() {
     cp "${SHARED}/xrpld.sysusers" "${dest}/xrpld.sysusers"
     cp "${SHARED}/xrpld.tmpfiles" "${dest}/xrpld.tmpfiles"
     cp "${SHARED}/xrpld.logrotate" "${dest}/xrpld.logrotate"
-    cp "${SHARED}/update-xrpld" "${dest}/update-xrpld"
-    cp "${SHARED}/update-xrpld.service" "${dest}/update-xrpld.service"
-    cp "${SHARED}/update-xrpld.timer" "${dest}/update-xrpld.timer"
     cp "${SHARED}/50-xrpld.preset" "${dest}/50-xrpld.preset"
 }
 
@@ -156,20 +164,18 @@ build_rpm() {
     cp "${SRC_DIR}/package/rpm/xrpld.spec" "${topdir}/SPECS/xrpld.spec"
     stage_common "${topdir}/SOURCES"
 
-    # RPM Version can't contain '-'. A pre-release goes in Release with a
-    # leading "0." so 3.2.0-b1 sorts before the final 3.2.0-<pkg_release>.
-    # The order is "0.<pkg_release>.<suffix>" (e.g. 0.1.b6) — the Fedora/EPEL
-    # convention. Reversing to "0.<suffix>.<pkg_release>" (e.g. 0.b6.1) breaks
-    # rpmvercmp against the former because numeric segments outrank alphabetic
-    # ones, so "0.1.b5" would sort newer than "0.b6.1".
-    local rpm_release="${PKG_RELEASE}"
-    [[ -n "${VER_SUFFIX}" ]] && rpm_release="0.${PKG_RELEASE}.${VER_SUFFIX}"
+    # Pre-releases use the modern rpm '~' convention (rpm >= 4.10): the suffix
+    # goes in Version (e.g. 3.2.0~b1), which rpmvercmp sorts *before* the final
+    # 3.2.0 — identical semantics to Debian's '~'. Release is just the package
+    # release number. This replaces the older "0.<release>.<suffix>" Release
+    # hack and keeps the RPM and DEB version strings symmetric.
+    local rpm_version="${VER_BASE}${VER_SUFFIX:+~${VER_SUFFIX}}"
 
     set -x
     rpmbuild -bb \
         --define "_topdir ${topdir}" \
-        --define "xrpld_version ${VER_BASE}" \
-        --define "xrpld_release ${rpm_release}" \
+        --define "xrpld_version ${rpm_version}" \
+        --define "xrpld_release ${PKG_RELEASE}" \
         "${topdir}/SPECS/xrpld.spec"
 }
 
@@ -181,13 +187,30 @@ build_deb() {
     stage_common "${staging}"
     cp -r "${DEBIAN_DIR}" "${staging}/debian"
 
-    # Debhelper auto-discovers these only from debian/.
+    # Build under an alternative binary package name (e.g. xrpld-asserts for an
+    # assertions-enabled build). It ships the same files as xrpld and is a
+    # drop-in alternative, so it Provides/Conflicts/Replaces xrpld. The source
+    # package name stays "xrpld"; only the binary package is renamed.
+    if [[ "${PKG_NAME}" != "xrpld" ]]; then
+        sed -i "s/^Package: xrpld\$/Package: ${PKG_NAME}/" "${staging}/debian/control"
+        sed -i "/^Package: ${PKG_NAME}\$/a Provides: xrpld\nConflicts: xrpld\nReplaces: xrpld" \
+            "${staging}/debian/control"
+        # Per-package debhelper config files are matched on the package name.
+        for ext in docs links; do
+            [[ -f "${staging}/debian/xrpld.${ext}" ]] &&
+                mv "${staging}/debian/xrpld.${ext}" "${staging}/debian/${PKG_NAME}.${ext}"
+        done
+    fi
+
+    # Debhelper auto-discovers these from debian/. sysusers/tmpfiles/logrotate
+    # and the --name=update-xrpld units are matched on the package name; the
+    # primary xrpld.service is referenced by bare unit name in debian/rules and
+    # resolves for any package name. For the default xrpld build these targets
+    # are unchanged.
     cp "${staging}/xrpld.service" "${staging}/debian/xrpld.service"
-    cp "${staging}/xrpld.sysusers" "${staging}/debian/xrpld.sysusers"
-    cp "${staging}/xrpld.tmpfiles" "${staging}/debian/xrpld.tmpfiles"
-    cp "${staging}/xrpld.logrotate" "${staging}/debian/xrpld.logrotate"
-    cp "${staging}/update-xrpld.service" "${staging}/debian/xrpld.update-xrpld.service"
-    cp "${staging}/update-xrpld.timer" "${staging}/debian/xrpld.update-xrpld.timer"
+    cp "${staging}/xrpld.sysusers" "${staging}/debian/${PKG_NAME}.sysusers"
+    cp "${staging}/xrpld.tmpfiles" "${staging}/debian/${PKG_NAME}.tmpfiles"
+    cp "${staging}/xrpld.logrotate" "${staging}/debian/${PKG_NAME}.logrotate"
 
     # Debian '~' marks a pre-release; 3.2.0~b1 sorts before 3.2.0.
     local deb_full_version="${VER_BASE}${VER_SUFFIX:+~${VER_SUFFIX}}-${PKG_RELEASE}"
