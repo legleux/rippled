@@ -20,7 +20,8 @@ BuildRequires: systemd-rpm-macros
 %description
 xrpld is the reference implementation of the XRP Ledger protocol. It
 participates in the peer-to-peer XRP Ledger network, processes
-transactions, and maintains the ledger database.
+transactions, maintains the ledger database, and includes the
+validator-keys tool.
 
 %prep
 :
@@ -30,6 +31,7 @@ transactions, and maintains the ledger database.
 
 %install
 install -Dm0755 %{_sourcedir}/xrpld                %{buildroot}%{_bindir}/%{name}
+install -Dm0755 %{_sourcedir}/validator-keys       %{buildroot}%{_bindir}/validator-keys
 install -Dm0644 %{_sourcedir}/xrpld.cfg            %{buildroot}%{_sysconfdir}/%{name}/xrpld.cfg
 install -Dm0644 %{_sourcedir}/validators.txt       %{buildroot}%{_sysconfdir}/%{name}/validators.txt
 
@@ -77,6 +79,7 @@ systemd-tmpfiles --create %{_tmpfilesdir}/xrpld.conf || :
 %dir %{_libexecdir}/%{name}
 
 %{_bindir}/%{name}
+%{_bindir}/validator-keys
 
 %config(noreplace) %{_sysconfdir}/%{name}/xrpld.cfg
 %config(noreplace) %{_sysconfdir}/%{name}/validators.txt

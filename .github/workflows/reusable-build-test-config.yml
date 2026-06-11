@@ -208,7 +208,11 @@ jobs:
         if: ${{ runner.os == 'Linux' && env.SANITIZERS_ENABLED == 'false' }}
         run: |
           loader="$(/tmp/loader-path.sh)"
-          patchelf --set-interpreter "${loader}" --remove-rpath "${{ env.BUILD_DIR }}/xrpld"
+          for binary in xrpld validator-keys; do
+              if [[ -f "${{ env.BUILD_DIR }}/${binary}" ]]; then
+                  patchelf --set-interpreter "${loader}" --remove-rpath "${{ env.BUILD_DIR }}/${binary}"
+              fi
+          done
 
       # We're only running aarch64 Linux builds in Ubuntu-based images, so this is kept simple
       - name: Install libatomic (Linux aarch64)
@@ -227,12 +231,21 @@ jobs:
               curl ${CCACHE_REMOTE_STORAGE%|*}/status || true
           fi
 
+      - name: Stage binary artifact (Linux)
+        if: ${{ github.event.repository.visibility == 'public' && runner.os == 'Linux' }}
+        run: |
+          mkdir -p "${BUILD_DIR}/artifact"
+          cp "${BUILD_DIR}/xrpld" "${BUILD_DIR}/artifact/xrpld"
+          if [[ -f "${BUILD_DIR}/validator-keys" ]]; then
+              cp "${BUILD_DIR}/validator-keys" "${BUILD_DIR}/artifact/validator-keys"
+          fi
+
       - name: Upload the binary (Linux)
         if: ${{ github.event.repository.visibility == 'public' && runner.os == 'Linux' }}
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: xrpld-${{ inputs.config_name }}
-          path: ${{ env.BUILD_DIR }}/xrpld
+          path: ${{ env.BUILD_DIR }}/artifact/*
           retention-days: 3
           if-no-files-found: error
 
@@ -265,13 +278,19 @@ jobs:
         if: ${{ runner.os == 'Linux' && env.SANITIZERS_ENABLED == 'false' }}
         working-directory: ${{ env.BUILD_DIR }}
         run: |
-          ldd ./xrpld
-          if [ "$(ldd ./xrpld | grep -E '(libstdc\+\+|libgcc)' | wc -l)" -eq 0 ]; then
-              echo 'The binary is statically linked.'
-          else
-              echo 'The binary is dynamically linked.'
-              exit 1
-          fi
+          for binary in xrpld validator-keys; do
+              if [[ ! -f "./${binary}" ]]; then
+                  continue
+              fi
+
+              ldd "./${binary}"
+              if [ "$(ldd "./${binary}" | grep -E '(libstdc\+\+|libgcc)' | wc -l)" -eq 0 ]; then
+                  echo "${binary} is statically linked."
+              else
+                  echo "${binary} is dynamically linked."
+                  exit 1
+              fi
+          done
 
       - name: Verify presence of instrumentation (Linux)
         if: ${{ runner.os == 'Linux' && env.VOIDSTAR_ENABLED == 'true' }}

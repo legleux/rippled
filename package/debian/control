@@ -20,4 +20,4 @@ Depends:
 Description: XRP Ledger daemon
  Reference implementation of the XRP Ledger protocol.
  Participates in the peer-to-peer network, processes transactions,
- and maintains a local ledger copy.
+ maintains a local ledger copy, and includes the validator-keys tool.
